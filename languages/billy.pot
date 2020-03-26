@@ -1,0 +1,760 @@
+# Copyright (C) 2020 them.es
+# This file is distributed under the same license as the Billy plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Billy 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/billy-src\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-03-25T14:46:33+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: billy\n"
+
+#. Plugin Name of the plugin
+msgid "Billy"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins"
+msgstr ""
+
+#. Description of the plugin
+msgid "A business-oriented billing suite powered by WordPress."
+msgstr ""
+
+#. Author of the plugin
+msgid "them.es"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://them.es/plugins/billy"
+msgstr ""
+
+#: billy.php:32
+msgid "<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version."
+msgstr ""
+
+#: billy.php:40
+msgid "<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version."
+msgstr ""
+
+#: billy.php:48
+msgid "<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin."
+msgstr ""
+
+#: billy.php:56
+msgid "Please setup a global header first: %s"
+msgstr ""
+
+#: billy.php:56
+msgid "Add New"
+msgstr ""
+
+#: inc/class-billy.php:168
+#: inc/class-billy.php:198
+#: inc/class-billy.php:207
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:192
+#: blocks/src/_accounting/table/index.js:207
+#: blocks/src/_accounting/table/index.js:222
+#: blocks/src/_accounting/table/index.js:238
+#: blocks/src/_accounting/table/index.js:248
+#: blocks/src/_accounting/table/index.js:316
+#: blocks/src/_accounting/table/index.js:321
+#: blocks/src/_accounting/table/index.js:336
+#: blocks/src/_accounting/table/index.js:351
+#: blocks/src/_accounting/table/index.js:356
+#: blocks/src/_invoice/table/index.js:196
+#: blocks/src/_invoice/table/index.js:237
+#: blocks/src/_invoice/table/index.js:310
+#: blocks/src/_invoice/table/index.js:351
+#: blocks/src/_invoice/table/index.js:610
+#: blocks/src/_quote/table/index.js:196
+#: blocks/src/_quote/table/index.js:237
+#: blocks/src/_quote/table/index.js:310
+#: blocks/src/_quote/table/index.js:351
+#: blocks/src/_quote/table/index.js:610
+msgid "%1$s %2$s"
+msgstr ""
+
+#: inc/class-billy.php:181
+msgid "Locale"
+msgstr ""
+
+#: inc/class-billy.php:185
+#: inc/class-billy.php:769
+msgid "Currency"
+msgstr ""
+
+#: inc/class-billy.php:189
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:347
+msgid "Taxes"
+msgstr ""
+
+#: inc/class-billy.php:193
+#: inc/class-billy.php:932
+msgid "Current invoice number"
+msgstr ""
+
+#: inc/class-billy.php:198
+msgid "Edit"
+msgstr ""
+
+#: inc/class-billy.php:207
+msgid "Thank you for purchasing %s"
+msgstr ""
+
+#: inc/class-billy.php:207
+msgid "Get the <u>Pro</u> version"
+msgstr ""
+
+#: inc/class-billy.php:207
+msgid "Premium add-on with Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
+msgstr ""
+
+#: inc/class-billy.php:207
+msgid "Please rate this Plugin"
+msgstr ""
+
+#: inc/class-billy.php:296
+#: blocks/build/index.js:1
+#: blocks/src/_header/header/index.js:24
+#: blocks/src/_header/header/index.js:46
+#: blocks/src/_header/header/index.js:54
+msgid "Header"
+msgstr ""
+
+#: inc/class-billy.php:358
+msgid "Pending"
+msgstr ""
+
+#: inc/class-billy.php:531
+msgid "%s Header"
+msgstr ""
+
+#: inc/class-billy.php:563
+msgid "Invoices"
+msgstr ""
+
+#: inc/class-billy.php:563
+#: inc/class-billy.php:836
+#: inc/class-blocks.php:294
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/actions/index.js:24
+#: blocks/src/_invoice/date/index.js:24
+#: blocks/src/_invoice/duedate/index.js:24
+#: blocks/src/_invoice/invoice-number/index.js:24
+#: blocks/src/_invoice/meta/index.js:26
+#: blocks/src/_invoice/paymentinformation/index.js:24
+#: blocks/src/_invoice/table/index.js:48
+#: blocks/src/_invoice/table/index.js:371
+msgid "Invoice"
+msgstr ""
+
+#: inc/class-billy.php:581
+#: inc/class-billy.php:643
+#: inc/class-billy.php:766
+#: inc/class-billy.php:850
+msgid "Name"
+msgstr ""
+
+#: inc/class-billy.php:581
+#: inc/class-billy.php:643
+msgid "Company"
+msgstr ""
+
+#: inc/class-billy.php:581
+#: inc/class-billy.php:643
+msgid "Address Field %s"
+msgstr ""
+
+#: inc/class-billy.php:581
+#: inc/class-billy.php:643
+msgid "Country"
+msgstr ""
+
+#: inc/class-billy.php:595
+msgid "Billing Period"
+msgstr ""
+
+#: inc/class-billy.php:601
+#: inc/class-billy.php:615
+#: inc/class-billy.php:661
+#: inc/class-billy.php:675
+#: inc/class-billy.php:702
+msgid "%s (optional)"
+msgstr ""
+
+#: inc/class-billy.php:601
+#: inc/class-billy.php:661
+msgid "Intro text"
+msgstr ""
+
+#: inc/class-billy.php:601
+#: inc/class-billy.php:661
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
+msgstr ""
+
+#: inc/class-billy.php:610
+#: inc/class-billy.php:611
+#: inc/class-billy.php:670
+#: inc/class-billy.php:671
+#: blocks/build/index.js:1
+#: blocks/src/_quote/information/index.js:21
+msgid "Information"
+msgstr ""
+
+#: inc/class-billy.php:615
+#: inc/class-billy.php:675
+#: inc/class-billy.php:702
+msgid "Notes"
+msgstr ""
+
+#: inc/class-billy.php:625
+msgid "Quotes"
+msgstr ""
+
+#: inc/class-billy.php:625
+#: inc/class-billy.php:830
+#: blocks/build/index.js:1
+#: blocks/src/_quote/actions/index.js:24
+#: blocks/src/_quote/date/index.js:19
+#: blocks/src/_quote/information/index.js:21
+#: blocks/src/_quote/meta/index.js:26
+#: blocks/src/_quote/table/index.js:48
+#: blocks/src/_quote/table/index.js:371
+#: blocks/src/_quote/validuntildate/index.js:19
+msgid "Quote"
+msgstr ""
+
+#: inc/class-billy.php:655
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:290
+#: blocks/src/_accounting/table/index.js:595
+msgid "Reference"
+msgstr ""
+
+#: inc/class-billy.php:685
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/actions/index.js:24
+#: blocks/src/_accounting/table/index.js:52
+#: blocks/src/_accounting/table/index.js:375
+msgid "Accounting"
+msgstr ""
+
+#: inc/class-billy.php:757
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:188
+#: blocks/src/_accounting/table/index.js:234
+#: blocks/src/_accounting/table/index.js:312
+#: blocks/src/_accounting/table/index.js:347
+msgid "Earnings"
+msgstr ""
+
+#: inc/class-billy.php:758
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:203
+#: blocks/src/_accounting/table/index.js:244
+#: blocks/src/_accounting/table/index.js:312
+#: blocks/src/_accounting/table/index.js:347
+msgid "Expenses"
+msgstr ""
+
+#: inc/class-billy.php:767
+#: inc/class-billy.php:866
+msgid "Address"
+msgstr ""
+
+#: inc/class-billy.php:768
+#: inc/class-billy.php:878
+msgid "VAT"
+msgstr ""
+
+#: inc/class-billy.php:817
+msgid "Plugin Setup"
+msgstr ""
+
+#: inc/class-billy.php:824
+msgid "General"
+msgstr ""
+
+#: inc/class-billy.php:879
+msgid "Enter your VAT identification number or Taxpayer ID"
+msgstr ""
+
+#: inc/class-billy.php:892
+msgid "Currency Code"
+msgstr ""
+
+#: inc/class-billy.php:893
+#: inc/class-billy.php:908
+msgid "Caution: Any changes made here may affect existing entries. Create a backup first!"
+msgstr ""
+
+#: inc/class-billy.php:906
+msgid "Tax Rates"
+msgstr ""
+
+#: inc/class-billy.php:907
+msgid "Enter the taxrates separated by newline: e.g. %s"
+msgstr ""
+
+#: inc/class-billy.php:920
+msgid "Invoice number: Prefix"
+msgstr ""
+
+#: inc/class-billy.php:933
+msgid "Upcoming invoice numbers will be autoincremented based on this value!"
+msgstr ""
+
+#: inc/class-billy.php:955
+msgid "Payment due within # days"
+msgstr ""
+
+#: inc/class-billy.php:971
+msgid "Payment information"
+msgstr ""
+
+#: inc/class-billy.php:972
+msgid "Add the payment instructions and link to your terms."
+msgstr ""
+
+#: inc/class-billy.php:979
+msgid "Thank you for your business!"
+msgstr ""
+
+#: inc/class-billy.php:988
+msgid "Quote information"
+msgstr ""
+
+#: inc/class-billy.php:989
+msgid "Inform your contacts about special terms, quote expiration clauses, etc."
+msgstr ""
+
+#: inc/class-billy.php:996
+msgid "We will be happy to answer any questions you may have!"
+msgstr ""
+
+#: inc/class-billy.php:1005
+msgid "Quote valid for # days"
+msgstr ""
+
+#: inc/class-billy.php:1022
+msgid "Please provide a valid currency format"
+msgstr ""
+
+#: inc/class-billy.php:1040
+msgid "Please separate the taxrates by newline and don't forget to append the \"%\" sign to each value."
+msgstr ""
+
+#: inc/class-blocks.php:173
+msgid "Billy Blocks"
+msgstr ""
+
+#: inc/class-blocks.php:194
+msgid "Print"
+msgstr ""
+
+#: inc/class-blocks.php:225
+#: inc/class-blocks.php:230
+msgid "Export %s"
+msgstr ""
+
+#: inc/class-blocks.php:225
+msgid "PDF"
+msgstr ""
+
+#: inc/class-blocks.php:230
+msgid "TSV"
+msgstr ""
+
+#: inc/class-blocks.php:257
+msgid "Please setup a global header."
+msgstr ""
+
+#: inc/class-blocks.php:276
+msgid "<strong>%1$s</strong> %2$s"
+msgstr ""
+
+#: inc/class-blocks.php:276
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:87
+#: blocks/src/_invoice/meta/index.js:108
+#: blocks/src/_quote/meta/index.js:87
+#: blocks/src/_quote/meta/index.js:108
+msgid "N/A"
+msgstr ""
+
+#: inc/class-blocks.php:282
+#: inc/class-blocks.php:294
+#: inc/class-blocks.php:301
+#: inc/class-blocks.php:314
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:87
+#: blocks/src/_invoice/meta/index.js:108
+#: blocks/src/_quote/meta/index.js:87
+#: blocks/src/_quote/meta/index.js:108
+msgid "<strong>%1$s</strong> <span>%2$s</span>"
+msgstr ""
+
+#: inc/class-blocks.php:282
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:284
+#: blocks/src/_accounting/table/index.js:544
+#: blocks/src/_invoice/date/index.js:24
+#: blocks/src/_invoice/date/index.js:42
+#: blocks/src/_quote/date/index.js:19
+msgid "Date"
+msgstr ""
+
+#: inc/class-blocks.php:301
+msgid "Due By"
+msgstr ""
+
+#: inc/class-blocks.php:301
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/duedate/index.js:24
+msgid "Due Date"
+msgstr ""
+
+#: inc/class-blocks.php:314
+msgid "Valid Until"
+msgstr ""
+
+#: inc/class-blocks.php:314
+msgid "Valid Until Date"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_header/header/index.js:41
+#: blocks/src/_invoice/date/index.js:38
+#: blocks/src/_invoice/duedate/index.js:38
+#: blocks/src/_invoice/invoice-number/index.js:38
+#: blocks/src/_invoice/paymentinformation/index.js:38
+#: blocks/src/_quote/information/index.js:35
+msgid "Info"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_header/header/index.js:46
+msgid "Edit the %s layout"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_header/header/index.js:54
+msgid "The %s values can be modified in the Theme Customizer."
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_header/theme-mod/index.js:22
+#: blocks/src/_header/theme-mod/index.js:53
+msgid "Theme Mod"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_header/theme-mod/index.js:55
+msgid "Setting"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_header/theme-mod/index.js:56
+msgid "Modify the value in the Theme Customizer."
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/actions/index.js:24
+#: blocks/src/_accounting/actions/index.js:51
+#: blocks/src/_accounting/table/index.js:52
+#: blocks/src/_accounting/table/index.js:375
+#: blocks/src/_invoice/actions/index.js:24
+#: blocks/src/_invoice/actions/index.js:51
+#: blocks/src/_invoice/date/index.js:24
+#: blocks/src/_invoice/duedate/index.js:24
+#: blocks/src/_invoice/invoice-number/index.js:24
+#: blocks/src/_invoice/meta/index.js:26
+#: blocks/src/_invoice/paymentinformation/index.js:24
+#: blocks/src/_invoice/table/index.js:48
+#: blocks/src/_invoice/table/index.js:371
+#: blocks/src/_quote/actions/index.js:24
+#: blocks/src/_quote/actions/index.js:51
+#: blocks/src/_quote/date/index.js:19
+#: blocks/src/_quote/information/index.js:21
+#: blocks/src/_quote/meta/index.js:26
+#: blocks/src/_quote/table/index.js:48
+#: blocks/src/_quote/table/index.js:371
+#: blocks/src/_quote/validuntildate/index.js:19
+msgid "%1$s: %2$s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/actions/index.js:24
+#: blocks/src/_accounting/table/index.js:159
+#: blocks/src/_invoice/actions/index.js:24
+#: blocks/src/_quote/actions/index.js:24
+msgid "Actions"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/actions/index.js:51
+#: blocks/src/_invoice/actions/index.js:51
+#: blocks/src/_quote/actions/index.js:51
+msgid "Last modified"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:26
+#: blocks/src/_quote/meta/index.js:26
+msgid "Meta"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:67
+#: blocks/src/_quote/meta/index.js:67
+msgid "Label"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:75
+#: blocks/src/_quote/meta/index.js:75
+msgid "Text"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/date/index.js:42
+#: blocks/src/_invoice/invoice-number/index.js:49
+msgid "Due to legal requirements in some countries, autogenerated data like %s can't be modified anymore after an invoice has been created in the system!"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/duedate/index.js:42
+#: blocks/src/_invoice/invoice-number/index.js:42
+#: blocks/src/_invoice/paymentinformation/index.js:42
+#: blocks/src/_quote/information/index.js:39
+msgid "The %s values can be modified in the Theme Customizer!"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/duedate/index.js:42
+msgid "Payment due days"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/invoice-number/index.js:24
+msgid "Number"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/invoice-number/index.js:42
+msgid "Invoice number prefix"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/invoice-number/index.js:49
+msgid "Invoice number"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/paymentinformation/index.js:24
+#: blocks/src/_invoice/paymentinformation/index.js:42
+msgid "Payment Information"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:52
+#: blocks/src/_invoice/table/index.js:48
+#: blocks/src/_quote/table/index.js:48
+msgid "Table"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:191
+#: blocks/src/_invoice/table/index.js:305
+#: blocks/src/_quote/table/index.js:191
+#: blocks/src/_quote/table/index.js:305
+msgid "Subtotal"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:191
+#: blocks/src/_invoice/table/index.js:233
+#: blocks/src/_invoice/table/index.js:305
+#: blocks/src/_invoice/table/index.js:347
+#: blocks/src/_quote/table/index.js:191
+#: blocks/src/_quote/table/index.js:233
+#: blocks/src/_quote/table/index.js:305
+#: blocks/src/_quote/table/index.js:347
+msgid "Total"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:299
+#: blocks/src/_accounting/table/index.js:622
+#: blocks/src/_invoice/table/index.js:207
+#: blocks/src/_invoice/table/index.js:289
+#: blocks/src/_invoice/table/index.js:321
+#: blocks/src/_invoice/table/index.js:545
+#: blocks/src/_quote/table/index.js:207
+#: blocks/src/_quote/table/index.js:289
+#: blocks/src/_quote/table/index.js:321
+#: blocks/src/_quote/table/index.js:545
+msgid "Tax"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:217
+#: blocks/src/_invoice/table/index.js:331
+#: blocks/src/_quote/table/index.js:217
+#: blocks/src/_quote/table/index.js:331
+msgid "%1$s %2$s %3$s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:162
+#: blocks/src/_invoice/table/index.js:250
+#: blocks/src/_quote/table/index.js:250
+msgid "Update Totals"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:281
+#: blocks/src/_invoice/table/index.js:277
+#: blocks/src/_quote/table/index.js:277
+msgid "#"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:287
+#: blocks/src/_accounting/table/index.js:587
+#: blocks/src/_invoice/table/index.js:280
+#: blocks/src/_invoice/table/index.js:527
+#: blocks/src/_quote/table/index.js:280
+#: blocks/src/_quote/table/index.js:527
+msgid "Description"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:283
+#: blocks/src/_invoice/table/index.js:535
+#: blocks/src/_quote/table/index.js:283
+#: blocks/src/_quote/table/index.js:535
+msgid "Amount"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:375
+#: blocks/src/_invoice/table/index.js:371
+#: blocks/src/_quote/table/index.js:371
+msgid "Table Row"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:494
+#: blocks/src/_quote/table/index.js:494
+msgid "Quantity/Rate Calculator"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:497
+#: blocks/src/_quote/table/index.js:497
+msgid "Quantity"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:605
+#: blocks/src/_accounting/table/index.js:614
+#: blocks/src/_accounting/table/index.js:623
+#: blocks/src/_invoice/table/index.js:498
+#: blocks/src/_invoice/table/index.js:506
+#: blocks/src/_invoice/table/index.js:537
+#: blocks/src/_invoice/table/index.js:557
+#: blocks/src/_quote/table/index.js:498
+#: blocks/src/_quote/table/index.js:506
+#: blocks/src/_quote/table/index.js:537
+#: blocks/src/_quote/table/index.js:557
+msgid "0"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:604
+#: blocks/src/_accounting/table/index.js:613
+#: blocks/src/_accounting/table/index.js:622
+#: blocks/src/_invoice/table/index.js:505
+#: blocks/src/_invoice/table/index.js:535
+#: blocks/src/_invoice/table/index.js:545
+#: blocks/src/_quote/table/index.js:505
+#: blocks/src/_quote/table/index.js:535
+#: blocks/src/_quote/table/index.js:545
+msgid "%1$s in %2$s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_invoice/table/index.js:505
+#: blocks/src/_quote/table/index.js:505
+msgid "Rate"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_quote/information/index.js:39
+msgid "Quote Information"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_quote/validuntildate/index.js:19
+msgid "Valid until Date"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:218
+#: blocks/src/_accounting/table/index.js:332
+msgid "Profit"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:234
+#: blocks/src/_accounting/table/index.js:244
+msgid "Taxes (%s)"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:293
+#: blocks/src/_accounting/table/index.js:604
+msgid "Earning"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:296
+#: blocks/src/_accounting/table/index.js:613
+msgid "Expense"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:312
+msgid "%1$s / %2$s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:347
+msgid "%1$s (%2$s / %3$s)"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:555
+msgid "Reference: %s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:555
+msgid "Post"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:579
+#: blocks/src/_accounting/table/index.js:653
+#: blocks/src/_accounting/table/index.js:668
+msgid "Q%s"
+msgstr ""

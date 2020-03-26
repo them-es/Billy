@@ -1,0 +1,182 @@
+/*!
+ * Admin and Editor Styles
+ */
+
+body.wp-admin .d-admin-none {
+	display: none !important;
+}
+body.wp-admin .d-admin-block {
+	display: block !important;
+}
+
+#billy_dashboard a {
+	text-decoration: none;
+}
+#billy_dashboard .dashicons-star-filled {
+	color: #ffb900;
+}
+#billy_dashboard table {
+	width: 100%;
+}
+#billy_dashboard table.widefat {
+	background-color: #F1F1F1;
+}
+#billy_dashboard table.widefat td:nth-child(even) {
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+#billy_dashboard table.footer td {
+	vertical-align: bottom;
+}
+#billy_dashboard .logo {
+	width: 80px;
+	margin: 0 12px;
+}
+
+.notice-billy::before {
+	content: '';
+	background-image: url('../../img/logo.png');
+	background-size: 100% 100%;
+	display: block;
+	float: left;
+	width: 40px;
+	height: 21px;
+	margin: 7px 10px;
+}
+
+/*body.post-type-billy-header #wpbody .page-title-action {
+	display: none;
+}*/
+
+li[id*="menu-posts-billy-"] {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+li[id*="menu-posts-billy-"] .wp-menu-image::before {
+	color: #FFF !important;
+}
+
+.text-right {
+	text-align: right;
+}
+.text-left {
+	text-align: left;
+}
+.text-center {
+	text-align: center;
+}
+
+.align-self-center {
+	-ms-flex-item-align: center !important;
+	align-self: center !important;
+}
+
+
+/* Header */
+
+.invoice-status,
+.quote-status {
+	background: transparent;
+}
+
+.header {
+	max-width: none;
+	padding: 25px;
+}
+.header .wp-block-columns {
+	display: flex;
+}
+.header .wp-block-columns .wp-block-column {
+	width: 33.33%;
+}
+.header .wp-block-columns .wp-block-column:first-of-type {
+	width: 66.66%;
+}
+
+.details {
+	margin-bottom: 90px;
+}
+.details [data-type="core/column"]:first-of-type {
+	border: 25px solid rgba(139, 139, 150, 0.1);
+	box-shadow: 0 10px 6px -6px #777;
+	border-radius: 12px;
+}
+.details [data-type="core/column"]:first-of-type .block-list-appender {
+	display: none !important;
+}
+
+.intro {
+	margin: 90px 0 !important;
+}
+
+
+/* Tables */
+
+[data-type$="accounting-tablerow"] {
+	border-left: 4px solid transparent;
+}
+[data-type$="accounting-tablerow"]:nth-of-type(even) {
+	border-left-color: #007cba;
+}
+
+table.totals {
+	width: 100%;
+	font-weight: bold;
+}
+table.totals tr td:first-of-type {
+	text-align: right;
+}
+table.totals tr td {
+	padding: 3px 10px;
+}
+
+table .index {
+	font-weight: bold;
+	font-size: 2rem;
+	padding: 10px 15px;
+}
+table .date {
+	min-width: 110px;
+}
+table .date sub {
+	font-weight: bold;
+}
+table label {
+	font-weight: bold;
+}
+
+table .amount label {
+	color: #073984;
+}
+table .amount input {
+	background-color: #cfe2ff;
+}
+
+table .amount.earning label {
+	color: #155724;
+}
+table .amount.earning input {
+	background-color: #d4edda;
+}
+
+table .amount.expense label {
+	color: #721c24;
+}
+table .amount.expense input {
+	background-color: #f8d7da;
+}
+
+
+/* [PRO] */
+
+[data-type$="invoice-paymentinformation"] .media {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+}
+[data-type$="invoice-paymentinformation"] .media-body {
+	-webkit-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
