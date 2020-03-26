@@ -1,0 +1,28 @@
+{
+	"name": "billy",
+	"version": "1.0.0",
+	"homepage": "https://them.es",
+	"author": "them.es",
+	"description": "",
+	"license": "GPLv2+",
+	"scripts": {
+		"create-translations": "wp i18n make-pot . languages/billy.pot --exclude=/assets/*",
+		"watch": "gulp watch",
+		"build-css": "gulp build-css",
+		"build-js": "gulp build-js",
+		"build": "npm run build-css && npm run build-js",
+		"update": "npm update",
+		"dist": "gulp dist"
+	},
+	"devDependencies": {
+		"autoprefixer": "^9",
+		"bootstrap": "^4",
+		"cssnano": "^4",
+		"gulp": "^4",
+		"gulp-postcss": "^8",
+		"gulp-sass": "^4",
+		"gulp-sourcemaps": "^2",
+		"webpack": "^4",
+		"webpack-stream": "^5"
+	}
+}
