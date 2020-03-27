@@ -2,7 +2,8 @@
 
 **Billy by them.es** is a business-oriented billing suite—tailored for freelancers and small agencies that integrates seamlessly into an existing WordPress environment.
 
-For more information and a showcase, check out [https://them.es/plugins/billy](https://them.es/plugins/billy)
+The **FREE version** is available on the WordPress Plugins Directory under [https://wordpress.org/plugins/billy](https://wordpress.org/plugins/billy)
+For more information and a showcase and for purchasing the **PRO Add-on** check out [https://them.es/plugins/billy](https://them.es/plugins/billy)
 
 ## What's included?
 * Custom Post types with Blocks and Block templates.
@@ -13,10 +14,10 @@ The Plugin should work with any modern WordPress theme that supports the Block e
 **Heads up:** Please note that the main content area of the **Single/Custom Post Template** needs to be "fullwidth". Having a sidebar may narrow the (invoice) table layout too much.
 
 ### The Plugin has been tested with the following themes
-* [https://them.es/starter](https://them.es/starter"them.es Starter")
-* [https://them.es/starter-material](https://them.es/starter-material"them.es Starter Material")
-* [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty"TwentyTwenty")
-* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen"TwentyNineteen")
+* [https://them.es/starter](https://them.es/starter)
+* [https://them.es/starter-material](https://them.es/starter-material)
+* [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty)
+* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen)
 
 ## Contributing
 Fork this repo and install the required Node dependencies.
@@ -34,8 +35,10 @@ Some external dependencies need to be installed via Composer
 ### Blocks
 Blocks are stored in a separate directory **/blocks**
 * `$ npm install`
-* `$ npm run start`: Start developing and test the updated version.
-* `$ npm run build`: Create a build version and test the updated build version.
+* `$ npm run start`
+  * Start developing and test the updated version.
+* `$ npm run build`
+  * Create a build version and test the updated build version.
 
 ### Translations
 All translations are managed via [translate.wordpress.org](translate.wordpress.org). If you have modified translation strings you can update the **POT** file with the following command (WP-CLI required!).
@@ -46,12 +49,12 @@ More information: [https://developer.wordpress.org/block-editor/developers/inter
 ### Dist version
 The development version may become quite large due to some external libraries and should not be implemented on a live system. You can create a smaller `dist` version with the following command:
 * `$ npm run dist`
-* Now you can activate and test the plugin on your system
+  * Now you can activate and test the plugin on your system
 
 When you're done with the development you can submit a [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests) to this repository.
 
 ## Support
-This code repository is not suitable for support requests. If you have a question or need assistence please access our [https://them.es/support](https://them.es/support"Support forum") (Pro version) or submit your question in the Support section of the WordPress Plugin directory (Free version).
+This code repository is not suitable for support requests. If you have a question or need assistence please access our [https://them.es/support](https://them.es/support) (PRO Add-on) or submit your question in the Support section of the WordPress Plugin directory (FREE version).
 
 ## Technology
 * [Gutenberg Block Editor](https://github.com/WordPress/gutenberg), [GPLv2+](https://github.com/WordPress/gutenberg/blob/master/LICENSE.md)
