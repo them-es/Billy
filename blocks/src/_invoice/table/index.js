@@ -602,7 +602,7 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 					}
 				</td>
 				{
-					taxRate && percentToDecimal( taxRate ) > 0 &&
+					taxRate && ( percentToDecimal( taxRate ) * amount ) > 0 &&
 						(
 							<td>
 								<RawHTML>
