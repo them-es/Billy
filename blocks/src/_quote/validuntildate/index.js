@@ -16,7 +16,7 @@ import ServerSideRender from '@wordpress/server-side-render';
 
 
 registerBlockType( 'billy-blocks/quote-validuntildate', {
-	title: sprintf( __( '%1$s: %2$s', 'billy' ), __( 'Quote', 'billy' ), __( 'Valid until Date', 'billy' ) ),
+	title: sprintf( __( '%1$s: %2$s', 'billy' ), __( 'Quote', 'billy' ), __( 'Valid Until', 'billy' ) ),
 	icon: 'calendar-alt', // https://developer.wordpress.org/resource/dashicons
 	category: 'billy-blocks', // Custom category: see index.php
 	supports: {

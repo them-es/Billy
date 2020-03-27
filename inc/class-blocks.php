@@ -311,7 +311,7 @@ class Billy_Blocks {
 		$add_days  = esc_attr( get_theme_mod( 'quote_valid_days', '30' ) );
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<p class="date' . ( $classname ? ' ' . $classname : '' ) . '">' . ( get_the_date() ? sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), __( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), $add_days ) ) : __( 'Valid Until Date', 'billy' ) ) . '</p>';
+		return '<p class="date' . ( $classname ? ' ' . $classname : '' ) . '">' . ( get_the_date() ? sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), __( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), $add_days ) ) : __( 'Date', 'billy' ) ) . '</p>';
 	}
 
 

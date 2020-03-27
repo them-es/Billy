@@ -46,7 +46,7 @@ The following WordPress themes have been tested:
 * PDF-Export
 * Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties
 * Dashboard widget
-* Multilingual: You can [help translate](https://translate.wordpress.org"translate.wordpress.org") the plugin into your language
+* Multilingual: You can [help translate](https://translate.wordpress.org/projects/wp-plugins/billy"translate.wordpress.org") the plugin into your language
 
 = Dependencies? =
 
@@ -89,7 +89,7 @@ Please consider purchasing the premium add-on with the following features:
 1. Upload the Plugin to the `/wp-content/plugins/` directory.
 2. Activate it through the 'Plugins' menu in WordPress.
 3. (Optional) Activate the [PRO add-on](https://them.es/plugins/billy "them.es Billy").
-4. Open the Customizer: __Appearence > Customize > Billy ([PRO])__
+4. Open the Customizer: __Appearence > Customize > Billy [PRO]__
 5. Add global data like your name, an address, currency, tax rates, etc.
 6. If you need to start with a specific invoice number you can modify the __invoice number__ value.
 7. Go back to the Dashboard and customize the global __Billy Header__ by adding your logo.
@@ -129,7 +129,7 @@ Please consider purchasing the premium add-on with the following features:
 = I need more features! =
 * Please check out the __PRO add-on__ which is available for purchase here: [https://them.es/plugins/billy](https://them.es/plugins/billy "them.es Billy")
 * WordPress developers are welcome to help improve the plugin via [GitHub](https://github.com/them-es "GitHub")
-* You can also [help translate](https://translate.wordpress.org"translate.wordpress.org") the plugin into your language
+* You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy"translate.wordpress.org") the plugin into your language
 
 == Upgrade Notice ==
 

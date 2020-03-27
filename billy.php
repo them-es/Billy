@@ -1,11 +1,11 @@
 <?php
 /**
  * @package Billy
- * @version 1.x.x
+ * @version 1.0.0
  *
  * @wordpress-plugin
  * Plugin Name: Billy
- * Plugin URI: https://wordpress.org/plugins
+ * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
  * Version: 1.0.0
  * Author: them.es

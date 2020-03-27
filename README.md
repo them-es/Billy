@@ -41,7 +41,7 @@ Blocks are stored in a separate directory **/blocks**
   * Create a build version and test the updated build version.
 
 ### Translations
-All translations are managed via [translate.wordpress.org](translate.wordpress.org). If you have modified translation strings you can update the **POT** file with the following command (WP-CLI required!).
+All translations are managed via [https://translate.wordpress.org/projects/wp-plugins/billy](translate.wordpress.org). If you have modified translation strings you can update the **POT** file with the following command (WP-CLI required!).
 * `$ npm run create-languagefile`
 
 More information: [https://developer.wordpress.org/block-editor/developers/internationalization](https://developer.wordpress.org/block-editor/developers/internationalization)

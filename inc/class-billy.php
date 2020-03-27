@@ -165,7 +165,7 @@ class Billy {
 		wp_add_dashboard_widget(
 			'billy_dashboard', // Widget slug.
 			sprintf( __( '%1$s %2$s', 'billy' ), self::$plugin_name, self::$plugin_version ), // Title.
-			array( $this, 'dashboard_widget' ), // Display function.
+			array( $this, 'dashboard_widget' ) // Display function.
 		);
 	}
 
@@ -603,7 +603,7 @@ class Billy {
 					) ),
 					// Product or service details (table).
 					array( 'billy-blocks/invoice-table', array( 'align' => 'wide', ) ),
-					// Payment information, Notes.
+					// Payment Information, Notes.
 					array( 'core/group', array( 'align' => 'wide', 'className' => 'information', ), array(
 						array( 'core/heading', array(
 							'level'       => 3,
@@ -667,7 +667,7 @@ class Billy {
 					) ),
 					// Product or service details (table).
 					array( 'billy-blocks/quote-table', array( 'align' => 'wide', ) ),
-					// Quote information, Notes.
+					// Quote Information, Notes.
 					array( 'core/group', array( 'align' => 'wide', 'className' => 'information', ), array(
 						array( 'core/heading', array(
 							'level'       => 3,
@@ -965,13 +965,13 @@ class Billy {
 			set_theme_mod( 'payment_due_days', '14' );
 		}
 
-		// Payment information.
+		// Payment Information.
 		$wp_customize->add_setting( 'payment_information', array(
 			'sanitize_callback' => 'wp_kses_post',
 		) );
 		$wp_customize->add_control( 'payment_information', array(
 			'type'        => 'textarea',
-			'label'       => __( 'Payment information', 'billy' ),
+			'label'       => __( 'Payment Information', 'billy' ),
 			'description' => __( 'Add the payment instructions and link to your terms.', 'billy' ),
 			'section'     => 'billy_invoice_section',
 			'settings'    => 'payment_information',
@@ -982,13 +982,13 @@ class Billy {
 			set_theme_mod( 'payment_information', __( 'Thank you for your business!', 'billy' ) );
 		}
 
-		// Quote information.
+		// Quote Information.
 		$wp_customize->add_setting( 'quote_information', array(
 			'sanitize_callback' => 'wp_kses_post',
 		) );
 		$wp_customize->add_control( 'quote_information', array(
 			'type'        => 'textarea',
-			'label'       => __( 'Quote information', 'billy' ),
+			'label'       => __( 'Quote Information', 'billy' ),
 			'description' => __( 'Inform your contacts about special terms, quote expiration clauses, etc.', 'billy' ),
 			'section'     => 'billy_quote_section',
 			'settings'    => 'quote_information',
