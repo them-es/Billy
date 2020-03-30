@@ -1,10 +1,10 @@
 === Billy ===
 Contributors: them.es
 Donate link: https://them.es/plugins/billy
-Tags: Billing, Invoices, Electronic Invoices, Quotes, Accounting, Gutenberg, Blocks
+Tags: accounting, billing, invoices, quotes
 Requires at least: 5.2
 Tested up to: 5.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -27,10 +27,10 @@ The plugin should work with any modern WordPress theme that supports the Block e
 __Heads up:__ Please note that the main content area of the __Single/Custom Post Template__ of your theme needs to be setup in "fullwidth" format. Having a sidebar may narrow the (invoice) table layout too much.
 
 The following WordPress themes have been tested:
-* [https://them.es/starter](https://them.es/starter"them.es Starter")
-* [https://them.es/starter-material](https://them.es/starter-material"them.es Starter Material")
-* [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty"TwentyTwenty")
-* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen"TwentyNineteen")
+* [https://them.es/starter-bootstrap](https://them.es/starter-bootstrap "Bootstrap Starter theme")
+* [https://them.es/starter-material](https://them.es/starter-material "Bootstrap Starter theme")
+* [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty "TwentyTwenty theme")
+* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen "TwentyNineteen theme")
 
 = What's included? =
 
@@ -46,7 +46,7 @@ The following WordPress themes have been tested:
 * PDF-Export
 * Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties
 * Dashboard widget
-* Multilingual: You can [help translate](https://translate.wordpress.org/projects/wp-plugins/billy"translate.wordpress.org") the plugin into your language
+* Multilingual: You can [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 = Dependencies? =
 
@@ -88,7 +88,7 @@ Please consider purchasing the premium add-on with the following features:
 
 1. Upload the Plugin to the `/wp-content/plugins/` directory.
 2. Activate it through the 'Plugins' menu in WordPress.
-3. (Optional) Activate the [PRO add-on](https://them.es/plugins/billy "them.es Billy").
+3. (Optional) Activate the [PRO add-on](https://them.es/plugins/billy "them.es Billy Pro").
 4. Open the Customizer: __Appearence > Customize > Billy [PRO]__
 5. Add global data like your name, an address, currency, tax rates, etc.
 6. If you need to start with a specific invoice number you can modify the __invoice number__ value.
@@ -137,6 +137,13 @@ Please consider purchasing the premium add-on with the following features:
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.0.2 =
+* Internationalization
+* Readme updates
+
+= 1.0.1 =
+* Minor update to the table row frontend view
 
 = 1.0 =
 * Initial Release

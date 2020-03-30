@@ -338,6 +338,9 @@ class Billy_Blocks {
 			$blocks_asset_file['dependencies'],
 			$blocks_asset_file['version']
 		);
+
+		// Load script translations.
+		wp_set_script_translations( 'billy-blocks-script', 'billy' );
 	}
 
 }

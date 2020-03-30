@@ -39,7 +39,7 @@ registerBlockType( 'billy-blocks/invoice-paymentinformation', {
 						<div className="components-notice">
 							<div className="components-notice__content">
 								{
-									sprintf( __( 'The %s values can be modified in the Theme Customizer', 'billy' ), __( 'Payment Information', 'billy' ) )
+									sprintf( __( 'The %s values can be modified in the Theme Customizer.', 'billy' ), __( 'Payment Information', 'billy' ) )
 								}
 							</div>
 						</div>

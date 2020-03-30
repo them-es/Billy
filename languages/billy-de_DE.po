@@ -1,0 +1,376 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugins - Billy - Stable (latest release)\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: them.es <support1@them.es>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-03-28T15:22:02+00:00\n"
+"PO-Revision-Date: 2020-03-30 07:30+0200\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 2.3\n"
+"X-Loco-Version: 2.3.1; wp-5.4-RC5\n"
+
+#. Plugin Name of the plugin
+msgid "Billy"
+msgstr "Billy"
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/billy"
+msgstr "https://de.wordpress.org/plugins/billy"
+
+#. Description of the plugin
+msgid "A business-oriented billing suite powered by WordPress."
+msgstr "A business-oriented billing suite powered by WordPress."
+
+#. Author of the plugin
+msgid "them.es"
+msgstr "them.es"
+
+#. Author URI of the plugin
+msgid "https://them.es/plugins/billy"
+msgstr "https://them.es/plugins/billy"
+
+#: billy.php:32
+msgid "<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version."
+msgstr "<strong>Achtung!</strong> %1$s setzt PHP %2$s (oder höher) voraus, um richtig zu funktionieren. Bitte aktualisiere deine PHP Version."
+
+#: billy.php:40
+msgid "<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version."
+msgstr "<strong>Achtung!</strong> Du verwendest eine veraltete WordPress Version, die mit %s nicht kompatibel ist. Bitte aktualisiere WordPress."
+
+#: billy.php:48
+msgid "<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin."
+msgstr "<strong>Achtung!</strong> %s ist mit dem Classic Editor nicht kompatibel. Bitte deaktiviere das Classic Editor Plugin."
+
+#: billy.php:56
+msgid "Please setup a global header first: %s"
+msgstr "Bitte erstellen Sie einen globalen Header: %s"
+
+#: billy.php:56
+msgid "Add New"
+msgstr "Neu erstellen"
+
+#: inc/class-billy.php:167 inc/class-billy.php:197 inc/class-billy.php:206
+#: blocks/build/index.js:1 blocks/src/_accounting/table/index.js:192
+#: blocks/src/_accounting/table/index.js:207
+#: blocks/src/_accounting/table/index.js:222
+#: blocks/src/_accounting/table/index.js:238
+#: blocks/src/_accounting/table/index.js:248
+#: blocks/src/_accounting/table/index.js:316
+#: blocks/src/_accounting/table/index.js:321
+#: blocks/src/_accounting/table/index.js:336
+#: blocks/src/_accounting/table/index.js:351
+#: blocks/src/_accounting/table/index.js:356
+#: blocks/src/_invoice/table/index.js:196
+#: blocks/src/_invoice/table/index.js:237
+#: blocks/src/_invoice/table/index.js:310
+#: blocks/src/_invoice/table/index.js:351
+#: blocks/src/_invoice/table/index.js:610 blocks/src/_quote/table/index.js:196
+#: blocks/src/_quote/table/index.js:237 blocks/src/_quote/table/index.js:310
+#: blocks/src/_quote/table/index.js:351 blocks/src/_quote/table/index.js:610
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
+
+#: inc/class-billy.php:180
+msgid "Locale"
+msgstr "Locale"
+
+#: inc/class-billy.php:184 inc/class-billy.php:772
+msgid "Currency"
+msgstr "Währung"
+
+#: inc/class-billy.php:188 blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:347
+msgid "Taxes"
+msgstr "Steuern"
+
+#: inc/class-billy.php:192 inc/class-billy.php:935
+msgid "Current invoice number"
+msgstr "Aktuelle Rechnungsnummer"
+
+#: inc/class-billy.php:197
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: inc/class-billy.php:206
+msgid "Thank you for purchasing %s!"
+msgstr "Vielen Dank, dass du %s erworben hast!"
+
+#: inc/class-billy.php:206
+msgid "Get the <u>Pro</u> version"
+msgstr "Erwirb die <u>Pro</u> Version"
+
+#: inc/class-billy.php:206
+msgid "Premium add-on with Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
+msgstr "Premium Add-on mit Kontakten, Adressbuch, Zahlen mittels QR-Code, Statistiken & Diagramme, Links mit Dritten teilen und mehr."
+
+#: inc/class-billy.php:206
+msgid "Please rate this Plugin"
+msgstr "Bitte bewerte dieses Plugin"
+
+#: inc/class-billy.php:294 blocks/build/index.js:1
+#: blocks/src/_header/header/index.js:24 blocks/src/_header/header/index.js:46
+#: blocks/src/_header/header/index.js:54
+msgid "Header"
+msgstr "Header"
+
+#: inc/class-billy.php:356
+msgid "Pending"
+msgstr "Ausstehend"
+
+#: inc/class-billy.php:527
+msgid "%s Header"
+msgstr "%s Header"
+
+#: inc/class-billy.php:559
+msgid "Invoices"
+msgstr "Rechnungen"
+
+#: inc/class-billy.php:559 inc/class-billy.php:839 inc/class-blocks.php:294
+#: blocks/build/index.js:1 blocks/src/_invoice/actions/index.js:24
+#: blocks/src/_invoice/date/index.js:24 blocks/src/_invoice/duedate/index.js:24
+#: blocks/src/_invoice/invoice-number/index.js:24
+#: blocks/src/_invoice/meta/index.js:26
+#: blocks/src/_invoice/paymentinformation/index.js:24
+#: blocks/src/_invoice/table/index.js:48 blocks/src/_invoice/table/index.js:371
+msgid "Invoice"
+msgstr "Rechnung"
+
+#: inc/class-billy.php:581 inc/class-billy.php:647 inc/class-billy.php:769
+#: inc/class-billy.php:853
+msgid "Name"
+msgstr "Name"
+
+#: inc/class-billy.php:581 inc/class-billy.php:647
+msgid "Company"
+msgstr "Firma"
+
+#: inc/class-billy.php:581 inc/class-billy.php:647
+msgid "Address Field %s"
+msgstr "Adressfeld %s"
+
+#: inc/class-billy.php:581 inc/class-billy.php:647
+msgid "Country"
+msgstr "Land"
+
+#: inc/class-billy.php:595
+msgid "Billing Period"
+msgstr "Abrechnungszeitraum"
+
+#: inc/class-billy.php:601 inc/class-billy.php:615 inc/class-billy.php:665
+#: inc/class-billy.php:679 inc/class-billy.php:706
+msgid "%s (optional)"
+msgstr "%s (optional)"
+
+#: inc/class-billy.php:601 inc/class-billy.php:665
+msgid "Intro text"
+msgstr "Einleitungstext"
+
+#: inc/class-billy.php:601 inc/class-billy.php:665
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
+msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
+
+#: inc/class-billy.php:610 inc/class-billy.php:611 inc/class-billy.php:674
+#: inc/class-billy.php:675 blocks/build/index.js:1
+#: blocks/src/_quote/information/index.js:21
+msgid "Information"
+msgstr "Information"
+
+#: inc/class-billy.php:615 inc/class-billy.php:679 inc/class-billy.php:706
+msgid "Notes"
+msgstr "Anmerkungen"
+
+#: inc/class-billy.php:625
+msgid "Quotes"
+msgstr "Angebote"
+
+#: inc/class-billy.php:625 inc/class-billy.php:833 blocks/build/index.js:1
+#: blocks/src/_quote/actions/index.js:24 blocks/src/_quote/date/index.js:19
+#: blocks/src/_quote/information/index.js:21 blocks/src/_quote/meta/index.js:26
+#: blocks/src/_quote/table/index.js:48 blocks/src/_quote/table/index.js:371
+#: blocks/src/_quote/validuntildate/index.js:19
+msgid "Quote"
+msgstr "Angebot"
+
+#: inc/class-billy.php:659 blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:290
+#: blocks/src/_accounting/table/index.js:595
+msgid "Reference"
+msgstr "Referenz"
+
+#: inc/class-billy.php:689 blocks/build/index.js:1
+#: blocks/src/_accounting/actions/index.js:24
+#: blocks/src/_accounting/table/index.js:52
+#: blocks/src/_accounting/table/index.js:375
+msgid "Accounting"
+msgstr "Buchhaltung"
+
+#: inc/class-billy.php:760 blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:188
+#: blocks/src/_accounting/table/index.js:234
+#: blocks/src/_accounting/table/index.js:312
+#: blocks/src/_accounting/table/index.js:347
+msgid "Earnings"
+msgstr "Einnahmen"
+
+#: inc/class-billy.php:761 blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:203
+#: blocks/src/_accounting/table/index.js:244
+#: blocks/src/_accounting/table/index.js:312
+#: blocks/src/_accounting/table/index.js:347
+msgid "Expenses"
+msgstr "Ausgaben"
+
+#: inc/class-billy.php:770 inc/class-billy.php:869
+msgid "Address"
+msgstr "﻿Adresse"
+
+#: inc/class-billy.php:771 inc/class-billy.php:881
+msgid "VAT"
+msgstr "VAT"
+
+#: inc/class-billy.php:820
+msgid "Plugin Setup"
+msgstr "Plugin Setup"
+
+#: inc/class-billy.php:827
+msgid "General"
+msgstr "Allgemeines"
+
+#: inc/class-billy.php:882
+msgid "Enter your VAT identification number or Taxpayer ID"
+msgstr "Gib deine VAT-Nummer oder die Steuer-ID ein"
+
+#: inc/class-billy.php:895
+msgid "Currency Code"
+msgstr "Währungscode"
+
+#: inc/class-billy.php:896 inc/class-billy.php:911
+msgid "Caution: Any changes made here may affect existing entries. Create a backup first!"
+msgstr "Wichtiger Hinweis: Änderungen, die hier vorgenommen werden können bereits veröffentlichte Einträge beeinflussen. Erstellen Sie unbedingt ein Backup!"
+
+#: inc/class-billy.php:909
+msgid "Tax Rates"
+msgstr "Steuersätze"
+
+#: inc/class-billy.php:910
+msgid "Enter the taxrates separated by newline: e.g. %s"
+msgstr "Gib die Steuersätze jeweils in einer neuen Zeile ein: Bsp. %s"
+
+#: inc/class-billy.php:923
+msgid "Invoice number: Prefix"
+msgstr "Präfix: Rechnungsnummer"
+
+#: inc/class-billy.php:936
+msgid "Upcoming invoice numbers will be autoincremented based on this value!"
+msgstr "Folgende Rechnungsnummern werden ab dieser Nummer hochgezählt!"
+
+#: inc/class-billy.php:958
+msgid "Payment due within # days"
+msgstr "Zahlungsfrist innerhalb von # Tagen"
+
+#: inc/class-billy.php:974 blocks/build/index.js:1
+#: blocks/src/_invoice/paymentinformation/index.js:24
+#: blocks/src/_invoice/paymentinformation/index.js:42
+msgid "Payment Information"
+msgstr "Zahlungsinformation"
+
+#: inc/class-billy.php:975
+msgid "Add the payment instructions and link to your terms."
+msgstr "Teilen Sie Zahlungsanweisungen mit und verlinken Sie Ihre Geschäftsbedingungen."
+
+#: inc/class-billy.php:982
+msgid "Thank you for your business!"
+msgstr "Vielen Dank für den Auftrag!"
+
+#: inc/class-billy.php:991 blocks/build/index.js:1
+#: blocks/src/_quote/information/index.js:39
+msgid "Quote Information"
+msgstr "Information zum Angebot"
+
+#: inc/class-billy.php:992
+msgid "Inform your contacts about special terms, quote expiration clauses, etc."
+msgstr "Informieren Sie Ihre Kunden über spezielle Bedingungen, Gültigkeitsklauseln, etc."
+
+#: inc/class-billy.php:999
+msgid "We will be happy to answer any questions you may have!"
+msgstr "Bei Fragen wenden Sie sich bitte an uns!"
+
+#: inc/class-billy.php:1008
+msgid "Quote valid for # days"
+msgstr "Angebot gültig für # Tage"
+
+#: inc/class-billy.php:1025
+msgid "Please provide a valid currency format"
+msgstr "Bitte gib ein gültiges Währungsformat ein"
+
+#: inc/class-billy.php:1043
+msgid "Please separate the taxrates by newline and don't forget to append the \"%\" sign to each value."
+msgstr "Bitte gib jeden Steuersatz in einer eigenen Zeile ein und vergiss nicht, das \"%\" Zeichen anzuhängen."
+
+#: inc/class-blocks.php:173
+msgid "Billy Blocks"
+msgstr "Billy Blocks"
+
+#: inc/class-blocks.php:194
+msgid "Print"
+msgstr "Drucken"
+
+#: inc/class-blocks.php:225 inc/class-blocks.php:230
+msgid "Export %s"
+msgstr "%s exportieren"
+
+#: inc/class-blocks.php:225
+msgid "PDF"
+msgstr "PDF"
+
+#: inc/class-blocks.php:230
+msgid "TSV"
+msgstr "TSV"
+
+#: inc/class-blocks.php:257
+msgid "Please setup a global header."
+msgstr "Bitte erstelle den globalen Header."
+
+#: inc/class-blocks.php:276
+msgid "<strong>%1$s</strong> %2$s"
+msgstr "<strong>%1$s</strong> %2$s"
+
+#: inc/class-blocks.php:276 blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:87 blocks/src/_invoice/meta/index.js:108
+#: blocks/src/_quote/meta/index.js:87 blocks/src/_quote/meta/index.js:108
+msgid "N/A"
+msgstr "N/A"
+
+#: inc/class-blocks.php:282 inc/class-blocks.php:294 inc/class-blocks.php:301
+#: inc/class-blocks.php:314 blocks/build/index.js:1
+#: blocks/src/_invoice/meta/index.js:87 blocks/src/_invoice/meta/index.js:108
+#: blocks/src/_quote/meta/index.js:87 blocks/src/_quote/meta/index.js:108
+msgid "<strong>%1$s</strong> <span>%2$s</span>"
+msgstr "<strong>%1$s</strong> <span>%2$s</span>"
+
+#: inc/class-blocks.php:282 inc/class-blocks.php:314 blocks/build/index.js:1
+#: blocks/src/_accounting/table/index.js:284
+#: blocks/src/_accounting/table/index.js:544
+#: blocks/src/_invoice/date/index.js:24 blocks/src/_invoice/date/index.js:42
+#: blocks/src/_quote/date/index.js:19
+msgid "Date"
+msgstr "Datum"
+
+#: inc/class-blocks.php:301
+msgid "Due By"
+msgstr "Fällig am"
+
+#: inc/class-blocks.php:301 blocks/build/index.js:1
+#: blocks/src/_invoice/duedate/index.js:24
+msgid "Due Date"
+msgstr "Fälligkeitsdatum"
+
+#: inc/class-blocks.php:314 blocks/build/index.js:1
+#: blocks/src/_quote/validuntildate/index.js:19
+msgid "Valid Until"
+msgstr "Gültig bis"
