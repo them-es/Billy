@@ -6,7 +6,7 @@
 	"description": "",
 	"license": "GPLv2+",
 	"scripts": {
-		"create-translations": "wp i18n make-pot . languages/billy.pot --exclude=/assets/*",
+		"create-translations": "wp i18n make-pot . languages/billy.pot --exclude=/assets/* --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/them-es/billy/issues\"}'",
 		"watch": "gulp watch",
 		"build-css": "gulp build-css",
 		"build-js": "gulp build-js",
