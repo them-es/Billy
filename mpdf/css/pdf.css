@@ -1,0 +1,100 @@
+body {
+	font-size: 10pt;
+	line-height: 1.5;
+}
+
+.d-none,
+.d-print-none {
+	display: none;
+}
+
+p {
+	font-size: inherit;
+}
+
+.small {
+	font-size: small;
+}
+
+hr {
+	margin: 10pt 0;
+}
+
+.header {
+	margin-bottom: 40pt;
+}
+.header p {
+	margin: 0;
+}
+.header .wp-block-image {
+	width: 100pt;
+}
+.header .wp-block-columns {
+	display: block;
+	width: 100%;
+}
+.header .wp-block-columns .wp-block-column {
+	display: block;
+	float: left;
+	width: 33%;
+	min-width: 33%;
+	margin: 0;
+	border-bottom: 1px solid #fff;
+}
+
+strong {
+	font-weight: bold;
+}
+
+.alignwide {
+	display: block;
+	max-width: none;
+	width: 100%;
+	margin-top: 0;
+}
+
+.details p {
+	margin: 0;
+}
+.metadata p {
+	text-align: right;
+}
+
+.intro {
+	margin: 40pt 0 0;
+}
+
+.table {
+	font-size: inherit;
+	border-spacing: 10px;
+	border-collapse: collapse;
+	margin: 40pt 0;
+	width: 100%;
+}
+.table th {
+	text-align: left;
+	font-weight: bold;
+	background-color: #F8F8F8;
+}
+.table th,
+.table td {
+	border: 1px solid;
+	border-left: 0;
+	border-right: 0;
+	padding: 5pt 10pt;
+}
+.table tfoot td {
+	font-weight: bold;
+}
+
+.wp-block-columns {
+	display: block;
+	width: 100%;
+}
+.wp-block-columns .wp-block-column {
+	display: block;
+	float: left;
+	width: 33%;
+	min-width: 33%;
+	margin: 0;
+}

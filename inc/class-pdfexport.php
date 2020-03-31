@@ -17,6 +17,14 @@ defined( 'ABSPATH' ) || exit;
 class Billy_PDF_Export {
 
 	/**
+	 * Stylesheet.
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	protected static $pdfstyles;
+
+	/**
 	 * Font directory.
 	 *
 	 * @access protected
@@ -36,6 +44,7 @@ class Billy_PDF_Export {
 	 * On load.
 	 */
 	public function __construct() {
+		self::$pdfstyles   = file_get_contents( dirname( __DIR__ ) . '/mpdf/css/pdf.css' );
 		self::$pdffont_dir = dirname( __DIR__ ) . '/mpdf/fonts/';
 		self::$pdffont     = array(
 			'R' => 'Roboto-Regular.ttf',
@@ -83,7 +92,7 @@ class Billy_PDF_Export {
 		$post_id    = esc_attr( $parameters['id'] );
 		$post_type  = get_post_type( $post_id );
 
-		$css = '';
+		$css = static::$pdfstyles;
 		/*if ( ! empty( $parameters['stylesheets'] ) ) {
 			$enqueued_styles = base64_decode( esc_attr( $parameters['stylesheets'] ) );
 			$enqueued_styles = explode( ',', str_replace( array( '[', ']', '"' ), '', $enqueued_styles ) );
@@ -93,119 +102,11 @@ class Billy_PDF_Export {
 				$css .= file_get_contents( $enqueued_style );
 			}
 		}*/
-		$css .= '
-			body {
-				font-size: 10pt;
-				line-height: 1.5;
-			}
-
-			.d-none,
-			.d-print-none {
-				display: none;
-			}
-			
-			p {
-				font-size: inherit;
-			}
-
-			.small {
-				font-size: small;
-			}
-
-			hr {
-				margin: 10pt 0;
-			}
-
-			.header {
-				margin-bottom: 40pt;
-			}
-			.header p {
-				margin: 0;
-			}
-			.header .wp-block-image {
-				width: 100pt;
-			}
-			.header .wp-block-columns {
-				display: block;
-				width: 100%;
-			}
-			.header .wp-block-columns .wp-block-column {
-				display: block;
-				float: left;
-				width: 33%;
-				min-width: 33%;
-				margin: 0;
-				border-bottom: 1px solid #fff;
-			}
-		
-			strong {
-				font-weight: bold;
-			}
-
-			.alignwide {
-				display: block;
-				max-width: none;
-				width: 100%;
-				margin-top: 0;
-			}
-
-			.details p {
-				margin: 0;
-			}
-			.metadata p {
-				text-align: right;
-			}
-
-			.intro {
-				margin: 40pt 0 0;
-			}
-		
-			.table {
-				font-size: inherit;
-				border-spacing: 10px;
-				border-collapse: collapse;
-				margin: 40pt 0;
-				width: 100%;
-			}
-			.table th {
-				text-align: left;
-				font-weight: bold;
-				background-color: #F8F8F8;
-			}
-			.table th,
-			.table td {
-				border: 1px solid;
-				border-left: 0;
-				border-right: 0;
-				padding: 5pt 10pt;
-			}
-			.table tfoot td {
-				font-weight: bold;
-			}
-
-			.wp-block-columns {
-				display: block;
-				width: 100%;
-			}
-			.wp-block-columns .wp-block-column {
-				display: block;
-				float: left;
-				width: 33%;
-				min-width: 33%;
-				margin: 0;
-			}
-
-			.qr .qr-info {
-				font-size: 9pt;
-				padding: 0 15pt;
-			}
-		';
 
 		// Debugging.
 		//print_r( $css );exit();
 		//print_r( str_replace( '"', '', base64_decode( $parameters['stylesheets'] ) ) );exit();
 		//print_r( $post_type );exit();
-		//print_r( $enqueued_styles );exit();
 		//print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) );exit();
 
 		// Create PDF.
