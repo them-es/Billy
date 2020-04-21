@@ -121,7 +121,7 @@ class Billy {
 		add_filter( 'private_title_format', array( $this, 'title_format' ) );
 		add_filter( 'protected_title_format', array( $this, 'title_format' ) );
 
-		// Custom Posttype Wrapper.
+		// Custom Post Type wrapper.
 		add_filter( 'the_content', array( $this, 'cpt_wrapper_content' ) );
 
 		// Limit Header "Custom Post type" creation to 1 post.
@@ -170,7 +170,7 @@ class Billy {
 
 
 	/**
-	 * Create the function to output the contents of the dashboard Widget.
+	 * Create the function to output the contents of the dashboard widget.
 	 */
 	public static function dashboard_widget_content() {
 		return '<table class="widefat">
@@ -224,7 +224,7 @@ class Billy {
 
 
 	/**
-	 * Add a <div class="{post_type}-wrapper"> wrapper to content of Custom Posttypes.
+	 * Add a <div class="{post_type}-wrapper"> wrapper to Custom Post types.
 	 */
 	public function cpt_wrapper_content( $content ) {
 		if ( ! in_array( get_post_type(), array( 'billy-header' ) ) && false !== strpos( get_post_type(), 'billy-' ) ) {
@@ -255,7 +255,7 @@ class Billy {
 
 
 	/**
-	 * Include Custom Posttype in main query.
+	 * Include Custom Post Type in main query.
 	 */
 	/*public function include_invoices_in_postsquery( $query ) {
 		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_posts' ) ) {
@@ -272,7 +272,7 @@ class Billy {
 
 
 	/**
-	 * Posttype "Custom Header": https://developer.wordpress.org/reference/hooks/rest_after_insert_this-post_type
+	 * Post Type "Custom Header": https://developer.wordpress.org/reference/hooks/rest_after_insert_this-post_type
 	 *
 	 * After save/update:
 	 * - Change title
@@ -299,7 +299,7 @@ class Billy {
 
 
 	/**
-	 * Posttype "Invoice": https://developer.wordpress.org/reference/hooks/rest_after_insert_this-post_type
+	 * Post Type "Invoice": https://developer.wordpress.org/reference/hooks/rest_after_insert_this-post_type
 	 *
 	 * After save/update:
 	 * - Autoincrement invoice number
@@ -361,7 +361,7 @@ class Billy {
 
 
 	/**
-	 * Posttype "Quote"
+	 * Post Type "Quote"
 	 *
 	 * After save/update:
 	 * - Change title
@@ -426,7 +426,7 @@ class Billy {
 
 
 	/**
-	 * Posttype "Accounting".
+	 * Post Type "Accounting".
 	 *
 	 * After save/update:
 	 * - Change title
@@ -504,7 +504,7 @@ class Billy {
 
 
 	/**
-	 * Register Custom Posttype:
+	 * Register Custom Post Type:
 	 * https://developer.wordpress.org/reference/functions/register_post_type
 	 *
 	 * Block Templates:

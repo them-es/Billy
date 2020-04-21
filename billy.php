@@ -7,7 +7,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -22,6 +22,8 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'BILLY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BILLY_PLUGIN_FILE', __FILE__ );
+define( 'REQUIRED_WP', '5.2' );
+define( 'REQUIRED_PHP', '7.2' );
 
 
 function billy_deactivate() {
@@ -29,7 +31,7 @@ function billy_deactivate() {
 }
 
 function billy_php_incompatible_admin_notice() {
-	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', '7.2' ) );
+	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
 
 	if ( isset( $_GET['activate'] ) ) {
 		unset( $_GET['activate'] );
@@ -61,17 +63,17 @@ function billy_is_plugin_active( $plugin ) {
 }
 
 function billy_plugins_loaded() {
-	if ( version_compare( PHP_VERSION, '7.2', '<=' ) ) {
+	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
 		add_action( 'admin_notices', 'billy_php_incompatible_admin_notice' );
-		add_action( 'admin_init', 'billy_deactivate' );
+		//add_action( 'admin_init', 'billy_deactivate' );
 
 		return false;
 	}
 
 	global $wp_version;
-	if ( version_compare( $wp_version, '5.2', '<=' ) ) {
+	if ( version_compare( $wp_version, REQUIRED_WP, '<=' ) ) {
 		add_action( 'admin_notices', 'billy_wp_incompatible_admin_notice' );
-		add_action( 'admin_init', 'billy_deactivate' );
+		//add_action( 'admin_init', 'billy_deactivate' );
 
 		return false;
 	}

@@ -1,6 +1,6 @@
 body {
 	font-size: 10pt;
-	line-height: 1.5;
+	line-height: 1.75;
 }
 
 .d-none,
@@ -58,6 +58,7 @@ strong {
 }
 .metadata p {
 	text-align: right;
+	font-size: small;
 }
 
 .intro {
@@ -83,8 +84,18 @@ strong {
 	border-right: 0;
 	padding: 5pt 10pt;
 }
+.table tbody td {
+	line-height: 1.75;
+}
 .table tfoot td {
 	font-weight: bold;
+}
+.table tfoot .subtotal td {
+	padding-top: 30pt;
+}
+.table tfoot .total td {
+	text-transform: uppercase;
+	text-decoration: underline;
 }
 
 .wp-block-columns {

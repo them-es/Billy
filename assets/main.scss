@@ -205,6 +205,10 @@ mark {
 		tr {
 			border: none;
 
+			&.total {
+				text-transform: uppercase;
+			}
+
 			td {
 				border-top: 2px solid;
 				font-weight: bold;

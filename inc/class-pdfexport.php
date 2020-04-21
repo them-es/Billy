@@ -45,7 +45,9 @@ class Billy_PDF_Export {
 	 */
 	public function __construct() {
 		self::$pdfstyles   = file_get_contents( dirname( __DIR__ ) . '/mpdf/css/pdf.css' );
-		self::$pdffont_dir = dirname( __DIR__ ) . '/mpdf/fonts/';
+		self::$pdffont_dir = array(
+			dirname( __DIR__ ) . '/mpdf/fonts/',
+		);
 		self::$pdffont     = array(
 			'R' => 'Roboto-Regular.ttf',
 			'B' => 'Roboto-Bold.ttf',
@@ -91,6 +93,7 @@ class Billy_PDF_Export {
 		$parameters = $data->get_params();
 		$post_id    = esc_attr( $parameters['id'] );
 		$post_type  = get_post_type( $post_id );
+		$reference  = esc_attr( get_the_title( $post_id ) );
 
 		$css = static::$pdfstyles;
 		/*if ( ! empty( $parameters['stylesheets'] ) ) {
@@ -115,9 +118,7 @@ class Billy_PDF_Export {
 				'tempDir'      => dirname( __DIR__, 1 ) . '/mpdf/tmp',
 				'simpleTables' => true,
 				'mode'         => 'utf-8',
-				'fontDir'      => array(
-					static::$pdffont_dir,
-				),
+				'fontDir'      => static::$pdffont_dir,
 				'fontdata'     => array(
 					'pdffont' => static::$pdffont,
 				),
@@ -146,7 +147,7 @@ class Billy_PDF_Export {
 					<tr>
 						<td width="33%"><small>' . esc_attr( date_i18n( get_option( 'date_format' ), date( 'U' ) ) ) . '</small></td>
 						<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
-						<td width="33%" align="right"><small>' . esc_attr( get_the_title( $post_id ) ) . '</small></td>
+						<td width="33%" align="right"><small>' . $reference . '</small></td>
 					</tr>
 				</table>'
 			);
@@ -157,9 +158,9 @@ class Billy_PDF_Export {
 			</body>
 		</html>';
 
+		$mpdf->SetTitle( $reference );
 		$mpdf->WriteHTML( $output, \Mpdf\HTMLParserMode::HTML_BODY );
-
-		$mpdf->Output();
+		$mpdf->Output( $reference . '.pdf', 'I' );
 		exit();
 	}
 
