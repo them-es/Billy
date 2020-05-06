@@ -222,7 +222,7 @@ class Billy_Blocks {
 					// Debugging.
 					//print_r( esc_url_raw(get_rest_url( null, 'export/pdf/?id=' . get_the_id() . '&stylesheets=' . json_encode( $enqueued_styles ) ) ) );
 				}*/
-				$output .= '<span class="wp-block-button"><a href="' . esc_url_raw( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( __( 'Export %s', 'billy' ), __( 'PDF', 'billy' ) ) . '</a></span>';
+				$output .= '<span class="wp-block-button"><a href="#" data-iframesrc="' . Billy::$plugin_url . 'pdfjs/web/viewer.html?file=' . rawurlencode( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( __( 'Export %s', 'billy' ), __( 'PDF', 'billy' ) ) . '</a></span>';
 				$output .= '&nbsp;';
 
 				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {

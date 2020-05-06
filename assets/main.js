@@ -1,3 +1,7 @@
+// Webpack Imports
+import * from 'pdfjs-dist';
+
+
 const getCurrency = () => {
 	return globalDataBilly.currency;
 };
@@ -118,5 +122,30 @@ document.addEventListener( 'DOMContentLoaded', function () {
 			return false;
 		} );
 	}*/
+
+	/**
+	 * PDF viewer
+	 */
+
+	document.querySelector( '.export-button' ).addEventListener( 'click', function ( e ) {
+		e.preventDefault();
+
+		var parentId = this.closest( '[id^="billy-"]' ).id;
+		
+		if ( document.body.contains( document.querySelector( '#pdf-viewer' ) ) ) {
+			document.querySelector( '#pdf-viewer' ).scrollIntoView({ behavior: 'smooth' });
+		} else {
+			var preview = document.createElement( 'iframe' );
+			preview.setAttribute( 'src', this.dataset.iframesrc );
+			preview.setAttribute( 'id', 'pdf-viewer' );
+			preview.style.width = '100%';
+			preview.style.height = '800px';
+			preview.style.margin = '0 auto';
+			preview.style.border = 'none';
+			document.querySelector( '#' + parentId ).appendChild( preview ).scrollIntoView({ behavior: 'smooth' });
+		}
+
+		
+	} );
 	
 } );

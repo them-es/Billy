@@ -19,26 +19,26 @@ class Billy_PDF_Export {
 	/**
 	 * Stylesheet.
 	 *
-	 * @access protected
+	 * @access public
 	 * @var string
 	 */
-	protected static $pdfstyles;
+	public static $pdfstyles;
 
 	/**
 	 * Font directory.
 	 *
-	 * @access protected
+	 * @access public
 	 * @var string
 	 */
-	protected static $pdffont_dir;
+	public static $pdffont_dir;
 
 	/**
 	 * Font data.
 	 *
-	 * @access protected
+	 * @access public
 	 * @var array
 	 */
-	protected static $pdffont;
+	public static $pdffont;
 
 	/**
 	 * On load.

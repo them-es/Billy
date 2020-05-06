@@ -53,11 +53,16 @@ strong {
 	margin-top: 0;
 }
 
+.details {
+	width: 100%;
+}
+.details div {
+	width: 33%;
+}
 .details p {
 	margin: 0;
 }
 .metadata p {
-	text-align: right;
 	font-size: small;
 }
 
@@ -67,35 +72,31 @@ strong {
 
 .table {
 	font-size: inherit;
-	border-spacing: 10px;
 	border-collapse: collapse;
 	margin: 40pt 0;
 	width: 100%;
 }
-.table th {
-	text-align: left;
-	font-weight: bold;
-	background-color: #F8F8F8;
-}
 .table th,
 .table td {
 	border: 1px solid;
-	border-left: 0;
-	border-right: 0;
+}
+.table th {
+	text-align: left;
+	font-weight: bold;
+}
+.table th,
+.table td {
 	padding: 5pt 10pt;
 }
+
 .table tbody td {
 	line-height: 1.75;
 }
 .table tfoot td {
 	font-weight: bold;
 }
-.table tfoot .subtotal td {
-	padding-top: 30pt;
-}
 .table tfoot .total td {
 	text-transform: uppercase;
-	text-decoration: underline;
 }
 
 .wp-block-columns {
@@ -108,4 +109,9 @@ strong {
 	width: 33%;
 	min-width: 33%;
 	margin: 0;
+}
+
+.qr-info {
+	font-size: 9pt;
+	padding: 0 15pt;
 }
