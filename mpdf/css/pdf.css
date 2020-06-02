@@ -92,11 +92,8 @@ strong {
 .table tbody td {
 	line-height: 1.75;
 }
-.table tfoot td {
-	font-weight: bold;
-}
 .table tfoot .total td {
-	text-transform: uppercase;
+	font-weight: bold;
 }
 
 .wp-block-columns {

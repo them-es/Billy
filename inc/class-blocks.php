@@ -222,7 +222,7 @@ class Billy_Blocks {
 					// Debugging.
 					//print_r( esc_url_raw(get_rest_url( null, 'export/pdf/?id=' . get_the_id() . '&stylesheets=' . json_encode( $enqueued_styles ) ) ) );
 				}*/
-				$output .= '<span class="wp-block-button"><a href="#" data-iframesrc="' . Billy::$plugin_url . 'pdfjs/web/viewer.html?file=' . rawurlencode( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( __( 'Export %s', 'billy' ), __( 'PDF', 'billy' ) ) . '</a></span>';
+				$output .= '<span class="wp-block-button"><button data-iframesrc="' . Billy::$plugin_url . 'pdfjs/web/viewer.html?file=' . rawurlencode( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( __( 'Export %s', 'billy' ), __( 'PDF', 'billy' ) ) . '</button></span>';
 				$output .= '&nbsp;';
 
 				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
@@ -320,8 +320,8 @@ class Billy_Blocks {
 	 */
 	public function get_block_editor_assets() {
 		// Blocks.
-		$blocks_dir        = 'blocks/build/';
-		$blocks_asset_file = include BILLY_PLUGIN_DIR . $blocks_dir . 'index.asset.php';
+		$blocks_dir = ( defined( 'BILLY_PLUGIN_DIR' ) ? BILLY_PLUGIN_DIR : '' ) . 'blocks/build/';
+		$blocks_asset_file = include $blocks_dir . 'index.asset.php';
 
 		// Replace "wp-blockEditor" with "wp-block-editor".
 		$blocks_asset_file['dependencies'] = array_replace(
@@ -332,9 +332,10 @@ class Billy_Blocks {
 			)
 		);
 
+		$blocks_url = ( defined( 'BILLY_PLUGIN_URL' ) ? BILLY_PLUGIN_URL : '' ) . 'blocks/build/';
 		wp_enqueue_script(
 			'billy-blocks-script',
-			Billy::$plugin_url . $blocks_dir . 'index.js',
+			$blocks_url . 'index.js',
 			$blocks_asset_file['dependencies'],
 			$blocks_asset_file['version']
 		);

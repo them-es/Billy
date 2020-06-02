@@ -25,7 +25,17 @@ class Billy_PDF_Export {
 	public static $pdfstyles;
 
 	/**
+	 * Temporary directory.
+	 * https://mpdf.github.io/installation-setup/folders-for-temporary-files.html
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public static $temp_dir;
+
+	/**
 	 * Font directory.
+	 * https://mpdf.github.io/fonts-languages/fonts-in-mpdf-7-x.html
 	 *
 	 * @access public
 	 * @var string
@@ -44,9 +54,11 @@ class Billy_PDF_Export {
 	 * On load.
 	 */
 	public function __construct() {
-		self::$pdfstyles   = file_get_contents( dirname( __DIR__ ) . '/mpdf/css/pdf.css' );
+		$mpdf_dir          = dirname( __DIR__ ) . '/mpdf';
+		self::$pdfstyles   = file_get_contents( $mpdf_dir . '/css/pdf.css' );
+		self::$temp_dir    = $mpdf_dir . '/tmp/';
 		self::$pdffont_dir = array(
-			dirname( __DIR__ ) . '/mpdf/fonts/',
+			$mpdf_dir . '/fonts/',
 		);
 		self::$pdffont     = array(
 			'R' => 'Roboto-Regular.ttf',
@@ -115,7 +127,7 @@ class Billy_PDF_Export {
 		// Create PDF.
 		$mpdf = new Mpdf(
 			array(
-				'tempDir'      => dirname( __DIR__, 1 ) . '/mpdf/tmp',
+				'tempDir'      => static::$temp_dir,
 				'simpleTables' => true,
 				'mode'         => 'utf-8',
 				'fontDir'      => static::$pdffont_dir,

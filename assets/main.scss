@@ -205,8 +205,11 @@ mark {
 		tr {
 			border: none;
 
-			&.total {
-				text-transform: uppercase;
+			&.subtotal,
+			&.taxrates {
+				td {
+					font-weight: initial !important;
+				}
 			}
 
 			td {
@@ -265,6 +268,10 @@ mark {
 		}
 		
 	}
+}
+
+#pdf-viewer {
+	margin-top: 100px !important;
 }
 
 

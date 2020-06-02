@@ -87,7 +87,7 @@ class Billy {
 		self::$plugin_name    = esc_attr( $plugin_data['Name'] );
 		self::$plugin_version = esc_attr( $plugin_data['Version'] );
 		self::$plugin_slug    = esc_attr( $plugin_data['TextDomain'] );
-		self::$plugin_url     = esc_url( plugin_dir_url( dirname( __FILE__ ) ) );
+		self::$plugin_url     = ( defined( 'BILLY_PLUGIN_URL' ) ? esc_url( BILLY_PLUGIN_URL ) : esc_url( plugin_dir_url( __DIR__ ) ) );
 		self::$plugin_uri     = esc_url( $plugin_data['PluginURI'] );
 		self::$billy_url      = esc_url( $plugin_data['AuthorURI'] );
 

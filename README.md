@@ -20,7 +20,8 @@ The Plugin should work with any modern WordPress theme that supports the Block e
 * [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen)
 
 ## Contributing
-Fork this repo and install the required Node dependencies.
+If you would like to extend this plugin you can fork this repo and create a pull request.
+Bugs or feature requests can be reported by creating a new issue.
 
 ### JS/CSS assets
 * `$ npm install`.
