@@ -245,7 +245,7 @@ registerBlockType( 'billy-blocks/invoice-table', {
 						)
 				}
 
-				<button id="updatetotals" className="components-button is-secondary is-button is-small" onClick={ updateTotals } style={ { display: ( amountSubtotal > 0 ? 'block' : 'none' ) } }>
+				<button id="updatetotals" className="components-button is-secondary is-button" onClick={ updateTotals } style={ { display: ( amountSubtotal > 0 ? 'block' : 'none' ) } }>
 					{
 						__( 'Update Totals', 'billy' )
 					}

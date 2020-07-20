@@ -157,7 +157,7 @@ registerBlockType( 'billy-blocks/accounting-table', {
 			<>
 				<InspectorControls>
 					<PanelBody title={ __( 'Actions', 'billy' ) }>
-						<button id="updatetotals" className="components-button is-secondary is-button is-small" onClick={ updateTotals }>
+						<button id="updatetotals" className="components-button is-secondary is-button" onClick={ updateTotals }>
 							{
 								__( 'Update Totals', 'billy' )
 							}
