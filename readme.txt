@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.2
 Tested up to: 5.5
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -133,6 +133,12 @@ Please consider purchasing the premium add-on with the following features:
 
 == Upgrade Notice ==
 
+= 1.1.4 =
+* WordPress 5.5+: Fix PHP notice in 'register_rest_route'
+
+= 1.1.3 =
+* Compatibility with WordPress 5.5
+
 = 1.1.0 =
 * Embedded PDF files (PDF.js)
 
@@ -140,6 +146,15 @@ Please consider purchasing the premium add-on with the following features:
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.1.4 =
+* Minor compatibility update for WordPress 5.5+
+
+= 1.1.3 =
+* Compatibility with WordPress 5.5
+
+= 1.1.3 =
+* Minor updates: styles
 
 = 1.1.1 =
 * Prevent TypeError in main.js

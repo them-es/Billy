@@ -89,8 +89,15 @@ class Billy_PDF_Export {
 			'export',
 			'/pdf',
 			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'billy_export_pdf' ),
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'billy_export_pdf' ),
+				'permission_callback' => function () {
+					if ( ! wp_get_current_user() ) {
+						return new WP_Error( 'rest_forbidden', esc_html__( 'You are not permitted to use this endpoint. Please sign in.', 'billy' ), array( 'status' => 401 ) );
+					}
+
+					return true;
+				},
 			)
 		);
 	}
