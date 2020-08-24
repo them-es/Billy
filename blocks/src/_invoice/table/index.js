@@ -15,7 +15,6 @@ import {
 import {
 	InspectorControls,
 	InnerBlocks,
-	RichText,
 } from '@wordpress/blockEditor';
 import {
 	PanelBody,
@@ -385,10 +384,6 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 			type: 'string',
 			default: '',
 		},
-		description: {
-			type: 'string',
-			default: '',
-		},
 		taxRate: {
 			type: 'string',
 			default: '',
@@ -432,7 +427,7 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 				index,
 				currency,
 				locale,
-				description,
+				description, // < v1.2.0
 				taxRate,
 				amount,
 				amountIncl,
@@ -448,10 +443,6 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 
 		if ( '' === taxRate ) {
 			setAttributes( { taxRate: ( 0 === globalDataBilly.taxOptions.length ? '0%' : globalDataBilly.taxOptions[ 0 ].value ) } );
-		}
-
-		const updateDescription = val => {
-			setAttributes( { description: val } );
 		}
 
 		const updateAmountIncl = val => {
@@ -519,14 +510,20 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 										index
 								}
 							</th>
-							<td>
-								<RichText
-									className="description"
-									style={ { width: '30vw', minWidth: '200px' } }
-									tagName="p"
-									placeholder={ __( 'Description', 'billy' ) }
-									value={ description }
-									onChange={ updateDescription }
+							<td style={ { width: '30vw', minWidth: '200px' } }>
+								<InnerBlocks
+									template={ [
+										[ 'core/paragraph', {
+											placeholder: __( 'Add content', 'billy' ),
+											content: ( description ? description : '' ), // < v1.2.0
+										} ],
+									] }
+									allowedBlocks={ [
+										'core/heading',
+										'core/paragraph',
+										'core/list',
+										'core/html',
+									] }
 								/>
 							</td>
 							<td>
@@ -571,7 +568,6 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 			attributes: {
 				index,
 				locale,
-				description,
 				taxRate,
 				amount,
 			},
@@ -586,12 +582,7 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 					}
 				</th>
 				<td>
-					{
-						description &&
-							(
-								<RawHTML>{ description }</RawHTML>
-							)
-					}
+					<InnerBlocks.Content />
 				</td>
 				<td>
 					{
@@ -617,4 +608,101 @@ registerBlockType( 'billy-blocks/invoice-tablerow', {
 		);
 
 	},
+
+	deprecated: [
+		// < v1.2.0 (20200824)
+		{
+			attributes: {
+				index: {
+					type: 'number',
+					default: '0',
+				},
+				currency: {
+					type: 'string',
+					default: '',
+				},
+				locale: {
+					type: 'string',
+					default: '',
+				},
+				description: {
+					type: 'string',
+					default: '',
+				},
+				taxRate: {
+					type: 'string',
+					default: '',
+				},
+				amount: {
+					type: 'number',
+					default: '',
+				},
+				amountIncl: {
+					type: 'number',
+					default: '',
+				},
+				quantity: {
+					type: 'number',
+					default: '',
+				},
+				quantityRate: {
+					type: 'number',
+					default: '',
+				},
+			},
+			
+			save: props => {
+				const {
+					className,
+					attributes: {
+						index,
+						locale,
+						description,
+						taxRate,
+						amount,
+					},
+				} = props;
+		
+				return (
+					<tr>
+						<th scope="row">
+							{
+								index &&
+									index
+							}
+						</th>
+						<td>
+							{
+								description &&
+									(
+										<RawHTML>{ description }</RawHTML>
+									)
+							}
+						</td>
+						<td>
+							{
+								amount &&
+									(
+										formatNumber( amount, locale )
+									)
+							}
+						</td>
+						{
+							taxRate && ( percentToDecimal( taxRate ) * amount ) > 0 &&
+								(
+									<td>
+										<RawHTML>
+											{
+												sprintf( __( '%1$s %2$s', 'billy' ), formatNumber( ( percentToDecimal( taxRate ) * amount ), locale ), '<small>(' + taxRate + ')</small>' )
+											}
+										</RawHTML>
+									</td>
+								)
+						}
+					</tr>
+				);
+		
+			},
+		}
+	],
 } );

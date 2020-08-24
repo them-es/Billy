@@ -110,6 +110,11 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 
 /* Tables */
 
+[data-type$="-tablerow"] table tr th,
+[data-type$="-tablerow"] table tr td {
+	vertical-align: top;
+}
+
 [data-type$="accounting-tablerow"] {
 	border-left: 4px solid transparent;
 }

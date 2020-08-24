@@ -197,6 +197,11 @@ mark {
 
 	tbody {
 		border-bottom: $table-border-width solid $table-border-color;
+
+		th,
+		td {
+			vertical-align: top;
+		}
 	}
 
 	tfoot {

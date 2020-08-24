@@ -8,7 +8,9 @@ body {
 	display: none;
 }
 
-p {
+p,
+ul,
+ol {
 	font-size: inherit;
 }
 
@@ -54,10 +56,16 @@ strong {
 }
 
 .details {
+	display: block;
 	width: 100%;
 }
-.details div {
+.details .wp-block-column {
+	display: block;
+	float: left;
 	width: 33%;
+	min-width: 33%;
+	margin: 0;
+	border-bottom: 1px solid #fff;
 }
 .details p {
 	margin: 0;
@@ -71,41 +79,32 @@ strong {
 }
 
 .table {
-	font-size: inherit;
-	border-collapse: collapse;
 	margin: 40pt 0;
 	width: 100%;
+	border-collapse: collapse;
+	autosize: 1;/* https://mpdf.github.io/tables/tables.html#autosize */
 }
 .table th,
 .table td {
 	border: 1px solid;
+	padding: 5pt 10pt;
 }
 .table th {
 	text-align: left;
 	font-weight: bold;
 }
-.table th,
-.table td {
-	padding: 5pt 10pt;
+
+.table tbody th,
+.table tbody td {
+	vertical-align: top;
+	line-height: 1.75;
 }
 
-.table tbody td {
-	line-height: 1.75;
+.table tfoot td {
+	white-space: nowrap;
 }
 .table tfoot .total td {
 	font-weight: bold;
-}
-
-.wp-block-columns {
-	display: block;
-	width: 100%;
-}
-.wp-block-columns .wp-block-column {
-	display: block;
-	float: left;
-	width: 33%;
-	min-width: 33%;
-	margin: 0;
 }
 
 .qr-info {

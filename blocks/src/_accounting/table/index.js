@@ -18,7 +18,6 @@ import {
 import {
 	InspectorControls,
 	InnerBlocks,
-	RichText,
 } from '@wordpress/blockEditor';
 import {
 	PanelBody,
@@ -29,9 +28,6 @@ import {
 	dispatch,
 	withSelect,
 } from '@wordpress/data';
-import {
-	RawHTML,
-} from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -43,6 +39,7 @@ import {
 } from '../../functions';
 
 var updateTotals;
+
 
 /**
  * 1. Outer Block
@@ -401,10 +398,6 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 			type: 'string',
 			default: '',
 		},
-		description: {
-			type: 'string',
-			default: '',
-		},
 		earning: {
 			type: 'number',
 			default: '',
@@ -460,9 +453,9 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 				index,
 				currency,
 				locale,
+				description, // < v1.2.0
 				date,
 				quarter,
-				description,
 				earning,
 				expense,
 				tax,
@@ -506,10 +499,6 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 
 		const updateReference = val => {
 			setAttributes( { reference: val } );
-		}
-
-		const updateDescription = val => {
-			setAttributes( { description: val } );
 		}
 
 		const updateEarning = val => {
@@ -580,13 +569,20 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 									}
 								</sub>
 							</td>
-							<td className="description">
-								<RichText
-									style={ { minWidth: '200px' } }
-									tagName="p"
-									placeholder={ __( 'Description', 'billy' ) }
-									value={ description }
-									onChange={ updateDescription }
+							<td className="description" style={ { minWidth: '200px' } }>
+								<InnerBlocks
+									template={ [
+										[ 'core/paragraph', {
+											placeholder: __( 'Add content', 'billy' ),
+											content: ( description ? description : '' ), // < v1.2.0
+										} ],
+									] }
+									allowedBlocks={ [
+										'core/heading',
+										'core/paragraph',
+										'core/list',
+										'core/html',
+									] }
 								/>
 							</td>
 							<td className="reference">
@@ -640,7 +636,6 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 				locale,
 				date,
 				quarter,
-				description,
 				earning,
 				expense,
 				tax,
@@ -670,12 +665,7 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 					</sub>
 				</td>
 				<td className="description">
-					{
-						description &&
-							(
-								<RawHTML>{ description }</RawHTML>
-							)
-					}
+					<InnerBlocks.Content />
 				</td>
 				<td className="reference">
 					{
@@ -715,4 +705,150 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 		);
 
 	},
+
+	deprecated: [
+		// < v1.2.0 (20200824)
+		{
+			attributes: {
+				index: {
+					type: 'number',
+					default: '0',
+				},
+				currency: {
+					type: 'string',
+					default: '',
+				},
+				locale: {
+					type: 'string',
+					default: '',
+				},
+				date: {
+					type: 'string',
+					default: '',
+				},
+				quarter: {
+					type: 'number',
+					default: '',
+				},
+				reference: {
+					type: 'string',
+					default: '',
+				},
+				description: {
+					type: 'string',
+					default: '',
+				},
+				earning: {
+					type: 'number',
+					default: '',
+				},
+				expense: {
+					type: 'number',
+					default: '',
+				},
+				tax: {
+					type: 'number',
+					default: '',
+				},
+				postUUID: {
+					type: 'string',
+					default: '',
+				},
+				postTitle: {
+					type: 'string',
+					default: '',
+				},
+				postLink: {
+					type: 'string',
+					default: '',
+				},
+				postType: {
+					type: 'string',
+					default: '',
+				},
+			},
+		
+			save: props => {
+				const {
+					className,
+					attributes: {
+						index,
+						locale,
+						date,
+						quarter,
+						description,
+						earning,
+						expense,
+						tax,
+						reference,
+						postLink,
+					},
+				} = props;
+		
+				return (
+					<tr data-date={ date && new Date( date ).toISOString().substring( 0, 10 ) } data-quarter={ quarter && sprintf( __( 'Q%s', 'billy' ), quarter ) } data-reference={ reference && reference } data-earning={ earning > 0 ? earning : null } data-expense={ expense > 0 ? expense : null } data-tax={ tax > 0 ? tax : null }>
+						<th className="index" scope="row">
+							{
+								index &&
+									index
+							}
+						</th>
+						<td className="date" data-value={ date && new Date( date ).toISOString().substring( 0, 10 ) }>
+							{
+								date &&
+									new Date( date ).toISOString().substring( 0, 10 )
+							}
+							<sub>
+								{
+									quarter &&
+										sprintf( __( 'Q%s', 'billy' ), quarter )
+								}
+							</sub>
+						</td>
+						<td className="description">
+							{
+								description &&
+									description
+							}
+						</td>
+						<td className="reference">
+							{
+								reference && !postLink &&
+									reference
+							}
+							{
+								reference && postLink &&
+									<a href={ postLink }>{ reference }</a>
+							}
+						</td>
+						<td className="amount earning" data-value={ earning > 0 ? earning : null }>
+							{
+								earning && earning > 0 &&
+									(
+										formatNumber( earning, locale )
+									)
+							}
+						</td>
+						<td className="amount expense" data-value={ expense > 0 ? expense : null }>
+							{
+								expense && expense > 0 &&
+									(
+										formatNumber( expense, locale )
+									)
+							}
+						</td>
+						<td className="amount tax" data-value={ tax > 0 ? tax : null }>
+							{
+								tax && tax > 0 &&
+									(
+										formatNumber( tax, locale )
+									)
+							}
+						</td>
+					</tr>
+				);
+		
+			},
+		}
+	],
 } );
