@@ -131,7 +131,7 @@ class Billy_PDF_Export {
 		//print_r( $post_type );exit();
 		//print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) );exit();
 
-		// Create PDF.
+		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(
 			array(
 				'tempDir'      => static::$temp_dir,
@@ -142,6 +142,7 @@ class Billy_PDF_Export {
 					'pdffont' => static::$pdffont,
 				),
 				'default_font' => 'pdffont',
+				'keep_table_proportions' => false,
 			)
 		);
 
@@ -189,9 +190,9 @@ class Billy_PDF_Export {
 			wp_reset_postdata();
 
 			$mpdf->SetHTMLFooter(
-				'<table width="100%">
+				'<table class="footer" width="100%">
 					<tr>
-						<td width="33%"><small>' . esc_attr( date_i18n( get_option( 'date_format' ), date( 'U' ) ) ) . '</small></td>
+						<td width="33%"><small>' . esc_attr( get_the_date( '', $post_id ) ) . '</small></td>
 						<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
 						<td width="33%" align="right"><small>' . $reference . '</small></td>
 					</tr>
