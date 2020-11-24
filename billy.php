@@ -59,6 +59,10 @@ function billy_globalheadermissing_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'Please setup a global header first: %s', 'billy' ), sprintf( '<a href="' . esc_url( admin_url( 'post-new.php?post_type=billy-header' ) ) . '">%s</a>', __( 'Add New', 'billy' ) ) ) );
 }
 
+function billy_temp_pdfdirectory_not_writable_admin_notice() {
+	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
+}
+
 function billy_is_plugin_active( $plugin ) {
 	return in_array( $plugin, (array) get_option( 'active_plugins', array() ) );
 }
