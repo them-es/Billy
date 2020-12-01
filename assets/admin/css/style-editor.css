@@ -146,6 +146,8 @@ table .date sub {
 }
 table label {
 	font-weight: bold;
+	padding: 0 !important;
+	margin-bottom: 8px !important;
 }
 
 table .amount label {

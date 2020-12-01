@@ -38,7 +38,7 @@ class Billy_PDF_Export {
 	 * https://mpdf.github.io/fonts-languages/fonts-in-mpdf-7-x.html
 	 *
 	 * @access public
-	 * @var string
+	 * @var array
 	 */
 	public static $pdffont_dir;
 
@@ -105,12 +105,12 @@ class Billy_PDF_Export {
 	/**
 	 * WP-API Custom endpoint callbacks.
 	 *
-	 * @param array $data Options for the function.
-	 * @return json object of post data.
+	 * @param WP_REST_Request $request Options for the function.
+	 * @return object MPDF post data.
 	 */
-	public function billy_export_pdf( $data ) {
-		$parameters = $data->get_params();
-		$post_id    = esc_attr( $parameters['id'] );
+	public function billy_export_pdf( $request ) {
+		$parameters = $request->get_params();
+		$post_id    = (int) $parameters['id'];
 		$post_type  = get_post_type( $post_id );
 		$reference  = esc_attr( get_the_title( $post_id ) );
 

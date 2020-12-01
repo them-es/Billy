@@ -333,7 +333,7 @@ class Billy {
 				$invoice_previouspost_unix_time = strtotime( $invoice_previouspost_query->posts[0]->post_date );
 
 				if ( get_the_date( 'U', $post_id ) < $invoice_previouspost_unix_time ) {
-					$post_date                = date_i18n( 'Y-m-d H:i:s', ++$invoice_previouspost_unix_time );
+					$post_date                = date_i18n( 'Y-m-d H:i:s', (int) ++$invoice_previouspost_unix_time );
 
 					$my_post['post_date']     = $post_date;
 					$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
@@ -413,7 +413,7 @@ class Billy {
 	/**
 	 * Get duedate in predefined format.
 	 */
-	public static function get_duedate( $post_id = null, $add_days = '14' ) {
+	public static function get_duedate( $post_id = null, int $add_days = 14 ) {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -421,7 +421,7 @@ class Billy {
 		$date = new DateTime( get_the_date( 'Y-m-d' ) );
 		$date->modify( '+' . $add_days . ' days' );
 
-		return date_i18n( get_option( 'date_format' ), $date->format( 'U' ) );
+		return date_i18n( get_option( 'date_format' ), (int) $date->format( 'U' ) );
 	}
 
 
@@ -743,7 +743,7 @@ class Billy {
 		}
 
 		// Scripts.
-		wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', false, self::$plugin_version, true );
+		wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
 		wp_add_inline_script( 'billy-script', 'var globalDataBilly = {
 			postId: "' .  get_the_ID() . '",
 			wpAdmin: "' . get_dashboard_url() . '",
@@ -788,7 +788,7 @@ class Billy {
 		}
 
 		// Scripts.
-		wp_enqueue_script( 'billy-adminscripts', self::$plugin_url . 'assets/admin/js/admin.js', false, self::$plugin_version, true );
+		wp_enqueue_script( 'billy-adminscripts', self::$plugin_url . 'assets/admin/js/admin.js', array(), self::$plugin_version, true );
 		wp_add_inline_script( 'billy-adminscripts', 'var globalDataBilly = {
 				wpAdmin: "' . get_dashboard_url() . '",
 				postId: "' . get_the_ID() . '",
