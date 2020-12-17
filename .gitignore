@@ -7,6 +7,7 @@ Gruntfile.js
 gulpfile.js
 bower_components/
 node_modules/
+vendor/
 package.json
 package.txt
 npm*
