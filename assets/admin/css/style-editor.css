@@ -91,6 +91,14 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 	width: 66.66%;
 }
 
+.metadata .label,
+.metadata .text {
+	display: inline-block;
+}
+.metadata .label {
+	font-weight: bold;
+}
+
 .details {
 	margin-bottom: 90px;
 }

@@ -50,6 +50,8 @@ mark {
 	margin-bottom: 3rem;
 	padding-bottom: 1rem;
 	border-bottom: 1px dashed;
+	position: sticky;
+	top: 0;
 
 	.btn {
 		margin-right: 15px;
@@ -84,11 +86,11 @@ mark {
 
 	.wp-block-column {
 		&:last-of-type {
-			p {
+			div {
 				display: flex;
 				font-size: smaller;
 
-				* {
+				div {
 					flex-basis: 50%;
 					flex-grow: 0;
 					padding: 0 0 0.5rem;
@@ -96,12 +98,10 @@ mark {
 					hyphens: auto;
 				}
 
-				strong {
+				.label {
+					font-weight: bold;
 					padding-right: 1rem;
 					padding-left: 1rem;
-				}
-				span {
-					text-align: left;
 				}
 			}
 		}

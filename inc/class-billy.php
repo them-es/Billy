@@ -189,7 +189,7 @@ class Billy {
 				</tr>
 				<tr>
 					<td><strong>' . __( 'Current invoice number', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_attr( sprintf( __( '%1$s%2$03s', 'invoice-theme' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) ) . '</a></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_attr( sprintf( __( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) ) . '</a></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -406,7 +406,7 @@ class Billy {
 		// (Optional) Add prefix.
 		$prefix = get_theme_mod( 'invoice_number_prefix', '#' );
 
-		return sprintf( __( '%1$s%2$03s', 'invoice-theme' ), $prefix, $invoicenumber );
+		return sprintf( __( '%1$s%2$03s', 'billy' ), $prefix, $invoicenumber );
 	}
 
 

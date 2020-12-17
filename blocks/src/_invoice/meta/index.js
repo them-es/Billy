@@ -84,7 +84,7 @@ registerBlockType( 'billy-blocks/invoice-meta', {
 
 				<RawHTML>
 					{
-						sprintf( '<p>' + __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ) + '</p>', ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
+						sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
 					}
 				</RawHTML>
 			</>
@@ -102,14 +102,50 @@ registerBlockType( 'billy-blocks/invoice-meta', {
 
 		return (
 			text && (
-				<p>
-					<RawHTML>
-						{
-							sprintf( '<p>' + __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ) + '</p>', ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
-						}
-					</RawHTML>
-				</p>
+				<RawHTML>
+					{
+						sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
+					}
+				</RawHTML>
 			)
 		);
 	},
+
+	deprecated: [
+		// < v1.2.3 (202012)
+		{
+			attributes: {
+				label: {
+					type: 'string',
+					default: '',
+				},
+				text: {
+					type: 'string',
+					default: '',
+				},
+			},
+			
+			save: props => {
+				const {
+					className,
+					attributes: {
+						label,
+						text,
+					},
+				} = props;
+		
+				return (
+					text && (
+						<p>
+							<RawHTML>
+								{
+									sprintf( '<p>' + __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ) + '</p>', ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
+								}
+							</RawHTML>
+						</p>
+					)
+				);
+			},
+		}
+	],
 } );

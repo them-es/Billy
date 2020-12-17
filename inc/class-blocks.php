@@ -269,17 +269,21 @@ class Billy_Blocks {
 		return $output;
 	}
 
+	public function meta_label_text_render_callback( $label, $text, $class ) {
+		return '<div' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), esc_html( $text ) ) : $label ) . '</div>';
+	}
+
 	public function theme_mod_render_callback( $attributes, $content ) {
 		$value     = esc_attr( $attributes['themeMod'] );
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<p class="thememod' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( $value, '<span class="d-none d-admin-block">' . sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', __( 'N/A', 'billy' ) ) . '</span>' ) ) . '</p>';
+		return '<div class="thememod' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( $value, '<span class="d-none d-admin-block">' . sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', __( 'N/A', 'billy' ) ) . '</span>' ) ) . '</div>';
 	}
 
 	public function date_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<p class="date' . ( $classname ? ' ' . $classname : '' ) . '">' . ( get_the_date() ? sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), __( 'Date', 'billy' ), get_the_date() ) : __( 'Date', 'billy' ) ) . '</p>';
+		return $this->meta_label_text_render_callback( __( 'Date', 'billy' ), get_the_date(), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 	public function invoicepaymentinformation_render_callback( $attributes, $content ) {
@@ -291,27 +295,27 @@ class Billy_Blocks {
 	public function invoicenumber_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<p class="invoicenumber' . ( $classname ? ' ' . $classname : '' ) . '">' . sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), __( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ) ) . '</p>';
+		return $this->meta_label_text_render_callback( __( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 	public function invoiceduedate_render_callback( $attributes, $content ) {
 		$add_days  = esc_attr( get_theme_mod( 'payment_due_days', '14' ) );
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<p class="date' . ( $classname ? ' ' . $classname : '' ) . '">' . ( get_the_date() ? sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), __( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ) ) : __( 'Due Date', 'billy' ) ) . '</p>';
+		return $this->meta_label_text_render_callback( __( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 	public function quoteinformation_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
-		return'<p class="quoteinformation' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
+		return '<p class="quoteinformation' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
 	}
 
 	public function quotevaliduntildate_render_callback( $attributes, $content ) {
 		$add_days  = esc_attr( get_theme_mod( 'quote_valid_days', '30' ) );
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<p class="date' . ( $classname ? ' ' . $classname : '' ) . '">' . ( get_the_date() ? sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), __( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ) ) : __( 'Date', 'billy' ) ) . '</p>';
+		return $this->meta_label_text_render_callback( __( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 
