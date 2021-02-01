@@ -38,6 +38,9 @@ import {
 	formatNumber,
 } from '../../functions';
 
+import deprecatedAccountingOuter from './deprecatedOuter';
+import deprecatedAccountingInner from './deprecatedInner';
+
 var updateTotals;
 
 
@@ -287,13 +290,13 @@ registerBlockType( 'billy-blocks/accounting-table', {
 								{ __( 'Reference', 'billy' ) }
 							</th>
 							<th scope="col" className="sort earnings" data-sort="earning">
-								{ __( 'Earning', 'billy' ) }
+								{ __( 'Earnings', 'billy' ) }
 							</th>
 							<th scope="col" className="sort expenses" data-sort="expense">
-								{ __( 'Expense', 'billy' ) }
+								{ __( 'Expenses', 'billy' ) }
 							</th>
 							<th scope="col" className="sort" data-sort="tax">
-								{ __( 'Tax', 'billy' ) }
+								{ __( 'Taxes', 'billy' ) }
 							</th>
 						</tr>
 					</thead>
@@ -305,7 +308,7 @@ registerBlockType( 'billy-blocks/accounting-table', {
 							( amountTotalEarnings > 0 || amountTotalExpenses > 0 ) &&
 								(
 									<tr>
-										<td colSpan="4" align="right">
+										<td colSpan="5" className="alignright">
 											{ sprintf( __( '%1$s / %2$s', 'billy' ), __( 'Earnings', 'billy' ), __( 'Expenses', 'billy' ) ) }
 										</td>
 										<td className="sum earnings">
@@ -325,7 +328,7 @@ registerBlockType( 'billy-blocks/accounting-table', {
 							( amountTotalEarnings > 0 || amountTotalExpenses > 0 ) &&
 								(
 									<tr>
-										<td colSpan="4" align="right">
+										<td colSpan="5" className="alignright">
 											{ __( 'Profit', 'billy' ) }
 										</td>
 										<td colSpan="2" className="profit">
@@ -340,7 +343,7 @@ registerBlockType( 'billy-blocks/accounting-table', {
 							( amountTaxEarnings > 0 || amountTaxExpenses > 0 ) &&
 								(
 									<tr>
-										<td colSpan="4" align="right">
+										<td colSpan="5" className="alignright">
 											{ sprintf( __( '%1$s (%2$s / %3$s)', 'billy' ), __( 'Taxes', 'billy' ) , __( 'Earnings', 'billy' ), __( 'Expenses', 'billy' ) ) }
 										</td>
 										<td className="sum tax-earnings">
@@ -361,6 +364,8 @@ registerBlockType( 'billy-blocks/accounting-table', {
 			</div>
 		);
 	},
+
+	deprecated: deprecatedAccountingOuter,
 } );
 
 
@@ -703,152 +708,7 @@ registerBlockType( 'billy-blocks/accounting-tablerow', {
 				</td>
 			</tr>
 		);
-
 	},
 
-	deprecated: [
-		// < v1.2.0 (20200824)
-		{
-			attributes: {
-				index: {
-					type: 'number',
-					default: '0',
-				},
-				currency: {
-					type: 'string',
-					default: '',
-				},
-				locale: {
-					type: 'string',
-					default: '',
-				},
-				date: {
-					type: 'string',
-					default: '',
-				},
-				quarter: {
-					type: 'number',
-					default: '',
-				},
-				reference: {
-					type: 'string',
-					default: '',
-				},
-				description: {
-					type: 'string',
-					default: '',
-				},
-				earning: {
-					type: 'number',
-					default: '',
-				},
-				expense: {
-					type: 'number',
-					default: '',
-				},
-				tax: {
-					type: 'number',
-					default: '',
-				},
-				postUUID: {
-					type: 'string',
-					default: '',
-				},
-				postTitle: {
-					type: 'string',
-					default: '',
-				},
-				postLink: {
-					type: 'string',
-					default: '',
-				},
-				postType: {
-					type: 'string',
-					default: '',
-				},
-			},
-		
-			save: props => {
-				const {
-					className,
-					attributes: {
-						index,
-						locale,
-						date,
-						quarter,
-						description,
-						earning,
-						expense,
-						tax,
-						reference,
-						postLink,
-					},
-				} = props;
-		
-				return (
-					<tr data-date={ date && new Date( date ).toISOString().substring( 0, 10 ) } data-quarter={ quarter && sprintf( __( 'Q%s', 'billy' ), quarter ) } data-reference={ reference && reference } data-earning={ earning > 0 ? earning : null } data-expense={ expense > 0 ? expense : null } data-tax={ tax > 0 ? tax : null }>
-						<th className="index" scope="row">
-							{
-								index &&
-									index
-							}
-						</th>
-						<td className="date" data-value={ date && new Date( date ).toISOString().substring( 0, 10 ) }>
-							{
-								date &&
-									new Date( date ).toISOString().substring( 0, 10 )
-							}
-							<sub>
-								{
-									quarter &&
-										sprintf( __( 'Q%s', 'billy' ), quarter )
-								}
-							</sub>
-						</td>
-						<td className="description">
-							{
-								description &&
-									description
-							}
-						</td>
-						<td className="reference">
-							{
-								reference && !postLink &&
-									reference
-							}
-							{
-								reference && postLink &&
-									<a href={ postLink }>{ reference }</a>
-							}
-						</td>
-						<td className="amount earning" data-value={ earning > 0 ? earning : null }>
-							{
-								earning && earning > 0 &&
-									(
-										formatNumber( earning, locale )
-									)
-							}
-						</td>
-						<td className="amount expense" data-value={ expense > 0 ? expense : null }>
-							{
-								expense && expense > 0 &&
-									(
-										formatNumber( expense, locale )
-									)
-							}
-						</td>
-						<td className="amount tax" data-value={ tax > 0 ? tax : null }>
-							{
-								tax && tax > 0 &&
-									(
-										formatNumber( tax, locale )
-									)
-							}
-						</td>
-					</tr>
-				);
-		
-			},
-		}
-	],
+	deprecated: deprecatedAccountingInner,
 } );

@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.2
 Tested up to: 5.6
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -133,6 +133,10 @@ Please consider purchasing the premium add-on with the following features:
 
 == Upgrade Notice ==
 
+= 1.3.0 =
+* Upgrade third-party dependencies
+* Cleanup
+
 = 1.2.0 =
 * Upgrade third-party dependencies
 
@@ -149,6 +153,15 @@ Please consider purchasing the premium add-on with the following features:
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.3.0 =
+* Refactoring
+* Minor style updates to improve PDF output
+* Use browser internal PDF viewer instead of PDF.js viewer
+
+= 1.2.3 =
+* Refactored Meta
+* Replaced two wrong Gettext domains
 
 = 1.2.2 =
 * Code quality

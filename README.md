@@ -33,9 +33,6 @@ All PHP classes are stored in a separate directory **/inc**
 Some external dependencies need to be installed via Composer
 * `$ composer install`
 
-### PDF.js
-A [http://mozilla.github.io/pdf.js/getting_started/#download](generic build of PDF.js) is stored in a separate directory **/pdfjs**
-
 ### Blocks
 Blocks are stored in a separate directory **/blocks**
 * `$ npm install`
@@ -69,8 +66,6 @@ This code repository is not suitable for support requests. If you have a questio
 * PDF file generation
   * [mPDF](https://github.com/mpdf/mpdf), [GPLv2](https://github.com/mpdf/mpdf/blob/development/LICENSE.txt)
   * [Roboto Font](https://fonts.google.com/specimen/Roboto), [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0)
-* PDF file viewer
-  * [PDF.js](https://github.com/mozilla/pdf.js), [Apache License v2](https://github.com/mozilla/pdf.js/blob/master/LICENSE)
 
 ## Copyright & License
 Code and Documentation &copy; [them.es](https://them.es)

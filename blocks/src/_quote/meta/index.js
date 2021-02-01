@@ -84,7 +84,7 @@ registerBlockType( 'billy-blocks/quote-meta', {
 
 				<RawHTML>
 					{
-						sprintf( __( '<strong>%1$s</strong> <span>%2$s</span>', 'billy' ), ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
+						sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), ( label ? label : '' ), ( text ? text : __( 'N/A', 'billy' ) ) )
 					}
 				</RawHTML>
 			</>

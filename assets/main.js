@@ -126,6 +126,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 			var parentId = this.closest( '[id^="billy-"]' ).id;
 			
+			// Add iFrame: PDF-Viewer
 			if ( document.body.contains( document.querySelector( '#pdf-viewer' ) ) ) {
 				document.querySelector( '#pdf-viewer' ).scrollIntoView( { behavior: 'smooth' } );
 			} else {
@@ -134,10 +135,19 @@ document.addEventListener( 'DOMContentLoaded', function () {
 				preview.setAttribute( 'id', 'pdf-viewer' );
 				preview.style.width = '100%';
 				preview.style.height = '800px';
-				preview.style.margin = '0 auto';
+				preview.style.margin = '15px auto';
 				preview.style.border = 'none';
 				document.querySelector( '#' + parentId ).appendChild( preview ).scrollIntoView( { behavior: 'smooth' } );
 			}
+
+			// Add Download button
+			var link = document.createElement( 'a' );
+			link.setAttribute( 'href', this.dataset.iframesrc );
+			link.setAttribute( 'class', 'wp-block-button__link is-style-outline' );
+			link.setAttribute( 'download', '' );
+			link.setAttribute( 'title', 'Download' );
+			link.innerHTML = '<span class="dashicons dashicons-download" aria-hidden="true"></span>';
+			document.querySelector( '#' + parentId ).appendChild( link );
 		} );
 	}
 	

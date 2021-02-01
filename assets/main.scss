@@ -19,6 +19,12 @@
  */
 
 body {
+	&.admin-bar {
+		.pre-header {
+			top: 32px;
+		}
+	}
+
 	&[class*="single-billy-"] {
 		.entry-header,
 		.entry-title,
@@ -47,14 +53,14 @@ mark {
 .pre-header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 3rem;
-	padding-bottom: 1rem;
+	margin-bottom: 30px;
+	padding: 15px 0;
 	border-bottom: 1px dashed;
 	position: sticky;
 	top: 0;
 
-	.btn {
-		margin-right: 15px;
+	.wp-block-button {
+		margin: 0 15px 0 0 !important;
 	}
 }
 
@@ -223,7 +229,7 @@ mark {
 				text-align: initial;
 				white-space: nowrap;
 
-				&[colspan] {
+				&.align-right {
 					border: none;
 					text-align: right;
 				}

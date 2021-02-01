@@ -48,6 +48,16 @@ strong {
 	font-weight: bold;
 }
 
+.align-center {
+	text-align: center;
+}
+.align-left {
+	text-align: left;
+}
+.align-right {
+	text-align: right;
+}
+
 .alignwide {
 	display: block;
 	max-width: none;
@@ -70,8 +80,20 @@ strong {
 .details p {
 	margin: 0;
 }
-.metadata p {
+
+.metadata .label,
+.metadata .text {
+	display: block;
+	float: left;
+	width: 50%;
+	min-width: 50%;
 	font-size: small;
+}
+.metadata .label {
+	font-weight: bold;
+}
+.metadata .text {
+	float: right;
 }
 
 .intro {
@@ -82,7 +104,6 @@ strong {
 	margin: 40pt 0;
 	width: 100%;
 	border-collapse: collapse;
-	autosize: 1;/* https://mpdf.github.io/tables/tables.html#autosize */
 }
 .table th,
 .table td {

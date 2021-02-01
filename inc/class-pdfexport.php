@@ -141,8 +141,7 @@ class Billy_PDF_Export {
 				'fontdata'     => array(
 					'pdffont' => static::$pdffont,
 				),
-				'default_font' => 'pdffont',
-				'keep_table_proportions' => false,
+				'default_font'   => 'pdffont',
 			)
 		);
 
@@ -160,35 +159,39 @@ class Billy_PDF_Export {
 				$content .= render_block( $block );
 			}
 
-			// Start Workaround: Add spacing in tbody content to each <p>/<ul>/<ol>
-				$search_tags  = array(
-					'<p>',
-					'</p>',
-					'<ul>',
-					'</ul>',
-					'<ol>',
-					'</ol>',
-				);
-				$spacer       = '<hr style="margin: 2px 0; color: #FFF;">';
-				$replace_tags = array(
-					$spacer . '<p>',
-					'</p>' . $spacer,
-					$spacer . '<ul>',
-					'</ul>' . $spacer,
-					$spacer . '<ol>',
-					'</ol>' . $spacer,
-				);
+			// --> Start Workaround: Add spacing in tbody content to each <p>/<ul>/<ol>.
+			$search_tags  = array(
+				'<p>',
+				'</p>',
+				'<ul>',
+				'</ul>',
+				'<ol>',
+				'</ol>',
+			);
+			$spacer       = '<hr style="margin: 2px 0; color: #FFF;">';
+			$replace_tags = array(
+				$spacer . '<p>',
+				'</p>' . $spacer,
+				$spacer . '<ul>',
+				'</ul>' . $spacer,
+				$spacer . '<ol>',
+				'</ol>' . $spacer,
+			);
 
-				// Modify <tbody> content
-				preg_match( '/<tbody>(.*?)<\/tbody>/s', $content, $match );
-				$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
+			// Modify <tbody> content.
+			preg_match( '/<tbody>(.*?)<\/tbody>/s', $content, $match );
+			$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
 
-				// Replace <tbody> with modified content
-				$content = preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $content );
-			// End Workaround
+			// Replace <tbody> with modified content.
+			$content = preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $content );
+			// <-- End Workaround.
+
+			// Remove line breaks from content.
+			$content = preg_replace( '/\r|\n/', '', $content );
 
 			wp_reset_postdata();
 
+			// PDF footer.
 			$mpdf->SetHTMLFooter(
 				'<table class="footer" width="100%">
 					<tr>

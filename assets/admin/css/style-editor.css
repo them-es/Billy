@@ -99,6 +99,19 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 	font-weight: bold;
 }
 
+.date .label,
+.metadata .label,
+.date .text,
+.metadata .text {
+	font-size: smaller;
+	display: inline-block;
+}
+.date .label,
+.metadata .label {
+	font-weight: bold;
+	width: 40%;
+}
+
 .details {
 	margin-bottom: 90px;
 }
