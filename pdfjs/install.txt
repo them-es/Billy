@@ -1,6 +1,0 @@
-1. Download ZIP
-http://mozilla.github.io/pdf.js/getting_started/#download
-
-2. Extract in "/pdfjs"
-
-3. Remove "/pdfjs/web/compressed.tracemonkey-pldi-09.pdf" (1 MB)
