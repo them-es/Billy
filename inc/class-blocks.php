@@ -29,7 +29,13 @@ class Billy_Blocks {
 		//add_action( 'enqueue_block_assets', 'enqueue_block_assets' );
 
 		// Create Block categories.
-		add_filter( 'block_categories', array( $this, 'categories' ), 10, 2 );
+		if ( ! function_exists( 'get_default_block_categories' ) ) {
+			// < WordPress v5.8
+			add_filter( 'block_categories', array( $this, 'categories' ), 10, 2 );
+		} else {
+			// >= WordPress v5.8
+			add_filter( 'block_categories_all', array( $this, 'categories' ), 10, 2 );
+		}
 
 		// Serverside Render callback.
 		if ( function_exists( 'register_block_type' ) ) {
@@ -159,18 +165,16 @@ class Billy_Blocks {
 
 
 	/**
-	 * Add custom block category to default categories
-	 * https://wordpress.org/gutenberg/handbook/designers-developers/developers/filters/block-filters/#managing-block-categories
+	 * Add custom block category to default categories.
+	 * https://developer.wordpress.org/block-editor/reference-guides/filters/block-filters/#managing-block-categories
 	 */
-	public function categories( $categories, $post ) {
-		// if ( $post->post_type !== 'post' ) { return $categories; }
-
+	public function categories( $categories ) {
 		return array_merge(
 			$categories,
 			array(
 				array(
 					'slug'  => 'billy-blocks',
-					'title' => __( 'Billy Blocks', 'billy' ),
+					'title' => esc_html__( 'Billy Blocks', 'billy' ),
 				),
 			)
 		);
@@ -178,7 +182,7 @@ class Billy_Blocks {
 
 
 	/**
-	 * Server-side rendering
+	 * Server-side rendering.
 	 *
 	 * "billy-blocks/header"
 	 * "billy-blocks/theme-mod"
@@ -191,7 +195,7 @@ class Billy_Blocks {
 		$output = '<div class="pre-header d-print-none d-admin-none">';
 			$output .= '<div>';
 				// Print.
-				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . __( 'Print', 'billy' ) . '</button></span>';
+				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . esc_html__( 'Print', 'billy' ) . '</button></span>';
 				$output .= '&nbsp;';
 
 				// PDF export.
@@ -222,12 +226,12 @@ class Billy_Blocks {
 					// Debugging.
 					//print_r( esc_url_raw(get_rest_url( null, 'export/pdf/?id=' . get_the_id() . '&stylesheets=' . json_encode( $enqueued_styles ) ) ) );
 				}*/
-				$output .= '<span class="wp-block-button"><button data-iframesrc="' . esc_url( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( __( 'Export %s', 'billy' ), __( 'PDF', 'billy' ) ) . '</button></span>';
+				$output .= '<span class="wp-block-button"><button data-iframesrc="' . esc_url( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</button></span>';
 				$output .= '&nbsp;';
 
 				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
 					// Export table data as tab separated txt file.
-					$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( __( 'Export %s', 'billy' ), __( 'TSV', 'billy' ) ) . '</button></span>';
+					$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
 				}
 			$output .= '</div>';
 		$output .= '</div>';
@@ -238,7 +242,7 @@ class Billy_Blocks {
 	public function header_render_callback() {
 		$output = '<div class="header">';
 			if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
-				$output .= '<h1>' . get_the_date( 'Y' ) . '</h1>';
+				$output .= '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
 			} else {
 				$header_post = wp_get_recent_posts(
 					array(
@@ -254,7 +258,7 @@ class Billy_Blocks {
 						$output .= render_block( $block );
 					}
 				} else {
-					$output .= '<p class="components-notice is-error d-print-none"><a href="' . admin_url( 'post-new.php?post_type=billy-header' ) . '" class="components-notice__content edit-link">' . __( 'Please setup a global header.', 'billy' ) . '</a></p>';
+					$output .= '<p class="components-notice is-error d-print-none"><a href="' . esc_url( admin_url( 'post-new.php?post_type=billy-header' ) ) . '" class="components-notice__content edit-link">' . esc_html__( 'Please setup a global header.', 'billy' ) . '</a></p>';
 				}
 			}
 		$output .= '</div>';
@@ -277,13 +281,13 @@ class Billy_Blocks {
 		$value     = esc_attr( $attributes['themeMod'] );
 		$classname = esc_attr( $attributes['className'] );
 
-		return '<div class="thememod' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( $value, '<span class="d-none d-admin-block">' . sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', __( 'N/A', 'billy' ) ) . '</span>' ) ) . '</div>';
+		return '<div class="thememod' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( $value, '<span class="d-none d-admin-block">' . sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', esc_html__( 'N/A', 'billy' ) ) . '</span>' ) ) . '</div>';
 	}
 
 	public function date_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
-		return $this->meta_label_text_render_callback( __( 'Date', 'billy' ), get_the_date(), 'date' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Date', 'billy' ), get_the_date(), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 	public function invoicepaymentinformation_render_callback( $attributes, $content ) {
@@ -302,7 +306,7 @@ class Billy_Blocks {
 		$add_days  = esc_attr( get_theme_mod( 'payment_due_days', '14' ) );
 		$classname = esc_attr( $attributes['className'] );
 
-		return $this->meta_label_text_render_callback( __( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 	public function quoteinformation_render_callback( $attributes, $content ) {
@@ -315,7 +319,7 @@ class Billy_Blocks {
 		$add_days  = esc_attr( get_theme_mod( 'quote_valid_days', '30' ) );
 		$classname = esc_attr( $attributes['className'] );
 
-		return $this->meta_label_text_render_callback( __( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 

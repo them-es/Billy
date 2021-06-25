@@ -76,14 +76,17 @@ class Billy {
 	 * On load.
 	 */
 	public function __construct() {
-		$plugin_data = get_file_data( plugin_dir_path( __DIR__ ) . 'billy.php', array(
-			'Name'       => 'Plugin Name',
-			'Version'    => 'Version',
-			'TextDomain' => 'Text Domain',
-			'PluginURI'  => 'Plugin URI',
-			'AuthorURI'  => 'Author URI',
-		) );
-		$plugin_name = $plugin_data['Name'];
+		$plugin_data          = get_file_data(
+			plugin_dir_path( __DIR__ ) . 'billy.php',
+			array(
+				'Name'       => 'Plugin Name',
+				'Version'    => 'Version',
+				'TextDomain' => 'Text Domain',
+				'PluginURI'  => 'Plugin URI',
+				'AuthorURI'  => 'Author URI',
+			),
+		);
+		$plugin_name          = $plugin_data['Name'];
 		self::$plugin_name    = esc_attr( $plugin_data['Name'] );
 		self::$plugin_version = esc_attr( $plugin_data['Version'] );
 		self::$plugin_slug    = esc_attr( $plugin_data['TextDomain'] );
@@ -163,7 +166,7 @@ class Billy {
 	public function add_dashboard_widget() {
 		wp_add_dashboard_widget(
 			'billy_dashboard', // Widget slug.
-			sprintf( __( '%1$s %2$s', 'billy' ), self::$plugin_name, self::$plugin_version ), // Title.
+			sprintf( esc_html__( '%1$s %2$s', 'billy' ), self::$plugin_name, self::$plugin_version ), // Title.
 			array( $this, 'dashboard_widget' ) // Display function.
 		);
 	}
@@ -176,24 +179,24 @@ class Billy {
 		return '<table class="widefat">
 			<tbody>
 				<tr>
-					<td><strong>' . __( 'Locale', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( get_edit_profile_url() ) . '">' . esc_attr( self::$locale ) . '</a></td>
+					<td><strong>' . esc_html__( 'Locale', 'billy' ) . '</strong></td>
+					<td><a href="' . esc_url( get_edit_profile_url() ) . '">' . esc_html( self::$locale ) . '</a></td>
 				</tr>
 				<tr>
-					<td><strong>' . __( 'Currency', 'billy' ) . '</strong></td>
-					<td>' . esc_attr( self::$currency ) . '</td>
+					<td><strong>' . esc_html__( 'Currency', 'billy' ) . '</strong></td>
+					<td>' . esc_html( self::$currency ) . '</td>
 				</tr>
 				<tr>
-					<td><strong>' . __( 'Taxes', 'billy' ) . '</strong></td>
+					<td><strong>' . esc_html__( 'Taxes', 'billy' ) . '</strong></td>
 					<td>' . nl2br( get_theme_mod( 'taxrates' ) ) . '</td>
 				</tr>
 				<tr>
-					<td><strong>' . __( 'Current invoice number', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_attr( sprintf( __( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) ) . '</a></td>
+					<td><strong>' . esc_html__( 'Current invoice number', 'billy' ) . '</strong></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . sprintf( esc_html__( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) . '</a></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . __( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', __( 'Edit', 'billy' ) ) . '</a></p></td>
+					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . esc_attr__( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', esc_html__( 'Edit', 'billy' ) ) . '</a></p></td>
 				</tr>
 			</tbody>
 		</table>';
@@ -290,7 +293,7 @@ class Billy {
 		}
 
 		// Update title and slug.
-		$post_title            = __( 'Header', 'billy' );
+		$post_title            = esc_html__( 'Header', 'billy' );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = $post_title;
 
@@ -323,13 +326,14 @@ class Billy {
 				$invoicenumber = get_theme_mod( 'invoice_number', '0' );
 
 				// Compare date of previous invoice with current invoice. If the current invoice date has been set before the previous one modify the date.
-				$args = array(
-					'posts_per_page' => 1,
-					'post_type'      => 'billy-invoice',
-					'meta_key'       => '_invoice_number',
-					'meta_value'     => $invoicenumber,
+				$invoice_previouspost_query = new WP_Query(
+					array(
+						'posts_per_page' => 1,
+						'post_type'      => 'billy-invoice',
+						'meta_key'       => '_invoice_number',
+						'meta_value'     => $invoicenumber,
+					)
 				);
-				$invoice_previouspost_query     = new WP_Query( $args );
 				$invoice_previouspost_unix_time = strtotime( $invoice_previouspost_query->posts[0]->post_date );
 
 				if ( get_the_date( 'U', $post_id ) < $invoice_previouspost_unix_time ) {
@@ -361,7 +365,7 @@ class Billy {
 
 
 	/**
-	 * Post Type "Quote"
+	 * Post Type "Quote".
 	 *
 	 * After save/update:
 	 * - Change title
@@ -406,7 +410,7 @@ class Billy {
 		// (Optional) Add prefix.
 		$prefix = get_theme_mod( 'invoice_number_prefix', '#' );
 
-		return sprintf( __( '%1$s%2$03s', 'billy' ), $prefix, $invoicenumber );
+		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $invoicenumber );
 	}
 
 
@@ -515,9 +519,13 @@ class Billy {
 		load_plugin_textdomain( 'billy', false, plugin_basename( dirname( BILLY_PLUGIN_FILE ) ) . '/languages/' );
 
 		// Header.
-		register_post_type( 'billy-header',
+		register_post_type(
+			'billy-header',
 			array(
-				'labels'        => array( 'name' => sprintf( __( '%s Header', 'billy' ), self::$plugin_name ), 'singular_name' => sprintf( __( '%s Header', 'billy' ), self::$plugin_name ) ),
+				'labels'        => array(
+					'name'          => sprintf( esc_html__( '%s Header', 'billy' ), self::$plugin_name ),
+					'singular_name' => sprintf( esc_html__( '%s Header', 'billy' ), self::$plugin_name ),
+				),
 				'menu_icon'     => 'dashicons-editor-table',
 				'public'        => false,
 				'show_in_rest'  => true,
@@ -526,30 +534,65 @@ class Billy {
 				'show_ui'       => true,
 				'template_lock' => 'insert',
 				'template'      => array(
-					array( 'core/columns', array( 'align' => 'wide', ), array(
-						array( 'core/column', array(), array(
-							array( 'core/image', array() )
-						) ),
-						array( 'core/column', array(), array(
-							array( 'core/spacer', array() ),
-						) ),
-						array( 'core/column', array(), array(
-							// Theme mod: name.
-							array( 'billy-blocks/theme-mod', array( 'themeMod' => 'name', ) ),
-							// Theme mod: address.
-							array( 'billy-blocks/theme-mod', array( 'themeMod' => 'address', ) ),
-							// Theme mod: vat.
-							array( 'billy-blocks/theme-mod', array( 'themeMod' => 'vat', ) ),
-						) ),
-					) ),
+					array(
+						'core/columns',
+						array( 'align' => 'wide' ),
+						array(
+							array(
+								'core/column',
+								array(),
+								array(
+									array(
+										'core/image',
+										array(),
+									),
+								),
+							),
+							array(
+								'core/column',
+								array(),
+								array(
+									array(
+										'core/spacer',
+										array(),
+									),
+								),
+							),
+							array(
+								'core/column',
+								array(),
+								array(
+									// Theme mod: name.
+									array(
+										'billy-blocks/theme-mod',
+										array( 'themeMod' => 'name' ),
+									),
+									// Theme mod: address.
+									array(
+										'billy-blocks/theme-mod',
+										array( 'themeMod' => 'address' ),
+									),
+									// Theme mod: vat.
+									array(
+										'billy-blocks/theme-mod',
+										array( 'themeMod' => 'vat' ),
+									),
+								),
+							),
+						),
+					),
 				),
 			)
 		);
 
 		// Invoices.
-		register_post_type( 'billy-invoice',
+		register_post_type(
+			'billy-invoice',
 			array(
-				'labels'        => array( 'name' => __( 'Invoices', 'billy' ), 'singular_name' => __( 'Invoice', 'billy' ) ),
+				'labels'        => array(
+					'name'          => esc_html__( 'Invoices', 'billy' ),
+					'singular_name' => esc_html__( 'Invoice', 'billy' ),
+				),
 				'menu_icon'     => 'dashicons-tickets',
 				'public'        => true,
 				'show_in_rest'  => true,
@@ -559,63 +602,135 @@ class Billy {
 				'template_lock' => 'insert',
 				'template'      => array(
 					// Actions.
-					array( 'billy-blocks/invoice-actions', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/invoice-actions',
+						array( 'align' => 'wide' ),
+					),
 					// Header.
-					array( 'billy-blocks/header', array() ),
+					array(
+						'billy-blocks/header',
+						array(),
+					),
 					// Recipient address field.
-					array( 'core/columns', array( 'align' => 'wide', 'className' => 'details', ), array(
-						array( 'core/column', array( 'className' => 'addressee' ), array(
-							class_exists( 'Billy_Pro_Blocks' )
-							?
-							array( 'billy-blocks/contact-selector', array() )
-							:
-							// Static address field.
-							array( 'core/paragraph', array(
-								'placeholder' => __( 'Name', 'billy' ) . ' / ' . __( 'Company', 'billy' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '2' ) . "\n" . __( 'Country', 'billy' ),
-							) )
-						) ),
-						array( 'core/column', array(), array(
-							array( 'core/spacer', array() ),
-						) ),
-						array( 'core/column', array( 'className' => 'metadata' ), array(
-							// Autogenerated from previous entry.
-							array( 'billy-blocks/invoice-number' ),
-							// Postdate
-							array( 'billy-blocks/invoice-date' ),
-							// Postdate + ## days
-							array( 'billy-blocks/invoice-duedate' ),
-							// Meta field: Billing period
-							array( 'billy-blocks/invoice-meta', array( 'label' => __( 'Billing Period', 'billy' ), 'text' => '', ) ),
-						) ),
-					) ),
-					// Intro text
-					array( 'core/group', array( 'align' => 'wide', 'className' => 'intro', ), array(
-						array( 'core/paragraph', array(
-							'placeholder' => sprintf( __( '%s (optional)', 'billy' ), __( 'Intro text', 'billy' ) ) . "\n" . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
-						) ),
-					) ),
+					array(
+						'core/columns',
+						array(
+							'align'     => 'wide',
+							'className' => 'details',
+						),
+						array(
+							array(
+								'core/column',
+								array( 'className' => 'addressee' ),
+								array(
+									class_exists( 'Billy_Pro_Blocks' )
+									?
+									array(
+										'billy-blocks/contact-selector',
+										array(),
+									)
+									:
+									// Static address field.
+									array(
+										'core/paragraph',
+										array(
+											'placeholder' => __( 'Name', 'billy' ) . ' / ' . __( 'Company', 'billy' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '2' ) . "\n" . __( 'Country', 'billy' ),
+										),
+									),
+								),
+							),
+							array(
+								'core/column',
+								array(),
+								array(
+									array(
+										'core/spacer',
+										array(),
+									),
+								),
+							),
+							array(
+								'core/column',
+								array( 'className' => 'metadata' ),
+								array(
+									// Autogenerated from previous entry.
+									array( 'billy-blocks/invoice-number' ),
+									// Postdate.
+									array( 'billy-blocks/invoice-date' ),
+									// Postdate + ## days.
+									array( 'billy-blocks/invoice-duedate' ),
+									// Meta field: Billing period.
+									array(
+										'billy-blocks/invoice-meta',
+										array(
+											'label' => esc_html__( 'Billing Period', 'billy' ),
+											'text'  => '',
+										),
+									),
+								),
+							),
+						),
+					),
+					// Intro text.
+					array(
+						'core/group',
+						array(
+							'align'     => 'wide',
+							'className' => 'intro',
+						),
+						array(
+							array(
+								'core/paragraph',
+								array(
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Intro text', 'billy' ) ) . "\n" . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+								),
+							),
+						),
+					),
 					// Product or service details (table).
-					array( 'billy-blocks/invoice-table', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/invoice-table',
+						array(
+							'align' => 'wide',
+						),
+					),
 					// Payment Information, Notes.
-					array( 'core/group', array( 'align' => 'wide', 'className' => 'information', ), array(
-						array( 'core/heading', array(
-							'level'       => 3,
-							'placeholder' => __( 'Information', 'billy' ),
-							'content'     => __( 'Information', 'billy' ),
-						) ),
-						array( 'billy-blocks/invoice-paymentinformation' ),
-						array( 'core/paragraph', array(
-							'placeholder' => sprintf( __( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
-						) ),
-					) ),
+					array(
+						'core/group',
+						array(
+							'align'     => 'wide',
+							'className' => 'information',
+						),
+						array(
+							array(
+								'core/heading',
+								array(
+									'level'       => 3,
+									'placeholder' => esc_html__( 'Information', 'billy' ),
+									'content'     => esc_html__( 'Information', 'billy' ),
+								),
+							),
+							array( 'billy-blocks/invoice-paymentinformation' ),
+							array(
+								'core/paragraph',
+								array(
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
+								),
+							),
+						),
+					),
 				),
 			)
 		);
 
 		// Quotes.
-		register_post_type( 'billy-quote',
+		register_post_type(
+			'billy-quote',
 			array(
-				'labels'        => array( 'name' => __( 'Quotes', 'billy' ), 'singular_name' => __( 'Quote', 'billy' ) ),
+				'labels'        => array(
+					'name'          => esc_html__( 'Quotes', 'billy' ),
+					'singular_name' => esc_html__( 'Quote', 'billy' ),
+				),
 				'menu_icon'     => 'dashicons-tickets-alt',
 				'public'        => true,
 				'show_in_rest'  => true,
@@ -625,61 +740,125 @@ class Billy {
 				'template_lock' => 'insert',
 				'template'      => array(
 					// Actions.
-					array( 'billy-blocks/quote-actions', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/quote-actions',
+						array( 'align' => 'wide' ),
+					),
 					// Header.
-					array( 'billy-blocks/header', array() ),
+					array(
+						'billy-blocks/header',
+						array(),
+					),
 					// Recipient address field.
-					array( 'core/columns', array( 'align' => 'wide', 'className' => 'details', ), array(
-						array( 'core/column', array( 'className' => 'addressee' ), array(
-							class_exists( 'Billy_Pro_Blocks' )
-							?
-							array( 'billy-blocks/contact-selector', array() )
-							:
-							// Static address field.
-							array( 'core/paragraph', array(
-								'placeholder' => __( 'Name', 'billy' ) . ' / ' . __( 'Company', 'billy' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '2' ) . "\n" . __( 'Country', 'billy' ),
-							) )
-						) ),
-						array( 'core/column', array(), array(
-							array( 'core/spacer', array() ),
-						) ),
-						array( 'core/column', array( 'className' => 'metadata' ), array(
-							// Postdate.
-							array( 'billy-blocks/quote-date' ),
-							// Postdate + ## days.
-							array( 'billy-blocks/quote-validuntildate' ),
-							// Meta field: Reference
-							array( 'billy-blocks/quote-meta', array( 'label' => __( 'Reference', 'billy' ), 'text' => '', ) ),
-						) ),
-					) ),
-					// Intro text
-					array( 'core/group', array( 'align' => 'wide', 'className' => 'intro', ), array(
-						array( 'core/paragraph', array(
-							'placeholder' => sprintf( __( '%s (optional)', 'billy' ), __( 'Intro text', 'billy' ) ) . "\n" . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
-						) ),
-					) ),
+					array(
+						'core/columns',
+						array(
+							'align'     => 'wide',
+							'className' => 'details',
+						),
+						array(
+							array(
+								'core/column',
+								array( 'className' => 'addressee' ),
+								array(
+									class_exists( 'Billy_Pro_Blocks' )
+									?
+									array( 'billy-blocks/contact-selector', array() )
+									:
+									// Static address field.
+									array(
+										'core/paragraph',
+										array(
+											'placeholder' => __( 'Name', 'billy' ) . ' / ' . __( 'Company', 'billy' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '2' ) . "\n" . __( 'Country', 'billy' ),
+										),
+									),
+								),
+							),
+							array(
+								'core/column',
+								array(),
+								array(
+									array( 'core/spacer', array() ),
+								),
+							),
+							array(
+								'core/column',
+								array( 'className' => 'metadata' ),
+								array(
+									// Postdate.
+									array( 'billy-blocks/quote-date' ),
+									// Postdate + ## days.
+									array( 'billy-blocks/quote-validuntildate' ),
+									// Meta field: Reference.
+									array(
+										'billy-blocks/quote-meta',
+										array(
+											'label' => esc_html__( 'Reference', 'billy' ),
+											'text'  => '',
+										),
+									),
+								),
+							),
+						),
+					),
+					// Intro text.
+					array(
+						'core/group',
+						array(
+							'align'     => 'wide',
+							'className' => 'intro',
+						),
+						array(
+							array(
+								'core/paragraph',
+								array(
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Intro text', 'billy' ) ) . "\n" . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+								),
+							),
+						),
+					),
 					// Product or service details (table).
-					array( 'billy-blocks/quote-table', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/quote-table',
+						array( 'align' => 'wide' ),
+					),
 					// Quote Information, Notes.
-					array( 'core/group', array( 'align' => 'wide', 'className' => 'information', ), array(
-						array( 'core/heading', array(
-							'level'       => 3,
-							'placeholder' => __( 'Information', 'billy' ),
-							'content'     => __( 'Information', 'billy' ),
-						) ),
-						array( 'billy-blocks/quote-information' ),
-						array( 'core/paragraph', array(
-							'placeholder' => sprintf( __( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
-						) ),
-					) ),
+					array(
+						'core/group',
+						array(
+							'align'     => 'wide',
+							'className' => 'information',
+						),
+						array(
+							array(
+								'core/heading',
+								array(
+									'level'       => 3,
+									'placeholder' => esc_html__( 'Information', 'billy' ),
+									'content'     => esc_html__( 'Information', 'billy' ),
+								),
+							),
+							array( 'billy-blocks/quote-information' ),
+							array(
+								'core/paragraph',
+								array(
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
+								),
+							),
+						),
+					),
 				),
 			)
 		);
 
 		// Accounting.
-		register_post_type( 'billy-accounting',
+		register_post_type(
+			'billy-accounting',
 			array(
-				'labels'        => array( 'name' => __( 'Accounting', 'billy' ), 'singular_name' => __( 'Accounting', 'billy' ) ),
+				'labels'        => array(
+					'name'          => esc_html__( 'Accounting', 'billy' ),
+					'singular_name' => esc_html__( 'Accounting', 'billy' ),
+				),
 				'menu_icon'     => 'dashicons-book-alt',
 				'public'        => true,
 				'show_in_rest'  => true,
@@ -689,15 +868,27 @@ class Billy {
 				'template_lock' => 'insert',
 				'template'      => array(
 					// Actions.
-					array( 'billy-blocks/accounting-actions', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/accounting-actions',
+						array( 'align' => 'wide' ),
+					),
 					// Header.
-					array( 'billy-blocks/header', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/header',
+						array( 'align' => 'wide' ),
+					),
 					// Table.
-					array( 'billy-blocks/accounting-table', array( 'align' => 'wide', ) ),
+					array(
+						'billy-blocks/accounting-table',
+						array( 'align' => 'wide' ),
+					),
 					// Notes.
-					array( 'core/paragraph', array(
-						'placeholder' => sprintf( __( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
-					) ),
+					array(
+						'core/paragraph',
+						array(
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
+						),
+					),
 				),
 			)
 		);
@@ -744,25 +935,28 @@ class Billy {
 
 		// Scripts.
 		wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
-		wp_add_inline_script( 'billy-script', 'var globalDataBilly = {
-			postId: "' .  get_the_ID() . '",
-			wpAdmin: "' . get_dashboard_url() . '",
-			currency: "' . self::$currency . '",
-			locale: "' . self::$locale . '",
-			translations: {
-				earnings: "' . __( 'Earnings', 'billy' ) . '",
-				expenses: "' . __( 'Expenses', 'billy' ) . '",
-			},
-		};' );
+		wp_add_inline_script(
+			'billy-script',
+			'var globalDataBilly = {
+				postId: "' .  get_the_ID() . '",
+				wpAdmin: "' . get_dashboard_url() . '",
+				currency: "' . self::$currency . '",
+				locale: "' . self::$locale . '",
+				translations: {
+					earnings: "' . esc_html__( 'Earnings', 'billy' ) . '",
+					expenses: "' . esc_html__( 'Expenses', 'billy' ) . '",
+				},
+			};'
+		);
 	}
 
 
 	public function enqueue_admin_assets() {
 		$theme_mods = array(
-			'name'     => __( 'Name', 'billy' ),
-			'address'  => __( 'Address', 'billy' ),
-			'vat'      => __( 'VAT', 'billy' ),
-			'currency' => __( 'Currency', 'billy' ),
+			'name'     => esc_html__( 'Name', 'billy' ),
+			'address'  => esc_html__( 'Address', 'billy' ),
+			'vat'      => esc_html__( 'VAT', 'billy' ),
+			'currency' => esc_html__( 'Currency', 'billy' ),
 		);
 		$theme_mod_options = '';
 		foreach ( $theme_mods as $key => $value ) {
@@ -782,14 +976,16 @@ class Billy {
 		}
 
 		// Styles.
-		wp_enqueue_style( 'billy-editor-style', self::$plugin_url . 'assets/admin/css/style-editor.css' );
+		wp_enqueue_style( 'billy-editor-style', self::$plugin_url . 'assets/admin/css/style-editor.css', array(), self::$plugin_version );
 		if ( is_rtl() ) {
-			wp_enqueue_style( 'billy-editor-rtl-style', self::$plugin_url . 'assets/admin/css/style-editor-rtl.css' );
+			wp_enqueue_style( 'billy-editor-rtl-style', self::$plugin_url . 'assets/admin/css/style-editor-rtl.css', array(), self::$plugin_version );
 		}
 
 		// Scripts.
 		wp_enqueue_script( 'billy-adminscripts', self::$plugin_url . 'assets/admin/js/admin.js', array(), self::$plugin_version, true );
-		wp_add_inline_script( 'billy-adminscripts', 'var globalDataBilly = {
+		wp_add_inline_script(
+			'billy-adminscripts',
+			'var globalDataBilly = {
 				wpAdmin: "' . get_dashboard_url() . '",
 				postId: "' . get_the_ID() . '",
 				currency: "' . self::$currency . '",
@@ -808,201 +1004,284 @@ class Billy {
 		/**
 		 * Initialize panel.
 		 */
-		$wp_customize->add_panel( 'billy_setup_panel', array(
-			'title'       => self::$plugin_name,
-			'description' => __( 'Plugin Setup', 'billy' ),
-		) );
+		$wp_customize->add_panel(
+			'billy_setup_panel',
+			array(
+				'title'       => self::$plugin_name,
+				'description' => esc_html__( 'Plugin Setup', 'billy' ),
+			)
+		);
 
 		/**
 		 * Initialize sections.
 		 */
-		$wp_customize->add_section( 'billy_general_section', array(
-			'title'    => __( 'General', 'billy' ),
-			'priority' => 1,
-			'panel'    => 'billy_setup_panel',
-		) );
+		$wp_customize->add_section(
+			'billy_general_section',
+			array(
+				'title'    => esc_html__( 'General', 'billy' ),
+				'priority' => 1,
+				'panel'    => 'billy_setup_panel',
+			)
+		);
 
-		$wp_customize->add_section( 'billy_quote_section', array(
-			'title'    => __( 'Quote', 'billy' ),
-			'priority' => 2,
-			'panel'    => 'billy_setup_panel',
-		) );
+		$wp_customize->add_section(
+			'billy_quote_section',
+			array(
+				'title'    => esc_html__( 'Quote', 'billy' ),
+				'priority' => 2,
+				'panel'    => 'billy_setup_panel',
+			)
+		);
 
-		$wp_customize->add_section( 'billy_invoice_section', array(
-			'title'    => __( 'Invoice', 'billy' ),
-			'priority' => 3,
-			'panel'    => 'billy_setup_panel',
-		) );
+		$wp_customize->add_section(
+			'billy_invoice_section',
+			array(
+				'title'    => esc_html__( 'Invoice', 'billy' ),
+				'priority' => 3,
+				'panel'    => 'billy_setup_panel',
+			)
+		);
 
 		/**
 		 * Controls.
 		 */
 		// Name.
-		$wp_customize->add_setting( 'name', array(
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-		$wp_customize->add_control( 'name', array(
-			'type'     => 'text',
-			'label'    => __( 'Name', 'billy' ),
-			'section'  => 'billy_general_section',
-			'settings' => 'name',
-			'priority' => 2,
-		) );
+		$wp_customize->add_setting(
+			'name',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'name',
+			array(
+				'type'     => 'text',
+				'label'    => esc_html__( 'Name', 'billy' ),
+				'section'  => 'billy_general_section',
+				'settings' => 'name',
+				'priority' => 2,
+			)
+		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'name' ) ) ) {
 			set_theme_mod( 'name', get_bloginfo( 'name' ) );
 		}
 
 		// Address.
-		$wp_customize->add_setting( 'address', array(
-			'sanitize_callback' => 'wp_kses',
-		) );
-		$wp_customize->add_control( 'address', array(
-			'type'     => 'textarea',
-			'label'    => __( 'Address', 'billy' ),
-			'section'  => 'billy_general_section',
-			'settings' => 'address',
-			'priority' => 3,
-		) );
+		$wp_customize->add_setting(
+			'address',
+			array(
+				'sanitize_callback' => 'wp_kses',
+			)
+		);
+		$wp_customize->add_control(
+			'address',
+			array(
+				'type'     => 'textarea',
+				'label'    => esc_html__( 'Address', 'billy' ),
+				'section'  => 'billy_general_section',
+				'settings' => 'address',
+				'priority' => 3,
+			)
+		);
 
 		// VAT.
-		$wp_customize->add_setting( 'vat', array(
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-		$wp_customize->add_control( 'vat', array(
-			'type'        => 'text',
-			'label'       => __( 'VAT', 'billy' ),
-			'description' => __( 'Enter your VAT identification number or Taxpayer ID', 'billy' ),
-			'section'     => 'billy_general_section',
-			'settings'    => 'vat',
-			'priority'    => 4,
-		) );
+		$wp_customize->add_setting(
+			'vat',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'vat',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'VAT', 'billy' ),
+				'description' => esc_html__( 'Enter your VAT identification number or Taxpayer ID', 'billy' ),
+				'section'     => 'billy_general_section',
+				'settings'    => 'vat',
+				'priority'    => 4,
+			)
+		);
 
 		// Currency.
-		$wp_customize->add_setting( 'currency', array(
-			'sanitize_callback' => 'sanitize_text_field',
-			'validate_callback' => array( $this, 'validate_currency' ),
-		) );
-		$wp_customize->add_control( 'currency', array(
-			'type'        => 'text',
-			'label'       => __( 'Currency Code', 'billy' ),
-			'description' => 'https://w.wiki/Fgw' . '<br>' . __( 'Caution: Any changes made here may affect existing entries. Create a backup first!', 'billy' ),
-			'section'     => 'billy_general_section',
-			'settings'    => 'currency',
-			'priority'    => 5,
-		) );
+		$wp_customize->add_setting(
+			'currency',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+				'validate_callback' => array( $this, 'validate_currency' ),
+			)
+		);
+		$wp_customize->add_control(
+			'currency',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Currency Code', 'billy' ),
+				'description' => 'https://w.wiki/Fgw' . '<br>' . esc_html__( 'Caution: Any changes made here may affect existing entries. Create a backup first!', 'billy' ),
+				'section'     => 'billy_general_section',
+				'settings'    => 'currency',
+				'priority'    => 5,
+			)
+		);
 
 		// Taxes.
-		$wp_customize->add_setting( 'taxrates', array(
-			'sanitize_callback' => 'wp_kses',
-			'validate_callback' => array( $this, 'validate_taxrates' ),
-		) );
-		$wp_customize->add_control( 'taxrates', array(
-			'type'        => 'textarea',
-			'label'       => __( 'Tax Rates', 'billy' ),
-			'description' => sprintf( __( 'Enter the taxrates separated by newline: e.g. %s', 'billy' ), '10%
-			20%' ) . '<br>' . __( 'Caution: Any changes made here may affect existing entries. Create a backup first!', 'billy' ),
-			'section'     => 'billy_general_section',
-			'settings'    => 'taxrates',
-			'priority'    => 6,
-		) );
+		$wp_customize->add_setting(
+			'taxrates',
+			array(
+				'sanitize_callback' => 'wp_kses',
+				'validate_callback' => array( $this, 'validate_taxrates' ),
+			)
+		);
+		$wp_customize->add_control(
+			'taxrates',
+			array(
+				'type'        => 'textarea',
+				'label'       => esc_html__( 'Tax Rates', 'billy' ),
+				'description' => sprintf(
+					esc_html__( 'Enter the taxrates separated by newline: e.g. %s', 'billy' ),
+					'10%
+			20%'
+				) . '<br>' . esc_html__( 'Caution: Any changes made here may affect existing entries. Create a backup first!', 'billy' ),
+				'section'     => 'billy_general_section',
+				'settings'    => 'taxrates',
+				'priority'    => 6,
+			)
+		);
 
 		// Invoice number prefix.
-		$wp_customize->add_setting( 'invoice_number_prefix', array(
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-		$wp_customize->add_control( 'invoice_number_prefix', array(
-			'type'     => 'text',
-			'label'    => __( 'Invoice number: Prefix', 'billy' ),
-			'section'  => 'billy_invoice_section',
-			'settings' => 'invoice_number_prefix',
-			'priority' => 1,
-		) );
+		$wp_customize->add_setting(
+			'invoice_number_prefix',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'invoice_number_prefix',
+			array(
+				'type'     => 'text',
+				'label'    => esc_html__( 'Invoice number: Prefix', 'billy' ),
+				'section'  => 'billy_invoice_section',
+				'settings' => 'invoice_number_prefix',
+				'priority' => 1,
+			)
+		);
 
 		// Invoice number start.
-		$wp_customize->add_setting( 'invoice_number', array(
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-		$wp_customize->add_control( 'invoice_number', array(
-			'type'        => 'text',
-			'label'       => __( 'Current invoice number', 'billy' ),
-			'description' => __( 'Upcoming invoice numbers will be autoincremented based on this value!', 'billy' ),
-			'section'     => 'billy_invoice_section',
-			'settings'    => 'invoice_number',
-			'priority'    => 2,
-		) );
+		$wp_customize->add_setting(
+			'invoice_number',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'invoice_number',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Current invoice number', 'billy' ),
+				'description' => esc_html__( 'Upcoming invoice numbers will be autoincremented based on this value!', 'billy' ),
+				'section'     => 'billy_invoice_section',
+				'settings'    => 'invoice_number',
+				'priority'    => 2,
+			)
+		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'invoice_number' ) ) ) {
-			$latest_invoices = wp_get_recent_posts( array(
-				'numberposts' => 1,
-				'post_status' => 'private',
-				'post_type'   => 'billy-invoice',
-			) );
+			$latest_invoices = wp_get_recent_posts(
+				array(
+					'numberposts' => 1,
+					'post_status' => 'private',
+					'post_type'   => 'billy-invoice',
+				)
+			);
 
 			set_theme_mod( 'invoice_number', ( $latest_invoices ? get_post_meta( $latest_invoices[0]['ID'], '_invoice_number', true ) : '0' ) );
 		}
 
 		// Payment is due within ## days.
-		$wp_customize->add_setting( 'payment_due_days', array(
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-		$wp_customize->add_control( 'payment_due_days', array(
-			'type'     => 'number',
-			'label'    => __( 'Payment due within # days', 'billy' ),
-			'section'  => 'billy_invoice_section',
-			'settings' => 'payment_due_days',
-			'priority' => 3,
-		) );
+		$wp_customize->add_setting(
+			'payment_due_days',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'payment_due_days',
+			array(
+				'type'     => 'number',
+				'label'    => esc_html__( 'Payment due within # days', 'billy' ),
+				'section'  => 'billy_invoice_section',
+				'settings' => 'payment_due_days',
+				'priority' => 3,
+			)
+		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'payment_due_days' ) ) ) {
 			set_theme_mod( 'payment_due_days', '14' );
 		}
 
 		// Payment Information.
-		$wp_customize->add_setting( 'payment_information', array(
-			'sanitize_callback' => 'wp_kses_post',
-		) );
-		$wp_customize->add_control( 'payment_information', array(
-			'type'        => 'textarea',
-			'label'       => __( 'Payment Information', 'billy' ),
-			'description' => __( 'Add the payment instructions and link to your terms.', 'billy' ),
-			'section'     => 'billy_invoice_section',
-			'settings'    => 'payment_information',
-			'priority'    => 4,
-		) );
+		$wp_customize->add_setting(
+			'payment_information',
+			array(
+				'sanitize_callback' => 'wp_kses_post',
+			)
+		);
+		$wp_customize->add_control(
+			'payment_information',
+			array(
+				'type'        => 'textarea',
+				'label'       => esc_html__( 'Payment Information', 'billy' ),
+				'description' => esc_html__( 'Add the payment instructions and link to your terms.', 'billy' ),
+				'section'     => 'billy_invoice_section',
+				'settings'    => 'payment_information',
+				'priority'    => 4,
+			)
+		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'payment_information' ) ) ) {
-			set_theme_mod( 'payment_information', __( 'Thank you for your business!', 'billy' ) );
+			set_theme_mod( 'payment_information', esc_html__( 'Thank you for your business!', 'billy' ) );
 		}
 
 		// Quote Information.
-		$wp_customize->add_setting( 'quote_information', array(
-			'sanitize_callback' => 'wp_kses_post',
-		) );
-		$wp_customize->add_control( 'quote_information', array(
-			'type'        => 'textarea',
-			'label'       => __( 'Quote Information', 'billy' ),
-			'description' => __( 'Inform your contacts about special terms, quote expiration clauses, etc.', 'billy' ),
-			'section'     => 'billy_quote_section',
-			'settings'    => 'quote_information',
-			'priority'    => 1,
-		) );
+		$wp_customize->add_setting(
+			'quote_information',
+			array(
+				'sanitize_callback' => 'wp_kses_post',
+			)
+		);
+		$wp_customize->add_control(
+			'quote_information',
+			array(
+				'type'        => 'textarea',
+				'label'       => esc_html__( 'Quote Information', 'billy' ),
+				'description' => esc_html__( 'Inform your contacts about special terms, quote expiration clauses, etc.', 'billy' ),
+				'section'     => 'billy_quote_section',
+				'settings'    => 'quote_information',
+				'priority'    => 1,
+			)
+		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'quote_information' ) ) ) {
-			set_theme_mod( 'quote_information', __( 'We will be happy to answer any questions you may have!', 'billy' ) );
+			set_theme_mod( 'quote_information', esc_html__( 'We will be happy to answer any questions you may have!', 'billy' ) );
 		}
 
 		// Quote is valid for ## days.
-		$wp_customize->add_setting( 'quote_valid_days', array(
-			'sanitize_callback' => 'sanitize_text_field',
-		) );
-		$wp_customize->add_control( 'quote_valid_days', array(
-			'type'     => 'number',
-			'label'    => __( 'Quote valid for # days', 'billy' ),
-			'section'  => 'billy_quote_section',
-			'settings' => 'quote_valid_days',
-			'priority' => 2,
-		) );
+		$wp_customize->add_setting(
+			'quote_valid_days',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'quote_valid_days',
+			array(
+				'type'     => 'number',
+				'label'    => esc_html__( 'Quote valid for # days', 'billy' ),
+				'section'  => 'billy_quote_section',
+				'settings' => 'quote_valid_days',
+				'priority' => 2,
+			)
+		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'quote_valid_days' ) ) ) {
 			set_theme_mod( 'quote_valid_days', '30' );
@@ -1015,7 +1294,7 @@ class Billy {
 	 */
 	public function validate_currency( $validity, $value ) {
 		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
-			$validity->add( 'no_valid_currency', __( 'Please provide a valid currency format', 'billy' ) );
+			$validity->add( 'no_valid_currency', esc_html__( 'Please provide a valid currency format', 'billy' ) );
 		}
 
 		return $validity;
@@ -1033,7 +1312,7 @@ class Billy {
 			}
 
 			if ( $wrong ) {
-				$validity->add( 'no_valid_taxrates', __( 'Please separate the taxrates by newline and don\'t forget to append the "%" sign to each value.', 'billy' ) );
+				$validity->add( 'no_valid_taxrates', esc_html__( 'Please separate the taxrates by newline and don\'t forget to append the "%" sign to each value.', 'billy' ) );
 			}
 		}
 
