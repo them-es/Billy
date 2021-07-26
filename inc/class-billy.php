@@ -113,8 +113,9 @@ class Billy {
 		// Dashboard widget.
 		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ), 998 );
 
-		// Enqueue Assets.
+		// Enqueue Frontend assets.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 998 );
+		// Enqueue Backend assets.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ), 998 );
 
 		// Theme Customizer.
@@ -925,29 +926,41 @@ class Billy {
 	 * Enqueue scripts and styles.
 	 */
 	public function enqueue_assets() {
-		// Styles.
-		wp_enqueue_style( 'dashicons' );
+		global $post;
 
-		wp_enqueue_style( 'billy-style', self::$plugin_url . 'assets/css/main.css', array(), self::$plugin_version );
-		if ( is_rtl() ) {
-			wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'assets/css/rtl.css', array(), self::$plugin_version );
+		// Only enqueue when post contains a Billy block.
+		if ( $post && has_blocks( $post->post_content ) ) {
+			$blocks = parse_blocks( $post->post_content );
+			foreach ( $blocks as $block ) {
+				if ( false !== strpos( $block['blockName'], 'billy-blocks' ) ) {
+					// Styles.
+					wp_enqueue_style( 'dashicons' );
+
+					wp_enqueue_style( 'billy-style', self::$plugin_url . 'assets/css/main.css', array(), self::$plugin_version );
+					if ( is_rtl() ) {
+						wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'assets/css/rtl.css', array(), self::$plugin_version );
+					}
+
+					// Scripts.
+					wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
+					wp_add_inline_script(
+						'billy-script',
+						'var globalDataBilly = {
+							postId: "' .  get_the_ID() . '",
+							wpAdmin: "' . get_dashboard_url() . '",
+							currency: "' . self::$currency . '",
+							locale: "' . self::$locale . '",
+							translations: {
+								earnings: "' . esc_html__( 'Earnings', 'billy' ) . '",
+								expenses: "' . esc_html__( 'Expenses', 'billy' ) . '",
+							},
+						};'
+					);
+
+					break;
+				}
+			}
 		}
-
-		// Scripts.
-		wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
-		wp_add_inline_script(
-			'billy-script',
-			'var globalDataBilly = {
-				postId: "' .  get_the_ID() . '",
-				wpAdmin: "' . get_dashboard_url() . '",
-				currency: "' . self::$currency . '",
-				locale: "' . self::$locale . '",
-				translations: {
-					earnings: "' . esc_html__( 'Earnings', 'billy' ) . '",
-					expenses: "' . esc_html__( 'Expenses', 'billy' ) . '",
-				},
-			};'
-		);
 	}
 
 

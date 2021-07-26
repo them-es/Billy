@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.2
 Tested up to: 5.8
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -133,6 +133,9 @@ Please consider purchasing the premium add-on with the following features:
 
 == Upgrade Notice ==
 
+= 1.3.3 =
+* Upgrade third-party dependencies
+
 = 1.3.2 =
 * WordPress 5.8+: Fix PHP notice in 'block_categories'
 * Upgrade third-party dependencies
@@ -161,6 +164,9 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.3.3 =
+* Enqueue frontend assets only when necessary
+
 = 1.3.2 =
 * Compatibility with WordPress 5.8
 * Coding Standards
@@ -171,7 +177,7 @@ Please consider purchasing the premium add-on with the following features:
 = 1.3.0 =
 * Refactoring
 * Minor style updates to improve PDF output
-* Use browser internal PDF viewer instead of PDF.js viewer
+* Removed PDF.js views: Use browser internal PDF viewer via iframe instead
 
 = 1.2.3 =
 * Refactored Meta
