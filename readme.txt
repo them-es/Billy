@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.2
 Tested up to: 5.8
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -133,6 +133,9 @@ Please consider purchasing the premium add-on with the following features:
 
 == Upgrade Notice ==
 
+= 1.3.4 =
+* Upgrade third-party dependencies
+
 = 1.3.3 =
 * Upgrade third-party dependencies
 
@@ -163,6 +166,10 @@ Please consider purchasing the premium add-on with the following features:
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.3.4 =
+* Numeric invoice numbers
+* Autoincrement invoice number function has been rewritten using get_previous_post()
 
 = 1.3.3 =
 * Enqueue frontend assets only when necessary

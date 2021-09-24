@@ -299,7 +299,7 @@ class Billy_Blocks {
 	public function invoicenumber_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
-		return $this->meta_label_text_render_callback( __( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
 	public function invoiceduedate_render_callback( $attributes, $content ) {

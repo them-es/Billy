@@ -206,7 +206,7 @@ class Billy {
 		return '<table class="footer">
 			<tbody>
 				<tr>
-					<td><p>' . ( class_exists( 'Billy_Pro' ) ? '<small>' . sprintf( __( 'Thank you for purchasing %s!', 'billy' ), '<strong>Billy Pro</strong> <span class="dashicons dashicons-smiley" aria-hidden="true"></span>' ) . '</small>' : '<strong><a href="' . esc_url( self::$billy_url ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Get the <u>Pro</u> version', 'billy' ), '<span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><small>' . __( 'Premium add-on with Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more.', 'billy' ) . '</small></p>' ) . '<hr><p><strong><a href="' . esc_url( self::$plugin_uri ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Please rate this Plugin', 'billy' ), ' <span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span></p></td>
+					<td><p>' . ( class_exists( 'Billy_Pro' ) ? '<small>' . sprintf( __( 'Thank you for purchasing %s!', 'billy' ), '<strong>Billy Pro</strong> <span class="dashicons dashicons-smiley" aria-hidden="true"></span>' ) . '</small>' : '<strong><a href="' . esc_url( self::$billy_url ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Get the <u>Pro</u> version', 'billy' ), '<span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><small>' . __( 'Premium add-on with Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more.', 'billy' ) . '</small></p>' ) . '<hr><p><strong><a href="' . esc_url( 'https://wordpress.org/support/plugin/' . self::$plugin_slug . '/reviews/?rate=5#new-post' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Please rate this Plugin', 'billy' ), ' <span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span></p></td>
 					<td> </td>
 					<td><a href="' . esc_url( self::$billy_url ) . '"><img src="' . esc_url( self::$plugin_url ) . 'assets/img/logo.png" class="logo" alt="Billy" /></a></td>
 				</tr>
@@ -319,29 +319,21 @@ class Billy {
 
 		$invoicenumber = get_post_meta( $post_id, '_invoice_number', true );
 
-		// (Optional) Update post status if unpublished: https://wordpress.org/support/article/post-status
+		// Update post status if unpublished: https://wordpress.org/support/article/post-status
 		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ) ) ) {
 			// New?
-			if ( empty( $invoicenumber ) ) {
-				// Get current number.
-				$invoicenumber = get_theme_mod( 'invoice_number', '0' );
+			if ( ! is_numeric( $invoicenumber ) ) {
+				global $post;
+				$post = get_post( $post_id );
 
-				// Compare date of previous invoice with current invoice. If the current invoice date has been set before the previous one modify the date.
-				$invoice_previouspost_query = new WP_Query(
-					array(
-						'posts_per_page' => 1,
-						'post_type'      => 'billy-invoice',
-						'meta_key'       => '_invoice_number',
-						'meta_value'     => $invoicenumber,
-					)
-				);
-				$invoice_previouspost_unix_time = strtotime( $invoice_previouspost_query->posts[0]->post_date );
+				$get_prev = get_previous_post();
 
-				if ( get_the_date( 'U', $post_id ) < $invoice_previouspost_unix_time ) {
-					$post_date                = date_i18n( 'Y-m-d H:i:s', (int) ++$invoice_previouspost_unix_time );
-
-					$my_post['post_date']     = $post_date;
-					$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
+				if ( $get_prev ) {
+					// Get invoice number (previous invoice).
+					$invoicenumber = get_post_meta( $get_prev->ID, '_invoice_number', true );
+				} else {
+					// Get current invoice number (Customizer).
+					$invoicenumber = get_theme_mod( 'invoice_number', '0' );
 				}
 
 				// Increment +1.
@@ -351,13 +343,23 @@ class Billy {
 				update_post_meta( $post_id, '_invoice_number', $invoicenumber );
 				// Update Customizer value.
 				set_theme_mod( 'invoice_number', $invoicenumber );
+
+				// Update post date: Current invoice must be published after previous invoice.
+				$get_prev_unix_time = strtotime( $get_prev->post_date );
+
+				if ( get_the_date( 'U', $post_id ) < $get_prev_unix_time ) {
+					$post_date                = date_i18n( 'Y-m-d H:i:s', (int) ++$get_prev_unix_time );
+
+					$my_post['post_date']     = $post_date;
+					$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
+				}
 			}
 
 			$my_post['post_status'] = 'private';
 		}
 
 		// Update title and slug.
-		$post_title = ( empty( $invoicenumber ) ? sprintf( '%1$s (%2$s)', $this->get_invoicenumber( $post_id ), __( 'Pending', 'billy' ) ) : $this->get_invoicenumber( $post_id ) );
+		$post_title = ( empty( $invoicenumber ) ? sprintf( '%1$s (%2$s)', $this->get_invoicenumber( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoicenumber( $post_id ) );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = $post_title;
 
@@ -403,8 +405,21 @@ class Billy {
 		$invoicenumber = get_post_meta( $post_id, '_invoice_number', true );
 
 		// New post?
-		if ( empty( $invoicenumber ) ) {
-			$invoicenumber = get_theme_mod( 'invoice_number', '0' );
+		if ( ! is_numeric( $invoicenumber ) ) {
+			global $post;
+			$post = get_post( $post_id );
+
+			$get_prev = get_previous_post();
+
+			if ( $get_prev ) {
+				// Get invoice number (previous invoice).
+				$invoicenumber = get_post_meta( $get_prev->ID, '_invoice_number', true );
+			} else {
+				// Get current invoice number (Customizer).
+				$invoicenumber = get_theme_mod( 'invoice_number', '0' );
+			}
+
+			// Increment +1.
 			++$invoicenumber;
 		}
 
@@ -635,7 +650,7 @@ class Billy {
 									array(
 										'core/paragraph',
 										array(
-											'placeholder' => __( 'Name', 'billy' ) . ' / ' . __( 'Company', 'billy' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '2' ) . "\n" . __( 'Country', 'billy' ),
+											'placeholder' => esc_html__( 'Name', 'billy' ) . ' / ' . esc_html__( 'Company', 'billy' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '2' ) . "\n" . esc_html__( 'Country', 'billy' ),
 										),
 									),
 								),
@@ -683,7 +698,7 @@ class Billy {
 							array(
 								'core/paragraph',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Intro text', 'billy' ) ) . "\n" . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
 								),
 							),
 						),
@@ -715,7 +730,7 @@ class Billy {
 							array(
 								'core/paragraph',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
 								),
 							),
 						),
@@ -770,7 +785,7 @@ class Billy {
 									array(
 										'core/paragraph',
 										array(
-											'placeholder' => __( 'Name', 'billy' ) . ' / ' . __( 'Company', 'billy' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( __( 'Address Field %s', 'billy' ), '2' ) . "\n" . __( 'Country', 'billy' ),
+											'placeholder' => esc_html__( 'Name', 'billy' ) . ' / ' . esc_html__( 'Company', 'billy' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '2' ) . "\n" . esc_html__( 'Country', 'billy' ),
 										),
 									),
 								),
@@ -813,7 +828,7 @@ class Billy {
 							array(
 								'core/paragraph',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Intro text', 'billy' ) ) . "\n" . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
 								),
 							),
 						),
@@ -843,7 +858,7 @@ class Billy {
 							array(
 								'core/paragraph',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
 								),
 							),
 						),
@@ -887,7 +902,7 @@ class Billy {
 					array(
 						'core/paragraph',
 						array(
-							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), __( 'Notes', 'billy' ) ),
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
 						),
 					),
 				),
@@ -1189,7 +1204,7 @@ class Billy {
 		$wp_customize->add_control(
 			'invoice_number',
 			array(
-				'type'        => 'text',
+				'type'        => 'number',
 				'label'       => esc_html__( 'Current invoice number', 'billy' ),
 				'description' => esc_html__( 'Upcoming invoice numbers will be autoincremented based on this value!', 'billy' ),
 				'section'     => 'billy_invoice_section',
