@@ -2,9 +2,9 @@
 Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
-Requires at least: 5.2
-Tested up to: 5.8
-Stable tag: 1.3.4
+Requires at least: 5.4
+Tested up to: 5.9
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -133,6 +133,10 @@ Please consider purchasing the premium add-on with the following features:
 
 == Upgrade Notice ==
 
+= 1.4.0 =
+* Upgrade third-party dependencies
+* Cleanup
+
 = 1.3.4 =
 * Upgrade third-party dependencies
 
@@ -167,6 +171,12 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.4.0 =
+* Removed iframe PDF viewer: Use WP native wp-block-file__embed instead
+* Add PDF preview before post content
+* Don't make pre-header sticky
+* Invoices: Check if required meta data is missing (e.g. after an import) and provide a (hidden) tool to regenerate the meta data on all posts based on the current invoice number
+
 = 1.3.4 =
 * Numeric invoice numbers
 * Autoincrement invoice number function has been rewritten using get_previous_post()
@@ -184,7 +194,7 @@ Please consider purchasing the premium add-on with the following features:
 = 1.3.0 =
 * Refactoring
 * Minor style updates to improve PDF output
-* Removed PDF.js views: Use browser internal PDF viewer via iframe instead
+* Removed PDF.js: Use browser internal PDF viewer via iframe instead
 
 = 1.2.3 =
 * Refactored Meta

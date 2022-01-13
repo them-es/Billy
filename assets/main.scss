@@ -15,12 +15,6 @@
  */
 
 body {
-	&.admin-bar {
-		.pre-header {
-			top: 32px;
-		}
-	}
-
 	&[class*="single-billy-"] {
 		.entry-header,
 		.entry-title,
@@ -52,8 +46,6 @@ mark {
 	margin-bottom: 30px;
 	padding: 15px 0;
 	border-bottom: 1px dashed;
-	position: sticky;
-	top: 0;
 
 	.wp-block-button {
 		margin: 0 15px 0 0 !important;
@@ -277,8 +269,20 @@ mark {
 	}
 }
 
-#pdf-viewer {
-	margin-top: 100px !important;
+#pdf {
+	width: 50%;
+	min-width: 400px;
+	min-height: 300px;
+	padding: 0 10px;
+
+	.wp-block-file__embed {
+		width: 100% !important;
+		height: 300px;
+
+		&:hover {
+			height: 600px;
+		}
+	}
 }
 
 
@@ -290,7 +294,7 @@ mark {
 		&[class*="single-billy-"] {
 			font-size: 9pt;
 
-			#pdf-viewer,
+			#pdf,
 			.pre-header,
 			header,
 			footer,

@@ -198,42 +198,15 @@ class Billy_Blocks {
 				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . esc_html__( 'Print', 'billy' ) . '</button></span>';
 				$output .= '&nbsp;';
 
-				// PDF export.
-				/*if ( get_theme_mod( 'pdf_export_fullstyles_enabled' ) ) {
-					// Get Stylesheets.
-					$wp_styles       = wp_styles();
-					$enqueued_styles = array();
-
-					$urlparts        = wp_parse_url( get_site_url() );
-					$domain          = $urlparts['scheme'] . '://' . $urlparts['host'];
-
-					$theme = wp_get_theme();
-					// 1. Theme styles.
-					$stylesheets_match = array( '\/block\-library', 'themes\/' . $theme->stylesheet, 'themes\/' . $theme->template );
-					foreach ( $wp_styles->queue as $handle ) {
-						if ( preg_match( '/' . implode( '|', $stylesheets_match ) . '/', $wp_styles->registered[$handle]->src ) ) {
-							$enqueued_styles[] = $domain . wp_make_link_relative( $wp_styles->registered[$handle]->src );
-						}
-					}
-					// 2. Billy styles.
-					$stylesheets_match = array( 'plugins\/billy\-' );
-					foreach ( $wp_styles->queue as $handle ) {
-						if ( preg_match( '/' . implode( '|', $stylesheets_match ) . '/', $wp_styles->registered[$handle]->src ) ) {
-							$enqueued_styles[] = $domain . wp_make_link_relative( $wp_styles->registered[$handle]->src );
-						}
-					}
-
-					// Debugging.
-					//print_r( esc_url_raw(get_rest_url( null, 'export/pdf/?id=' . get_the_id() . '&stylesheets=' . json_encode( $enqueued_styles ) ) ) );
-				}*/
-				$output .= '<span class="wp-block-button"><button data-iframesrc="' . esc_url( get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ ) ) . '" class="wp-block-button__link is-style-outline export-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</button></span>';
-				$output .= '&nbsp;';
-
 				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
 					// Export table data as tab separated txt file.
 					$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
 				}
 			$output .= '</div>';
+
+			// PDF export.
+			$pdfLink = get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ );
+			$output .= '<!-- wp:file {"href":"' . esc_url( $pdfLink ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><object class="wp-block-file__embed" data="' . esc_url( $pdfLink ) . '"></object><a href="' . esc_url( $pdfLink ) . '">' . esc_html( get_the_title() ) . '</a><a href="' . esc_url( $pdfLink ) . '" class="wp-block-file__button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a></div><!-- /wp:file -->';
 		$output .= '</div>';
 
 		return $output;

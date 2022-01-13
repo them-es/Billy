@@ -145,8 +145,10 @@ class Billy {
 		add_action( 'rest_after_insert_billy-accounting', array( $this, 'onsave_accounting' ), 10, 2 );
 
 		// Modify REST response.
-		add_filter( 'rest_prepare_billy-invoice', array( $this, 'blocks_to_rest_api' ), 10, 3 );
-		add_filter( 'rest_prepare_billy-quote', array( $this, 'blocks_to_rest_api' ), 10, 3 );
+		if ( ! is_admin() ) {
+			add_filter( 'rest_prepare_billy-invoice', array( $this, 'blocks_to_rest_api' ), 10, 3 );
+			add_filter( 'rest_prepare_billy-quote', array( $this, 'blocks_to_rest_api' ), 10, 3 );
+		}
 
 		// Quick Edit rows.
 		add_filter( 'post_row_actions', array( $this, 'remove_quick_edit_invoice' ), 10, 2 );
@@ -177,6 +179,88 @@ class Billy {
 	 * Create the function to output the contents of the dashboard widget.
 	 */
 	public static function dashboard_widget_content() {
+		$debug = array();
+
+		// (Debug|Undocumented) Get invoices with missing metadata ("_invoice_number" is required!) and provide a solution to rewrite all post metas based on the latest invoice.
+		$invoices_missing_meta = new WP_Query(
+			array(
+				'post_type'      => 'billy-invoice',
+				'post_status'    => 'private',
+				'posts_per_page' => -1,
+				'meta_query'     => array(
+					'relation' => 'OR',
+					array(
+						'key'     => '_invoice_number',
+						'compare' => 'NOT EXISTS',
+					),
+				),
+			),
+		);
+
+		if ( $invoices_missing_meta->have_posts() ) {
+			while ( $invoices_missing_meta->have_posts() ) {
+				$invoices_missing_meta->the_post();
+
+				$debug[] = '#' . get_the_ID();
+			}
+
+			if ( isset( $_GET['fix_invoices'] ) && 'true' === $_GET['fix_invoices'] ) {
+				$invoices_fix = new WP_Query(
+					array(
+						'post_type'      => 'billy-invoice',
+						'post_status'    => 'private',
+						'posts_per_page' => -1,
+					),
+				);
+
+				if ( $invoices_fix->have_posts() ) {
+					$row = 1;
+					while ( $invoices_fix->have_posts() ) {
+						$invoices_fix->the_post();
+
+						$post_id = get_the_ID();
+
+						// Update Post meta value.
+						if ( 1 === $row ) {
+							// Latest invoice.
+							$invoicenumber = get_theme_mod( 'invoice_number' );
+						} else {
+							// Next invoice.
+							global $post;
+							$post = get_post( $post_id );
+
+							$get_next = get_next_post();
+
+							if ( $get_next ) {
+								// Get invoice number (next invoice).
+								$invoicenumber = get_post_meta( $get_next->ID, '_invoice_number', true );
+
+								// Decrement -1.
+								--$invoicenumber;
+							}
+						}
+
+						update_post_meta( $post_id, '_invoice_number', $invoicenumber );
+
+						// Update title and slug.
+						$post_title = Billy::get_invoicenumber( $post_id );
+
+						wp_update_post(
+							array(
+								'ID'         => $post_id,
+								'post_title' => $post_title,
+								'post_name'  => $post_title,
+							)
+						);
+
+						++$row;
+					}
+				}
+			}
+
+			$output_script = '<script>console.error( "The following [Billy] Invoices are missing required meta data: ' . implode( ', ', $debug ) . '", "\n", "Would you like to fix it? Please make sure that the latest invoice number is correct. Invoice numbers will be regenerated and updated in descending order. It is strongly advised to backup the database before clicking this link. ' . esc_url( admin_url( 'index.php?fix_invoices=true' ) ) . '" )</script>';
+		}
+
 		return '<table class="widefat">
 			<tbody>
 				<tr>
@@ -196,11 +280,11 @@ class Billy {
 					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . sprintf( esc_html__( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) . '</a></td>
 				</tr>
 				<tr>
-					<td></td>
+					<td>' . ( ! empty( $output_script ) ? '<span class="dashicons dashicons-warning" aria-hidden="true" title="' . esc_attr__( 'Problems detected. Please open the Web Console for more information!', 'billy' ) . '" style="color: red;"></span>' : '' ) . '</td>
 					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . esc_attr__( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', esc_html__( 'Edit', 'billy' ) ) . '</a></p></td>
 				</tr>
 			</tbody>
-		</table>';
+		</table>' . ( ! empty( $output_script ) ? $output_script : '' );
 	}
 	public static function dashboard_widget_footer() {
 		return '<table class="footer">
@@ -231,7 +315,7 @@ class Billy {
 	 * Add a <div class="{post_type}-wrapper"> wrapper to Custom Post types.
 	 */
 	public function cpt_wrapper_content( $content ) {
-		if ( ! in_array( get_post_type(), array( 'billy-header' ) ) && false !== strpos( get_post_type(), 'billy-' ) ) {
+		if ( ! in_array( get_post_type(), array( 'billy-header' ) ) && false !== strpos( (string) get_post_type(), 'billy-' ) ) {
 			$content = '<div' . ( is_singular() ? ' id="' . get_post_type() . '"' : '' ) . ' class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ) ) ? ' alignwide' : '' ) . '">' . $content . '</div>';
 		}
 
@@ -933,7 +1017,6 @@ class Billy {
 
 		// "Quote" number.
 		register_post_meta( 'billy-quote', '_quote_number', $field_args );
-
 	}
 
 
@@ -947,7 +1030,7 @@ class Billy {
 		if ( $post && has_blocks( $post->post_content ) ) {
 			$blocks = parse_blocks( $post->post_content );
 			foreach ( $blocks as $block ) {
-				if ( false !== strpos( $block['blockName'], 'billy-blocks' ) ) {
+				if ( false !== strpos( (string) $block['blockName'], 'billy-blocks' ) ) {
 					// Styles.
 					wp_enqueue_style( 'dashicons' );
 

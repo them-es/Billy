@@ -7,7 +7,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.3.4
+ * Version: 1.4.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -90,7 +90,7 @@ function billy_plugins_loaded() {
 		return false;
 	}
 
-	if ( ! wp_is_writable( __DIR__ . '/mpdf/tmp' ) ) {
+	if ( isset( $_REQUEST['post_type'] ) && false !== strpos( (string) $_REQUEST['post_type'], 'billy-' ) && ! wp_is_writable( __DIR__ . '/mpdf/tmp' ) ) {
 		add_action( 'admin_notices', 'billy_temp_pdfdirectory_not_writable_admin_notice' );
 	}
 
