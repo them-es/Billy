@@ -3,8 +3,8 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
-Tested up to: 5.9
-Stable tag: 1.4.0
+Tested up to: 6.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -132,6 +132,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+* Upgrade third-party dependencies
+* Code modernization
+* Cleanup
 
 = 1.4.0 =
 * Upgrade third-party dependencies

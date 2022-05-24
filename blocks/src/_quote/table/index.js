@@ -15,7 +15,7 @@ import {
 import {
 	InspectorControls,
 	InnerBlocks,
-} from '@wordpress/blockEditor';
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,

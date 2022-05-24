@@ -592,7 +592,7 @@ class Billy {
 
 	/**
 	 * Include block attributes in REST response.
-	 *
+	 * https://wordpress.stackexchange.com/questions/326688/why-my-admin-doesnt-work-after-adding-rest-prepare-post-filter
 	 * [TODO] Implement the following approach once included in core: https://github.com/WordPress/gutenberg/pull/18414
 	 */
 	public function blocks_to_rest_api( $response, $post, $request ) {

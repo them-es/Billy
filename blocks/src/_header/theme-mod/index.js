@@ -9,7 +9,7 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/blockEditor';
+import { InspectorControls } from '@wordpress/block-editor';
 import {
 	SelectControl,
 	PanelBody,

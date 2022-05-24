@@ -12,7 +12,7 @@ import {
 	__,
 	sprintf
 } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/blockEditor';
+import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
