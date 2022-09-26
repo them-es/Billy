@@ -2,8 +2,8 @@
  * Import blocks
  */
 
-// Basic
-import './_header/header/index';
+import './_header/header/index'; // Deprecated
+
 import './_header/theme-mod/index';
 
 import './_invoice/actions/index';

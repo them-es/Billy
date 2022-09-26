@@ -26,6 +26,16 @@ body {
 		.entry-content {
 			font-family: inherit;
 		}
+
+		[class*="show-on-"] {
+			display: none;
+		}
+
+		&.single-billy-invoice .show-on-invoice,
+		&.single-billy-quote .show-on-quote,
+		&.single-billy-accounting .show-on-accounting {
+			display: block;
+		}
 	}
 }
 
@@ -64,6 +74,7 @@ mark {
 
 		img {
 			max-height: 110px;
+			width: auto;
 		}
 	}
 
@@ -274,6 +285,11 @@ mark {
 	min-width: 400px;
 	min-height: 300px;
 	padding: 0 10px;
+
+	> a {
+		margin: 0 10px 10px 0;
+		display: inline-block;
+	}
 
 	.wp-block-file__embed {
 		width: 100% !important;

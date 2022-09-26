@@ -58,7 +58,7 @@ if ( document.querySelector( '.tsv-button' ) !== null ) {
 	document.querySelector( '.tsv-button' ).addEventListener( 'click', function () {
 		var html = document.querySelector( '.table' ).outerHTML;
 
-		export_table_to_tsv( html, document.querySelector( '#billy-accounting .header h1' ).innerHTML + '.tsv' );
+		export_table_to_tsv( html, document.querySelector( '#billy-accounting h1' ).innerHTML + '.tsv' );
 	} );
 }
 

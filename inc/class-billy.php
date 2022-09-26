@@ -128,15 +128,10 @@ class Billy {
 		// Custom Post Type wrapper.
 		add_filter( 'the_content', array( $this, 'cpt_wrapper_content' ) );
 
-		// Limit Header "Custom Post type" creation to 1 post.
-		add_action( 'admin_menu', array( $this, 'adjust_admin_menu' ), 999 );
-
 		// Include Custom Posts in main query.
-		//add_action( 'pre_get_posts', array( $this, 'include_invoices_in_postsquery' ) );
+		// add_action( 'pre_get_posts', array( $this, 'include_invoices_in_postsquery' ) );
 
 		// Modify Post data onsave.
-		add_action( 'rest_after_insert_billy-header', array( $this, 'onsave_header' ), 10, 2 );
-
 		add_action( 'rest_after_insert_billy-invoice', array( $this, 'onsave_invoice' ), 10, 2 );
 		add_filter( 'wp_insert_post_data', array( $this, 'keep_original_date_on_publishing' ), 10, 2 );
 
@@ -243,7 +238,7 @@ class Billy {
 						update_post_meta( $post_id, '_invoice_number', $invoicenumber );
 
 						// Update title and slug.
-						$post_title = Billy::get_invoicenumber( $post_id );
+						$post_title = self::get_invoicenumber( $post_id );
 
 						wp_update_post(
 							array(
@@ -312,33 +307,37 @@ class Billy {
 
 
 	/**
+	 * Modify Post content
 	 * Add a <div class="{post_type}-wrapper"> wrapper to Custom Post types.
+	 * Add pre-header with general information, Download buttons and PDF preview.
 	 */
+	public function preheader_render_callback() {
+		$output = '<div class="pre-header d-print-none d-admin-none">';
+			$output .= '<div>';
+				// Print.
+				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . esc_html__( 'Print', 'billy' ) . '</button></span>';
+				$output .= '&nbsp;';
+
+				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
+					// Export table data as tab separated txt file.
+					$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
+				}
+				$output .= '</div>';
+
+			// PDF export.
+			$pdf_link = get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ );
+			$output .= '<!-- wp:file {"href":"' . esc_url( $pdf_link ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><a href="' . esc_url( $pdf_link ) . '" class="wp-block-file__button wp-element-button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a>' . esc_html( get_the_title() ) . ' <object class="wp-block-file__embed" data="' . esc_url( $pdf_link ) . '"></object></div><!-- /wp:file -->';
+		$output .= '</div>';
+
+		return $output;
+	}
+
 	public function cpt_wrapper_content( $content ) {
-		if ( ! in_array( get_post_type(), array( 'billy-header' ) ) && false !== strpos( (string) get_post_type(), 'billy-' ) ) {
-			$content = '<div' . ( is_singular() ? ' id="' . get_post_type() . '"' : '' ) . ' class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ) ) ? ' alignwide' : '' ) . '">' . $content . '</div>';
+		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ) ) ) {
+			$content = '<div id="' . get_post_type() . '" class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ) ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
 		}
 
 		return $content;
-	}
-
-
-	/**
-	 * Admin menu.
-	 *
-	 * Limit Header "Custom Post type" creation to 1 post.
-	 */
-	public function adjust_admin_menu() {
-		$cpt = 'billy-header';
-
-		// Get number of posts.
-		$count_private = wp_count_posts( $cpt )->private;
-		$count_publish = wp_count_posts( $cpt )->publish;
-
-		// Conditionally remove Edit link if post has been found.
-		if ( $count_private >= 1 || $count_publish >= 1 ) {
-			remove_submenu_page( 'edit.php?post_type=' . $cpt, 'post-new.php?post_type=' . $cpt );
-		}
 	}
 
 
@@ -357,33 +356,6 @@ class Billy {
 			);
 		}
 	}*/
-
-
-	/**
-	 * Post Type "Custom Header": https://developer.wordpress.org/reference/hooks/rest_after_insert_this-post_type
-	 *
-	 * After save/update:
-	 * - Change title
-	 */
-	public function onsave_header( $post, $request ) {
-		$post_id = $post->ID;
-
-		$my_post = array(
-			'ID' => $post_id,
-		);
-
-		// (Optional) Update post status if unpublished: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ) ) ) {
-			$my_post['post_status'] = 'private';
-		}
-
-		// Update title and slug.
-		$post_title            = esc_html__( 'Header', 'billy' );
-		$my_post['post_title'] = $post_title;
-		$my_post['post_name']  = $post_title;
-
-		wp_update_post( $my_post );
-	}
 
 
 	/**
@@ -580,8 +552,8 @@ class Billy {
 	 */
 	public function remove_quick_edit_invoice( $actions, $post ) {
 		if ( 'billy-invoice' === $post->post_type ) {
-			//unset( $actions['edit'] );
-			//unset( $actions['view'] );
+			// unset( $actions['edit'] );
+			// unset( $actions['view'] );
 			unset( $actions['trash'] );
 			unset( $actions['inline hide-if-no-js'] );
 		}
@@ -618,7 +590,7 @@ class Billy {
 		// Load translations.
 		load_plugin_textdomain( 'billy', false, plugin_basename( dirname( BILLY_PLUGIN_FILE ) ) . '/languages/' );
 
-		// Header.
+		// [Deprecated 2022-09].
 		register_post_type(
 			'billy-header',
 			array(
@@ -631,7 +603,7 @@ class Billy {
 				'show_in_rest'  => true,
 				'has_archive'   => false,
 				'supports'      => array( 'editor', 'revisions' ),
-				'show_ui'       => true,
+				'show_ui'       => false,
 				'template_lock' => 'insert',
 				'template'      => array(
 					array(
@@ -685,6 +657,74 @@ class Billy {
 			)
 		);
 
+		// Add existing content from deprecated Header posts as reusable block.
+		// [Deprecated 2022-09] billy-header found? Insert existing content as reusable block and delete old post. Otherwise insert empty template.
+		$deprecated_header_posts = get_posts(
+			array(
+				'post_type'   => 'billy-header',
+				'post_status' => array( 'publish', 'private' ),
+			)
+		);
+		if ( $deprecated_header_posts ) {
+			$header_content = '<!-- wp:group {"className":"header"} --><div class="wp-block-group header">' . $deprecated_header_posts[0]->post_content . '</div><!-- /wp:group -->';
+
+			// Delete deprecated Header posts.
+			foreach ( $deprecated_header_posts as $deprecated_header_post ) {
+				wp_delete_post( (int) $deprecated_header_post->ID, true );
+			}
+		} else {
+			$header_content = '<!-- wp:group {"className":"header"} -->
+<div class="wp-block-group header"><!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image -->
+<figure class="wp-block-image"><img alt=""/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"text-right"} -->
+<div class="wp-block-column text-right"><!-- wp:billy-blocks/theme-mod {"themeMod":"name"} /-->
+
+<!-- wp:billy-blocks/theme-mod {"themeMod":"address"} /-->
+
+<!-- wp:billy-blocks/theme-mod {"themeMod":"vat","className":"vat"} /--></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->';
+		}
+
+		$header_reusable_block = get_posts(
+			array(
+				'post_type'   => 'wp_block',
+				'title'       => 'Billy Header',
+				'post_status' => array( 'publish', 'private' ),
+			)
+		);
+		if ( ! $header_reusable_block ) {
+			// Insert new reusable block.
+			$header_id = wp_insert_post(
+				array(
+					'post_title'     => 'Billy Header',
+					'post_content'   => $header_content,
+					'post_type'      => 'wp_block',
+					'post_status'    => 'publish',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'guid'           => sprintf(
+						'%s/wp_block/%s',
+						site_url(),
+						sanitize_title( 'billy-header' ),
+					),
+				)
+			);
+		} else {
+			// Get existing reusable block.
+			$header_id = $header_reusable_block[0]->ID;
+		}
+
 		// Invoices.
 		register_post_type(
 			'billy-invoice',
@@ -706,10 +746,10 @@ class Billy {
 						'billy-blocks/invoice-actions',
 						array( 'align' => 'wide' ),
 					),
-					// Header.
+					// Header (reusable block).
 					array(
-						'billy-blocks/header',
-						array(),
+						'core/block',
+						array( 'ref' => $header_id ),
 					),
 					// Recipient address field.
 					array(
@@ -844,10 +884,10 @@ class Billy {
 						'billy-blocks/quote-actions',
 						array( 'align' => 'wide' ),
 					),
-					// Header.
+					// Header (reusable block).
 					array(
-						'billy-blocks/header',
-						array(),
+						'core/block',
+						array( 'ref' => $header_id ),
 					),
 					// Recipient address field.
 					array(
@@ -962,7 +1002,7 @@ class Billy {
 				'menu_icon'     => 'dashicons-book-alt',
 				'public'        => true,
 				'show_in_rest'  => true,
-				'supports'      => array( 'editor', 'thumbnail', 'revisions' ), 
+				'supports'      => array( 'editor', 'thumbnail', 'revisions' ),
 				'taxonomies'    => array( 'category' ),
 				'show_ui'       => true,
 				'template_lock' => 'insert',
@@ -972,10 +1012,14 @@ class Billy {
 						'billy-blocks/accounting-actions',
 						array( 'align' => 'wide' ),
 					),
-					// Header.
+					// Heeading.
 					array(
-						'billy-blocks/header',
-						array( 'align' => 'wide' ),
+						'core/heading',
+						array(
+							'level'       => 1,
+							'placeholder' => esc_html__( 'Heading', 'billy' ),
+							'content'     => wp_date( 'Y' ),
+						),
 					),
 					// Table.
 					array(
@@ -1002,7 +1046,6 @@ class Billy {
 		 *
 		 * https://github.com/WordPress/gutenberg/issues/5622
 		 */
-
 		$field_args = array(
 			'show_in_rest'  => true,
 			'single'        => true,
@@ -1028,35 +1071,30 @@ class Billy {
 
 		// Only enqueue when post contains a Billy block.
 		if ( $post && has_blocks( $post->post_content ) ) {
-			$blocks = parse_blocks( $post->post_content );
-			foreach ( $blocks as $block ) {
-				if ( false !== strpos( (string) $block['blockName'], 'billy-blocks' ) ) {
-					// Styles.
-					wp_enqueue_style( 'dashicons' );
+			if ( str_contains( $post->post_content, ':billy-blocks/' ) ) {
+				// Styles.
+				wp_enqueue_style( 'dashicons' );
 
-					wp_enqueue_style( 'billy-style', self::$plugin_url . 'assets/css/main.css', array(), self::$plugin_version );
-					if ( is_rtl() ) {
-						wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'assets/css/rtl.css', array(), self::$plugin_version );
-					}
-
-					// Scripts.
-					wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
-					wp_add_inline_script(
-						'billy-script',
-						'var globalDataBilly = {
-							postId: "' .  get_the_ID() . '",
-							wpAdmin: "' . get_dashboard_url() . '",
-							currency: "' . self::$currency . '",
-							locale: "' . self::$locale . '",
-							translations: {
-								earnings: "' . esc_html__( 'Earnings', 'billy' ) . '",
-								expenses: "' . esc_html__( 'Expenses', 'billy' ) . '",
-							},
-						};'
-					);
-
-					break;
+				wp_enqueue_style( 'billy-style', self::$plugin_url . 'assets/css/main.css', array(), self::$plugin_version );
+				if ( is_rtl() ) {
+					wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'assets/css/rtl.css', array(), self::$plugin_version );
 				}
+
+				// Scripts.
+				wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
+				wp_add_inline_script(
+					'billy-script',
+					'var globalDataBilly = {
+						postId: "' . (int) get_the_ID() . '",
+						wpAdmin: "' . esc_url( get_dashboard_url() ) . '",
+						currency: "' . self::$currency . '",
+						locale: "' . self::$locale . '",
+						translations: {
+							earnings: "' . esc_html__( 'Earnings', 'billy' ) . '",
+							expenses: "' . esc_html__( 'Expenses', 'billy' ) . '",
+						},
+					};'
+				);
 			}
 		}
 	}
@@ -1297,7 +1335,7 @@ class Billy {
 		);
 		// Default mod.
 		if ( empty( get_theme_mod( 'invoice_number' ) ) ) {
-			$latest_invoices = wp_get_recent_posts(
+			$latest_invoices = get_posts(
 				array(
 					'numberposts' => 1,
 					'post_status' => 'private',
@@ -1305,7 +1343,7 @@ class Billy {
 				)
 			);
 
-			set_theme_mod( 'invoice_number', ( $latest_invoices ? get_post_meta( $latest_invoices[0]['ID'], '_invoice_number', true ) : '0' ) );
+			set_theme_mod( 'invoice_number', ( $latest_invoices ? get_post_meta( $latest_invoices[0]->ID, '_invoice_number', true ) : '0' ) );
 		}
 
 		// Payment is due within ## days.

@@ -141,7 +141,7 @@ class Billy_PDF_Export {
 				'fontdata'     => array(
 					'pdffont' => static::$pdffont,
 				),
-				'default_font'   => 'pdffont',
+				'default_font' => 'pdffont',
 			)
 		);
 

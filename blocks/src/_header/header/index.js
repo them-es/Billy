@@ -1,5 +1,5 @@
 /**
- * Header
+ * Header [Deprecated 2022-09; Block is still needed for backwards compatibility]
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
 
@@ -41,7 +41,7 @@ registerBlockType( 'billy-blocks/header', {
 					<PanelBody title={ __( 'Info', 'billy' ) }>
 						<div className="components-notice">
 							<div className="components-notice__content">
-								<a href={ globalDataBilly.wpAdmin + 'edit.php?post_type=billy-header' }>
+								<a href={ globalDataBilly.wpAdmin + 'wp-admin/edit.php?post_type=wp_block' }>
 									{
 										sprintf( __( 'Edit the %s layout', 'billy' ), __( 'Header', 'billy' ) )
 									}

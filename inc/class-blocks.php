@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * [PRO] Primary controller class
+ * Primary controller class.
  */
 class Billy_Blocks {
 
@@ -14,7 +14,6 @@ class Billy_Blocks {
 	public function __construct() {
 		$this->init();
 	}
-
 
 	/**
 	 * Plugin initiation.
@@ -39,6 +38,7 @@ class Billy_Blocks {
 
 		// Serverside Render callback.
 		if ( function_exists( 'register_block_type' ) ) {
+			// [Deprecated 2022-09] CPT billy-header.
 			register_block_type(
 				'billy-blocks/header',
 				array(
@@ -184,64 +184,30 @@ class Billy_Blocks {
 	/**
 	 * Server-side rendering.
 	 *
-	 * "billy-blocks/header"
+	 * "billy-blocks/header" // [Deprecated 2022-09] CPT billy-header.
 	 * "billy-blocks/theme-mod"
 	 * "billy-blocks/invoice-paymentinformation"
 	 * "billy-blocks/invoice-number"
 	 * "billy-blocks/postdate"
 	 * "billy-blocks/duedate"
 	 */
-	public function preheader_render_callback() {
-		$output = '<div class="pre-header d-print-none d-admin-none">';
-			$output .= '<div>';
-				// Print.
-				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . esc_html__( 'Print', 'billy' ) . '</button></span>';
-				$output .= '&nbsp;';
 
-				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
-					// Export table data as tab separated txt file.
-					$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
-				}
-			$output .= '</div>';
-
-			// PDF export.
-			$pdfLink = get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ );
-			$output .= '<!-- wp:file {"href":"' . esc_url( $pdfLink ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><object class="wp-block-file__embed" data="' . esc_url( $pdfLink ) . '"></object><a href="' . esc_url( $pdfLink ) . '">' . esc_html( get_the_title() ) . '</a><a href="' . esc_url( $pdfLink ) . '" class="wp-block-file__button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a></div><!-- /wp:file -->';
-		$output .= '</div>';
-
-		return $output;
-	}
-
-	public function header_render_callback() {
-		$output = '<div class="header">';
-			if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
-				$output .= '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
-			} else {
-				$header_post = wp_get_recent_posts(
-					array(
-						'post_type'   => 'billy-header',
-						'numberposts' => '1',
-					)
-				);
-
-				if ( ! empty( $header_post ) ) {
-					$blocks = parse_blocks( get_post_field( 'post_content', $header_post[0]['ID'] ) );
-
-					foreach ( $blocks as $block ) {
-						$output .= render_block( $block );
-					}
-				} else {
-					$output .= '<p class="components-notice is-error d-print-none"><a href="' . esc_url( admin_url( 'post-new.php?post_type=billy-header' ) ) . '" class="components-notice__content edit-link">' . esc_html__( 'Please setup a global header.', 'billy' ) . '</a></p>';
-				}
-			}
-		$output .= '</div>';
-
-		return $output;
-	}
-
+	// [Deprecated 2022-09] CPT billy-header.
 	public function headerlayout_render_callback() {
-		$output = $this->preheader_render_callback();
-		$output .= $this->header_render_callback();
+		$output = '';
+		if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
+			$output .= '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
+		} else {
+			$header_reusable_block = get_posts(
+				array(
+					'post_type'   => 'wp_block',
+					'title'       => 'Billy Header',
+					'post_status' => array( 'publish', 'private' ),
+				)
+			);
+
+			$output .= do_blocks( '<!-- wp:block {"ref":' . (int) $header_reusable_block[0]->ID . '} /-->' );
+		}
 
 		return $output;
 	}

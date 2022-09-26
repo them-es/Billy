@@ -2,11 +2,28 @@
  * Admin and Editor Styles
  */
 
-body.wp-admin .d-admin-none {
+body[class*="post-type-billy-"] .wp-block-post-content {
+	padding: 24px;
+}
+
+body[class*="post-type-billy-"] .wp-block-post-content > .wp-block {
+	margin-block-start: 1.5rem;
+}
+
+body[class*="post-type-billy-"] .d-admin-none {
 	display: none !important;
 }
-body.wp-admin .d-admin-block {
+body[class*="post-type-billy-"] .d-admin-block {
 	display: block !important;
+}
+
+body[class*="post-type-billy-"] [class*="show-on-"] {
+	display: none;
+}
+body.post-type-billy-invoice .show-on-invoice,
+body.post-type-billy-quote .show-on-quote,
+body.post-type-billy-accounting .show-on-accounting {
+	display: block;
 }
 
 #billy_dashboard a {
@@ -43,10 +60,6 @@ body.wp-admin .d-admin-block {
 	margin: 7px 10px;
 }
 
-/*body.post-type-billy-header #wpbody .page-title-action {
-	display: none;
-}*/
-
 li[id*="menu-posts-billy-"] {
 	background-color: rgba(0, 0, 0, 0.2);
 }
@@ -69,26 +82,24 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 	align-self: center !important;
 }
 
+.editor-styles-wrapper a.components-button {
+	text-decoration: none;
+}
+
 
 /* Header */
+
+body[class*="post-type-billy-"] .edit-post-visual-editor .wp-block.is-reusable,
+[data-type="billy-blocks/header"] {
+	max-width: 100%;
+	border-top: 1px dashed;
+	border-bottom: 1px dashed;
+	padding: 12px;
+}
 
 .invoice-status,
 .quote-status {
 	background: transparent;
-}
-
-.header {
-	max-width: none;
-	padding: 25px;
-}
-.header .wp-block-columns {
-	display: flex;
-}
-.header .wp-block-columns .wp-block-column {
-	width: 33.33%;
-}
-.header .wp-block-columns .wp-block-column:first-of-type {
-	width: 66.66%;
 }
 
 .metadata .label,
@@ -131,6 +142,22 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 
 /* Tables */
 
+[data-type$="-table"] .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
+	margin-bottom: -20px !important;
+}
+[data-type$="-table"] .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender,
+[data-type$="-table"] .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender button {
+	display: block !important;
+	width: 100% !important;
+}
+
+[data-type$="-tablerow"] table {
+	width: 100%;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	margin-bottom: -1px;
+}
+
 [data-type$="-tablerow"] table tr th,
 [data-type$="-tablerow"] table tr td {
 	vertical-align: top;
@@ -146,6 +173,7 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 table.totals {
 	width: 100%;
 	font-weight: bold;
+	margin-top: 20px;
 }
 table.totals tr td:first-of-type {
 	text-align: right;
@@ -164,11 +192,6 @@ table .date {
 }
 table .date sub {
 	font-weight: bold;
-}
-table label {
-	font-weight: bold;
-	padding: 0 !important;
-	margin-bottom: 8px !important;
 }
 
 table .amount label {

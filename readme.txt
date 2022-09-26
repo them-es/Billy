@@ -3,8 +3,8 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
-Tested up to: 6.0
-Stable tag: 1.4.1
+Tested up to: 6.1
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -133,6 +133,12 @@ Please consider purchasing the premium add-on with the following features:
 
 == Upgrade Notice ==
 
+= 1.5.0 =
+* Upgrade third-party dependencies
+* Code modernization: Replace Header CPT with a reusable block ensuring backwards compatibility
+* Minor style updates and UI improvements
+* Cleanup
+
 = 1.4.1 =
 * Upgrade third-party dependencies
 * Code modernization
@@ -175,6 +181,11 @@ Please consider purchasing the premium add-on with the following features:
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.5.0 =
+* Deprecate Header CPT and replace it with a reusable block
+* UI improvements
+* Compatibility with WordPress 6.1
 
 = 1.4.0 =
 * Removed iframe PDF viewer: Use WP native wp-block-file__embed instead
