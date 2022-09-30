@@ -1012,7 +1012,7 @@ class Billy {
 						'billy-blocks/accounting-actions',
 						array( 'align' => 'wide' ),
 					),
-					// Heeading.
+					// Heading.
 					array(
 						'core/heading',
 						array(

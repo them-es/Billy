@@ -131,86 +131,49 @@ Please consider purchasing the premium add-on with the following features:
 * WordPress developers are welcome to help improve the plugin via [GitHub](https://github.com/them-es "GitHub")
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
-== Upgrade Notice ==
-
-= 1.5.0 =
-* Upgrade third-party dependencies
-* Code modernization: Replace Header CPT with a reusable block ensuring backwards compatibility
-* Minor style updates and UI improvements
-* Cleanup
-
-= 1.4.1 =
-* Upgrade third-party dependencies
-* Code modernization
-* Cleanup
-
-= 1.4.0 =
-* Upgrade third-party dependencies
-* Cleanup
-
-= 1.3.4 =
-* Upgrade third-party dependencies
-
-= 1.3.3 =
-* Upgrade third-party dependencies
-
-= 1.3.2 =
-* WordPress 5.8+: Fix PHP notice in 'block_categories'
-* Upgrade third-party dependencies
-
-= 1.3.1 =
-* Upgrade third-party dependencies
-
-= 1.3.0 =
-* Upgrade third-party dependencies
-* Cleanup
-
-= 1.2.0 =
-* Upgrade third-party dependencies
-
-= 1.1.4 =
-* WordPress 5.5+: Fix PHP notice in 'register_rest_route'
-
-= 1.1.3 =
-* Compatibility with WordPress 5.5
-
-= 1.1.0 =
-* Embedded PDF files (PDF.js)
-
-= 1.0 =
-* Initial public release in the WordPress Plugin directory
-
 == Changelog ==
 
 = 1.5.0 =
-* Deprecate Header CPT and replace it with a reusable block
-* UI improvements
+* Code modernization: Replace Header CPT with a reusable block ensuring backwards compatibility
+* Cleanup
+* Minor style updates and UI improvements
+* Upgrade third-party dependencies
 * Compatibility with WordPress 6.1
+
+= 1.4.1 =
+* Code modernization and Cleanup
+* Upgrade third-party dependencies
 
 = 1.4.0 =
 * Removed iframe PDF viewer: Use WP native wp-block-file__embed instead
 * Add PDF preview before post content
 * Don't make pre-header sticky
 * Invoices: Check if required meta data is missing (e.g. after an import) and provide a (hidden) tool to regenerate the meta data on all posts based on the current invoice number
+* Upgrade third-party dependencies
 
 = 1.3.4 =
 * Numeric invoice numbers
 * Autoincrement invoice number function has been rewritten using get_previous_post()
+* Upgrade third-party dependencies
 
 = 1.3.3 =
 * Enqueue frontend assets only when necessary
+* Upgrade third-party dependencies
 
 = 1.3.2 =
-* Compatibility with WordPress 5.8
 * Coding Standards
+* Compatibility with WordPress 5.8: Fix PHP notice in 'block_categories'
+* Upgrade third-party dependencies
 
 = 1.3.1 =
 * Compatibility with WordPress 5.7
+* Upgrade third-party dependencies
 
 = 1.3.0 =
 * Refactoring
 * Minor style updates to improve PDF output
 * Removed PDF.js: Use browser internal PDF viewer via iframe instead
+* Upgrade third-party dependencies
 
 = 1.2.3 =
 * Refactored Meta
@@ -227,6 +190,7 @@ Please consider purchasing the premium add-on with the following features:
 * Allow more formatting options in descriptions: Replace RichText components with InnerBlocks components.
 * Style improvements to the PDF output
 * Tables: Vertical alignment "top"
+* Upgrade third-party dependencies
 
 = 1.1.4 =
 * Minor compatibility update for WordPress 5.5+
