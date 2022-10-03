@@ -121,8 +121,12 @@ strong {
 	line-height: 1.75;
 }
 
+.table tfoot th,
 .table tfoot td {
 	white-space: nowrap;
+}
+.table tfoot th {
+	text-align: right;
 }
 .table tfoot .total td {
 	font-weight: bold;

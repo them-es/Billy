@@ -188,11 +188,11 @@ registerBlockType( 'billy-blocks/invoice-table', {
 										amountSubtotal > 0 &&
 											(
 												<tr className="subtotal">
-													<td style={ { width: '50%' } }>
+													<th style={ { width: '50%' } }>
 														{
 															amountTotal > amountSubtotal ? __( 'Subtotal', 'billy' ) : __( 'Total', 'billy' )
 														}
-													</td>
+													</th>
 													<td>
 														{
 															sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountSubtotal, locale ) )
@@ -205,9 +205,9 @@ registerBlockType( 'billy-blocks/invoice-table', {
 										taxRates && taxRatesTotal > 0 &&
 											(
 												<tr className="taxRates">
-													<td style={ { width: '50%' } }>
+													<th style={ { width: '50%' } }>
 														{ __( 'Tax', 'billy' ) }
-													</td>
+													</th>
 													<td>
 														{
 															// Sort by Taxrate
@@ -231,9 +231,9 @@ registerBlockType( 'billy-blocks/invoice-table', {
 										amountTotal > amountSubtotal &&
 											(
 												<tr className="total">
-													<td style={ { width: '50%' } }>
+													<th style={ { width: '50%' } }>
 														{ __( 'Total', 'billy' ) }
-													</td>
+													</th>
 													<td>
 														{
 															sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTotal, locale ) )
@@ -302,11 +302,11 @@ registerBlockType( 'billy-blocks/invoice-table', {
 							amountSubtotal > 0 &&
 								(
 									<tr className="subtotal">
-										<td colSpan="2" className="align-right">
+										<th colSpan="2">
 											{
 												amountTotal > amountSubtotal ? __( 'Subtotal', 'billy' ) : __( 'Total', 'billy' )
 											}
-										</td>
+										</th>
 										<td colSpan={ ( taxRates && taxRatesTotal > 0 ? '2' : null ) }>
 											{
 												sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountSubtotal, locale ) )
@@ -319,9 +319,9 @@ registerBlockType( 'billy-blocks/invoice-table', {
 							taxRates && taxRatesTotal > 0 &&
 								(
 									<tr className="taxrates">
-										<td colSpan="2" className="align-right">
+										<th colSpan="2">
 											{ __( 'Tax', 'billy' ) }
-										</td>
+										</th>
 										<td colSpan={ ( taxRates && taxRatesTotal > 0 ? '2' : null ) }>
 											{
 												// Sort by Taxrate
@@ -345,9 +345,9 @@ registerBlockType( 'billy-blocks/invoice-table', {
 							amountTotal > amountSubtotal &&
 								(
 									<tr className="total">
-										<td colSpan="2" className="align-right">
+										<th colSpan="2">
 											{ __( 'Total', 'billy' ) }
-										</td>
+										</th>
 										<td colSpan={ ( taxRates && taxRatesTotal > 0 ? '2' : null ) }>
 											{
 												sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTotal, locale ) )

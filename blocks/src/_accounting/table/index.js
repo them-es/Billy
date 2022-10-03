@@ -184,9 +184,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 								amountTotalEarnings > 0 &&
 									(
 										<tr className="earnings">
-											<td style={ { width: '50%' } }>
+											<th style={ { width: '50%' } }>
 												{ __( 'Earnings', 'billy' ) }
-											</td>
+											</th>
 											<td>
 												{
 													sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTotalEarnings, locale ) )
@@ -199,9 +199,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 								amountTotalExpenses > 0 &&
 									(
 										<tr className="expenses">
-											<td style={ { width: '50%' } }>
+											<th style={ { width: '50%' } }>
 												{ __( 'Expenses', 'billy' ) }
-											</td>
+											</th>
 											<td>
 												{
 													sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTotalExpenses, locale ) )
@@ -214,9 +214,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 								( amountTotalEarnings > 0 || amountTotalExpenses > 0 ) &&
 									(
 										<tr className="profit">
-											<td style={ { width: '50%' } }>
+											<th style={ { width: '50%' } }>
 												{ __( 'Profit', 'billy' ) }
-											</td>
+											</th>
 											<td style={ { borderTop: '2px solid' } }>
 												{
 													sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( ( amountTotalEarnings - amountTotalExpenses ), locale ) )
@@ -230,9 +230,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 									(
 										<>
 											<tr className="taxes-earnings">
-												<td style={ { width: '50%' } }>
+												<th style={ { width: '50%' } }>
 													{ sprintf( __( 'Taxes (%s)', 'billy' ), __( 'Earnings', 'billy' ) ) }
-												</td>
+												</th>
 												<td>
 													{
 														sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTaxEarnings, locale ) )
@@ -240,9 +240,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 												</td>
 											</tr>
 											<tr className="taxes-expenses">
-												<td style={ { width: '50%' } }>
+												<th style={ { width: '50%' } }>
 													{ sprintf( __( 'Taxes (%s)', 'billy' ), __( 'Expenses', 'billy' ) ) }
-												</td>
+												</th>
 												<td>
 													{
 														sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTaxExpenses, locale ) )
@@ -308,9 +308,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 							( amountTotalEarnings > 0 || amountTotalExpenses > 0 ) &&
 								(
 									<tr>
-										<td colSpan="5" className="alignright">
+										<th colSpan="5">
 											{ sprintf( __( '%1$s / %2$s', 'billy' ), __( 'Earnings', 'billy' ), __( 'Expenses', 'billy' ) ) }
-										</td>
+										</th>
 										<td className="sum earnings">
 											{
 												sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTotalEarnings, locale ) )
@@ -328,9 +328,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 							( amountTotalEarnings > 0 || amountTotalExpenses > 0 ) &&
 								(
 									<tr>
-										<td colSpan="5" className="alignright">
+										<th colSpan="5">
 											{ __( 'Profit', 'billy' ) }
-										</td>
+										</th>
 										<td colSpan="2" className="profit">
 											{
 												sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( ( amountTotalEarnings - amountTotalExpenses ), locale ) )
@@ -343,9 +343,9 @@ registerBlockType( 'billy-blocks/accounting-table', {
 							( amountTaxEarnings > 0 || amountTaxExpenses > 0 ) &&
 								(
 									<tr>
-										<td colSpan="5" className="alignright">
+										<th colSpan="5">
 											{ sprintf( __( '%1$s (%2$s / %3$s)', 'billy' ), __( 'Taxes', 'billy' ) , __( 'Earnings', 'billy' ), __( 'Expenses', 'billy' ) ) }
-										</td>
+										</th>
 										<td className="sum tax-earnings">
 											{
 												sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTaxEarnings, locale ) )

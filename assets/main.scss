@@ -217,21 +217,17 @@ mark {
 
 			&.subtotal,
 			&.taxrates {
-				td {
+				th {
 					font-weight: initial !important;
 				}
 			}
 
+			th,
 			td {
 				border-top: 2px solid;
 				font-weight: bold;
 				text-align: initial;
 				white-space: nowrap;
-
-				&.align-right {
-					border: none;
-					text-align: right;
-				}
 
 				&.sum {
 					text-align: center;
@@ -274,6 +270,10 @@ mark {
 						transform: rotate(90deg);
 					}
 				}
+			}
+			th {
+				border: none;
+				text-align: right;
 			}
 		}
 		
@@ -372,6 +372,12 @@ mark {
 
 	.wp-block-table {
 		font-size: 10pt;
+
+		tfoot {
+			th {
+				text-align: right;
+			}
+		}
 	}
 
 }

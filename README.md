@@ -14,8 +14,12 @@ The Plugin should work with any modern WordPress theme that supports the Block e
 **Heads up:** Please note that the main content area of the **Single/Custom Post Template** needs to be "fullwidth". Having a sidebar may narrow the (invoice) table layout too much.
 
 ### The Plugin has been tested with the following themes
+* [https://them.es/starter-fse](https://them.es/starter-fse)
 * [https://them.es/starter](https://them.es/starter)
 * [https://them.es/starter-material](https://them.es/starter-material)
+* [https://wordpress.org/themes/twentytwentythree](https://wordpress.org/themes/twentytwentythree)
+* [https://wordpress.org/themes/twentytwentytwo](https://wordpress.org/themes/twentytwentytwo)
+* [https://wordpress.org/themes/twentytwentyone](https://wordpress.org/themes/twentytwentyone)
 * [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty)
 * [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen)
 

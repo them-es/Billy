@@ -149,6 +149,10 @@ body[class*="post-type-billy-"] .edit-post-visual-editor .wp-block.is-reusable,
 [data-type$="-table"] .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender button {
 	display: block !important;
 	width: 100% !important;
+	max-width: 100%;
+}
+[data-type$="-table"] table label {
+	font-size: initial !important;
 }
 
 [data-type$="-tablerow"] table {
@@ -175,17 +179,24 @@ table.totals {
 	font-weight: bold;
 	margin-top: 20px;
 }
-table.totals tr td:first-of-type {
+table.totals tr th {
 	text-align: right;
 }
+table.totals tr th,
 table.totals tr td {
 	padding: 3px 10px;
 }
 
-table .index {
+body[class*="post-type-billy-"] table th,
+body[class*="post-type-billy-"] table td {
+	padding: 10px 15px !important;
+}
+body[class*="post-type-billy-"] table th {
 	font-weight: bold;
+}
+
+table .index {
 	font-size: 2rem;
-	padding: 10px 15px;
 }
 table .date {
 	min-width: 110px;
@@ -194,24 +205,24 @@ table .date sub {
 	font-weight: bold;
 }
 
-table .amount label {
+[data-type$="-table"] table .amount label {
 	color: #073984;
 }
-table .amount input {
+[data-type$="-table"] table .amount input {
 	background-color: #cfe2ff;
 }
 
-table .amount.earning label {
+[data-type$="-table"] table .amount.earning label {
 	color: #155724;
 }
-table .amount.earning input {
+[data-type$="-table"] table .amount.earning input {
 	background-color: #d4edda;
 }
 
-table .amount.expense label {
+[data-type$="-table"] table .amount.expense label {
 	color: #721c24;
 }
-table .amount.expense input {
+[data-type$="-table"] table .amount.expense input {
 	background-color: #f8d7da;
 }
 
