@@ -8,6 +8,19 @@ body {
 	display: none;
 }
 
+.billy-invoice-wrapper .show-on-invoice {
+	display: block;
+}
+.billy-invoice-wrapper .show-on-quote {
+	display: none;
+}
+.billy-quote-wrapper .show-on-invoice {
+	display: none;
+}
+.billy-quote-wrapper .show-on-quote {
+	display: block;
+}
+
 p,
 ul,
 ol {
@@ -91,6 +104,7 @@ strong {
 }
 .metadata .label {
 	font-weight: bold;
+	hyphens: auto;
 }
 .metadata .text {
 	float: right;
@@ -130,9 +144,4 @@ strong {
 }
 .table tfoot .total td {
 	font-weight: bold;
-}
-
-.qr-info {
-	font-size: 9pt;
-	padding: 0 15pt;
 }
