@@ -105,11 +105,11 @@ const deprecatedQuoteOuter = [
 								amountSubtotal > 0 &&
 									(
 										<tr className="subtotal">
-											<th colSpan="2">
+											<td colSpan="2" className="align-right">
 												{
 													amountTotal > amountSubtotal ? __( 'Subtotal', 'billy' ) : __( 'Total', 'billy' )
 												}
-											</th>
+											</td>
 											<td colSpan={ ( taxRates && taxRatesTotal > 0 ? '2' : null ) }>
 												{
 													sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountSubtotal, locale ) )
@@ -122,9 +122,9 @@ const deprecatedQuoteOuter = [
 								taxRates && taxRatesTotal > 0 &&
 									(
 										<tr className="taxrates">
-											<th colSpan="2">
+											<td colSpan="2" className="align-right">
 												{ __( 'Tax', 'billy' ) }
-											</th>
+											</td>
 											<td colSpan={ ( taxRates && taxRatesTotal > 0 ? '2' : null ) }>
 												{
 													// Sort by Taxrate
@@ -148,9 +148,9 @@ const deprecatedQuoteOuter = [
 								amountTotal > amountSubtotal &&
 									(
 										<tr className="total">
-											<th colSpan="2">
+											<td colSpan="2" className="align-right">
 												{ __( 'Total', 'billy' ) }
-											</th>
+											</td>
 											<td colSpan={ ( taxRates && taxRatesTotal > 0 ? '2' : null ) }>
 												{
 													sprintf( __( '%1$s %2$s', 'billy' ), currency, formatNumber( amountTotal, locale ) )
