@@ -22,7 +22,6 @@ import {
 	SelectControl,
 } from '@wordpress/components';
 import {
-	select,
 	withSelect,
 } from '@wordpress/data';
 import {

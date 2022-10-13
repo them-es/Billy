@@ -176,6 +176,8 @@ class Billy {
 	public static function dashboard_widget_content() {
 		$debug = array();
 
+		$output_script = '';
+
 		// (Debug|Undocumented) Get invoices with missing metadata ("_invoice_number" is required!) and provide a solution to rewrite all post metas based on the latest invoice.
 		$invoices_missing_meta = new WP_Query(
 			array(
@@ -275,17 +277,17 @@ class Billy {
 					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . sprintf( esc_html__( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) . '</a></td>
 				</tr>
 				<tr>
-					<td>' . ( isset( $output_script ) ? '<span class="dashicons dashicons-warning" aria-hidden="true" title="' . esc_attr__( 'Problems detected. Please open the Web Console for more information!', 'billy' ) . '" style="color: red;"></span>' : '' ) . '</td>
+					<td>' . ( ! empty( $output_script ) ? '<span class="dashicons dashicons-warning" aria-hidden="true" title="' . esc_attr__( 'Problems detected. Please open the Web Console for more information!', 'billy' ) . '" style="color: red;"></span>' : '' ) . '</td>
 					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . esc_attr__( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', esc_html__( 'Edit', 'billy' ) ) . '</a></p></td>
 				</tr>
 			</tbody>
-		</table>' . ( ! empty( $output_script ) ? $output_script : '' );
+		</table>' . $output_script;
 	}
 	public static function dashboard_widget_footer() {
 		return '<table class="footer">
 			<tbody>
 				<tr>
-					<td><p>' . ( class_exists( 'Billy_Pro' ) ? '<small>' . sprintf( __( 'Thank you for purchasing %s!', 'billy' ), '<strong>Billy Pro</strong> <span class="dashicons dashicons-smiley" aria-hidden="true"></span>' ) . '</small>' : '<strong><a href="' . esc_url( self::$billy_url ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Get the <u>Pro</u> version', 'billy' ), '<span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><small>' . __( 'Premium add-on with Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more.', 'billy' ) . '</small></p>' ) . '<hr><p><strong><a href="' . esc_url( 'https://wordpress.org/support/plugin/' . self::$plugin_slug . '/reviews/?rate=5#new-post' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Please rate this Plugin', 'billy' ), ' <span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span></p></td>
+					<td><p>' . ( class_exists( 'Billy_Pro' ) ? '<small>' . sprintf( __( 'Thank you for purchasing %s!', 'billy' ), '<strong>Billy Pro</strong> <span class="dashicons dashicons-smiley" aria-hidden="true"></span>' ) . '</small>' : '<strong><a href="' . esc_url( self::$billy_url ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Get the <u>Pro</u> version', 'billy' ), '<span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><small>' . __( 'Premium add-on with WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more.', 'billy' ) . '</small></p>' ) . '<hr><p><strong><a href="' . esc_url( 'https://wordpress.org/support/plugin/' . self::$plugin_slug . '/reviews/?rate=5#new-post' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Please rate this Plugin', 'billy' ), ' <span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span></p></td>
 					<td> </td>
 					<td><a href="' . esc_url( self::$billy_url ) . '"><img src="' . esc_url( self::$plugin_url ) . 'assets/img/logo.png" class="logo" alt="Billy" /></a></td>
 				</tr>

@@ -134,6 +134,12 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.5.1 =
+* Improve table tfoot markup by replacing <td> labels with <th> and remove classNames
+* CSS updates (Frontend and generated PDF)
+* Minor bugfixes
+* Backwards compatibility
+
 = 1.5.0 =
 * Code modernization: Replace Header CPT with a reusable block ensuring backwards compatibility
 * Cleanup
