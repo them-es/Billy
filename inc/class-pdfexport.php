@@ -168,7 +168,7 @@ class Billy_PDF_Export {
 				'<ol>',
 				'</ol>',
 			);
-			$spacer       = '<hr style="margin: 2px 0; color: #FFF;">';
+			$spacer       = '<hr style="margin: 1.5pt 0; color: #FFF;">';
 			$replace_tags = array(
 				$spacer . '<p>',
 				'</p>' . $spacer,

@@ -824,6 +824,12 @@ class Billy {
 							array(
 								'core/paragraph',
 								array(
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
+								),
+							),
+							array(
+								'core/paragraph',
+								array(
 									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
 								),
 							),
@@ -951,6 +957,12 @@ class Billy {
 							'className' => 'intro',
 						),
 						array(
+							array(
+								'core/paragraph',
+								array(
+									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
+								),
+							),
 							array(
 								'core/paragraph',
 								array(

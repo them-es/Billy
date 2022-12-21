@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -27,10 +27,14 @@ The plugin should work with any modern WordPress theme that supports the Block e
 __Heads up:__ Please note that the main content area of the __Single/Custom Post Template__ of your theme needs to be setup in "fullwidth" format. Having a sidebar may narrow the (invoice) table layout too much.
 
 The following WordPress themes have been tested:
+
 * [https://them.es/starter-bootstrap](https://them.es/starter-bootstrap "Bootstrap Starter theme")
 * [https://them.es/starter-material](https://them.es/starter-material "Bootstrap Starter theme")
-* [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty "TwentyTwenty theme")
-* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen "TwentyNineteen theme")
+* [https://wordpress.org/themes/twentytwentythree](https://wordpress.org/themes/twentytwentythree "Twenty Twenty-Three theme")
+* [https://wordpress.org/themes/twentytwentytwo](https://wordpress.org/themes/twentytwentytwo "Twenty Twenty-Two theme")
+* [https://wordpress.org/themes/twentytwentyone](https://wordpress.org/themes/twentytwentyone "Twenty Twenty-One theme")
+* [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty "Twenty Twenty theme")
+* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen "Twenty Nineteen theme")
 
 = What's included? =
 
@@ -133,6 +137,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.5.2 =
+* Added an optional "subject" line in Custom Post type templates
+* CSS updates (Frontend and generated PDF)
+* Upgrade third-party dependencies
 
 = 1.5.1 =
 * Improve table tfoot markup by replacing <td> labels with <th> and remove classNames
