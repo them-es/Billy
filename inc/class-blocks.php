@@ -2,7 +2,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-
 /**
  * Primary controller class.
  */
@@ -16,9 +15,10 @@ class Billy_Blocks {
 	}
 
 	/**
-	 * Plugin initiation.
-	 *
+	 * Plugin initiation:
 	 * A helper function to initiate actions, hooks and other features needed.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		// Editor: Block assets.
@@ -38,7 +38,6 @@ class Billy_Blocks {
 
 		// Serverside Render callback.
 		if ( function_exists( 'register_block_type' ) ) {
-			// [Deprecated 2022-09] CPT billy-header.
 			register_block_type(
 				'billy-blocks/header',
 				array(
@@ -163,10 +162,13 @@ class Billy_Blocks {
 		}
 	}
 
-
 	/**
 	 * Add custom block category to default categories.
 	 * https://developer.wordpress.org/block-editor/reference-guides/filters/block-filters/#managing-block-categories
+	 *
+	 * @param array $categories Block categories.
+	 *
+	 * @return array
 	 */
 	public function categories( $categories ) {
 		return array_merge(
@@ -180,11 +182,10 @@ class Billy_Blocks {
 		);
 	}
 
-
 	/**
 	 * Server-side rendering.
 	 *
-	 * "billy-blocks/header" // [Deprecated 2022-09] CPT billy-header.
+	 * "billy-blocks/header"
 	 * "billy-blocks/theme-mod"
 	 * "billy-blocks/invoice-paymentinformation"
 	 * "billy-blocks/invoice-number"
@@ -192,7 +193,12 @@ class Billy_Blocks {
 	 * "billy-blocks/duedate"
 	 */
 
-	// [Deprecated 2022-09] CPT billy-header.
+	/**
+	 * Header: Reusable Block.
+	 * CPT "billy-header" has been deprecated in 2022-09. It got replaced by this Reusable Block.
+	 *
+	 * @return string
+	 */
 	public function headerlayout_render_callback() {
 		$output = '';
 		if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
@@ -212,10 +218,27 @@ class Billy_Blocks {
 		return $output;
 	}
 
+	/**
+	 * Meta label.
+	 *
+	 * @param string $label Meta label.
+	 * @param string $text  Meta text.
+	 * @param string $class Meta class.
+	 *
+	 * @return string
+	 */
 	public function meta_label_text_render_callback( $label, $text, $class ) {
 		return '<div' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), esc_html( $text ) ) : $label ) . '</div>';
 	}
 
+	/**
+	 * Theme mod.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function theme_mod_render_callback( $attributes, $content ) {
 		$value     = esc_attr( $attributes['themeMod'] );
 		$classname = esc_attr( $attributes['className'] );
@@ -223,24 +246,56 @@ class Billy_Blocks {
 		return '<div class="thememod' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( $value, '<span class="d-none d-admin-block">' . sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', esc_html__( 'N/A', 'billy' ) ) . '</span>' ) ) . '</div>';
 	}
 
+	/**
+	 * Post Date.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function date_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
 		return $this->meta_label_text_render_callback( esc_html__( 'Date', 'billy' ), get_the_date(), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
+	/**
+	 * Invoice payment information.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function invoicepaymentinformation_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
 		return '<p class="paymentinformation' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( 'payment_information' ) ) . '</p>';
 	}
 
+	/**
+	 * Invoice number.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function invoicenumber_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
 		return $this->meta_label_text_render_callback( esc_html__( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
+	/**
+	 * Invoice due date.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function invoiceduedate_render_callback( $attributes, $content ) {
 		$add_days  = esc_attr( get_theme_mod( 'payment_due_days', '14' ) );
 		$classname = esc_attr( $attributes['className'] );
@@ -248,22 +303,39 @@ class Billy_Blocks {
 		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
+	/**
+	 * Quote information.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function quoteinformation_render_callback( $attributes, $content ) {
 		$classname = esc_attr( $attributes['className'] );
 
 		return '<p class="quoteinformation' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
 	}
 
+	/**
+	 * Quote valid until date.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string
+	 */
 	public function quotevaliduntildate_render_callback( $attributes, $content ) {
-		$add_days  = esc_attr( get_theme_mod( 'quote_valid_days', '30' ) );
+		$add_days  = get_theme_mod( 'quote_valid_days', 30 );
 		$classname = esc_attr( $attributes['className'] );
 
 		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
 	}
 
-
 	/**
 	 * Enqueue scripts.
+	 *
+	 * @return void
 	 */
 	public function get_block_editor_assets() {
 		// Blocks.
@@ -284,7 +356,8 @@ class Billy_Blocks {
 			'billy-blocks-script',
 			$blocks_url . 'index.js',
 			$blocks_asset_file['dependencies'],
-			$blocks_asset_file['version']
+			$blocks_asset_file['version'],
+			true
 		);
 
 		// Load script translations.

@@ -205,6 +205,10 @@ table .date sub {
 	font-weight: bold;
 }
 
+[data-type$="-table"] table label {
+	white-space: nowrap;
+	min-width: 80px;
+}
 [data-type$="-table"] table .amount label {
 	color: #073984;
 }

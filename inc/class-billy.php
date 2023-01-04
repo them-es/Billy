@@ -71,7 +71,6 @@ class Billy {
 	 */
 	public static $currency;
 
-
 	/**
 	 * On load.
 	 */
@@ -100,11 +99,11 @@ class Billy {
 		$this->init();
 	}
 
-
 	/**
-	 * Plugin initiation.
-	 *
+	 * Plugin initiation:
 	 * A helper function to initiate actions, hooks and other features needed.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		add_action( 'init', array( $this, 'on_init' ), 998 );
@@ -122,8 +121,8 @@ class Billy {
 		add_action( 'customize_register', array( $this, 'wp_customizer_options' ), 998 );
 
 		// Title Format.
-		add_filter( 'private_title_format', array( $this, 'title_format' ) );
-		add_filter( 'protected_title_format', array( $this, 'title_format' ) );
+		add_filter( 'private_title_format', array( $this, 'title_format' ), 10, 2 );
+		add_filter( 'protected_title_format', array( $this, 'title_format' ), 10, 2 );
 
 		// Custom Post Type wrapper.
 		add_filter( 'the_content', array( $this, 'cpt_wrapper_content' ) );
@@ -149,17 +148,19 @@ class Billy {
 		add_filter( 'post_row_actions', array( $this, 'remove_quick_edit_invoice' ), 10, 2 );
 	}
 
-
 	/**
-	 * Flush Rewrite rules.
+	 * Flush rewrite rules.
+	 *
+	 * @return void
 	 */
 	public function flush_rewrite() {
 		flush_rewrite_rules();
 	}
 
-
 	/**
 	 * Add a widget to the dashboard.
+	 *
+	 * @return void
 	 */
 	public function add_dashboard_widget() {
 		wp_add_dashboard_widget(
@@ -169,9 +170,10 @@ class Billy {
 		);
 	}
 
-
 	/**
-	 * Create the function to output the contents of the dashboard widget.
+	 * Create the function to output the dashboard widget content.
+	 *
+	 * @return string
 	 */
 	public static function dashboard_widget_content() {
 		$debug = array();
@@ -283,6 +285,12 @@ class Billy {
 			</tbody>
 		</table>' . $output_script;
 	}
+
+	/**
+	 * Create the function to output the dashboard widget footer.
+	 *
+	 * @return string
+	 */
 	public static function dashboard_widget_footer() {
 		return '<table class="footer">
 			<tbody>
@@ -294,24 +302,34 @@ class Billy {
 			</tbody>
 		</table>';
 	}
+
+	/**
+	 * Build the dashboard widget.
+	 *
+	 * @return void
+	 */
 	public static function dashboard_widget() {
-		echo self::dashboard_widget_content() . self::dashboard_widget_footer();
+		echo wp_kses_post( self::dashboard_widget_content() . self::dashboard_widget_footer() );
 	}
-
-
 
 	/**
 	 * Modify Post title format for private/protected posts.
+	 *
+	 * @param string  $format Title format.
+	 * @param WP_Post $post   Current post object.
+	 *
+	 * @return string
 	 */
-	public function title_format( $content ) {
+	public function title_format( $format, $post ) {
 		return '%s';
 	}
-
 
 	/**
 	 * Modify Post content
 	 * Add a <div class="{post_type}-wrapper"> wrapper to Custom Post types.
 	 * Add pre-header with general information, Download buttons and PDF preview.
+	 *
+	 * @return string
 	 */
 	public function preheader_render_callback() {
 		$output = '<div class="pre-header d-print-none d-admin-none">';
@@ -334,6 +352,13 @@ class Billy {
 		return $output;
 	}
 
+	/**
+	 * Wrap content.
+	 *
+	 * @param string $content Post content.
+	 *
+	 * @return string
+	 */
 	public function cpt_wrapper_content( $content ) {
 		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ) ) ) {
 			$content = '<div id="' . get_post_type() . '" class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ) ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
@@ -342,9 +367,10 @@ class Billy {
 		return $content;
 	}
 
-
 	/**
 	 * Include Custom Post Type in main query.
+	 *
+	 * @return void
 	 */
 	/*public function include_invoices_in_postsquery( $query ) {
 		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_posts' ) ) {
@@ -359,7 +385,6 @@ class Billy {
 		}
 	}*/
 
-
 	/**
 	 * Post Type "Invoice": https://developer.wordpress.org/reference/hooks/rest_after_insert_this-post_type
 	 *
@@ -367,6 +392,11 @@ class Billy {
 	 * - Autoincrement invoice number
 	 * - Change title
 	 * - Make private
+	 *
+	 * @param WP_Post         $post    Post object.
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return void
 	 */
 	public function onsave_invoice( $post, $request ) {
 		$post_id = $post->ID;
@@ -424,13 +454,17 @@ class Billy {
 		wp_update_post( $my_post );
 	}
 
-
 	/**
 	 * Post Type "Quote".
 	 *
 	 * After save/update:
 	 * - Change title
 	 * - Make private
+	 *
+	 * @param WP_Post         $post    Post object.
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return void
 	 */
 	public function onsave_quote( $post, $request ) {
 		$post_id    = $post->ID;
@@ -451,9 +485,12 @@ class Billy {
 		wp_update_post( $my_post );
 	}
 
-
 	/**
 	 * Get invoicenumber in predefined format.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return string
 	 */
 	public static function get_invoicenumber( $post_id = null ) {
 		if ( null === $post_id ) {
@@ -487,9 +524,13 @@ class Billy {
 		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $invoicenumber );
 	}
 
-
 	/**
 	 * Get duedate in predefined format.
+	 *
+	 * @param int $post_id  Post ID.
+	 * @param int $add_days Added number of days.
+	 *
+	 * @return string
 	 */
 	public static function get_duedate( $post_id = null, int $add_days = 14 ) {
 		if ( null === $post_id ) {
@@ -502,13 +543,17 @@ class Billy {
 		return date_i18n( get_option( 'date_format' ), (int) $date->format( 'U' ) );
 	}
 
-
 	/**
 	 * Post Type "Accounting".
 	 *
 	 * After save/update:
 	 * - Change title
 	 * - Make private
+	 *
+	 * @param WP_Post         $post    Post object.
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return void
 	 */
 	public function onsave_accounting( $post, $request ) {
 		$post_id    = $post->ID;
@@ -529,17 +574,21 @@ class Billy {
 		wp_update_post( $my_post );
 	}
 
-
 	/**
 	 * Invoices: Keep original date once published.
+	 *
+	 * @param array $data    An array of slashed, sanitized, and processed post data.
+	 * @param array $postarr An array of sanitized (and slashed) but otherwise unmodified post data.
+	 *
+	 * @return array
 	 */
-	public function keep_original_date_on_publishing( $data, $post ) {
+	public function keep_original_date_on_publishing( $data, $postarr ) {
 		if ( 'billy-invoice' !== $data['post_type'] ) {
 			return $data;
 		}
 
-		if ( 'private' === get_post_status( $post['ID'] ) ) {
-			$post_date = get_the_date( 'Y-m-d H:i:s', $post['ID'] );
+		if ( 'private' === get_post_status( $postarr['ID'] ) ) {
+			$post_date = get_the_date( 'Y-m-d H:i:s', $postarr['ID'] );
 
 			$data['post_date']     = $post_date;
 			$data['post_date_gmt'] = get_gmt_from_date( $post_date );
@@ -548,9 +597,13 @@ class Billy {
 		return $data;
 	}
 
-
 	/**
 	 * Remove Quick Edit settings.
+	 *
+	 * @param string[] $actions An array of row action links.
+	 * @param WP_Post  $post    Post object.
+	 *
+	 * @return array
 	 */
 	public function remove_quick_edit_invoice( $actions, $post ) {
 		if ( 'billy-invoice' === $post->post_type ) {
@@ -563,11 +616,16 @@ class Billy {
 		return $actions;
 	}
 
-
 	/**
 	 * Include block attributes in REST response.
 	 * https://wordpress.stackexchange.com/questions/326688/why-my-admin-doesnt-work-after-adding-rest-prepare-post-filter
 	 * [TODO] Implement the following approach once included in core: https://github.com/WordPress/gutenberg/pull/18414
+	 *
+	 * @param WP_REST_Response $response Response object.
+	 * @param WP_Post          $post     Post object.
+	 * @param WP_REST_Request  $request  Request object.
+	 *
+	 * @return object
 	 */
 	public function blocks_to_rest_api( $response, $post, $request ) {
 		if ( ! function_exists( 'parse_blocks' ) ) {
@@ -580,13 +638,14 @@ class Billy {
 		return $response;
 	}
 
-
 	/**
 	 * Register Custom Post Type:
 	 * https://developer.wordpress.org/reference/functions/register_post_type
 	 *
 	 * Block Templates:
 	 * https://developer.wordpress.org/block-editor/developers/block-api/block-templates/#custom-post-types
+	 *
+	 * @return void
 	 */
 	public function on_init() {
 		// Load translations.
@@ -1076,9 +1135,10 @@ class Billy {
 		register_post_meta( 'billy-quote', '_quote_number', $field_args );
 	}
 
-
 	/**
-	 * Enqueue scripts and styles.
+	 * Enqueue frontend assets.
+	 *
+	 * @return void
 	 */
 	public function enqueue_assets() {
 		global $post;
@@ -1113,7 +1173,11 @@ class Billy {
 		}
 	}
 
-
+	/**
+	 * Enqueue admin assets.
+	 *
+	 * @return void
+	 */
 	public function enqueue_admin_assets() {
 		$theme_mods = array(
 			'name'     => esc_html__( 'Name', 'billy' ),
@@ -1159,9 +1223,12 @@ class Billy {
 		);
 	}
 
-
 	/**
 	 * Theme Customizer options.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+	 *
+	 * @return void
 	 */
 	public function wp_customizer_options( $wp_customize ) {
 		/**
@@ -1451,9 +1518,13 @@ class Billy {
 		}
 	}
 
-
 	/**
-	 * Theme Customizer: Validation.
+	 * Theme Customizer: Validate currency.
+	 *
+	 * @param object $validity WP Customize validity.
+	 * @param string $value    WP Customize value.
+	 *
+	 * @return object
 	 */
 	public function validate_currency( $validity, $value ) {
 		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
@@ -1463,6 +1534,14 @@ class Billy {
 		return $validity;
 	}
 
+	/**
+	 * Theme Customizer: Validate tax rates.
+	 *
+	 * @param object $validity WP Customize validity.
+	 * @param string $value    WP Customize value.
+	 *
+	 * @return object
+	 */
 	public function validate_taxrates( $validity, $value ) {
 		if ( ! empty( $value ) ) {
 			$newlines = explode( "\n", $value );

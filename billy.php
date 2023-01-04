@@ -1,13 +1,9 @@
 <?php
 /**
- * @package Billy
- * @version 1.5.x
- *
- * @wordpress-plugin
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.5.2
+ * Version: 1.5.3
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -19,18 +15,27 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
+// Billy constants.
 define( 'BILLY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BILLY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BILLY_PLUGIN_FILE', __FILE__ );
 define( 'REQUIRED_WP', '5.2' );
 define( 'REQUIRED_PHP', '7.2' );
 
-
+/**
+ * On plugin deactivation.
+ *
+ * @return void
+ */
 function billy_deactivate() {
 	deactivate_plugins( plugin_basename( BILLY_PLUGIN_FILE ) );
 }
 
+/**
+ * Admin notice: Incompatible PHP version.
+ *
+ * @return void
+ */
 function billy_php_incompatible_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
 
@@ -39,6 +44,11 @@ function billy_php_incompatible_admin_notice() {
 	}
 }
 
+/**
+ * Admin notice: Incompatible WP version.
+ *
+ * @return void
+ */
 function billy_wp_incompatible_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) );
 
@@ -47,6 +57,11 @@ function billy_wp_incompatible_admin_notice() {
 	}
 }
 
+/**
+ * Admin notice: Incompatible with Classic Editor.
+ *
+ * @return void
+ */
 function billy_classic_editor_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) );
 
@@ -55,14 +70,32 @@ function billy_classic_editor_admin_notice() {
 	}
 }
 
+/**
+ * Admin notice: PDF directory not writable.
+ *
+ * @return void
+ */
 function billy_temp_pdfdirectory_not_writable_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
 }
 
-function billy_is_plugin_active( $plugin ) {
+/**
+ * Test if plugin is active.
+ *
+ * @param string $plugin Plugin slug.
+ * @return bool
+ */
+function billy_is_plugin_active( $plugin = '' ) {
 	return in_array( $plugin, (array) get_option( 'active_plugins', array() ) );
 }
 
+/**
+ * On load:
+ * 1. Test compatibility.
+ * 2. Initialize plugin.
+ *
+ * @return false|void
+ */
 function billy_plugins_loaded() {
 	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
 		add_action( 'admin_notices', 'billy_php_incompatible_admin_notice' );

@@ -71,18 +71,20 @@ class Billy_PDF_Export {
 	}
 
 	/**
-	 * Plugin initiation.
-	 *
+	 * Plugin initiation:
 	 * A helper function to initiate actions, hooks and other features needed.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		add_action( 'rest_api_init', array( $this, 'billy_rest_api_init' ) );
 	}
 
 	/**
-	 * WP-API initiation.
-	 *
+	 * WP-API initiation:
 	 * GET /wp-json/export/pdf/{ID}
+	 *
+	 * @return void
 	 */
 	public function billy_rest_api_init() {
 		register_rest_route(
@@ -105,8 +107,8 @@ class Billy_PDF_Export {
 	/**
 	 * WP-API Custom endpoint callbacks.
 	 *
-	 * @param WP_REST_Request $request Options for the function.
-	 * @return object MPDF post data.
+	 * @param  WP_REST_Request $request Options for the function.
+	 * @return void
 	 */
 	public function billy_export_pdf( $request ) {
 		$parameters = $request->get_params();
@@ -119,17 +121,17 @@ class Billy_PDF_Export {
 			$enqueued_styles = base64_decode( esc_attr( $parameters['stylesheets'] ) );
 			$enqueued_styles = explode( ',', str_replace( array( '[', ']', '"' ), '', $enqueued_styles ) );
 
-			// Add all registered stylesheets to output.
+			// Add all registered stylesheets to CSS output.
 			foreach ( $enqueued_styles as $enqueued_style ) {
 				$css .= file_get_contents( $enqueued_style );
 			}
 		}*/
 
 		// Debugging.
-		//print_r( $css );exit();
-		//print_r( str_replace( '"', '', base64_decode( $parameters['stylesheets'] ) ) );exit();
-		//print_r( $post_type );exit();
-		//print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) );exit();
+		//print_r( $css ); exit();
+		//print_r( str_replace( '"', '', base64_decode( $parameters['stylesheets'] ) ) ); exit();
+		//print_r( $post_type ); exit();
+		//print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) ); exit();
 
 		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(
