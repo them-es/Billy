@@ -9,7 +9,6 @@
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
 
-
 /**
  * General
  */
@@ -47,7 +46,6 @@ mark {
 	background-color: $warning;
 }
 
-
 /* Header */
 
 .pre-header {
@@ -68,7 +66,7 @@ mark {
 	p {
 		margin: 0;
 	}
-	
+
 	.wp-block-image {
 		margin: 0 !important;
 
@@ -81,6 +79,10 @@ mark {
 	.wp-block-columns {
 		margin-top: 0;
 		margin-bottom: 0;
+
+		div {
+			margin-block-start: 0;
+		}
 	}
 }
 
@@ -93,7 +95,7 @@ mark {
 		&:last-of-type {
 			div {
 				display: flex;
-				font-size: smaller;
+				margin-block-start: 0;
 
 				div {
 					flex-basis: 50%;
@@ -119,52 +121,55 @@ mark {
 	}
 }
 
-
 /* Tables */
 
 #billy-accounting {
 	table {
 		tr[data-quarter="Q1"] {
 			th {
-				background-color: #F8F8F8;
+				background-color: #f8f8f8;
 			}
 		}
 		tr[data-quarter="Q2"] {
 			th {
-				background-color: #E0E0E0;
+				background-color: #e0e0e0;
 			}
 		}
 		tr[data-quarter="Q3"] {
 			th {
-				background-color: #D0D0D0;
+				background-color: #d0d0d0;
 			}
 		}
 		tr[data-quarter="Q4"] {
 			th {
-				background-color: #B8B8B8;
+				background-color: #b8b8b8;
 			}
 		}
 	}
 }
 
-.wp-block-table  {
+.wp-block-table {
 	width: 100%;
 	margin-top: 60px;
 	margin-bottom: 60px;
-	border: none;
-	
+	border-collapse: collapse;
+
+	th,
+	td {
+		padding: 5px;
+	}
+
 	th {
 		cursor: pointer;
 		white-space: nowrap;
-		
+
 		&::after {
-			content: '';
+			content: "";
 			display: inline-block;
 			width: 10px;
 			height: 10px;
 			margin-top: -5px;
 			margin-left: 10px;
-			border: none;
 			border-bottom: 1px solid $primary;
 			border-left: 1px solid $primary;
 			transform: rotate(-225deg);
@@ -193,9 +198,12 @@ mark {
 		}
 	}
 
-	tbody {
-		border-bottom: $table-border-width solid $table-border-color;
+	tbody,
+	thead {
+		border-bottom: $table-border-width solid;
+	}
 
+	tbody {
 		th,
 		td {
 			vertical-align: top;
@@ -203,22 +211,17 @@ mark {
 	}
 
 	tfoot {
-		border: none;
-
 		tr {
-			border: none;
+			&.total {
+				font-weight: bold;
 
-			&.subtotal,
-			&.taxrates {
-				th {
-					font-weight: initial !important;
+				td {
+					border-top: $table-border-width solid;
 				}
 			}
 
 			th,
 			td {
-				border-top: 2px solid;
-				font-weight: bold;
 				text-align: initial;
 				white-space: nowrap;
 
@@ -242,7 +245,7 @@ mark {
 
 					&::before,
 					&::after {
-						content: '';
+						content: "";
 						display: block;
 						width: 1rem;
 						height: 1rem;
@@ -265,11 +268,9 @@ mark {
 				}
 			}
 			th {
-				border: none;
 				text-align: right;
 			}
 		}
-		
 	}
 }
 
@@ -294,11 +295,9 @@ mark {
 	}
 }
 
-
 /* Print */
 
 @media print {
-
 	body {
 		&[class*="single-billy-"] {
 			font-size: 9pt;
@@ -341,11 +340,11 @@ mark {
 		.wp-block-column {
 			&:last-of-type {
 				display: table;
-	
+
 				p {
 					display: table-row;
 					font-size: smaller;
-	
+
 					* {
 						display: table-cell;
 					}
@@ -367,5 +366,4 @@ mark {
 			}
 		}
 	}
-
 }

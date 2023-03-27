@@ -92,7 +92,6 @@ class Billy {
 		self::$plugin_url     = ( defined( 'BILLY_PLUGIN_URL' ) ? esc_url( BILLY_PLUGIN_URL ) : esc_url( plugin_dir_url( __DIR__ ) ) );
 		self::$plugin_uri     = esc_url( $plugin_data['PluginURI'] );
 		self::$billy_url      = esc_url( $plugin_data['AuthorURI'] );
-
 		self::$locale         = esc_attr( str_replace( '_', '-', get_user_locale() ) );
 		self::$currency       = esc_attr( get_theme_mod( 'currency', '$' ) );
 
@@ -180,7 +179,7 @@ class Billy {
 
 		$output_script = '';
 
-		// (Debug|Undocumented) Get invoices with missing metadata ("_invoice_number" is required!) and provide a solution to rewrite all post metas based on the latest invoice.
+		// [UNDOCUMENTED: "/wp-admin/index.php?fix_invoices=true"] Get invoices with missing metadata ("_invoice_number" is required on each incoice post!) and provide a solution to rewrite all posts from up->bottom based on the latest invoice number.
 		$invoices_missing_meta = new WP_Query(
 			array(
 				'post_type'      => 'billy-invoice',
@@ -196,7 +195,7 @@ class Billy {
 			),
 		);
 
-		if ( $invoices_missing_meta->have_posts() ) {
+		if ( current_user_can( 'edit_posts' ) && $invoices_missing_meta->have_posts() ) {
 			while ( $invoices_missing_meta->have_posts() ) {
 				$invoices_missing_meta->the_post();
 
@@ -332,22 +331,22 @@ class Billy {
 	 * @return string
 	 */
 	public function preheader_render_callback() {
-		$output = '<div class="pre-header d-print-none d-admin-none">';
+		$output      = '<div class="pre-header d-print-none d-admin-none">';
 			$output .= '<div>';
 				// Print.
 				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . esc_html__( 'Print', 'billy' ) . '</button></span>';
 				$output .= '&nbsp;';
 
-				if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
-					// Export table data as tab separated txt file.
-					$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
-				}
+		if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
+			// Export table data as tab separated txt file.
+			$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
+		}
 				$output .= '</div>';
 
 			// PDF export.
 			$pdf_link = get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ );
-			$output .= '<!-- wp:file {"href":"' . esc_url( $pdf_link ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><a href="' . esc_url( $pdf_link ) . '" class="wp-block-file__button wp-element-button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a>' . esc_html( get_the_title() ) . ' <object class="wp-block-file__embed" data="' . esc_url( $pdf_link ) . '"></object></div><!-- /wp:file -->';
-		$output .= '</div>';
+			$output  .= '<!-- wp:file {"href":"' . esc_url( $pdf_link ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><a href="' . esc_url( $pdf_link ) . '" class="wp-block-file__button wp-element-button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a>' . esc_html( get_the_title() ) . ' <object class="wp-block-file__embed" data="' . esc_url( $pdf_link ) . '"></object></div><!-- /wp:file -->';
+		$output      .= '</div>';
 
 		return $output;
 	}
@@ -372,7 +371,8 @@ class Billy {
 	 *
 	 * @return void
 	 */
-	/*public function include_invoices_in_postsquery( $query ) {
+	/*
+	public function include_invoices_in_postsquery( $query ) {
 		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_posts' ) ) {
 			$query->set(
 				'post_type',
@@ -436,7 +436,7 @@ class Billy {
 				$get_prev_unix_time = strtotime( $get_prev->post_date );
 
 				if ( get_the_date( 'U', $post_id ) < $get_prev_unix_time ) {
-					$post_date                = date_i18n( 'Y-m-d H:i:s', (int) ++$get_prev_unix_time );
+					$post_date = date_i18n( 'Y-m-d H:i:s', (int) ++$get_prev_unix_time );
 
 					$my_post['post_date']     = $post_date;
 					$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
@@ -447,7 +447,7 @@ class Billy {
 		}
 
 		// Update title and slug.
-		$post_title = ( empty( $invoicenumber ) ? sprintf( '%1$s (%2$s)', $this->get_invoicenumber( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoicenumber( $post_id ) );
+		$post_title            = ( empty( $invoicenumber ) ? sprintf( '%1$s (%2$s)', $this->get_invoicenumber( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoicenumber( $post_id ) );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = $post_title;
 
@@ -757,14 +757,14 @@ class Billy {
 <!-- /wp:group -->';
 		}
 
-		$header_reusable_block = get_posts(
+		$header_reusable_blocks = get_posts(
 			array(
 				'post_type'   => 'wp_block',
 				'title'       => 'Billy Header',
 				'post_status' => array( 'publish', 'private' ),
 			)
 		);
-		if ( ! $header_reusable_block ) {
+		if ( ! $header_reusable_blocks ) {
 			// Insert new reusable block.
 			$header_id = wp_insert_post(
 				array(
@@ -783,7 +783,23 @@ class Billy {
 			);
 		} else {
 			// Get existing reusable block.
-			$header_id = $header_reusable_block[0]->ID;
+			if ( function_exists( 'pll_get_post_language' ) ) {
+				foreach ( $header_reusable_blocks as $header_reusable_block ) {
+					if ( pll_get_post_language( $header_reusable_block->ID ) === substr( self::$locale, 0, 2 ) ) {
+						$header_id = $header_reusable_block->ID;
+					}
+				}
+			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
+				foreach ( $header_reusable_blocks as $header_reusable_block ) {
+					if ( wpml_get_language_information( $header_reusable_block->ID ) === self::$locale ) {
+						$header_id = $header_reusable_block->ID;
+					}
+				}
+			}
+
+			if ( empty( $header_id ) ) {
+				$header_id = $header_reusable_blocks[0]->ID;
+			}
 		}
 
 		// Invoices.
@@ -1179,7 +1195,7 @@ class Billy {
 	 * @return void
 	 */
 	public function enqueue_admin_assets() {
-		$theme_mods = array(
+		$theme_mods        = array(
 			'name'     => esc_html__( 'Name', 'billy' ),
 			'address'  => esc_html__( 'Address', 'billy' ),
 			'vat'      => esc_html__( 'VAT', 'billy' ),
@@ -1196,7 +1212,7 @@ class Billy {
 			$tax_options = '';
 			foreach ( $taxes as $key => $value ) {
 				// Validate input.
-				$value = ( empty( $value ) || '%' !== substr( $value, -1 ) || ! in_array( preg_replace( '/[^0-9]/', '', $value ), range( 1, 99 ) ) ? '0%' : $value ); // Default: 0%
+				$value        = ( empty( $value ) || '%' !== substr( $value, -1 ) || ! in_array( preg_replace( '/[^0-9]/', '', $value ), range( 1, 99 ) ) ? '0%' : $value ); // Default: 0%
 				$tax_options .= '{ label: "' . $value . '", value: "' . $value . '" },';
 			}
 			$tax_options .= '{ label: "0%", value: "0%" },';
@@ -1209,9 +1225,8 @@ class Billy {
 		}
 
 		// Scripts.
-		wp_enqueue_script( 'billy-adminscripts', self::$plugin_url . 'assets/admin/js/admin.js', array(), self::$plugin_version, true );
 		wp_add_inline_script(
-			'billy-adminscripts',
+			'editor',
 			'var globalDataBilly = {
 				wpAdmin: "' . get_dashboard_url() . '",
 				postId: "' . get_the_ID() . '",

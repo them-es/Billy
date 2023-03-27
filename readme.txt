@@ -3,8 +3,8 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
-Tested up to: 6.1
-Stable tag: 1.5.3
+Tested up to: 6.2
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -138,13 +138,20 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.6.0 =
+* Refactoring and Code quality
+* Styling updates
+* Bugfix: Retrieve reusable Header block in current locale (Polylang, WPML)
+* New Sidebar panel with settings overview
+* Upgrade third-party dependencies
+
 = 1.5.3 =
 * Minor style update in Editor CSS
 * Code quality
 * Documentation
 
 = 1.5.2 =
-* Added an optional "subject" line in Custom Post type templates
+* Add an optional "subject" line in Custom Post type templates
 * CSS updates (Frontend and generated PDF)
 * Upgrade third-party dependencies
 

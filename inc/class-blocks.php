@@ -24,10 +24,7 @@ class Billy_Blocks {
 		// Editor: Block assets.
 		add_action( 'enqueue_block_editor_assets', array( $this, 'get_block_editor_assets' ) );
 
-		// Frontend: Block assets.
-		//add_action( 'enqueue_block_assets', 'enqueue_block_assets' );
-
-		// Create Block categories.
+		// Editor: Block categories.
 		if ( ! function_exists( 'get_default_block_categories' ) ) {
 			// < WordPress v5.8
 			add_filter( 'block_categories', array( $this, 'categories' ), 10, 2 );
@@ -36,7 +33,7 @@ class Billy_Blocks {
 			add_filter( 'block_categories_all', array( $this, 'categories' ), 10, 2 );
 		}
 
-		// Serverside Render callback.
+		// Serverside Render callbacks.
 		if ( function_exists( 'register_block_type' ) ) {
 			register_block_type(
 				'billy-blocks/header',
@@ -48,8 +45,8 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/theme-mod',
 				array(
-					'attributes' => array(
-						'themeMod' => array(
+					'attributes'      => array(
+						'themeMod'  => array(
 							'type'    => 'string',
 							'default' => '',
 						),
@@ -72,7 +69,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/invoice-paymentinformation',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -85,7 +82,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/invoice-number',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -98,7 +95,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/invoice-date',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -111,7 +108,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/invoice-duedate',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -124,7 +121,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/quote-information',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -137,7 +134,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/quote-date',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -150,7 +147,7 @@ class Billy_Blocks {
 			register_block_type(
 				'billy-blocks/quote-validuntildate',
 				array(
-					'attributes' => array(
+					'attributes'      => array(
 						'className' => array(
 							'type'    => 'string',
 							'default' => '',
@@ -228,11 +225,11 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function meta_label_text_render_callback( $label, $text, $class ) {
-		return '<div' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), esc_html( $text ) ) : $label ) . '</div>';
+		return '<div' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), wp_kses_post( $text ) ) : $label ) . '</div>';
 	}
 
 	/**
-	 * Theme mod.
+	 * Theme mod (WP Customizer API setting).
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.
@@ -240,10 +237,12 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function theme_mod_render_callback( $attributes, $content ) {
-		$value     = esc_attr( $attributes['themeMod'] );
-		$classname = esc_attr( $attributes['className'] );
+		$value = esc_attr( $attributes['themeMod'] );
+		// Fallback value (only shown in edit mode).
+		global $wp;
+		$fallback_value = ( false !== strpos( $wp->request, 'block-renderer' ) ? sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', esc_html__( 'N/A', 'billy' ) ) : '' );
 
-		return '<div class="thememod' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( $value, '<span class="d-none d-admin-block">' . sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', esc_html__( 'N/A', 'billy' ) ) . '</span>' ) ) . '</div>';
+		return $this->meta_label_text_render_callback( '', nl2br( get_theme_mod( $value, $fallback_value ) ), 'thememod' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -255,9 +254,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function date_render_callback( $attributes, $content ) {
-		$classname = esc_attr( $attributes['className'] );
-
-		return $this->meta_label_text_render_callback( esc_html__( 'Date', 'billy' ), get_the_date(), 'date' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Date', 'billy' ), get_the_date(), 'date' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -269,9 +266,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function invoicepaymentinformation_render_callback( $attributes, $content ) {
-		$classname = esc_attr( $attributes['className'] );
-
-		return '<p class="paymentinformation' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( 'payment_information' ) ) . '</p>';
+		return '<p class="paymentinformation' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'payment_information' ) ) . '</p>';
 	}
 
 	/**
@@ -283,9 +278,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function invoicenumber_render_callback( $attributes, $content ) {
-		$classname = esc_attr( $attributes['className'] );
-
-		return $this->meta_label_text_render_callback( esc_html__( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -297,10 +290,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function invoiceduedate_render_callback( $attributes, $content ) {
-		$add_days  = esc_attr( get_theme_mod( 'payment_due_days', '14' ) );
-		$classname = esc_attr( $attributes['className'] );
-
-		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'payment_due_days', 14 ) ), 'date' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -312,9 +302,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function quoteinformation_render_callback( $attributes, $content ) {
-		$classname = esc_attr( $attributes['className'] );
-
-		return '<p class="quoteinformation' . ( $classname ? ' ' . $classname : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
+		return '<p class="quoteinformation' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
 	}
 
 	/**
@@ -326,10 +314,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function quotevaliduntildate_render_callback( $attributes, $content ) {
-		$add_days  = get_theme_mod( 'quote_valid_days', 30 );
-		$classname = esc_attr( $attributes['className'] );
-
-		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) $add_days ), 'date' . ( $classname ? ' ' . $classname : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'quote_valid_days', 30 ) ), 'date' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -339,7 +324,7 @@ class Billy_Blocks {
 	 */
 	public function get_block_editor_assets() {
 		// Blocks.
-		$blocks_dir = ( defined( 'BILLY_PLUGIN_DIR' ) ? BILLY_PLUGIN_DIR : '' ) . 'blocks/build/';
+		$blocks_dir        = ( defined( 'BILLY_PLUGIN_DIR' ) ? BILLY_PLUGIN_DIR : '' ) . 'blocks/build/';
 		$blocks_asset_file = include $blocks_dir . 'index.asset.php';
 
 		// Replace "wp-blockEditor" with "wp-block-editor".

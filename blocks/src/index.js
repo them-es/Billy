@@ -2,24 +2,25 @@
  * Import blocks
  */
 
-import './_header/header/index'; // Deprecated
+import './_deprecated/header/index';
 
-import './_header/theme-mod/index';
+import './invoice/actions/index';
+import './invoice/meta/index';
+import './invoice/date/index';
+import './invoice/duedate/index';
+import './invoice/invoice-number/index';
+import './invoice/paymentinformation/index';
+import './invoice/table/index';
 
-import './_invoice/actions/index';
-import './_invoice/meta/index';
-import './_invoice/date/index';
-import './_invoice/duedate/index';
-import './_invoice/invoice-number/index';
-import './_invoice/paymentinformation/index';
-import './_invoice/table/index';
+import './quote/actions/index';
+import './quote/meta/index';
+import './quote/date/index';
+import './quote/information/index';
+import './quote/table/index';
+import './quote/validuntildate/index';
 
-import './_quote/actions/index';
-import './_quote/meta/index';
-import './_quote/date/index';
-import './_quote/information/index';
-import './_quote/table/index';
-import './_quote/validuntildate/index';
+import './accounting/table/index';
+import './accounting/actions/index';
 
-import './_accounting/table/index';
-import './_accounting/actions/index';
+import './settings/panel/index';
+import './settings/theme-mod/index';

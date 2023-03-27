@@ -1,15 +1,13 @@
 <?php
 /**
- * mPDF PHP library.
+ * "mPDF" PHP library.
  * https://mpdf.github.io
  */
 require dirname( __DIR__, 1 ) . '/vendor/autoload.php';
 
 use Mpdf\Mpdf;
 
-
 defined( 'ABSPATH' ) || exit;
-
 
 /**
  * Export PDF class.
@@ -117,7 +115,8 @@ class Billy_PDF_Export {
 		$reference  = esc_attr( get_the_title( $post_id ) );
 
 		$css = static::$pdfstyles;
-		/*if ( ! empty( $parameters['stylesheets'] ) ) {
+		/*
+		if ( ! empty( $parameters['stylesheets'] ) ) {
 			$enqueued_styles = base64_decode( esc_attr( $parameters['stylesheets'] ) );
 			$enqueued_styles = explode( ',', str_replace( array( '[', ']', '"' ), '', $enqueued_styles ) );
 
@@ -128,10 +127,10 @@ class Billy_PDF_Export {
 		}*/
 
 		// Debugging.
-		//print_r( $css ); exit();
-		//print_r( str_replace( '"', '', base64_decode( $parameters['stylesheets'] ) ) ); exit();
-		//print_r( $post_type ); exit();
-		//print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) ); exit();
+		// print_r( $css ); exit();
+		// print_r( str_replace( '"', '', base64_decode( $parameters['stylesheets'] ) ) ); exit();
+		// print_r( $post_type ); exit();
+		// print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) ); exit();
 
 		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(

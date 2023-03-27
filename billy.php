@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.5.3
+ * Version: 1.6.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -99,7 +99,7 @@ function billy_is_plugin_active( $plugin = '' ) {
 function billy_plugins_loaded() {
 	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
 		add_action( 'admin_notices', 'billy_php_incompatible_admin_notice' );
-		//add_action( 'admin_init', 'billy_deactivate' );
+		// add_action( 'admin_init', 'billy_deactivate' );
 
 		return false;
 	}
@@ -107,7 +107,7 @@ function billy_plugins_loaded() {
 	global $wp_version;
 	if ( version_compare( $wp_version, REQUIRED_WP, '<=' ) ) {
 		add_action( 'admin_notices', 'billy_wp_incompatible_admin_notice' );
-		//add_action( 'admin_init', 'billy_deactivate' );
+		// add_action( 'admin_init', 'billy_deactivate' );
 
 		return false;
 	}
