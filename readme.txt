@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.2
@@ -138,15 +138,22 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.6.1 =
+* Bugfix: React warnings "Cannot update a component while rendering a different component"
+* Deactivate mPDF simpleTables to allow full CSS support for tables (e.g. via manipulating Billy_PDF_Export::$pdfstyles)
+* PDF output: Less opinionated table styles
+* Minor updates in style-editor.css to format Block-Editor specific elements only
+
 = 1.6.0 =
 * Refactoring and Code quality
 * Styling updates
 * Bugfix: Retrieve reusable Header block in current locale (Polylang, WPML)
 * New Sidebar panel with settings overview
 * Upgrade third-party dependencies
+* Compatibility with WordPress 6.2
 
 = 1.5.3 =
-* Minor style update in Editor CSS
+* Minor style update in style-editor.css
 * Code quality
 * Documentation
 

@@ -16,6 +16,7 @@ import {
 	DatePicker, // https://developer.wordpress.org/block-editor/components/date-time
 } from '@wordpress/components';
 import { dispatch, withSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -141,7 +142,9 @@ registerBlockType('billy-blocks/accounting-table', {
 			setAttributes({ amountTaxEarnings: amountTaxEarningsSum });
 			setAttributes({ amountTaxExpenses: amountTaxExpensesSum });
 		};
-		updateTotals();
+		useEffect(() => {
+			updateTotals();
+		});
 
 		// Markup: Backend
 		return (
@@ -535,16 +538,22 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 			setAttributes,
 		} = props;
 
-		setAttributes({ index: i });
-		setAttributes({ currency: globalDataBilly.currency });
-		setAttributes({ locale: globalDataBilly.locale });
+		useEffect(() => {
+			setAttributes({ index: i });
+			setAttributes({ currency: globalDataBilly.currency });
+			setAttributes({ locale: globalDataBilly.locale });
 
-		if ('' === date) {
-			setAttributes({ date: new Date().toISOString().substring(0, 10) }); // Current date
-			setAttributes({
-				quarter: getQuarter(new Date().toISOString().substring(0, 10)),
-			}); // Current date
-		}
+			if ('' === date) {
+				setAttributes({
+					date: new Date().toISOString().substring(0, 10),
+				}); // Current date
+				setAttributes({
+					quarter: getQuarter(
+						new Date().toISOString().substring(0, 10)
+					),
+				}); // Current date
+			}
+		});
 
 		const reOrder = () => {
 			// Reorder by date (move up/down): see "childBlocks.sort()"

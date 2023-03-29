@@ -12,7 +12,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { InspectorControls, InnerBlocks } from '@wordpress/block-editor';
 import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
-import { RawHTML } from '@wordpress/element';
+import { useEffect, RawHTML } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -163,7 +163,9 @@ registerBlockType('billy-blocks/invoice-table', {
 				setAttributes({ amountTotal: amountTotalSum });
 			}
 		};
-		updateTotals();
+		useEffect(() => {
+			updateTotals();
+		});
 
 		// Markup: Backend
 		return (
@@ -487,18 +489,20 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 			setAttributes,
 		} = props;
 
-		setAttributes({ index: i });
-		setAttributes({ currency: globalDataBilly.currency });
-		setAttributes({ locale: globalDataBilly.locale });
+		useEffect(() => {
+			setAttributes({ index: i });
+			setAttributes({ currency: globalDataBilly.currency });
+			setAttributes({ locale: globalDataBilly.locale });
 
-		if ('' === taxRate) {
-			setAttributes({
-				taxRate:
-					0 === globalDataBilly.taxOptions.length
-						? '0%'
-						: globalDataBilly.taxOptions[0].value,
-			});
-		}
+			if ('' === taxRate) {
+				setAttributes({
+					taxRate:
+						0 === globalDataBilly.taxOptions.length
+							? '0%'
+							: globalDataBilly.taxOptions[0].value,
+				});
+			}
+		});
 
 		const updateAmountIncl = (val) => {
 			setAttributes({ amountIncl: val > 0 ? Number(val) : '' });

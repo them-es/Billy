@@ -2,27 +2,29 @@
  * Admin and Editor Styles
  */
 
-body[class*="post-type-billy-"] .wp-block-post-content {
+body.block-editor-page[class*="post-type-billy-"] .wp-block-post-content {
 	padding: 24px;
 }
 
-body[class*="post-type-billy-"] .wp-block-post-content > .wp-block {
+body.block-editor-page[class*="post-type-billy-"]
+	.wp-block-post-content
+	> .wp-block {
 	margin-block-start: 1.5rem;
 }
 
-body[class*="post-type-billy-"] .d-admin-none {
+body.block-editor-page[class*="post-type-billy-"] .d-admin-none {
 	display: none !important;
 }
-body[class*="post-type-billy-"] .d-admin-block {
+body.block-editor-page[class*="post-type-billy-"] .d-admin-block {
 	display: block !important;
 }
 
-body[class*="post-type-billy-"] [class*="show-on-"] {
+body.block-editor-page[class*="post-type-billy-"] [class*="show-on-"] {
 	display: none;
 }
-body.post-type-billy-invoice .show-on-invoice,
-body.post-type-billy-quote .show-on-quote,
-body.post-type-billy-accounting .show-on-accounting {
+body.block-editor-page.post-type-billy-invoice .show-on-invoice,
+body.block-editor-page.post-type-billy-quote .show-on-quote,
+body.block-editor-page.post-type-billy-accounting .show-on-accounting {
 	display: block;
 }
 
@@ -99,7 +101,9 @@ li[id*="menu-posts-billy-"] .wp-menu-image::before {
 
 /* Header */
 
-body[class*="post-type-billy-"] .edit-post-visual-editor .wp-block.is-reusable,
+body.block-editor-page[class*="post-type-billy-"]
+	.edit-post-visual-editor
+	.wp-block.is-reusable,
 [data-type="billy-blocks/header"] {
 	max-width: 100%;
 	border-top: 1px dashed;
@@ -206,11 +210,11 @@ table.totals tr td {
 	padding: 3px 10px;
 }
 
-body[class*="post-type-billy-"] table th,
-body[class*="post-type-billy-"] table td {
+body.block-editor-page[class*="post-type-billy-"] table th,
+body.block-editor-page[class*="post-type-billy-"] table td {
 	padding: 10px 15px !important;
 }
-body[class*="post-type-billy-"] table th {
+body.block-editor-page[class*="post-type-billy-"] table th {
 	font-weight: bold;
 }
 

@@ -136,7 +136,7 @@ class Billy_PDF_Export {
 		$mpdf = new Mpdf(
 			array(
 				'tempDir'      => static::$temp_dir,
-				'simpleTables' => true,
+				'simpleTables' => false, // https://stackoverflow.com/a/67087295
 				'mode'         => 'utf-8',
 				'fontDir'      => static::$pdffont_dir,
 				'fontdata'     => array(
