@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.6.1
+ * Version: 1.6.2
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+

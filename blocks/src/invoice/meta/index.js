@@ -14,7 +14,11 @@ import { TextControl, PanelBody } from '@wordpress/components';
 import { RawHTML } from '@wordpress/element';
 
 registerBlockType('billy-blocks/invoice-meta', {
-	title: sprintf(__('%1$s: %2$s', 'billy'), __('Invoice', 'billy'), __('Meta', 'billy')),
+	title: sprintf(
+		__('%1$s: %2$s', 'billy'),
+		__('Invoice', 'billy'),
+		__('Meta', 'billy')
+	),
 	icon: 'editor-textcolor', // https://developer.wordpress.org/resource/dashicons
 	category: 'billy-blocks', // Custom category: see index.php
 	attributes: {
@@ -45,9 +49,7 @@ registerBlockType('billy-blocks/invoice-meta', {
 		};
 
 		const updateInput = (val) => {
-			editEntityRecord('root', 'site', undefined, {
-				description: val,
-			});
+			setAttributes({ text: val });
 		};
 
 		// Markup: Backend
@@ -55,16 +57,29 @@ registerBlockType('billy-blocks/invoice-meta', {
 			<>
 				<InspectorControls>
 					<PanelBody title={__('Label', 'billy')}>
-						<TextControl type="text" className="label" value={label} onChange={updateLabel} />
+						<TextControl
+							type="text"
+							className="label"
+							value={label}
+							onChange={updateLabel}
+						/>
 					</PanelBody>
 					<PanelBody title={__('Text', 'billy')}>
-						<TextControl type="text" className="text" value={text} onChange={updateInput} />
+						<TextControl
+							type="text"
+							className="text"
+							value={text}
+							onChange={updateInput}
+						/>
 					</PanelBody>
 				</InspectorControls>
 
 				<RawHTML>
 					{sprintf(
-						__('<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy'),
+						__(
+							'<div class="label">%1$s</div> <div class="text">%2$s</div>',
+							'billy'
+						),
 						label ? label : '',
 						text ? text : __('N/A', 'billy')
 					)}
@@ -83,7 +98,10 @@ registerBlockType('billy-blocks/invoice-meta', {
 			text && (
 				<RawHTML>
 					{sprintf(
-						__('<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy'),
+						__(
+							'<div class="label">%1$s</div> <div class="text">%2$s</div>',
+							'billy'
+						),
 						label ? label : '',
 						text ? text : __('N/A', 'billy')
 					)}
@@ -117,7 +135,12 @@ registerBlockType('billy-blocks/invoice-meta', {
 						<p>
 							<RawHTML>
 								{sprintf(
-									'<p>' + __('<strong>%1$s</strong> <span>%2$s</span>', 'billy') + '</p>',
+									'<p>' +
+										__(
+											'<strong>%1$s</strong> <span>%2$s</span>',
+											'billy'
+										) +
+										'</p>',
 									label ? label : '',
 									text ? text : __('N/A', 'billy')
 								)}
