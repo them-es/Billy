@@ -3,11 +3,11 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
-Tested up to: 6.2
-Stable tag: 1.6.2
+Tested up to: 6.3
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires PHP: 7.2
+Requires PHP: 8.0
 
 A business-oriented billing suite—tailored for freelancers and small agencies.
 

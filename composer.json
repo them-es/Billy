@@ -1,5 +1,8 @@
 {
-    "require": {
-        "mpdf/mpdf": "^8.0"
-    }
+	"require": {
+		"mpdf/mpdf": "^8.0"
+	},
+	"config": {
+		"platform-check": false
+	}
 }
