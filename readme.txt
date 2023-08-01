@@ -138,6 +138,9 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.6.3 =
+* Tested in PHP 7.4 and updated composer.json to prevent a fatal error (Using PHP 8.0+ is still advised!)
+
 = 1.6.2 =
 * Bugfix: React warning "Uncaught ReferenceError: editEntityRecord is not defined" in invoice meta
 * Upgrade third-party dependencies
