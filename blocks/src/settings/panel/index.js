@@ -7,8 +7,9 @@ import ServerSideRender from '@wordpress/server-side-render';
 
 const BillySetup = () => (
 	<PluginDocumentSettingPanel
-		className="my-document-setting-plugin"
+		name="billy-setup"
 		title={__('Billy Setup', 'billy')}
+		className="my-document-setting-plugin"
 	>
 		<p>
 			<a
