@@ -3,7 +3,7 @@
  * "mPDF" PHP library.
  * https://mpdf.github.io
  */
-require dirname( __DIR__, 1 ) . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Mpdf\Mpdf;
 
@@ -214,5 +214,4 @@ class Billy_PDF_Export {
 		$mpdf->Output( $reference . '.pdf', 'I' );
 		exit();
 	}
-
 }

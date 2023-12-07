@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
 Tested up to: 6.4
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -30,6 +30,7 @@ The following WordPress themes have been tested:
 
 * [https://them.es/starter-bootstrap](https://them.es/starter-bootstrap "Bootstrap Starter theme")
 * [https://them.es/starter-material](https://them.es/starter-material "Bootstrap Starter theme")
+* [https://wordpress.org/themes/twentytwentyfour](https://wordpress.org/themes/twentytwentyfour "Twenty Twenty-Four theme")
 * [https://wordpress.org/themes/twentytwentythree](https://wordpress.org/themes/twentytwentythree "Twenty Twenty-Three theme")
 * [https://wordpress.org/themes/twentytwentytwo](https://wordpress.org/themes/twentytwentytwo "Twenty Twenty-Two theme")
 * [https://wordpress.org/themes/twentytwentyone](https://wordpress.org/themes/twentytwentyone "Twenty Twenty-One theme")
@@ -137,6 +138,10 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.6.5 =
+* Enhancement: Update composer autoloader reference to fix a potential issue
+* Add Twenty Twenty-Four to tested Themes
 
 = 1.6.4 =
 * Tested up to WordPress 6.4
