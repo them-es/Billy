@@ -27,10 +27,10 @@ class Billy_Blocks {
 		// Editor: Block categories.
 		if ( ! function_exists( 'get_default_block_categories' ) ) {
 			// < WordPress v5.8
-			add_filter( 'block_categories', array( $this, 'categories' ), 10, 2 );
+			add_filter( 'block_categories', array( $this, 'categories' ), 10 );
 		} else {
 			// >= WordPress v5.8
-			add_filter( 'block_categories_all', array( $this, 'categories' ), 10, 2 );
+			add_filter( 'block_categories_all', array( $this, 'categories' ), 10 );
 		}
 
 		// Serverside Render callbacks.
@@ -348,5 +348,4 @@ class Billy_Blocks {
 		// Load script translations.
 		wp_set_script_translations( 'billy-blocks-script', 'billy' );
 	}
-
 }

@@ -51,7 +51,6 @@ mark {
 .pre-header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 30px;
 	padding: 15px 0;
 	border-bottom: 1px dashed;
 
@@ -61,6 +60,7 @@ mark {
 }
 
 .header {
+	margin-top: 30px;
 	margin-bottom: 100px;
 
 	p {
@@ -275,10 +275,9 @@ mark {
 }
 
 #pdf {
-	width: 50%;
-	min-width: 400px;
-	min-height: 300px;
-	padding: 0 10px;
+	position: relative;
+	display: flex;
+	align-items: flex-start;
 
 	> a {
 		margin: 0 10px 10px 0;
@@ -286,11 +285,12 @@ mark {
 	}
 
 	.wp-block-file__embed {
-		width: 100% !important;
-		height: 300px;
+		width: 350px;
+		margin: 0 10px;
+		box-shadow: 0 10px 5px -5px gray;
 
 		&:hover {
-			height: 600px;
+			height: 480px;
 		}
 	}
 }

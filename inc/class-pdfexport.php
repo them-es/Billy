@@ -63,9 +63,7 @@ class Billy_PDF_Export {
 			'B' => 'Roboto-Bold.ttf',
 		);
 
-		if ( current_user_can( 'read_private_posts' ) ) {
-			$this->init();
-		}
+		$this->init();
 	}
 
 	/**
@@ -76,6 +74,15 @@ class Billy_PDF_Export {
 	 */
 	public function init() {
 		add_action( 'rest_api_init', array( $this, 'billy_rest_api_init' ) );
+	}
+
+	/**
+	 * Authorization.
+	 *
+	 * @return bool
+	 */
+	public function billy_authorized_to_view_pdf() {
+		return current_user_can( 'read_private_posts' );
 	}
 
 	/**
@@ -92,11 +99,7 @@ class Billy_PDF_Export {
 				'methods'             => 'GET',
 				'callback'            => array( $this, 'billy_export_pdf' ),
 				'permission_callback' => function () {
-					if ( ! wp_get_current_user() ) {
-						return new WP_Error( 'rest_forbidden', esc_html__( 'You are not permitted to use this endpoint. Please sign in.', 'billy' ), array( 'status' => 401 ) );
-					}
-
-					return true;
+					return self::billy_authorized_to_view_pdf();
 				},
 			)
 		);
@@ -105,32 +108,33 @@ class Billy_PDF_Export {
 	/**
 	 * WP-API Custom endpoint callbacks.
 	 *
-	 * @param  WP_REST_Request $request Options for the function.
-	 * @return void
+	 * @param WP_REST_Request $request Options for the function.
+	 *
+	 * @return bool|WP_Error
 	 */
 	public function billy_export_pdf( $request ) {
+		$has_valid_parameters = $request->has_valid_params();
+		if ( ! $has_valid_parameters || is_wp_error( $has_valid_parameters ) ) {
+			return $has_valid_parameters;
+		}
+
+		// PDF generation is restricted.
+		if ( ! self::billy_authorized_to_view_pdf() ) {
+			return new WP_Error(
+				'rest_cannot_view',
+				__( 'You are not allowed to view this content.', 'billy' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		$parameters = $request->get_params();
-		$post_id    = (int) $parameters['id'];
-		$post_type  = get_post_type( $post_id );
-		$reference  = esc_attr( get_the_title( $post_id ) );
+
+		$post_id   = (int) $parameters['id']; // Invoice/Quote.
+		$post      = get_post( $post_id );
+		$post_type = $post->post_type;
+		$reference = $post->post_title;
 
 		$css = static::$pdfstyles;
-		/*
-		if ( ! empty( $parameters['stylesheets'] ) ) {
-			$enqueued_styles = base64_decode( esc_attr( $parameters['stylesheets'] ) );
-			$enqueued_styles = explode( ',', str_replace( array( '[', ']', '"' ), '', $enqueued_styles ) );
-
-			// Add all registered stylesheets to CSS output.
-			foreach ( $enqueued_styles as $enqueued_style ) {
-				$css .= file_get_contents( $enqueued_style );
-			}
-		}*/
-
-		// Debugging.
-		// print_r( $css ); exit();
-		// print_r( str_replace( '"', '', base64_decode( $parameters['stylesheets'] ) ) ); exit();
-		// print_r( $post_type ); exit();
-		// print_r( apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) ) ); exit();
 
 		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(
@@ -196,22 +200,22 @@ class Billy_PDF_Export {
 			$mpdf->SetHTMLFooter(
 				'<table class="footer" width="100%">
 					<tr>
-						<td width="33%"><small>' . esc_attr( get_the_date( '', $post_id ) ) . '</small></td>
+						<td width="33%"><small>' . esc_html( get_the_date( '', $post_id ) ) . '</small></td>
 						<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
-						<td width="33%" align="right"><small>' . $reference . '</small></td>
+						<td width="33%" align="right"><small>' . esc_html( $reference ) . '</small></td>
 					</tr>
 				</table>'
 			);
 		}
 
 		$output = '<html>
-			<body class="' . $post_type . '-template-default single single-' . $post_type . ' singular"><div class="entry-content"><div id="' . $post_type . '" class="' . $post_type . '-wrapper">' . $content . '</div></div>
+			<body class="' . esc_attr( $post_type ) . '-template-default single single-' . esc_attr( $post_type ) . ' singular"><div class="entry-content"><div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper">' . $content . '</div></div>
 			</body>
 		</html>';
 
-		$mpdf->SetTitle( $reference );
+		$mpdf->SetTitle( esc_html( $reference ) );
 		$mpdf->WriteHTML( $output, \Mpdf\HTMLParserMode::HTML_BODY );
-		$mpdf->Output( $reference . '.pdf', 'I' );
+		$mpdf->Output( esc_attr( $reference ) . '.pdf', 'I' );
 		exit();
 	}
 }

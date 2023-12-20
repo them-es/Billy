@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.4
 Tested up to: 6.4
-Stable tag: 1.6.5
+Stable tag: 1.6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -139,14 +139,22 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.6.6 =
+* Restrict current_user_can() to users who can view/edit private posts
+* Add nonce validation to PDF generator
+* Hide Print button on Chrome
+* Code refactoring and minor style updates
+* Upgrade third-party dependencies
+* Tested with PHP 8.3
+
 = 1.6.5 =
 * Enhancement: Update composer autoloader reference to fix a potential issue
 * Add Twenty Twenty-Four to tested Themes
 
 = 1.6.4 =
-* Tested up to WordPress 6.4
 * Bugfix: Minor warning in Editor
 * Upgrade third-party dependencies
+* Tested up to WordPress 6.4
 
 = 1.6.3 =
 * Tested in PHP 7.4 and updated composer.json to prevent a fatal error (Using PHP 8.0+ is still advised!)
@@ -167,7 +175,7 @@ Please consider purchasing the premium add-on with the following features:
 * Bugfix: Retrieve reusable Header block in current locale (Polylang, WPML)
 * New Sidebar panel with settings overview
 * Upgrade third-party dependencies
-* Compatibility with WordPress 6.2
+* Tested up to WordPress 6.2
 
 = 1.5.3 =
 * Minor style update in style-editor.css

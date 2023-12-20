@@ -105,10 +105,16 @@ body.block-editor-page[class*="post-type-billy-"]
 	.edit-post-visual-editor
 	.wp-block.is-reusable,
 [data-type="billy-blocks/header"] {
-	max-width: 100%;
 	border-top: 1px dashed;
 	border-bottom: 1px dashed;
-	padding: 12px;
+	margin: 15px auto;
+}
+body.block-editor-page[class*="post-type-billy-"]
+	.edit-post-visual-editor
+	.wp-block.is-reusable
+	> *,
+[data-type="billy-blocks/header"] > * {
+	padding: 15px 0;
 }
 
 .invoice-status,

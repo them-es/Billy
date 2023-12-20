@@ -195,7 +195,7 @@ class Billy {
 			),
 		);
 
-		if ( current_user_can( 'edit_posts' ) && $invoices_missing_meta->have_posts() ) {
+		if ( current_user_can( 'edit_private_posts' ) && $invoices_missing_meta->have_posts() ) {
 			while ( $invoices_missing_meta->have_posts() ) {
 				$invoices_missing_meta->the_post();
 
@@ -247,7 +247,7 @@ class Billy {
 							array(
 								'ID'         => $post_id,
 								'post_title' => $post_title,
-								'post_name'  => $post_title,
+								'post_name'  => sanitize_title( $post_title ),
 							)
 						);
 
@@ -334,17 +334,26 @@ class Billy {
 		$output      = '<div class="pre-header d-print-none d-admin-none">';
 			$output .= '<div>';
 				// Print.
-				$output .= '<span class="wp-block-button"><button class="wp-block-button__link is-style-outline print-button">' . esc_html__( 'Print', 'billy' ) . '</button></span>';
-				$output .= '&nbsp;';
+		if ( ! str_contains( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ), 'Chrome' ) ) {
+			$output .= '<div class="wp-block-button"><button class="wp-block-button__link is-style-outline" onclick="window.print();">' . esc_html__( 'Print', 'billy' ) . '</button></div>';
+			$output .= '&nbsp;';
+		}
 
 		if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
 			// Export table data as tab separated txt file.
-			$output .= '<span class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></span>';
+			$output .= '<div class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></div>';
 		}
+
 				$output .= '</div>';
 
-			// PDF export.
-			$pdf_link = get_rest_url( null, 'export/pdf/?id=' . get_the_id() /*. ( empty( $enqueued_styles ) ? '' : '&stylesheets=' . base64_encode( json_encode( $enqueued_styles ) ) ) */ );
+			// PDF export link with 'wp_rest' nonce.
+			$pdf_link = wp_nonce_url(
+				get_rest_url(
+					null,
+					'export/pdf/?id=' . get_the_id(),
+				),
+				'wp_rest'
+			);
 			$output  .= '<!-- wp:file {"href":"' . esc_url( $pdf_link ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><a href="' . esc_url( $pdf_link ) . '" class="wp-block-file__button wp-element-button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a>' . esc_html( get_the_title() ) . ' <object class="wp-block-file__embed" data="' . esc_url( $pdf_link ) . '"></object></div><!-- /wp:file -->';
 		$output      .= '</div>';
 
@@ -373,7 +382,7 @@ class Billy {
 	 */
 	/*
 	public function include_invoices_in_postsquery( $query ) {
-		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_posts' ) ) {
+		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_private_posts' ) ) {
 			$query->set(
 				'post_type',
 				array(
@@ -449,7 +458,7 @@ class Billy {
 		// Update title and slug.
 		$post_title            = ( empty( $invoicenumber ) ? sprintf( '%1$s (%2$s)', $this->get_invoicenumber( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoicenumber( $post_id ) );
 		$my_post['post_title'] = $post_title;
-		$my_post['post_name']  = $post_title;
+		$my_post['post_name']  = sanitize_title( $post_title );
 
 		wp_update_post( $my_post );
 	}
@@ -474,7 +483,7 @@ class Billy {
 		$my_post = array(
 			'ID'         => $post_id,
 			'post_title' => $post_title,
-			'post_name'  => $post_title,
+			'post_name'  => sanitize_title( $post_title ),
 		);
 
 		// (Optional) Update post status: https://wordpress.org/support/article/post-status
@@ -563,7 +572,7 @@ class Billy {
 		$my_post = array(
 			'ID'         => $post_id,
 			'post_title' => $post_title,
-			'post_name'  => $post_title,
+			'post_name'  => sanitize_title( $post_title ),
 		);
 
 		// (Optional) Update post status: https://wordpress.org/support/article/post-status
@@ -1140,7 +1149,7 @@ class Billy {
 			'single'        => true,
 			'type'          => 'string',
 			'auth_callback' => function () {
-				return current_user_can( 'edit_posts' );
+				return current_user_can( 'edit_private_posts' );
 			},
 		);
 
@@ -1575,5 +1584,4 @@ class Billy {
 
 		return $validity;
 	}
-
 }
