@@ -82,6 +82,11 @@ class Billy_PDF_Export {
 	 * @return bool
 	 */
 	public function billy_authorized_to_view_pdf() {
+		// [TODO]: Also authorize on password protected posts if the correct password has been entered.
+		// 1. Get Invoice/Quote ID: intval( $_GET['id'] ) )...
+		// 2. Get connected [PRO] Share link ID by querying "_post_uuid"...
+		// 3. Permission granted if connected post has been accessed with the correct password...
+
 		return current_user_can( 'read_private_posts' );
 	}
 

@@ -8,17 +8,18 @@
  */
 
 import { registerBlockType } from '@wordpress/blocks';
-import {
-	__,
-	sprintf
-} from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { __, sprintf } from '@wordpress/i18n';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
-
-registerBlockType( 'billy-blocks/quote-information', {
-	title: sprintf( __( '%1$s: %2$s', 'billy' ), __( 'Quote', 'billy' ), __( 'Information', 'billy' ) ),
+registerBlockType('billy-blocks/quote-information', {
+	apiVersion: 2,
+	title: sprintf(
+		__('%1$s: %2$s', 'billy'),
+		__('Quote', 'billy'),
+		__('Information', 'billy')
+	),
 	icon: 'info', // https://developer.wordpress.org/resource/dashicons
 	category: 'billy-blocks', // Custom category: see index.php
 	supports: {
@@ -27,29 +28,34 @@ registerBlockType( 'billy-blocks/quote-information', {
 		html: false,
 	},
 
-	edit: props => {
+	edit: () => {
+		const blockProps = useBlockProps();
 		// Markup: Backend
 		return (
-			<>
+			<div {...blockProps}>
 				<InspectorControls>
-					<PanelBody title={ __( 'Info', 'billy' ) }>
+					<PanelBody title={__('Info', 'billy')}>
 						<div className="components-notice">
 							<div className="components-notice__content">
-								{
-									sprintf( __( 'The %s values can be modified in the Theme Customizer.', 'billy' ), __( 'Quote Information', 'billy' ) )
-								}
+								{sprintf(
+									__(
+										'The %s values can be modified in the Theme Customizer.',
+										'billy'
+									),
+									__('Quote Information', 'billy')
+								)}
 							</div>
 						</div>
 					</PanelBody>
 				</InspectorControls>
-				
+
 				<ServerSideRender block="billy-blocks/quote-information" />
-			</>
+			</div>
 		);
 	},
 
-	save: props => {
+	save: () => {
 		// Handled by PHP.
 		return null;
 	},
-} );
+});

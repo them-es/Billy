@@ -7,21 +7,18 @@
  * WordPress dependencies
  */
 
-import {
-	registerBlockType,
-} from '@wordpress/blocks';
-import {
-	__,
-	_n,
-	sprintf
-} from '@wordpress/i18n';
-import {
-	withSelect,
-} from '@wordpress/data';
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps } from '@wordpress/block-editor';
+import { __, _n, sprintf } from '@wordpress/i18n';
+import { withSelect } from '@wordpress/data';
 
-
-registerBlockType( 'billy-blocks/quote-actions', {
-	title: sprintf( __( '%1$s: %2$s', 'billy' ), __( 'Quote', 'billy' ), __( 'Actions', 'billy' ) ),
+registerBlockType('billy-blocks/quote-actions', {
+	apiVersion: 2,
+	title: sprintf(
+		__('%1$s: %2$s', 'billy'),
+		__('Quote', 'billy'),
+		__('Actions', 'billy')
+	),
 	icon: 'menu-alt', // https://developer.wordpress.org/resource/dashicons
 	category: 'billy-blocks', // Custom category: see index.php
 	supports: {
@@ -34,28 +31,35 @@ registerBlockType( 'billy-blocks/quote-actions', {
 		return { 'data-align': 'wide' };
 	},
 
-	edit: withSelect( ( select ) => {
+	edit: withSelect((select) => {
 		return {
-			postModifiedDate: select( 'core/editor' ).getEditedPostAttribute( 'modified' ),
+			postModifiedDate:
+				select('core/editor').getEditedPostAttribute('modified'),
 		};
-	} )( props => {
-		const {
-			postModifiedDate,
-		} = props;
+	})((props) => {
+		const { postModifiedDate } = props;
+		const blockProps = useBlockProps( {
+			className: "components-placeholder",
+			style: { minHeight: 'auto' }
+		});
 
 		// Markup: Backend
 		return (
-			<div className="components-placeholder" style={ { minHeight: 'auto' } }>
+			<div
+				{...blockProps}
+			>
 				<small>
-					{
-						sprintf( __( '%1$s: %2$s', 'billy' ), __( 'Last modified', 'billy' ), new Date( postModifiedDate ).toLocaleString() )
-					}
+					{sprintf(
+						__('%1$s: %2$s', 'billy'),
+						__('Last modified', 'billy'),
+						new Date(postModifiedDate).toLocaleString()
+					)}
 				</small>
 			</div>
 		);
-	} ),
+	}),
 
-	save: props => {
+	save: () => {
 		return null;
 	},
-} );
+});

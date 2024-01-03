@@ -8,20 +8,18 @@
  */
 
 import { registerBlockType } from '@wordpress/blocks';
-import {
-	__,
-	sprintf
-} from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	Disabled,
-} from '@wordpress/components';
+import { __, sprintf } from '@wordpress/i18n';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, Disabled } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
-
-registerBlockType( 'billy-blocks/invoice-duedate', {
-	title: sprintf( __( '%1$s: %2$s', 'billy' ), __( 'Invoice', 'billy' ), __( 'Due Date', 'billy' ) ),
+registerBlockType('billy-blocks/invoice-duedate', {
+	apiVersion: 2,
+	title: sprintf(
+		__('%1$s: %2$s', 'billy'),
+		__('Invoice', 'billy'),
+		__('Due Date', 'billy')
+	),
 	icon: 'calendar-alt', // https://developer.wordpress.org/resource/dashicons
 	category: 'billy-blocks', // Custom category: see index.php
 	supports: {
@@ -30,17 +28,22 @@ registerBlockType( 'billy-blocks/invoice-duedate', {
 		html: false,
 	},
 
-	edit: props => {
+	edit: () => {
+		const blockProps = useBlockProps();
 		// Markup: Backend
 		return (
-			<>
+			<div {...blockProps}>
 				<InspectorControls>
-					<PanelBody title={ __( 'Info', 'billy' ) }>
+					<PanelBody title={__('Info', 'billy')}>
 						<div className="components-notice">
 							<div className="components-notice__content">
-								{
-									sprintf( __( 'The %s values can be modified in the Theme Customizer.', 'billy' ), __( 'Payment due days', 'billy' ) )
-								}
+								{sprintf(
+									__(
+										'The %s values can be modified in the Theme Customizer.',
+										'billy'
+									),
+									__('Payment due days', 'billy')
+								)}
 							</div>
 						</div>
 					</PanelBody>
@@ -49,12 +52,12 @@ registerBlockType( 'billy-blocks/invoice-duedate', {
 				<Disabled>
 					<ServerSideRender block="billy-blocks/invoice-duedate" />
 				</Disabled>
-			</>
+			</div>
 		);
 	},
 
-	save: props => {
+	save: () => {
 		// Handled by PHP.
 		return null;
 	},
-} );
+});

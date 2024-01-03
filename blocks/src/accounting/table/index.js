@@ -9,7 +9,11 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { InspectorControls, InnerBlocks } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	InnerBlocks,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,
@@ -34,6 +38,7 @@ var updateTotals;
  */
 
 registerBlockType('billy-blocks/accounting-table', {
+	apiVersion: 2,
 	title: sprintf(
 		__('%1$s: %2$s', 'billy'),
 		__('Accounting', 'billy'),
@@ -105,7 +110,10 @@ registerBlockType('billy-blocks/accounting-table', {
 			},
 			setAttributes,
 		} = props;
-
+		const blockProps = useBlockProps({
+			className:
+				'accountingtable-block' + (className ? ' ' + className : ''),
+		});
 		//console.log(childBlocks);
 
 		// Calculate values and update attributes
@@ -148,7 +156,7 @@ registerBlockType('billy-blocks/accounting-table', {
 
 		// Markup: Backend
 		return (
-			<>
+			<div {...blockProps}>
 				<InspectorControls>
 					<PanelBody title={__('Actions', 'billy')}>
 						<button
@@ -161,122 +169,109 @@ registerBlockType('billy-blocks/accounting-table', {
 					</PanelBody>
 				</InspectorControls>
 
-				<div
-					className={
-						'accountingtable-block' +
-						(className ? ' ' + className : '')
-					}
-				>
-					<InnerBlocks
-						templateLock={false}
-						template={[
-							[
-								'billy-blocks/accounting-tablerow',
-								{
-									//placeholder: 'Enter content…',
-								},
-							],
-						]}
-						allowedBlocks={['billy-blocks/accounting-tablerow']}
-					/>
+				<InnerBlocks
+					templateLock={false}
+					template={[
+						[
+							'billy-blocks/accounting-tablerow',
+							{
+								//placeholder: 'Enter content…',
+							},
+						],
+					]}
+					allowedBlocks={['billy-blocks/accounting-tablerow']}
+				/>
 
-					<table className="totals">
-						<tbody>
-							{amountTotalEarnings > 0 && (
-								<tr className="earnings">
-									<th style={{ width: '50%' }}>
-										{__('Earnings', 'billy')}
-									</th>
-									<td>
-										{sprintf(
-											__('%1$s %2$s', 'billy'),
-											currency,
-											formatNumber(
-												amountTotalEarnings,
-												locale
-											)
-										)}
-									</td>
-								</tr>
-							)}
-							{amountTotalExpenses > 0 && (
-								<tr className="expenses">
-									<th style={{ width: '50%' }}>
-										{__('Expenses', 'billy')}
-									</th>
-									<td>
-										{sprintf(
-											__('%1$s %2$s', 'billy'),
-											currency,
-											formatNumber(
+				<table className="totals">
+					<tbody>
+						{amountTotalEarnings > 0 && (
+							<tr className="earnings">
+								<th style={{ width: '50%' }}>
+									{__('Earnings', 'billy')}
+								</th>
+								<td>
+									{sprintf(
+										__('%1$s %2$s', 'billy'),
+										currency,
+										formatNumber(
+											amountTotalEarnings,
+											locale
+										)
+									)}
+								</td>
+							</tr>
+						)}
+						{amountTotalExpenses > 0 && (
+							<tr className="expenses">
+								<th style={{ width: '50%' }}>
+									{__('Expenses', 'billy')}
+								</th>
+								<td>
+									{sprintf(
+										__('%1$s %2$s', 'billy'),
+										currency,
+										formatNumber(
+											amountTotalExpenses,
+											locale
+										)
+									)}
+								</td>
+							</tr>
+						)}
+						{(amountTotalEarnings > 0 ||
+							amountTotalExpenses > 0) && (
+							<tr className="profit">
+								<th style={{ width: '50%' }}>
+									{__('Profit', 'billy')}
+								</th>
+								<td style={{ borderTop: '2px solid' }}>
+									{sprintf(
+										__('%1$s %2$s', 'billy'),
+										currency,
+										formatNumber(
+											amountTotalEarnings -
 												amountTotalExpenses,
-												locale
-											)
-										)}
-									</td>
-								</tr>
-							)}
-							{(amountTotalEarnings > 0 ||
-								amountTotalExpenses > 0) && (
-								<tr className="profit">
-									<th style={{ width: '50%' }}>
-										{__('Profit', 'billy')}
-									</th>
-									<td style={{ borderTop: '2px solid' }}>
-										{sprintf(
-											__('%1$s %2$s', 'billy'),
-											currency,
-											formatNumber(
-												amountTotalEarnings -
-													amountTotalExpenses,
-												locale
-											)
-										)}
-									</td>
-								</tr>
-							)}
-							<>
-								<tr className="taxes-earnings">
-									<th style={{ width: '50%' }}>
-										{sprintf(
-											__('Taxes (%s)', 'billy'),
-											__('Earnings', 'billy')
-										)}
-									</th>
-									<td>
-										{sprintf(
-											__('%1$s %2$s', 'billy'),
-											currency,
-											formatNumber(
-												amountTaxEarnings,
-												locale
-											)
-										)}
-									</td>
-								</tr>
-								<tr className="taxes-expenses">
-									<th style={{ width: '50%' }}>
-										{sprintf(
-											__('Taxes (%s)', 'billy'),
-											__('Expenses', 'billy')
-										)}
-									</th>
-									<td>
-										{sprintf(
-											__('%1$s %2$s', 'billy'),
-											currency,
-											formatNumber(
-												amountTaxExpenses,
-												locale
-											)
-										)}
-									</td>
-								</tr>
-							</>
-						</tbody>
-					</table>
-				</div>
-			</>
+											locale
+										)
+									)}
+								</td>
+							</tr>
+						)}
+						<>
+							<tr className="taxes-earnings">
+								<th style={{ width: '50%' }}>
+									{sprintf(
+										__('Taxes (%s)', 'billy'),
+										__('Earnings', 'billy')
+									)}
+								</th>
+								<td>
+									{sprintf(
+										__('%1$s %2$s', 'billy'),
+										currency,
+										formatNumber(amountTaxEarnings, locale)
+									)}
+								</td>
+							</tr>
+							<tr className="taxes-expenses">
+								<th style={{ width: '50%' }}>
+									{sprintf(
+										__('Taxes (%s)', 'billy'),
+										__('Expenses', 'billy')
+									)}
+								</th>
+								<td>
+									{sprintf(
+										__('%1$s %2$s', 'billy'),
+										currency,
+										formatNumber(amountTaxExpenses, locale)
+									)}
+								</td>
+							</tr>
+						</>
+					</tbody>
+				</table>
+			</div>
 		);
 	}),
 
@@ -292,9 +287,12 @@ registerBlockType('billy-blocks/accounting-table', {
 				amountTaxExpenses,
 			},
 		} = props;
+		const blockProps = useBlockProps.save({
+			className: 'alignwide' + (className ? ' ' + className : ''),
+		});
 
 		return (
-			<div className={'alignwide' + (className ? ' ' + className : '')}>
+			<div {...blockProps}>
 				<table className="table wp-block-table">
 					<thead>
 						<tr>
@@ -437,6 +435,7 @@ registerBlockType('billy-blocks/accounting-table', {
  */
 
 registerBlockType('billy-blocks/accounting-tablerow', {
+	apiVersion: 2,
 	title: sprintf(
 		__('%1$s: %2$s', 'billy'),
 		__('Accounting', 'billy'),
@@ -515,7 +514,6 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 		};
 	})((props) => {
 		const {
-			className,
 			clientId,
 			rootClientId,
 			i,
@@ -735,7 +733,6 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 
 	save: (props) => {
 		const {
-			className,
 			attributes: {
 				index,
 				locale,

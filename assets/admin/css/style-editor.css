@@ -6,10 +6,8 @@ body.block-editor-page[class*="post-type-billy-"] .wp-block-post-content {
 	padding: 24px;
 }
 
-body.block-editor-page[class*="post-type-billy-"]
-	.wp-block-post-content
-	> .wp-block {
-	margin-block-start: 1.5rem;
+body.block-editor-page[class*="post-type-billy-"] .wp-block-group {
+	margin-block-start: 1.5rem !important;
 }
 
 body.block-editor-page[class*="post-type-billy-"] .d-admin-none {
@@ -257,20 +255,4 @@ table .date sub {
 }
 [data-type$="-table"] table .amount.expense input {
 	background-color: #f8d7da;
-}
-
-/* [PRO] */
-
-[data-type$="invoice-paymentinformation"] .media {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-align: start;
-	-ms-flex-align: start;
-	align-items: flex-start;
-}
-[data-type$="invoice-paymentinformation"] .media-body {
-	-webkit-box-flex: 1;
-	-ms-flex: 1;
-	flex: 1;
 }

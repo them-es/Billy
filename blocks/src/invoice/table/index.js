@@ -9,7 +9,11 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 import { __, sprintf } from '@wordpress/i18n';
-import { InspectorControls, InnerBlocks } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	InnerBlocks,
+} from '@wordpress/block-editor';
 import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 import { useEffect, RawHTML } from '@wordpress/element';
@@ -30,6 +34,7 @@ var updateTotals;
  */
 
 registerBlockType('billy-blocks/invoice-table', {
+	apiVersion: 2,
 	title: sprintf(
 		__('%1$s: %2$s', 'billy'),
 		__('Invoice', 'billy'),
@@ -94,7 +99,10 @@ registerBlockType('billy-blocks/invoice-table', {
 			},
 			setAttributes,
 		} = props;
-
+		const blockProps = useBlockProps({
+			className:
+				'invoicetable-block' + (className ? ' ' + className : ''),
+		});
 		//console.log(childBlocks);
 
 		// Onload "once": Calculate values and update attributes
@@ -169,11 +177,19 @@ registerBlockType('billy-blocks/invoice-table', {
 
 		// Markup: Backend
 		return (
-			<div
-				className={
-					'invoicetable-block' + (className ? ' ' + className : '')
-				}
-			>
+			<div {...blockProps}>
+				<InspectorControls>
+					<PanelBody title={__('Actions', 'billy')}>
+						<button
+							id="updatetotals"
+							className="components-button is-secondary is-button"
+							onClick={updateTotals}
+						>
+							{__('Update Totals', 'billy')}
+						</button>
+					</PanelBody>
+				</InspectorControls>
+
 				<InnerBlocks
 					templateLock={false}
 					template={[
@@ -268,15 +284,6 @@ registerBlockType('billy-blocks/invoice-table', {
 						</tbody>
 					</table>
 				)}
-
-				<button
-					id="updatetotals"
-					className="components-button is-secondary is-button"
-					onClick={updateTotals}
-					style={{ display: amountSubtotal > 0 ? 'block' : 'none' }}
-				>
-					{__('Update Totals', 'billy')}
-				</button>
 			</div>
 		);
 	}),
@@ -293,14 +300,14 @@ registerBlockType('billy-blocks/invoice-table', {
 				taxRatesTotal,
 			},
 		} = props;
+		const blockProps = useBlockProps.save({
+			className:
+				'invoicetable-block alignwide' +
+				(className ? ' ' + className : ''),
+		});
 
 		return (
-			<div
-				className={
-					'invoicetable-block alignwide' +
-					(className ? ' ' + className : '')
-				}
-			>
+			<div {...blockProps}>
 				<table className="table wp-block-table">
 					<thead>
 						<tr>
@@ -417,6 +424,7 @@ registerBlockType('billy-blocks/invoice-table', {
  */
 
 registerBlockType('billy-blocks/invoice-tablerow', {
+	apiVersion: 2,
 	title: sprintf(
 		__('%1$s: %2$s', 'billy'),
 		__('Invoice', 'billy'),
@@ -473,7 +481,6 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 		};
 	})((props) => {
 		const {
-			className,
 			i,
 			attributes: {
 				index,
@@ -488,6 +495,7 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 			},
 			setAttributes,
 		} = props;
+		const blockProps = useBlockProps();
 
 		useEffect(() => {
 			setAttributes({ index: i });
@@ -540,7 +548,7 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 
 		// Markup: Backend
 		return (
-			<>
+			<div {...blockProps}>
 				<InspectorControls>
 					<PanelBody title={__('Quantity/Rate Calculator', 'billy')}>
 						<TextControl
@@ -651,13 +659,12 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 						</tr>
 					</tbody>
 				</table>
-			</>
+			</div>
 		);
 	}),
 
 	save: (props) => {
 		const {
-			className,
 			attributes: { index, locale, taxRate, amount },
 		} = props;
 

@@ -9,17 +9,13 @@
 
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import {
-	SelectControl,
-	PanelBody,
-	Disabled,
-} from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { SelectControl, PanelBody, Disabled } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
-
-registerBlockType( 'billy-blocks/theme-mod', {
-	title: __( 'Theme Mod', 'billy' ),
+registerBlockType('billy-blocks/theme-mod', {
+	apiVersion: 2,
+	title: __('Theme Mod', 'billy'),
 	icon: 'admin-generic', // https://developer.wordpress.org/resource/dashicons
 	category: 'billy-blocks', // Custom category: see index.php
 	attributes: {
@@ -34,42 +30,47 @@ registerBlockType( 'billy-blocks/theme-mod', {
 		html: false,
 	},
 
-	edit: props => {
+	edit: (props) => {
 		const {
-			className,
-			attributes: {
-				themeMod,
-			},
+			attributes: { themeMod },
 			setAttributes,
 		} = props;
 
-		const updateThemeMod = val => {
-			setAttributes( { themeMod: val } );
-		}
+		const updateThemeMod = (val) => {
+			setAttributes({ themeMod: val });
+		};
+
+		const blockProps = useBlockProps();
 
 		return (
-			<>
+			<div {...blockProps}>
 				<InspectorControls>
-					<PanelBody title={ __( 'Theme Mod', 'billy' ) }>
+					<PanelBody title={__('Theme Mod', 'billy')}>
 						<SelectControl
-							label={ __( 'Setting', 'billy' ) }
-							help={ __( 'Modify the value in the Theme Customizer.', 'billy' ) }
-							options={ globalDataBilly.themeModOptions }
-							value={ themeMod }
-							onChange={ updateThemeMod }
+							label={__('Setting', 'billy')}
+							help={__(
+								'Modify the value in the Theme Customizer.',
+								'billy'
+							)}
+							options={globalDataBilly.themeModOptions}
+							value={themeMod}
+							onChange={updateThemeMod}
 						/>
 					</PanelBody>
 				</InspectorControls>
 
 				<Disabled>
-					<ServerSideRender block="billy-blocks/theme-mod" attributes={ props.attributes } />
+					<ServerSideRender
+						block="billy-blocks/theme-mod"
+						attributes={props.attributes}
+					/>
 				</Disabled>
-			</>
+			</div>
 		);
 	},
 
-	save: props => {
+	save: () => {
 		// Handled by PHP.
 		return null;
 	},
-} );
+});
