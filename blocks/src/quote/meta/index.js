@@ -36,14 +36,18 @@ registerBlockType('billy-blocks/quote-meta', {
 		inserter: false,
 		reusable: false,
 		html: false,
+		className: true,
 	},
 
 	edit: (props) => {
 		const {
+			className,
 			attributes: { label, text },
 			setAttributes,
 		} = props;
-		const blockProps = useBlockProps();
+		const blockProps = useBlockProps({
+			className: (className ? ' ' + className : ''),
+		});
 
 		const updateLabel = (val) => {
 			setAttributes({ label: val });
@@ -91,26 +95,70 @@ registerBlockType('billy-blocks/quote-meta', {
 
 	save: (props) => {
 		const {
+			className,
 			attributes: { label, text },
 		} = props;
 
+		const blockProps = useBlockProps.save({
+			className: (className ? ' ' + className : ''),
+		});
+
 		return (
 			text && (
-				<RawHTML>
-					{sprintf(
-						__(
-							'<div class="label">%1$s</div> <div class="text">%2$s</div>',
-							'billy'
-						),
-						label ? label : '',
-						text ? text : __('N/A', 'billy')
-					)}
-				</RawHTML>
+				<div {...blockProps}>
+					<RawHTML>
+						{sprintf(
+							__(
+								'<div class="label">%1$s</div> <div class="text">%2$s</div>',
+								'billy'
+							),
+							label ? label : '',
+							text ? text : __('N/A', 'billy')
+						)}
+					</RawHTML>
+				</div>
 			)
 		);
 	},
 
 	deprecated: [
+		// < v1.7.0 (202312)
+		{
+			attributes: {
+				label: {
+					type: 'string',
+					default: '',
+				},
+				text: {
+					type: 'string',
+					default: '',
+				},
+			},
+
+			save: (props) => {
+				const {
+					attributes: { label, text },
+				} = props;
+
+				return (
+					text && (
+						<>
+							<RawHTML>
+								{sprintf(
+									__(
+										'<div class="label">%1$s</div> <div class="text">%2$s</div>',
+										'billy'
+									),
+									label ? label : '',
+									text ? text : __('N/A', 'billy')
+								)}
+							</RawHTML>
+						</>
+					)
+				);
+			},
+		},
+
 		// < v1.2.3 (202012)
 		{
 			attributes: {

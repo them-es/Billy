@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.6
 Tested up to: 6.4
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -138,6 +138,10 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.7.1 =
+* Bugfix: Custom meta deprecation warning
+* Allow to add classes in custom meta fields
 
 = 1.7.0 =
 * Code refactoring with an upgrade to Block API v2
