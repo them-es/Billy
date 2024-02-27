@@ -1309,11 +1309,9 @@ class Billy {
 		$wp_customize->add_control(
 			'name',
 			array(
-				'type'     => 'text',
-				'label'    => esc_html__( 'Name', 'billy' ),
-				'section'  => 'billy_general_section',
-				'settings' => 'name',
-				'priority' => 2,
+				'type'    => 'text',
+				'label'   => esc_html__( 'Name', 'billy' ),
+				'section' => 'billy_general_section',
 			)
 		);
 		// Default mod.
@@ -1331,11 +1329,9 @@ class Billy {
 		$wp_customize->add_control(
 			'address',
 			array(
-				'type'     => 'textarea',
-				'label'    => esc_html__( 'Address', 'billy' ),
-				'section'  => 'billy_general_section',
-				'settings' => 'address',
-				'priority' => 3,
+				'type'    => 'textarea',
+				'label'   => esc_html__( 'Address', 'billy' ),
+				'section' => 'billy_general_section',
 			)
 		);
 
@@ -1353,8 +1349,6 @@ class Billy {
 				'label'       => esc_html__( 'VAT', 'billy' ),
 				'description' => esc_html__( 'Enter your VAT identification number or Taxpayer ID', 'billy' ),
 				'section'     => 'billy_general_section',
-				'settings'    => 'vat',
-				'priority'    => 4,
 			)
 		);
 
@@ -1373,8 +1367,6 @@ class Billy {
 				'label'       => esc_html__( 'Currency Code', 'billy' ),
 				'description' => 'https://w.wiki/Fgw' . '<br>' . esc_html__( 'Caution: Any changes made here may affect existing entries. Create a backup first!', 'billy' ),
 				'section'     => 'billy_general_section',
-				'settings'    => 'currency',
-				'priority'    => 5,
 			)
 		);
 
@@ -1397,8 +1389,6 @@ class Billy {
 			20%'
 				) . '<br>' . esc_html__( 'Caution: Any changes made here may affect existing entries. Create a backup first!', 'billy' ),
 				'section'     => 'billy_general_section',
-				'settings'    => 'taxrates',
-				'priority'    => 6,
 			)
 		);
 
@@ -1412,11 +1402,9 @@ class Billy {
 		$wp_customize->add_control(
 			'invoice_number_prefix',
 			array(
-				'type'     => 'text',
-				'label'    => esc_html__( 'Invoice number: Prefix', 'billy' ),
-				'section'  => 'billy_invoice_section',
-				'settings' => 'invoice_number_prefix',
-				'priority' => 1,
+				'type'    => 'text',
+				'label'   => esc_html__( 'Invoice number: Prefix', 'billy' ),
+				'section' => 'billy_invoice_section',
 			)
 		);
 
@@ -1434,8 +1422,6 @@ class Billy {
 				'label'       => esc_html__( 'Current invoice number', 'billy' ),
 				'description' => esc_html__( 'Upcoming invoice numbers will be autoincremented based on this value!', 'billy' ),
 				'section'     => 'billy_invoice_section',
-				'settings'    => 'invoice_number',
-				'priority'    => 2,
 			)
 		);
 		// Default mod.
@@ -1461,11 +1447,9 @@ class Billy {
 		$wp_customize->add_control(
 			'payment_due_days',
 			array(
-				'type'     => 'number',
-				'label'    => esc_html__( 'Payment due within # days', 'billy' ),
-				'section'  => 'billy_invoice_section',
-				'settings' => 'payment_due_days',
-				'priority' => 3,
+				'type'    => 'number',
+				'label'   => esc_html__( 'Payment due within # days', 'billy' ),
+				'section' => 'billy_invoice_section',
 			)
 		);
 		// Default mod.
@@ -1487,8 +1471,6 @@ class Billy {
 				'label'       => esc_html__( 'Payment Information', 'billy' ),
 				'description' => esc_html__( 'Add the payment instructions and link to your terms.', 'billy' ),
 				'section'     => 'billy_invoice_section',
-				'settings'    => 'payment_information',
-				'priority'    => 4,
 			)
 		);
 		// Default mod.
@@ -1510,8 +1492,6 @@ class Billy {
 				'label'       => esc_html__( 'Quote Information', 'billy' ),
 				'description' => esc_html__( 'Inform your contacts about special terms, quote expiration clauses, etc.', 'billy' ),
 				'section'     => 'billy_quote_section',
-				'settings'    => 'quote_information',
-				'priority'    => 1,
 			)
 		);
 		// Default mod.
@@ -1529,11 +1509,9 @@ class Billy {
 		$wp_customize->add_control(
 			'quote_valid_days',
 			array(
-				'type'     => 'number',
-				'label'    => esc_html__( 'Quote valid for # days', 'billy' ),
-				'section'  => 'billy_quote_section',
-				'settings' => 'quote_valid_days',
-				'priority' => 2,
+				'type'    => 'number',
+				'label'   => esc_html__( 'Quote valid for # days', 'billy' ),
+				'section' => 'billy_quote_section',
 			)
 		);
 		// Default mod.

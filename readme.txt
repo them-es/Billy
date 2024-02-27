@@ -3,8 +3,8 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.6
-Tested up to: 6.4
-Stable tag: 1.7.1
+Tested up to: 6.5
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -15,7 +15,7 @@ A business-oriented billing suite—tailored for freelancers and small agencies.
 
 Preparing invoices and quotes can be time consuming. This plugin helps you speed-up your billing process, from creating invoices or quotes, minimizing any potential errors to getting paid faster.
 Create an electronic invoice, a quote or accounting records in just a matter of minutes with the block-based WordPress editor. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
-Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer. The billing header can be branded with your logo. Any frontend styles will be inherited from the theme so you please make sure the theme you've installed on your site fully supports the Block editor.
+Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer. The post header can be branded with your logo. Any frontend styles will be inherited from the theme, so please make sure the theme installed on your site fully supports the Block editor.
 
 = Target group? =
 
@@ -55,7 +55,7 @@ The following WordPress themes have been tested:
 
 = Dependencies? =
 
-* There are no third-party dependencies required. If you use the latest WordPress version with a block based WordPress theme you are good to go.
+* There are no third-party dependencies required and if you use the latest WordPress version with a block based WordPress theme you are good to go.
 
 = Contribution? =
 
@@ -138,6 +138,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.7.2 =
+* Minor code refactoring
+* Update dependencies
+* Tested up to WordPress 6.5
 
 = 1.7.1 =
 * Bugfix: Custom meta deprecation warning
