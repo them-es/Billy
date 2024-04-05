@@ -339,7 +339,7 @@ class Billy {
 			$output .= '&nbsp;';
 		}
 
-		if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
+		if ( in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
 			// Export table data as tab separated txt file.
 			$output .= '<div class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></div>';
 		}
@@ -368,8 +368,8 @@ class Billy {
 	 * @return string
 	 */
 	public function cpt_wrapper_content( $content ) {
-		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ) ) ) {
-			$content = '<div id="' . get_post_type() . '" class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ) ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
+		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ), true ) ) {
+			$content = '<div id="' . get_post_type() . '" class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
 		}
 
 		return $content;
@@ -417,7 +417,7 @@ class Billy {
 		$invoicenumber = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Update post status if unpublished: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ) ) ) {
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
 			// New?
 			if ( ! is_numeric( $invoicenumber ) ) {
 				global $post;
@@ -487,7 +487,7 @@ class Billy {
 		);
 
 		// (Optional) Update post status: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future' ) ) ) {
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future' ), true ) ) {
 			$my_post['post_status'] = 'private';
 		}
 
@@ -576,7 +576,7 @@ class Billy {
 		);
 
 		// (Optional) Update post status: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future' ) ) ) {
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future' ), true ) ) {
 			$my_post['post_status'] = 'private';
 		}
 
@@ -1221,7 +1221,7 @@ class Billy {
 			$tax_options = '';
 			foreach ( $taxes as $key => $value ) {
 				// Validate input.
-				$value        = ( empty( $value ) || '%' !== substr( $value, -1 ) || ! in_array( preg_replace( '/[^0-9]/', '', $value ), range( 1, 99 ) ) ? '0%' : $value ); // Default: 0%
+				$value        = ( empty( $value ) || '%' !== substr( $value, -1 ) || ! in_array( (int) preg_replace( '/[^0-9]/', '', $value ), range( 1, 99 ), true ) ? '0%' : $value ); // Default: 0%
 				$tax_options .= '{ label: "' . $value . '", value: "' . $value . '" },';
 			}
 			$tax_options .= '{ label: "0%", value: "0%" },';

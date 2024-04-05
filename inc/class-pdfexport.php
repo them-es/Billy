@@ -54,9 +54,9 @@ class Billy_PDF_Export {
 	public function __construct() {
 		$mpdf_dir          = dirname( __DIR__ ) . '/mpdf';
 		self::$pdfstyles   = file_get_contents( $mpdf_dir . '/css/pdf.css' );
-		self::$temp_dir    = $mpdf_dir . '/tmp/';
+		self::$temp_dir    = $mpdf_dir . '/tmp';
 		self::$pdffont_dir = array(
-			$mpdf_dir . '/fonts/',
+			$mpdf_dir . '/fonts',
 		);
 		self::$pdffont     = array(
 			'R' => 'Roboto-Regular.ttf',

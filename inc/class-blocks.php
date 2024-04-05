@@ -168,15 +168,12 @@ class Billy_Blocks {
 	 * @return array
 	 */
 	public function categories( $categories ) {
-		return array_merge(
-			$categories,
-			array(
-				array(
-					'slug'  => 'billy-blocks',
-					'title' => esc_html__( 'Billy Blocks', 'billy' ),
-				),
-			)
+		$categories[] = array(
+			'slug'  => 'billy-blocks',
+			'title' => esc_html__( 'Billy Blocks', 'billy' ),
 		);
+
+		return $categories;
 	}
 
 	/**
@@ -198,7 +195,7 @@ class Billy_Blocks {
 	 */
 	public function headerlayout_render_callback() {
 		$output = '';
-		if ( in_array( get_post_type(), array( 'billy-accounting' ) ) ) {
+		if ( in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
 			$output .= '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
 		} else {
 			$header_reusable_block = get_posts(

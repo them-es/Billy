@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.6
 Tested up to: 6.5
-Stable tag: 1.7.2
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -28,6 +28,7 @@ __Heads up:__ Please note that the main content area of the __Single/Custom Post
 
 The following WordPress themes have been tested:
 
+* [https://them.es/starter-fse](https://them.es/starter-fse "Block Starter theme")
 * [https://them.es/starter-bootstrap](https://them.es/starter-bootstrap "Bootstrap Starter theme")
 * [https://them.es/starter-material](https://them.es/starter-material "Bootstrap Starter theme")
 * [https://wordpress.org/themes/twentytwentyfour](https://wordpress.org/themes/twentytwentyfour "Twenty Twenty-Four theme")
@@ -138,6 +139,14 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.7.4 =
+* Bugfix: Error loading font "Could not find PostScript font name"
+
+= 1.7.3 =
+* Minor code refactoring
+* Add .l10n.php translation files to adopt performant translations (WordPress 6.5+)
+* Update dependencies
 
 = 1.7.2 =
 * Minor code refactoring
