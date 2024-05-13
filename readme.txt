@@ -4,16 +4,16 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.6
 Tested up to: 6.5
-Stable tag: 1.7.4
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
 
-A business-oriented billing suite—tailored for freelancers and small agencies.
+Create invoices, quotes and keep track of your earnings and expenses with this business-oriented billing suite—tailored for freelancers and small agencies.
 
 == Description ==
 
-Preparing invoices and quotes can be time consuming. This plugin helps you speed-up your billing process, from creating invoices or quotes, minimizing any potential errors to getting paid faster.
+This plugin helps you speed-up your billing process, from creating invoices or quotes, minimizing any potential errors to getting paid faster.
 Create an electronic invoice, a quote or accounting records in just a matter of minutes with the block-based WordPress editor. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
 Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer. The post header can be branded with your logo. Any frontend styles will be inherited from the theme, so please make sure the theme installed on your site fully supports the Block editor.
 
@@ -45,7 +45,8 @@ The following WordPress themes have been tested:
 * Accounting
 * Custom styles: Compatible with any WordPress theme that supports the Block editor
 * Custom Post types
-* Blocks and Block templates
+* Custom Blocks and Block templates
+* Set individual tax rates
 * WYSIWYG, Real-time calculation
 * Locale specific number formatting
 * Legally compliant: Unique and sequential invoice numbers
@@ -68,16 +69,19 @@ Please consider purchasing the premium add-on with the following features:
 [https://them.es/plugins/billy](https://them.es/plugins/billy "Billy")
 
 * Contact Management
-* Address book block
+* Address book
+* Project Management: Kanban-style todos
+* Time tracking
 * Enhanced invoices: Contact selector, Status selector, QR code generator for customized payment codes
 * Enhanced quotes: Contact selector, Status selector
 * Enhanced accounting: Autofilter, Autosync invoices
 * Share Invoices and Quotes via a password protected link
-* Create invoices from WooCommerce orders
-* Address book
-* Upcoming birthdays
+* Update the current invoice/quote status
+* Overdue invoices get highlighted in the overview
+* Auto-create invoices from WooCommerce orders
+* Show upcoming birthdays in a dashboard widget
 * Admin columns
-* Stats and charts
+* Useful stats and charts
 * WordPress Export Personal Data tool
 * Compatible with Polylang
 
@@ -140,8 +144,26 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.8.0 =
+* In general more possibilities to customize the look and feel
+* All Billy menu items are restructured and combined in a single dashboard menu
+* Always show [+] row appender in tables
+* Enhancement: Enabled the Synced Patterns core feature in invoice, quote and accounting tables to be able to create reusable blocks for products and services.
+* Bugfix: Make table rows in ccounting table selectable
+* Quotes: Optionally autoincrement numbers (like in invoices) and add a number prefix
+* Number prefixes: Include placeholders {YEAR}, {MONTH} and {DAY} to output the post date variables. Remove "#" fallback prefix from output.
+* Tables: Add top/bottom borders by default
+* Table data export: Improve handling of output
+* PDF generator: Improve unicode chars output
+* The PDF footer can now be fully customized via a reusable block - similar to the header. Heads up: Modifying the footer will also change the PDF output of existing posts!
+* Code refactoring: Add on_init action in "Billy" class. Combine setAttributes() requests in blocks where possible. Define a table export constant instead of the hardcoded post type lookup, Use document.title as export_table_to_tsv() filename.
+* Renamed some variables for consistency
+* Fixed some PHP linting warnings
+* Updated translation strings
+
 = 1.7.4 =
 * Bugfix: Error loading font "Could not find PostScript font name"
+* Add them.es Starter FSE to tested Themes
 
 = 1.7.3 =
 * Minor code refactoring

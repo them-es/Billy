@@ -28,7 +28,7 @@ ol {
 }
 
 .small {
-	font-size: small;
+	font-size: 7pt;
 }
 
 hr {
@@ -57,17 +57,35 @@ hr {
 	border-bottom: 1px solid #fff;
 }
 
+.footer,
+.footer p {
+	font-size: 7pt;
+}
+.footer .wp-block-columns {
+	width: 100%;
+}
+.footer .wp-block-columns .wp-block-column {
+	float: left;
+	width: 33%;
+	min-width: 33%;
+	margin: 0;
+	border: none;
+}
+
 strong {
 	font-weight: bold;
 }
 
-.align-center {
+.align-center,
+.text-center {
 	text-align: center;
 }
-.align-left {
+.align-left,
+.text-left {
 	text-align: left;
 }
-.align-right {
+.align-right,
+.text-right {
 	text-align: right;
 }
 
@@ -100,7 +118,7 @@ strong {
 	float: left;
 	width: 50%;
 	min-width: 50%;
-	font-size: small;
+	font-size: 7pt;
 }
 .metadata .label {
 	font-weight: bold;
@@ -122,6 +140,8 @@ strong {
 .wp-block-table th,
 .wp-block-table td {
 	padding: 5pt 10pt;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
 }
 .wp-block-table th {
 	text-align: left;

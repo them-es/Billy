@@ -112,8 +112,10 @@ registerBlockType('billy-blocks/quote-table', {
 				taxRatesHolderOutput = [],
 				taxRatesMergedOutput = [];
 
-			setAttributes({ currency: globalDataBilly.currency });
-			setAttributes({ locale: globalDataBilly.locale });
+			setAttributes({
+				currency: globalDataBilly.currency,
+				locale: globalDataBilly.locale,
+			});
 
 			// Create values-array of child block attributes
 			if (childBlocks && childBlocks.length > 0) {
@@ -161,13 +163,12 @@ registerBlockType('billy-blocks/quote-table', {
 					}, {});
 				}
 
-				setAttributes({ taxRatesTotal: taxRatesTotalSum });
 				setAttributes({
+					taxRatesTotal: taxRatesTotalSum,
 					taxRates: JSON.stringify(taxRatesMergedOutput),
+					amountSubtotal: amountSubtotalSum,
+					amountTotal: amountTotalSum,
 				});
-
-				setAttributes({ amountSubtotal: amountSubtotalSum });
-				setAttributes({ amountTotal: amountTotalSum });
 			}
 		};
 		useEffect(() => {
@@ -191,15 +192,9 @@ registerBlockType('billy-blocks/quote-table', {
 
 				<InnerBlocks
 					templateLock={false}
-					template={[
-						[
-							'billy-blocks/quote-tablerow',
-							{
-								//placeholder: 'Enter content…',
-							},
-						],
-					]}
+					template={[['billy-blocks/quote-tablerow']]}
 					allowedBlocks={['billy-blocks/quote-tablerow']}
+					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
 				/>
 
 				{amountSubtotal > 0 && (
@@ -497,9 +492,11 @@ registerBlockType('billy-blocks/quote-tablerow', {
 		const blockProps = useBlockProps();
 
 		useEffect(() => {
-			setAttributes({ index: i });
-			setAttributes({ currency: globalDataBilly.currency });
-			setAttributes({ locale: globalDataBilly.locale });
+			setAttributes({
+				index: i,
+				currency: globalDataBilly.currency,
+				locale: globalDataBilly.locale,
+			});
 
 			if ('' === taxRate) {
 				setAttributes({
@@ -582,10 +579,6 @@ registerBlockType('billy-blocks/quote-tablerow', {
 										[
 											'core/paragraph',
 											{
-												placeholder: __(
-													'Add content',
-													'billy'
-												),
 												content: description
 													? description
 													: '', // < v1.2.0
@@ -593,6 +586,7 @@ registerBlockType('billy-blocks/quote-tablerow', {
 										],
 									]}
 									allowedBlocks={[
+										'core/block',
 										'core/heading',
 										'core/paragraph',
 										'core/list',

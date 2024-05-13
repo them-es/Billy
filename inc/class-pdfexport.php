@@ -127,7 +127,7 @@ class Billy_PDF_Export {
 		if ( ! self::billy_authorized_to_view_pdf() ) {
 			return new WP_Error(
 				'rest_cannot_view',
-				__( 'You are not allowed to view this content.', 'billy' ),
+				esc_html__( 'You are not allowed to view this content.', 'billy' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -144,14 +144,16 @@ class Billy_PDF_Export {
 		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(
 			array(
-				'tempDir'      => static::$temp_dir,
-				'simpleTables' => false, // https://stackoverflow.com/a/67087295
-				'mode'         => 'utf-8',
-				'fontDir'      => static::$pdffont_dir,
-				'fontdata'     => array(
+				'tempDir'             => static::$temp_dir,
+				'mode'                => 'utf-8',
+				'fontDir'             => static::$pdffont_dir,
+				'fontdata'            => array(
 					'pdffont' => static::$pdffont,
 				),
-				'default_font' => 'pdffont',
+				'default_font'        => 'pdffont',
+				'simpleTables'        => false, // https://stackoverflow.com/a/67087295
+				'useSubstitutions'    => true,
+				'setAutoBottomMargin' => 'stretch',
 			)
 		);
 
@@ -164,9 +166,25 @@ class Billy_PDF_Export {
 
 			setup_postdata( $post );
 
+			$footer_id = 0;
+
+			$footer_reusable_blocks = get_posts(
+				array(
+					'post_type'   => 'wp_block',
+					'title'       => 'Billy Footer',
+					'post_status' => array( 'publish', 'private' ),
+				)
+			);
+			if ( $footer_reusable_blocks ) {
+				$footer_id = $footer_reusable_blocks[0]->ID;
+			}
+
 			$blocks = parse_blocks( get_the_content() );
 			foreach ( $blocks as $block ) {
-				$content .= render_block( $block );
+				// Exclude reusable Footer block.
+				if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && $footer_id !== $block['attrs']['ref'] ) ) {
+					$content .= render_block( $block );
+				}
 			}
 
 			// --> Start Workaround: Add spacing in tbody content to each <p>/<ul>/<ol>.
@@ -190,10 +208,12 @@ class Billy_PDF_Export {
 
 			// Modify <tbody> content.
 			preg_match( '/<tbody>(.*?)<\/tbody>/s', $content, $match );
-			$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
+			if ( $match && $match[0] ) {
+				$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
 
-			// Replace <tbody> with modified content.
-			$content = preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $content );
+				// Replace <tbody> with modified content.
+				$content = preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $content );
+			}
 			// <-- End Workaround.
 
 			// Remove line breaks from content.
@@ -202,15 +222,40 @@ class Billy_PDF_Export {
 			wp_reset_postdata();
 
 			// PDF footer.
-			$mpdf->SetHTMLFooter(
-				'<table class="footer" width="100%">
-					<tr>
-						<td width="33%"><small>' . esc_html( get_the_date( '', $post_id ) ) . '</small></td>
-						<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
-						<td width="33%" align="right"><small>' . esc_html( $reference ) . '</small></td>
-					</tr>
-				</table>'
-			);
+			if ( $footer_reusable_blocks ) {
+				$footer_content = $footer_reusable_blocks[0]->post_content;
+
+				$footer_placeholders       = array(
+					'{CURRENTPAGE}',
+					'{TOTALPAGES}',
+					'class="has-text-align-center',
+					'class="has-text-align-right',
+					'class="has-text-align-left',
+					'<p ',
+					'</p>',
+				);
+				$footer_placeholder_values = array(
+					'{PAGENO}',
+					'{nbpg}',
+					'align="center" class="has-text-align-center',
+					'align="right" class="has-text-align-right',
+					'align="left" class="has-text-align-left',
+					'<figure ',
+					'</figure><br>',
+				);
+				$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
+			} else {
+				// Fallback.
+				$footer_content = '<table class="footer" width="100%">
+				<tr>
+					<td width="33%"><small>' . esc_html( get_the_date( '', $post_id ) ) . '</small></td>
+					<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
+					<td width="33%" align="right"><small>' . esc_html( $reference ) . '</small></td>
+				</tr>
+			</table>';
+			}
+
+			$mpdf->SetHTMLFooter( do_blocks( $footer_content ) );
 		}
 
 		$output = '<html>

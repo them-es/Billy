@@ -1,267 +1,180 @@
-# Copyright (C) 2023 them.es
+# Copyright (C) 2024 them.es
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Billy 1.6.0\n"
+"Project-Id-Version: Billy 1.8.0\n"
 "Report-Msgid-Bugs-To: https://github.com/them-es/billy/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-26T17:56:09+00:00\n"
+"POT-Creation-Date: 2024-05-13T13:58:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: billy\n"
 
 #. Plugin Name of the plugin
+#: billy.php
 msgid "Billy"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: billy.php
 msgid "https://wordpress.org/plugins/billy"
 msgstr ""
 
 #. Description of the plugin
+#: billy.php
 msgid "A business-oriented billing suite powered by WordPress."
 msgstr ""
 
 #. Author of the plugin
+#: billy.php
 msgid "them.es"
 msgstr ""
 
 #. Author URI of the plugin
+#: billy.php
 msgid "https://them.es/plugins/billy"
 msgstr ""
 
-#: billy.php:40
+#: billy.php:36
 msgid "<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version."
 msgstr ""
 
-#: billy.php:53
+#: billy.php:47
 msgid "<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version."
 msgstr ""
 
-#: billy.php:66
+#: billy.php:58
 msgid "<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin."
 msgstr ""
 
-#: billy.php:79
+#: billy.php:69
 msgid "The temp directory %s is not writable. Please change the read/write permissions."
 msgstr ""
 
-#: inc/class-billy.php:167
-#: inc/class-billy.php:282
-#: inc/class-billy.php:297
-#: blocks/build/index.js:332
-#: blocks/build/index.js:334
-#: blocks/build/index.js:340
-#: blocks/build/index.js:345
-#: blocks/build/index.js:347
-#: blocks/build/index.js:429
-#: blocks/build/index.js:431
-#: blocks/build/index.js:437
-#: blocks/build/index.js:442
-#: blocks/build/index.js:444
-#: blocks/build/index.js:526
-#: blocks/build/index.js:528
-#: blocks/build/index.js:534
-#: blocks/build/index.js:539
-#: blocks/build/index.js:541
-#: blocks/build/index.js:739
-#: blocks/build/index.js:745
-#: blocks/build/index.js:755
-#: blocks/build/index.js:761
-#: blocks/build/index.js:767
-#: blocks/build/index.js:819
-#: blocks/build/index.js:821
-#: blocks/build/index.js:826
-#: blocks/build/index.js:830
-#: blocks/build/index.js:832
-#: blocks/build/index.js:1748
-#: blocks/build/index.js:1851
-#: blocks/build/index.js:1873
-#: blocks/build/index.js:1933
-#: blocks/build/index.js:1951
-#: blocks/build/index.js:2164
-#: blocks/build/index.js:2184
-#: blocks/build/index.js:2223
-#: blocks/build/index.js:2243
-#: blocks/build/index.js:2446
-#: blocks/build/index.js:2854
-#: blocks/build/index.js:2957
-#: blocks/build/index.js:2979
-#: blocks/build/index.js:3039
-#: blocks/build/index.js:3057
-#: blocks/build/index.js:3270
-#: blocks/build/index.js:3290
-#: blocks/build/index.js:3329
-#: blocks/build/index.js:3349
-#: blocks/build/index.js:3552
-#: blocks/src/_accounting/table/deprecatedOuter.js:113
-#: blocks/src/_accounting/table/deprecatedOuter.js:118
-#: blocks/src/_accounting/table/deprecatedOuter.js:133
-#: blocks/src/_accounting/table/deprecatedOuter.js:148
-#: blocks/src/_accounting/table/deprecatedOuter.js:153
-#: blocks/src/_accounting/table/deprecatedOuter.js:248
-#: blocks/src/_accounting/table/deprecatedOuter.js:253
-#: blocks/src/_accounting/table/deprecatedOuter.js:268
-#: blocks/src/_accounting/table/deprecatedOuter.js:283
-#: blocks/src/_accounting/table/deprecatedOuter.js:288
-#: blocks/src/_accounting/table/deprecatedOuter.js:383
-#: blocks/src/_accounting/table/deprecatedOuter.js:388
-#: blocks/src/_accounting/table/deprecatedOuter.js:403
-#: blocks/src/_accounting/table/deprecatedOuter.js:418
-#: blocks/src/_accounting/table/deprecatedOuter.js:423
-#: blocks/src/_accounting/table/index.js:192
-#: blocks/src/_accounting/table/index.js:207
-#: blocks/src/_accounting/table/index.js:222
-#: blocks/src/_accounting/table/index.js:238
-#: blocks/src/_accounting/table/index.js:248
-#: blocks/src/_accounting/table/index.js:316
-#: blocks/src/_accounting/table/index.js:321
-#: blocks/src/_accounting/table/index.js:336
-#: blocks/src/_accounting/table/index.js:351
-#: blocks/src/_accounting/table/index.js:356
-#: blocks/src/_invoice/table/deprecatedInner.js:113
-#: blocks/src/_invoice/table/deprecatedOuter.js:115
-#: blocks/src/_invoice/table/deprecatedOuter.js:156
-#: blocks/src/_invoice/table/deprecatedOuter.js:252
-#: blocks/src/_invoice/table/deprecatedOuter.js:293
-#: blocks/src/_invoice/table/index.js:197
-#: blocks/src/_invoice/table/index.js:238
-#: blocks/src/_invoice/table/index.js:311
-#: blocks/src/_invoice/table/index.js:352
-#: blocks/src/_invoice/table/index.js:605
-#: blocks/src/_quote/table/deprecatedInner.js:113
-#: blocks/src/_quote/table/deprecatedOuter.js:115
-#: blocks/src/_quote/table/deprecatedOuter.js:156
-#: blocks/src/_quote/table/deprecatedOuter.js:251
-#: blocks/src/_quote/table/deprecatedOuter.js:292
-#: blocks/src/_quote/table/index.js:197
-#: blocks/src/_quote/table/index.js:238
-#: blocks/src/_quote/table/index.js:311
-#: blocks/src/_quote/table/index.js:352
-#: blocks/src/_quote/table/index.js:605
-#: blocks/build/index.js:352
-#: blocks/build/index.js:367
-#: blocks/build/index.js:382
-#: blocks/build/index.js:387
-#: blocks/build/index.js:482
-#: blocks/build/index.js:487
-#: blocks/build/index.js:502
-#: blocks/build/index.js:517
-#: blocks/build/index.js:522
-#: blocks/build/index.js:617
-#: blocks/build/index.js:622
-#: blocks/build/index.js:637
-#: blocks/build/index.js:652
-#: blocks/build/index.js:657
-#: blocks/build/index.js:863
-#: blocks/build/index.js:878
-#: blocks/build/index.js:893
-#: blocks/build/index.js:909
-#: blocks/build/index.js:919
-#: blocks/build/index.js:987
-#: blocks/build/index.js:992
-#: blocks/build/index.js:1007
-#: blocks/build/index.js:1022
-#: blocks/build/index.js:1027
-#: blocks/build/index.js:2017
-#: blocks/build/index.js:2145
-#: blocks/build/index.js:2186
-#: blocks/build/index.js:2282
-#: blocks/build/index.js:2323
-#: blocks/build/index.js:2536
-#: blocks/build/index.js:2577
-#: blocks/build/index.js:2650
-#: blocks/build/index.js:2691
-#: blocks/build/index.js:2944
-#: blocks/build/index.js:3379
-#: blocks/build/index.js:3507
-#: blocks/build/index.js:3548
-#: blocks/build/index.js:3643
-#: blocks/build/index.js:3684
-#: blocks/build/index.js:3897
-#: blocks/build/index.js:3938
-#: blocks/build/index.js:4011
-#: blocks/build/index.js:4052
-#: blocks/build/index.js:4305
+#: inc/class-billy.php:166
+#: inc/class-billy.php:281
+#: inc/class-billy.php:296
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:136
+#: blocks/src/accounting/table/deprecatedOuter.js:146
+#: blocks/src/accounting/table/deprecatedOuter.js:162
+#: blocks/src/accounting/table/deprecatedOuter.js:186
+#: blocks/src/accounting/table/deprecatedOuter.js:196
+#: blocks/src/accounting/table/deprecatedOuter.js:328
+#: blocks/src/accounting/table/deprecatedOuter.js:338
+#: blocks/src/accounting/table/deprecatedOuter.js:356
+#: blocks/src/accounting/table/deprecatedOuter.js:380
+#: blocks/src/accounting/table/deprecatedOuter.js:390
+#: blocks/src/accounting/table/deprecatedOuter.js:522
+#: blocks/src/accounting/table/deprecatedOuter.js:532
+#: blocks/src/accounting/table/deprecatedOuter.js:550
+#: blocks/src/accounting/table/deprecatedOuter.js:574
+#: blocks/src/accounting/table/deprecatedOuter.js:584
+#: blocks/src/accounting/table/deprecatedOuter.js:716
+#: blocks/src/accounting/table/deprecatedOuter.js:726
+#: blocks/src/accounting/table/deprecatedOuter.js:744
+#: blocks/src/accounting/table/deprecatedOuter.js:768
+#: blocks/src/accounting/table/deprecatedOuter.js:778
+#: blocks/src/accounting/table/index.js:191
+#: blocks/src/accounting/table/index.js:208
+#: blocks/src/accounting/table/index.js:226
+#: blocks/src/accounting/table/index.js:247
+#: blocks/src/accounting/table/index.js:262
+#: blocks/src/accounting/table/index.js:358
+#: blocks/src/accounting/table/index.js:368
+#: blocks/src/accounting/table/index.js:384
+#: blocks/src/accounting/table/index.js:407
+#: blocks/src/accounting/table/index.js:414
+#: blocks/src/invoice/table/deprecatedInner.js:79
+#: blocks/src/invoice/table/deprecatedInner.js:149
+#: blocks/src/invoice/table/deprecatedOuter.js:115
+#: blocks/src/invoice/table/deprecatedOuter.js:156
+#: blocks/src/invoice/table/deprecatedOuter.js:252
+#: blocks/src/invoice/table/deprecatedOuter.js:293
+#: blocks/src/invoice/table/index.js:213
+#: blocks/src/invoice/table/index.js:272
+#: blocks/src/invoice/table/index.js:336
+#: blocks/src/invoice/table/index.js:401
+#: blocks/src/invoice/table/index.js:676
+#: blocks/src/quote/table/deprecatedInner.js:79
+#: blocks/src/quote/table/deprecatedInner.js:149
+#: blocks/src/quote/table/deprecatedOuter.js:115
+#: blocks/src/quote/table/deprecatedOuter.js:156
+#: blocks/src/quote/table/deprecatedOuter.js:251
+#: blocks/src/quote/table/deprecatedOuter.js:292
+#: blocks/src/quote/table/index.js:212
+#: blocks/src/quote/table/index.js:271
+#: blocks/src/quote/table/index.js:335
+#: blocks/src/quote/table/index.js:400
+#: blocks/src/quote/table/index.js:675
 msgid "%1$s %2$s"
 msgstr ""
 
-#: inc/class-billy.php:265
+#: inc/class-billy.php:264
 msgid "Locale"
 msgstr ""
 
-#: inc/class-billy.php:269
-#: inc/class-billy.php:1202
-#: blocks/build/index.js:3669
-#: blocks/src/_settings/panel/index.js:45
-#: blocks/build/index.js:4402
+#: inc/class-billy.php:268
+#: inc/class-billy.php:1411
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:46
 msgid "Currency"
 msgstr ""
 
-#: inc/class-billy.php:273
-#: blocks/build/index.js:325
-#: blocks/build/index.js:343
-#: blocks/build/index.js:440
-#: blocks/build/index.js:537
-#: blocks/build/index.js:813
-#: blocks/build/index.js:828
-#: blocks/build/index.js:3676
-#: blocks/src/_accounting/table/deprecatedOuter.js:96
-#: blocks/src/_accounting/table/deprecatedOuter.js:144
-#: blocks/src/_accounting/table/deprecatedOuter.js:279
-#: blocks/src/_accounting/table/deprecatedOuter.js:414
-#: blocks/src/_accounting/table/index.js:299
-#: blocks/src/_accounting/table/index.js:347
-#: blocks/src/_settings/panel/index.js:51
-#: blocks/build/index.js:330
-#: blocks/build/index.js:378
-#: blocks/build/index.js:513
-#: blocks/build/index.js:648
-#: blocks/build/index.js:970
-#: blocks/build/index.js:1018
-#: blocks/build/index.js:4408
+#: inc/class-billy.php:272
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:116
+#: blocks/src/accounting/table/deprecatedOuter.js:179
+#: blocks/src/accounting/table/deprecatedOuter.js:308
+#: blocks/src/accounting/table/deprecatedOuter.js:373
+#: blocks/src/accounting/table/deprecatedOuter.js:567
+#: blocks/src/accounting/table/deprecatedOuter.js:761
+#: blocks/src/accounting/table/index.js:337
+#: blocks/src/accounting/table/index.js:400
+#: blocks/src/settings/panel/index.js:52
 msgid "Taxes"
 msgstr ""
 
-#: inc/class-billy.php:277
-#: inc/class-billy.php:1426
+#: inc/class-billy.php:276
+#: inc/class-billy.php:1606
 msgid "Current invoice number"
 msgstr ""
 
-#: inc/class-billy.php:278
-#: inc/class-billy.php:524
+#: inc/class-billy.php:277
+#: inc/class-billy.php:590
+#: inc/class-billy.php:647
 msgid "%1$s%2$03s"
 msgstr ""
 
-#: inc/class-billy.php:281
+#: inc/class-billy.php:280
 msgid "Problems detected. Please open the Web Console for more information!"
 msgstr ""
 
-#: inc/class-billy.php:282
+#: inc/class-billy.php:281
 msgid "Edit"
 msgstr ""
 
-#: inc/class-billy.php:297
+#: inc/class-billy.php:296
 msgid "Thank you for purchasing %s!"
 msgstr ""
 
-#: inc/class-billy.php:297
+#: inc/class-billy.php:296
 msgid "Get the <u>Pro</u> version"
 msgstr ""
 
-#: inc/class-billy.php:297
+#: inc/class-billy.php:296
 msgid "Premium add-on with WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
 msgstr ""
 
-#: inc/class-billy.php:297
+#: inc/class-billy.php:296
 msgid "Please rate this Plugin"
 msgstr ""
 
-#: inc/class-billy.php:337
+#: inc/class-billy.php:336
 msgid "Print"
 msgstr ""
 
@@ -273,454 +186,356 @@ msgstr ""
 msgid "TSV"
 msgstr ""
 
-#: inc/class-billy.php:348
+#: inc/class-billy.php:355
 msgid "Download %s"
 msgstr ""
 
-#: inc/class-billy.php:348
+#: inc/class-billy.php:355
 msgid "PDF"
 msgstr ""
 
-#: inc/class-billy.php:450
+#: inc/class-billy.php:463
+#: inc/class-billy.php:533
 msgid "Pending"
 msgstr ""
 
-#: inc/class-billy.php:659
-#: inc/class-billy.php:660
+#: inc/class-billy.php:782
+#: inc/class-billy.php:783
 msgid "%s Header"
 msgstr ""
 
-#: inc/class-billy.php:810
+#: inc/class-billy.php:1006
 msgid "Invoices"
 msgstr ""
 
-#: inc/class-billy.php:811
-#: inc/class-billy.php:1285
-#: inc/class-blocks.php:281
-#: blocks/build/index.js:1230
-#: blocks/build/index.js:1304
-#: blocks/build/index.js:1369
-#: blocks/build/index.js:1434
-#: blocks/build/index.js:1501
-#: blocks/build/index.js:1631
-#: blocks/build/index.js:2010
-#: blocks/build/index.js:2253
-#: blocks/src/_invoice/actions/index.js:24
-#: blocks/src/_invoice/date/index.js:24
-#: blocks/src/_invoice/duedate/index.js:24
-#: blocks/src/_invoice/invoice-number/index.js:24
-#: blocks/src/_invoice/meta/index.js:17
-#: blocks/src/_invoice/paymentinformation/index.js:24
-#: blocks/src/_invoice/table/index.js:49
-#: blocks/src/_invoice/table/index.js:374
-#: blocks/build/index.js:1483
-#: blocks/build/index.js:1545
-#: blocks/build/index.js:1606
-#: blocks/build/index.js:1667
-#: blocks/build/index.js:1728
-#: blocks/build/index.js:1867
-#: blocks/build/index.js:2388
-#: blocks/build/index.js:2713
+#: inc/class-billy.php:1007
+#: inc/class-billy.php:1493
+#: inc/class-blocks.php:282
+#: blocks/build/index.js:1
+#: blocks/src/invoice/actions/index.js:19
+#: blocks/src/invoice/date/index.js:20
+#: blocks/src/invoice/duedate/index.js:20
+#: blocks/src/invoice/invoice-number/index.js:20
+#: blocks/src/invoice/meta/index.js:20
+#: blocks/src/invoice/paymentinformation/index.js:20
+#: blocks/src/invoice/table/index.js:40
+#: blocks/src/invoice/table/index.js:425
 msgid "Invoice"
 msgstr ""
 
-#: inc/class-billy.php:854
-#: inc/class-billy.php:995
-#: inc/class-billy.php:1199
-#: inc/class-billy.php:1305
-#: blocks/build/index.js:3648
-#: blocks/src/_settings/panel/index.js:27
-#: blocks/build/index.js:4384
+#: inc/class-billy.php:1051
+#: inc/class-billy.php:1198
+#: inc/class-billy.php:1408
+#: inc/class-billy.php:1513
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:28
 msgid "Name"
 msgstr ""
 
-#: inc/class-billy.php:854
-#: inc/class-billy.php:995
+#: inc/class-billy.php:1051
+#: inc/class-billy.php:1198
 msgid "Company"
 msgstr ""
 
-#: inc/class-billy.php:854
-#: inc/class-billy.php:995
+#: inc/class-billy.php:1051
+#: inc/class-billy.php:1198
 msgid "Address Field %s"
 msgstr ""
 
-#: inc/class-billy.php:854
-#: inc/class-billy.php:995
+#: inc/class-billy.php:1051
+#: inc/class-billy.php:1198
 msgid "Country"
 msgstr ""
 
-#: inc/class-billy.php:883
+#: inc/class-billy.php:1080
 msgid "Billing Period"
 msgstr ""
 
-#: inc/class-billy.php:902
-#: inc/class-billy.php:908
-#: inc/class-billy.php:940
-#: inc/class-billy.php:1038
-#: inc/class-billy.php:1044
-#: inc/class-billy.php:1074
-#: inc/class-billy.php:1122
+#: inc/class-billy.php:1099
+#: inc/class-billy.php:1105
+#: inc/class-billy.php:1137
+#: inc/class-billy.php:1241
+#: inc/class-billy.php:1247
+#: inc/class-billy.php:1277
+#: inc/class-billy.php:1331
 msgid "%s (optional)"
 msgstr ""
 
-#: inc/class-billy.php:902
-#: inc/class-billy.php:1038
+#: inc/class-billy.php:1099
+#: inc/class-billy.php:1241
 msgid "Subject"
 msgstr ""
 
-#: inc/class-billy.php:908
-#: inc/class-billy.php:1044
+#: inc/class-billy.php:1105
+#: inc/class-billy.php:1247
 msgid "Intro text"
 msgstr ""
 
-#: inc/class-billy.php:908
-#: inc/class-billy.php:1044
+#: inc/class-billy.php:1105
+#: inc/class-billy.php:1247
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
 msgstr ""
 
-#: inc/class-billy.php:932
-#: inc/class-billy.php:933
-#: inc/class-billy.php:1066
-#: inc/class-billy.php:1067
-#: blocks/build/index.js:2609
-#: blocks/src/_quote/information/index.js:21
-#: blocks/build/index.js:3079
+#: inc/class-billy.php:1129
+#: inc/class-billy.php:1130
+#: inc/class-billy.php:1269
+#: inc/class-billy.php:1270
+#: blocks/build/index.js:1
+#: blocks/src/quote/information/index.js:21
 msgid "Information"
 msgstr ""
 
-#: inc/class-billy.php:940
-#: inc/class-billy.php:1074
-#: inc/class-billy.php:1122
+#: inc/class-billy.php:1137
+#: inc/class-billy.php:1277
+#: inc/class-billy.php:1331
 msgid "Notes"
 msgstr ""
 
-#: inc/class-billy.php:954
+#: inc/class-billy.php:1156
 msgid "Quotes"
 msgstr ""
 
-#: inc/class-billy.php:955
-#: inc/class-billy.php:1276
-#: blocks/build/index.js:2482
-#: blocks/build/index.js:2550
-#: blocks/build/index.js:2609
-#: blocks/build/index.js:2672
-#: blocks/build/index.js:3116
-#: blocks/build/index.js:3359
-#: blocks/build/index.js:3588
-#: blocks/src/_quote/actions/index.js:24
-#: blocks/src/_quote/date/index.js:19
-#: blocks/src/_quote/information/index.js:21
-#: blocks/src/_quote/meta/index.js:26
-#: blocks/src/_quote/table/index.js:49
-#: blocks/src/_quote/table/index.js:374
-#: blocks/src/_quote/validuntildate/index.js:19
-#: blocks/build/index.js:2980
-#: blocks/build/index.js:3037
-#: blocks/build/index.js:3079
-#: blocks/build/index.js:3140
-#: blocks/build/index.js:3749
-#: blocks/build/index.js:4074
-#: blocks/build/index.js:4336
+#: inc/class-billy.php:1157
+#: inc/class-billy.php:1484
+#: blocks/build/index.js:1
+#: blocks/src/quote/actions/index.js:19
+#: blocks/src/quote/date/index.js:20
+#: blocks/src/quote/information/index.js:20
+#: blocks/src/quote/meta/index.js:20
+#: blocks/src/quote/table/index.js:40
+#: blocks/src/quote/table/index.js:424
+#: blocks/src/quote/validuntildate/index.js:20
 msgid "Quote"
 msgstr ""
 
-#: inc/class-billy.php:1019
-#: blocks/build/index.js:313
-#: blocks/build/index.js:410
-#: blocks/build/index.js:507
-#: blocks/build/index.js:801
-#: blocks/build/index.js:1046
-#: blocks/src/_accounting/table/deprecatedOuter.js:87
-#: blocks/src/_accounting/table/deprecatedOuter.js:222
-#: blocks/src/_accounting/table/deprecatedOuter.js:357
-#: blocks/src/_accounting/table/index.js:290
-#: blocks/src/_accounting/table/index.js:596
-#: blocks/build/index.js:321
-#: blocks/build/index.js:456
-#: blocks/build/index.js:591
-#: blocks/build/index.js:961
-#: blocks/build/index.js:1267
+#: inc/class-billy.php:1222
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:95
+#: blocks/src/accounting/table/deprecatedOuter.js:287
+#: blocks/src/accounting/table/deprecatedOuter.js:481
+#: blocks/src/accounting/table/deprecatedOuter.js:675
+#: blocks/src/accounting/table/index.js:314
+#: blocks/src/accounting/table/index.js:673
 msgid "Reference"
 msgstr ""
 
-#: inc/class-billy.php:1088
-#: inc/class-billy.php:1089
-#: blocks/build/index.js:34
-#: blocks/build/index.js:600
-#: blocks/build/index.js:842
-#: blocks/src/_accounting/actions/index.js:24
-#: blocks/src/_accounting/table/index.js:52
-#: blocks/src/_accounting/table/index.js:377
-#: blocks/build/index.js:24
-#: blocks/build/index.js:723
-#: blocks/build/index.js:1048
+#: inc/class-billy.php:1296
+#: inc/class-billy.php:1297
+#: blocks/build/index.js:1
+#: blocks/src/accounting/actions/index.js:19
+#: blocks/src/accounting/table/index.js:44
+#: blocks/src/accounting/table/index.js:438
 msgid "Accounting"
 msgstr ""
 
-#: inc/class-billy.php:1109
+#: inc/class-billy.php:1318
 msgid "Heading"
 msgstr ""
 
-#: inc/class-billy.php:1183
-#: blocks/build/index.js:317
-#: blocks/build/index.js:330
-#: blocks/build/index.js:343
-#: blocks/build/index.js:414
-#: blocks/build/index.js:427
-#: blocks/build/index.js:440
-#: blocks/build/index.js:524
-#: blocks/build/index.js:537
-#: blocks/build/index.js:739
-#: blocks/build/index.js:761
-#: blocks/build/index.js:805
-#: blocks/build/index.js:817
-#: blocks/build/index.js:828
-#: blocks/src/_accounting/table/deprecatedOuter.js:90
-#: blocks/src/_accounting/table/deprecatedOuter.js:109
-#: blocks/src/_accounting/table/deprecatedOuter.js:144
-#: blocks/src/_accounting/table/deprecatedOuter.js:225
-#: blocks/src/_accounting/table/deprecatedOuter.js:244
-#: blocks/src/_accounting/table/deprecatedOuter.js:279
-#: blocks/src/_accounting/table/deprecatedOuter.js:379
-#: blocks/src/_accounting/table/deprecatedOuter.js:414
-#: blocks/src/_accounting/table/index.js:188
-#: blocks/src/_accounting/table/index.js:234
-#: blocks/src/_accounting/table/index.js:293
-#: blocks/src/_accounting/table/index.js:312
-#: blocks/src/_accounting/table/index.js:347
-#: blocks/build/index.js:324
-#: blocks/build/index.js:378
-#: blocks/build/index.js:459
-#: blocks/build/index.js:478
-#: blocks/build/index.js:513
-#: blocks/build/index.js:613
-#: blocks/build/index.js:648
-#: blocks/build/index.js:859
-#: blocks/build/index.js:905
-#: blocks/build/index.js:964
-#: blocks/build/index.js:983
-#: blocks/build/index.js:1018
+#: inc/class-billy.php:1392
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:102
+#: blocks/src/accounting/table/deprecatedOuter.js:130
+#: blocks/src/accounting/table/deprecatedOuter.js:180
+#: blocks/src/accounting/table/deprecatedOuter.js:294
+#: blocks/src/accounting/table/deprecatedOuter.js:322
+#: blocks/src/accounting/table/deprecatedOuter.js:374
+#: blocks/src/accounting/table/deprecatedOuter.js:488
+#: blocks/src/accounting/table/deprecatedOuter.js:516
+#: blocks/src/accounting/table/deprecatedOuter.js:568
+#: blocks/src/accounting/table/deprecatedOuter.js:710
+#: blocks/src/accounting/table/deprecatedOuter.js:762
+#: blocks/src/accounting/table/index.js:187
+#: blocks/src/accounting/table/index.js:242
+#: blocks/src/accounting/table/index.js:321
+#: blocks/src/accounting/table/index.js:352
+#: blocks/src/accounting/table/index.js:401
 msgid "Earnings"
 msgstr ""
 
-#: inc/class-billy.php:1184
-#: blocks/build/index.js:321
-#: blocks/build/index.js:330
-#: blocks/build/index.js:343
-#: blocks/build/index.js:418
-#: blocks/build/index.js:427
-#: blocks/build/index.js:440
-#: blocks/build/index.js:524
-#: blocks/build/index.js:537
-#: blocks/build/index.js:745
-#: blocks/build/index.js:767
-#: blocks/build/index.js:809
-#: blocks/build/index.js:817
-#: blocks/build/index.js:828
-#: blocks/src/_accounting/table/deprecatedOuter.js:93
-#: blocks/src/_accounting/table/deprecatedOuter.js:109
-#: blocks/src/_accounting/table/deprecatedOuter.js:144
-#: blocks/src/_accounting/table/deprecatedOuter.js:228
-#: blocks/src/_accounting/table/deprecatedOuter.js:244
-#: blocks/src/_accounting/table/deprecatedOuter.js:279
-#: blocks/src/_accounting/table/deprecatedOuter.js:379
-#: blocks/src/_accounting/table/deprecatedOuter.js:414
-#: blocks/src/_accounting/table/index.js:203
-#: blocks/src/_accounting/table/index.js:244
-#: blocks/src/_accounting/table/index.js:296
-#: blocks/src/_accounting/table/index.js:312
-#: blocks/src/_accounting/table/index.js:347
-#: blocks/build/index.js:327
-#: blocks/build/index.js:378
-#: blocks/build/index.js:462
-#: blocks/build/index.js:478
-#: blocks/build/index.js:513
-#: blocks/build/index.js:613
-#: blocks/build/index.js:648
-#: blocks/build/index.js:874
-#: blocks/build/index.js:915
-#: blocks/build/index.js:967
-#: blocks/build/index.js:983
-#: blocks/build/index.js:1018
+#: inc/class-billy.php:1393
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:109
+#: blocks/src/accounting/table/deprecatedOuter.js:131
+#: blocks/src/accounting/table/deprecatedOuter.js:181
+#: blocks/src/accounting/table/deprecatedOuter.js:301
+#: blocks/src/accounting/table/deprecatedOuter.js:323
+#: blocks/src/accounting/table/deprecatedOuter.js:375
+#: blocks/src/accounting/table/deprecatedOuter.js:495
+#: blocks/src/accounting/table/deprecatedOuter.js:517
+#: blocks/src/accounting/table/deprecatedOuter.js:569
+#: blocks/src/accounting/table/deprecatedOuter.js:711
+#: blocks/src/accounting/table/deprecatedOuter.js:763
+#: blocks/src/accounting/table/index.js:204
+#: blocks/src/accounting/table/index.js:257
+#: blocks/src/accounting/table/index.js:328
+#: blocks/src/accounting/table/index.js:353
+#: blocks/src/accounting/table/index.js:402
 msgid "Expenses"
 msgstr ""
 
-#: inc/class-billy.php:1200
-#: inc/class-billy.php:1327
-#: blocks/build/index.js:3655
-#: blocks/src/_settings/panel/index.js:33
-#: blocks/build/index.js:4390
+#: inc/class-billy.php:1409
+#: inc/class-billy.php:1533
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:34
 msgid "Address"
 msgstr ""
 
-#: inc/class-billy.php:1201
-#: inc/class-billy.php:1345
-#: blocks/build/index.js:3662
-#: blocks/src/_settings/panel/index.js:39
-#: blocks/build/index.js:4396
+#: inc/class-billy.php:1410
+#: inc/class-billy.php:1549
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:40
 msgid "VAT"
 msgstr ""
 
-#: inc/class-billy.php:1257
+#: inc/class-billy.php:1465
 msgid "Plugin Setup"
 msgstr ""
 
-#: inc/class-billy.php:1267
+#: inc/class-billy.php:1475
 msgid "General"
 msgstr ""
 
-#: inc/class-billy.php:1346
+#: inc/class-billy.php:1550
 msgid "Enter your VAT identification number or Taxpayer ID"
 msgstr ""
 
-#: inc/class-billy.php:1365
+#: inc/class-billy.php:1567
 msgid "Currency Code"
 msgstr ""
 
-#: inc/class-billy.php:1366
-#: inc/class-billy.php:1390
+#: inc/class-billy.php:1568
+#: inc/class-billy.php:1590
 msgid "Caution: Any changes made here may affect existing entries. Create a backup first!"
 msgstr ""
 
-#: inc/class-billy.php:1385
+#: inc/class-billy.php:1585
 msgid "Tax Rates"
 msgstr ""
 
-#: inc/class-billy.php:1387
+#: inc/class-billy.php:1587
 msgid "Enter the taxrates separated by newline: e.g. %s"
 msgstr ""
 
-#: inc/class-billy.php:1408
-#: blocks/build/index.js:1452
-#: blocks/src/_invoice/invoice-number/index.js:42
-#: blocks/build/index.js:1685
-msgid "Invoice number: Prefix"
-msgstr ""
-
-#: inc/class-billy.php:1427
+#: inc/class-billy.php:1607
 msgid "Upcoming invoice numbers will be autoincremented based on this value!"
 msgstr ""
 
-#: inc/class-billy.php:1457
+#: inc/class-billy.php:1635
+#: blocks/build/index.js:1
+#: blocks/src/invoice/invoice-number/index.js:45
+msgid "Invoice number: Prefix"
+msgstr ""
+
+#: inc/class-billy.php:1636
+#: inc/class-billy.php:1760
+msgid "You can include placeholders like {YEAR}, {MONTH} and {DAY}."
+msgstr ""
+
+#: inc/class-billy.php:1652
 msgid "Payment due within # days"
 msgstr ""
 
-#: inc/class-billy.php:1479
-#: blocks/build/index.js:1631
-#: blocks/build/index.js:1649
-#: blocks/src/_invoice/paymentinformation/index.js:24
-#: blocks/src/_invoice/paymentinformation/index.js:42
-#: blocks/build/index.js:1867
-#: blocks/build/index.js:1885
+#: inc/class-billy.php:1672
+#: blocks/build/index.js:1
+#: blocks/src/invoice/paymentinformation/index.js:21
+#: blocks/src/invoice/paymentinformation/index.js:45
 msgid "Payment Information"
 msgstr ""
 
-#: inc/class-billy.php:1480
+#: inc/class-billy.php:1673
 msgid "Add the payment instructions and link to your terms."
 msgstr ""
 
-#: inc/class-billy.php:1488
+#: inc/class-billy.php:1679
 msgid "Thank you for your business!"
 msgstr ""
 
-#: inc/class-billy.php:1502
-#: blocks/build/index.js:2627
-#: blocks/src/_quote/information/index.js:39
-#: blocks/build/index.js:3097
+#: inc/class-billy.php:1693
+#: blocks/build/index.js:1
+#: blocks/src/quote/information/index.js:45
 msgid "Quote Information"
 msgstr ""
 
-#: inc/class-billy.php:1503
+#: inc/class-billy.php:1694
 msgid "Inform your contacts about special terms, quote expiration clauses, etc."
 msgstr ""
 
-#: inc/class-billy.php:1511
+#: inc/class-billy.php:1700
 msgid "We will be happy to answer any questions you may have!"
 msgstr ""
 
-#: inc/class-billy.php:1525
+#: inc/class-billy.php:1714
+msgid "Current quote number"
+msgstr ""
+
+#: inc/class-billy.php:1715
+msgid "Upcoming quote numbers will be autoincremented based on this value!"
+msgstr ""
+
+#: inc/class-billy.php:1742
+msgid "Just use the current date (\"Ymd\") as quote number"
+msgstr ""
+
+#: inc/class-billy.php:1759
+msgid "Quote number: Prefix"
+msgstr ""
+
+#: inc/class-billy.php:1776
 msgid "Quote valid for # days"
 msgstr ""
 
-#: inc/class-billy.php:1547
+#: inc/class-billy.php:1796
 msgid "Please provide a valid currency format"
 msgstr ""
 
-#: inc/class-billy.php:1573
+#: inc/class-billy.php:1822
 msgid "Please separate the taxrates by newline and don't forget to append the \"%\" sign to each value."
 msgstr ""
 
-#: inc/class-blocks.php:176
+#: inc/class-blocks.php:181
 msgid "Billy Blocks"
 msgstr ""
 
-#: inc/class-blocks.php:228
-#: blocks/build/index.js:1556
-#: blocks/build/index.js:1566
-#: blocks/build/index.js:2727
-#: blocks/build/index.js:2737
-#: blocks/src/_invoice/meta/index.js:67
-#: blocks/src/_invoice/meta/index.js:86
-#: blocks/src/_quote/meta/index.js:87
-#: blocks/src/_quote/meta/index.js:107
-#: blocks/build/index.js:1778
-#: blocks/build/index.js:1797
-#: blocks/build/index.js:3201
-#: blocks/build/index.js:3221
+#: inc/class-blocks.php:233
+#: blocks/build/index.js:1
+#: blocks/src/invoice/meta/index.js:84
+#: blocks/src/invoice/meta/index.js:111
+#: blocks/src/invoice/meta/index.js:149
+#: blocks/src/quote/meta/index.js:84
+#: blocks/src/quote/meta/index.js:111
+#: blocks/src/quote/meta/index.js:148
 msgid "<div class=\"label\">%1$s</div> <div class=\"text\">%2$s</div>"
 msgstr ""
 
-#: inc/class-blocks.php:243
+#: inc/class-blocks.php:247
 msgid "<strong>%1$s</strong> %2$s"
 msgstr ""
 
-#: inc/class-blocks.php:243
-#: blocks/build/index.js:1556
-#: blocks/build/index.js:1566
-#: blocks/build/index.js:1589
-#: blocks/build/index.js:2727
-#: blocks/build/index.js:2737
-#: blocks/build/index.js:2760
-#: blocks/src/_invoice/meta/index.js:69
-#: blocks/src/_invoice/meta/index.js:88
-#: blocks/src/_invoice/meta/index.js:122
-#: blocks/src/_quote/meta/index.js:87
-#: blocks/src/_quote/meta/index.js:107
-#: blocks/src/_quote/meta/index.js:142
-#: blocks/build/index.js:1780
-#: blocks/build/index.js:1799
-#: blocks/build/index.js:1833
-#: blocks/build/index.js:3201
-#: blocks/build/index.js:3221
-#: blocks/build/index.js:3256
+#: inc/class-blocks.php:247
+#: blocks/build/index.js:1
+#: blocks/src/invoice/meta/index.js:89
+#: blocks/src/invoice/meta/index.js:116
+#: blocks/src/invoice/meta/index.js:154
+#: blocks/src/invoice/meta/index.js:194
+#: blocks/src/quote/meta/index.js:89
+#: blocks/src/quote/meta/index.js:116
+#: blocks/src/quote/meta/index.js:153
+#: blocks/src/quote/meta/index.js:192
 msgid "N/A"
 msgstr ""
 
-#: inc/class-blocks.php:257
-#: blocks/build/index.js:305
-#: blocks/build/index.js:402
-#: blocks/build/index.js:499
-#: blocks/build/index.js:793
-#: blocks/build/index.js:1018
-#: blocks/build/index.js:1304
-#: blocks/build/index.js:1322
-#: blocks/build/index.js:2550
-#: blocks/src/_accounting/table/deprecatedOuter.js:81
-#: blocks/src/_accounting/table/deprecatedOuter.js:216
-#: blocks/src/_accounting/table/deprecatedOuter.js:351
-#: blocks/src/_accounting/table/index.js:284
-#: blocks/src/_accounting/table/index.js:538
-#: blocks/src/_invoice/date/index.js:24
-#: blocks/src/_invoice/date/index.js:42
-#: blocks/src/_quote/date/index.js:19
-#: blocks/build/index.js:315
-#: blocks/build/index.js:450
-#: blocks/build/index.js:585
-#: blocks/build/index.js:955
-#: blocks/build/index.js:1209
-#: blocks/build/index.js:1545
-#: blocks/build/index.js:1563
-#: blocks/build/index.js:3037
+#: inc/class-blocks.php:260
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:81
+#: blocks/src/accounting/table/deprecatedOuter.js:273
+#: blocks/src/accounting/table/deprecatedOuter.js:467
+#: blocks/src/accounting/table/deprecatedOuter.js:661
+#: blocks/src/accounting/table/index.js:300
+#: blocks/src/accounting/table/index.js:606
+#: blocks/src/invoice/date/index.js:21
+#: blocks/src/invoice/date/index.js:45
+#: blocks/src/quote/date/index.js:21
 msgid "Date"
 msgstr ""
 
@@ -728,772 +543,407 @@ msgstr ""
 msgid "Due By"
 msgstr ""
 
-#: inc/class-blocks.php:317
-#: blocks/build/index.js:3588
-#: blocks/src/_quote/validuntildate/index.js:19
-#: blocks/build/index.js:4336
+#: inc/class-blocks.php:315
+#: blocks/build/index.js:1
+#: blocks/src/quote/validuntildate/index.js:21
 msgid "Valid Until"
 msgstr ""
 
-#: inc/class-pdfexport.php:98
-msgid "You are not permitted to use this endpoint. Please sign in."
+#: inc/class-pdfexport.php:130
+msgid "You are not allowed to view this content."
 msgstr ""
 
-#: blocks/build/index.js:34
-#: blocks/build/index.js:64
-#: blocks/build/index.js:600
-#: blocks/build/index.js:842
-#: blocks/build/index.js:1230
-#: blocks/build/index.js:1260
-#: blocks/build/index.js:1304
-#: blocks/build/index.js:1369
-#: blocks/build/index.js:1434
-#: blocks/build/index.js:1501
-#: blocks/build/index.js:1631
-#: blocks/build/index.js:2010
-#: blocks/build/index.js:2253
-#: blocks/build/index.js:2482
-#: blocks/build/index.js:2512
-#: blocks/build/index.js:2550
-#: blocks/build/index.js:2609
-#: blocks/build/index.js:2672
-#: blocks/build/index.js:3116
-#: blocks/build/index.js:3359
-#: blocks/build/index.js:3588
-#: blocks/src/_accounting/actions/index.js:24
-#: blocks/src/_accounting/actions/index.js:51
-#: blocks/src/_accounting/table/index.js:52
-#: blocks/src/_accounting/table/index.js:377
-#: blocks/src/_invoice/actions/index.js:24
-#: blocks/src/_invoice/actions/index.js:51
-#: blocks/src/_invoice/date/index.js:24
-#: blocks/src/_invoice/duedate/index.js:24
-#: blocks/src/_invoice/invoice-number/index.js:24
-#: blocks/src/_invoice/meta/index.js:17
-#: blocks/src/_invoice/paymentinformation/index.js:24
-#: blocks/src/_invoice/table/index.js:49
-#: blocks/src/_invoice/table/index.js:374
-#: blocks/src/_quote/actions/index.js:24
-#: blocks/src/_quote/actions/index.js:51
-#: blocks/src/_quote/date/index.js:19
-#: blocks/src/_quote/information/index.js:21
-#: blocks/src/_quote/meta/index.js:26
-#: blocks/src/_quote/table/index.js:49
-#: blocks/src/_quote/table/index.js:374
-#: blocks/src/_quote/validuntildate/index.js:19
-#: blocks/build/index.js:24
-#: blocks/build/index.js:51
-#: blocks/build/index.js:723
-#: blocks/build/index.js:1048
-#: blocks/build/index.js:1483
-#: blocks/build/index.js:1510
-#: blocks/build/index.js:1545
-#: blocks/build/index.js:1606
-#: blocks/build/index.js:1667
-#: blocks/build/index.js:1728
-#: blocks/build/index.js:1867
-#: blocks/build/index.js:2388
-#: blocks/build/index.js:2713
-#: blocks/build/index.js:2980
-#: blocks/build/index.js:3007
-#: blocks/build/index.js:3037
-#: blocks/build/index.js:3079
-#: blocks/build/index.js:3140
-#: blocks/build/index.js:3749
-#: blocks/build/index.js:4074
-#: blocks/build/index.js:4336
-msgid "%1$s: %2$s"
-msgstr ""
-
-#: blocks/build/index.js:34
-#: blocks/build/index.js:718
-#: blocks/build/index.js:1230
-#: blocks/build/index.js:2482
-#: blocks/src/_accounting/actions/index.js:24
-#: blocks/src/_accounting/table/index.js:159
-#: blocks/src/_invoice/actions/index.js:24
-#: blocks/src/_quote/actions/index.js:24
-#: blocks/build/index.js:24
-#: blocks/build/index.js:830
-#: blocks/build/index.js:1483
-#: blocks/build/index.js:2980
-msgid "Actions"
-msgstr ""
-
-#: blocks/build/index.js:64
-#: blocks/build/index.js:1260
-#: blocks/build/index.js:2512
-#: blocks/src/_accounting/actions/index.js:51
-#: blocks/src/_invoice/actions/index.js:51
-#: blocks/src/_quote/actions/index.js:51
-#: blocks/build/index.js:51
-#: blocks/build/index.js:1510
-#: blocks/build/index.js:3007
-msgid "Last modified"
-msgstr ""
-
-#: blocks/build/index.js:184
-#: blocks/build/index.js:195
-#: blocks/build/index.js:1030
-#: blocks/build/index.js:1093
-#: blocks/build/index.js:1104
-#: blocks/src/_accounting/table/deprecatedInner.js:106
-#: blocks/src/_accounting/table/deprecatedInner.js:121
-#: blocks/src/_accounting/table/index.js:573
-#: blocks/src/_accounting/table/index.js:653
-#: blocks/src/_accounting/table/index.js:668
-#: blocks/build/index.js:168
-#: blocks/build/index.js:183
-#: blocks/build/index.js:1244
-#: blocks/build/index.js:1324
-#: blocks/build/index.js:1339
-msgid "Q%s"
-msgstr ""
-
-#: blocks/build/index.js:301
-#: blocks/build/index.js:398
-#: blocks/build/index.js:495
-#: blocks/build/index.js:789
-#: blocks/build/index.js:1838
-#: blocks/build/index.js:1922
-#: blocks/build/index.js:2211
-#: blocks/build/index.js:2944
-#: blocks/build/index.js:3028
-#: blocks/build/index.js:3317
-#: blocks/src/_accounting/table/deprecatedOuter.js:78
-#: blocks/src/_accounting/table/deprecatedOuter.js:213
-#: blocks/src/_accounting/table/deprecatedOuter.js:348
-#: blocks/src/_accounting/table/index.js:281
-#: blocks/src/_invoice/table/deprecatedOuter.js:82
-#: blocks/src/_invoice/table/deprecatedOuter.js:219
-#: blocks/src/_invoice/table/index.js:278
-#: blocks/src/_quote/table/deprecatedOuter.js:82
-#: blocks/src/_quote/table/deprecatedOuter.js:218
-#: blocks/src/_quote/table/index.js:278
-#: blocks/build/index.js:312
-#: blocks/build/index.js:447
-#: blocks/build/index.js:582
-#: blocks/build/index.js:952
-#: blocks/build/index.js:2112
-#: blocks/build/index.js:2249
-#: blocks/build/index.js:2617
-#: blocks/build/index.js:3474
-#: blocks/build/index.js:3610
-#: blocks/build/index.js:3978
-msgid "#"
-msgstr ""
-
-#: blocks/build/index.js:309
-#: blocks/build/index.js:406
-#: blocks/build/index.js:503
-#: blocks/build/index.js:797
-#: blocks/build/index.js:1840
-#: blocks/build/index.js:1924
-#: blocks/build/index.js:2213
-#: blocks/build/index.js:2946
-#: blocks/build/index.js:3030
-#: blocks/build/index.js:3319
-#: blocks/src/_accounting/table/deprecatedOuter.js:84
-#: blocks/src/_accounting/table/deprecatedOuter.js:219
-#: blocks/src/_accounting/table/deprecatedOuter.js:354
-#: blocks/src/_accounting/table/index.js:287
-#: blocks/src/_invoice/table/deprecatedOuter.js:85
-#: blocks/src/_invoice/table/deprecatedOuter.js:222
-#: blocks/src/_invoice/table/index.js:281
-#: blocks/src/_quote/table/deprecatedOuter.js:85
-#: blocks/src/_quote/table/deprecatedOuter.js:221
-#: blocks/src/_quote/table/index.js:281
-#: blocks/build/index.js:318
-#: blocks/build/index.js:453
-#: blocks/build/index.js:588
-#: blocks/build/index.js:958
-#: blocks/build/index.js:2115
-#: blocks/build/index.js:2252
-#: blocks/build/index.js:2620
-#: blocks/build/index.js:3477
-#: blocks/build/index.js:3613
-#: blocks/build/index.js:3981
-msgid "Description"
-msgstr ""
-
-#: blocks/build/index.js:330
-#: blocks/build/index.js:427
-#: blocks/build/index.js:524
-#: blocks/build/index.js:817
-#: blocks/src/_accounting/table/deprecatedOuter.js:109
-#: blocks/src/_accounting/table/deprecatedOuter.js:244
-#: blocks/src/_accounting/table/deprecatedOuter.js:379
-#: blocks/src/_accounting/table/index.js:312
-#: blocks/build/index.js:343
-#: blocks/build/index.js:478
-#: blocks/build/index.js:613
-#: blocks/build/index.js:983
-msgid "%1$s / %2$s"
-msgstr ""
-
-#: blocks/build/index.js:337
-#: blocks/build/index.js:434
-#: blocks/build/index.js:531
-#: blocks/build/index.js:751
-#: blocks/build/index.js:823
-#: blocks/src/_accounting/table/deprecatedOuter.js:129
-#: blocks/src/_accounting/table/deprecatedOuter.js:264
-#: blocks/src/_accounting/table/deprecatedOuter.js:399
-#: blocks/src/_accounting/table/index.js:218
-#: blocks/src/_accounting/table/index.js:332
-#: blocks/build/index.js:363
-#: blocks/build/index.js:498
-#: blocks/build/index.js:633
-#: blocks/build/index.js:889
-#: blocks/build/index.js:1003
-msgid "Profit"
-msgstr ""
-
-#: blocks/build/index.js:343
-#: blocks/build/index.js:440
-#: blocks/build/index.js:537
-#: blocks/build/index.js:828
-#: blocks/src/_accounting/table/deprecatedOuter.js:144
-#: blocks/src/_accounting/table/deprecatedOuter.js:279
-#: blocks/src/_accounting/table/deprecatedOuter.js:414
-#: blocks/src/_accounting/table/index.js:347
-#: blocks/build/index.js:378
-#: blocks/build/index.js:513
-#: blocks/build/index.js:648
-#: blocks/build/index.js:1018
-msgid "%1$s (%2$s / %3$s)"
-msgstr ""
-
-#: blocks/build/index.js:422
-#: blocks/build/index.js:519
-#: blocks/build/index.js:1070
-#: blocks/build/index.js:1844
-#: blocks/build/index.js:1856
-#: blocks/build/index.js:1928
-#: blocks/build/index.js:1938
-#: blocks/build/index.js:2170
-#: blocks/build/index.js:2217
-#: blocks/build/index.js:2227
-#: blocks/build/index.js:2415
-#: blocks/build/index.js:2950
-#: blocks/build/index.js:2962
-#: blocks/build/index.js:3034
-#: blocks/build/index.js:3044
-#: blocks/build/index.js:3276
-#: blocks/build/index.js:3323
-#: blocks/build/index.js:3333
-#: blocks/build/index.js:3521
-#: blocks/src/_accounting/table/deprecatedOuter.js:231
-#: blocks/src/_accounting/table/deprecatedOuter.js:366
-#: blocks/src/_accounting/table/index.js:623
-#: blocks/src/_invoice/table/deprecatedOuter.js:94
-#: blocks/src/_invoice/table/deprecatedOuter.js:126
-#: blocks/src/_invoice/table/deprecatedOuter.js:231
-#: blocks/src/_invoice/table/deprecatedOuter.js:263
-#: blocks/src/_invoice/table/index.js:208
-#: blocks/src/_invoice/table/index.js:290
-#: blocks/src/_invoice/table/index.js:322
-#: blocks/src/_invoice/table/index.js:546
-#: blocks/src/_quote/table/deprecatedOuter.js:94
-#: blocks/src/_quote/table/deprecatedOuter.js:126
-#: blocks/src/_quote/table/deprecatedOuter.js:230
-#: blocks/src/_quote/table/deprecatedOuter.js:262
-#: blocks/src/_quote/table/index.js:208
-#: blocks/src/_quote/table/index.js:290
-#: blocks/src/_quote/table/index.js:322
-#: blocks/src/_quote/table/index.js:546
-#: blocks/build/index.js:465
-#: blocks/build/index.js:600
-#: blocks/build/index.js:1294
-#: blocks/build/index.js:2124
-#: blocks/build/index.js:2156
-#: blocks/build/index.js:2261
-#: blocks/build/index.js:2293
-#: blocks/build/index.js:2547
-#: blocks/build/index.js:2629
-#: blocks/build/index.js:2661
-#: blocks/build/index.js:2885
-#: blocks/build/index.js:3486
-#: blocks/build/index.js:3518
-#: blocks/build/index.js:3622
-#: blocks/build/index.js:3654
-#: blocks/build/index.js:3908
-#: blocks/build/index.js:3990
-#: blocks/build/index.js:4022
-#: blocks/build/index.js:4246
-msgid "Tax"
-msgstr ""
-
-#: blocks/build/index.js:511
-#: blocks/build/index.js:1054
-#: blocks/src/_accounting/table/deprecatedOuter.js:360
-#: blocks/src/_accounting/table/index.js:605
-#: blocks/build/index.js:594
-#: blocks/build/index.js:1276
-msgid "Earning"
-msgstr ""
-
-#: blocks/build/index.js:515
-#: blocks/build/index.js:1062
-#: blocks/src/_accounting/table/deprecatedOuter.js:363
-#: blocks/src/_accounting/table/index.js:614
-#: blocks/build/index.js:597
-#: blocks/build/index.js:1285
-msgid "Expense"
-msgstr ""
-
-#: blocks/build/index.js:600
-#: blocks/build/index.js:2010
-#: blocks/build/index.js:3116
-#: blocks/src/_accounting/table/index.js:52
-#: blocks/src/_invoice/table/index.js:49
-#: blocks/src/_quote/table/index.js:49
-#: blocks/build/index.js:723
-#: blocks/build/index.js:2388
-#: blocks/build/index.js:3749
-msgid "Table"
-msgstr ""
-
-#: blocks/build/index.js:723
-#: blocks/build/index.js:2191
-#: blocks/build/index.js:3297
-#: blocks/src/_accounting/table/index.js:162
-#: blocks/src/_invoice/table/index.js:251
-#: blocks/src/_quote/table/index.js:251
-#: blocks/build/index.js:833
-#: blocks/build/index.js:2590
-#: blocks/build/index.js:3951
-msgid "Update Totals"
-msgstr ""
-
-#: blocks/build/index.js:761
-#: blocks/build/index.js:767
-#: blocks/src/_accounting/table/index.js:234
-#: blocks/src/_accounting/table/index.js:244
-#: blocks/build/index.js:905
-#: blocks/build/index.js:915
-msgid "Taxes (%s)"
-msgstr ""
-
-#: blocks/build/index.js:842
-#: blocks/build/index.js:2253
-#: blocks/build/index.js:3359
-#: blocks/src/_accounting/table/index.js:377
-#: blocks/src/_invoice/table/index.js:374
-#: blocks/src/_quote/table/index.js:374
-#: blocks/build/index.js:1048
-#: blocks/build/index.js:2713
-#: blocks/build/index.js:4074
-msgid "Table Row"
-msgstr ""
-
-#: blocks/build/index.js:1023
-#: blocks/src/_accounting/table/index.js:549
-#: blocks/build/index.js:1220
-msgid "Reference: %s"
-msgstr ""
-
-#: blocks/build/index.js:1023
-#: blocks/src/_accounting/table/index.js:549
-#: blocks/build/index.js:1220
-msgid "Post"
-msgstr ""
-
-#: blocks/build/index.js:1037
-#: blocks/build/index.js:2401
-#: blocks/build/index.js:3507
-#: blocks/src/_accounting/table/index.js:581
-#: blocks/src/_invoice/table/index.js:521
-#: blocks/src/_quote/table/index.js:521
-#: blocks/build/index.js:1252
-#: blocks/build/index.js:2860
-#: blocks/build/index.js:4221
-msgid "Add content"
-msgstr ""
-
-#: blocks/build/index.js:1054
-#: blocks/build/index.js:1062
-#: blocks/build/index.js:1070
-#: blocks/build/index.js:2388
-#: blocks/build/index.js:2408
-#: blocks/build/index.js:2415
-#: blocks/build/index.js:3494
-#: blocks/build/index.js:3514
-#: blocks/build/index.js:3521
-#: blocks/src/_accounting/table/index.js:605
-#: blocks/src/_accounting/table/index.js:614
-#: blocks/src/_accounting/table/index.js:623
-#: blocks/src/_invoice/table/index.js:500
-#: blocks/src/_invoice/table/index.js:536
-#: blocks/src/_invoice/table/index.js:546
-#: blocks/src/_quote/table/index.js:500
-#: blocks/src/_quote/table/index.js:536
-#: blocks/src/_quote/table/index.js:546
-#: blocks/build/index.js:1276
-#: blocks/build/index.js:1285
-#: blocks/build/index.js:1294
-#: blocks/build/index.js:2839
-#: blocks/build/index.js:2875
-#: blocks/build/index.js:2885
-#: blocks/build/index.js:4200
-#: blocks/build/index.js:4236
-#: blocks/build/index.js:4246
-msgid "%1$s in %2$s"
-msgstr ""
-
-#: blocks/build/index.js:1055
-#: blocks/build/index.js:1063
-#: blocks/build/index.js:1071
-#: blocks/build/index.js:2383
-#: blocks/build/index.js:2389
-#: blocks/build/index.js:2410
-#: blocks/build/index.js:2430
-#: blocks/build/index.js:3489
-#: blocks/build/index.js:3495
-#: blocks/build/index.js:3516
-#: blocks/build/index.js:3536
-#: blocks/src/_accounting/table/index.js:606
-#: blocks/src/_accounting/table/index.js:615
-#: blocks/src/_accounting/table/index.js:624
-#: blocks/src/_invoice/table/index.js:493
-#: blocks/src/_invoice/table/index.js:501
-#: blocks/src/_invoice/table/index.js:538
-#: blocks/src/_invoice/table/index.js:558
-#: blocks/src/_quote/table/index.js:493
-#: blocks/src/_quote/table/index.js:501
-#: blocks/src/_quote/table/index.js:538
-#: blocks/src/_quote/table/index.js:558
-#: blocks/build/index.js:1277
-#: blocks/build/index.js:1286
-#: blocks/build/index.js:1295
-#: blocks/build/index.js:2832
-#: blocks/build/index.js:2840
-#: blocks/build/index.js:2877
-#: blocks/build/index.js:2897
-#: blocks/build/index.js:4193
-#: blocks/build/index.js:4201
-#: blocks/build/index.js:4238
-#: blocks/build/index.js:4258
-msgid "0"
-msgstr ""
-
-#: blocks/build/index.js:1161
-#: blocks/build/index.js:1185
-#: blocks/build/index.js:1189
+#: blocks/build/index.js:1
 #: blocks/src/_deprecated/header/index.js:24
 #: blocks/src/_deprecated/header/index.js:46
 #: blocks/src/_deprecated/header/index.js:54
-#: blocks/build/index.js:1410
-#: blocks/build/index.js:1432
-#: blocks/build/index.js:1440
 msgid "Header"
 msgstr ""
 
-#: blocks/build/index.js:1178
-#: blocks/build/index.js:1317
-#: blocks/build/index.js:1382
-#: blocks/build/index.js:1447
-#: blocks/build/index.js:1644
-#: blocks/build/index.js:2622
+#: blocks/build/index.js:1
+#: blocks/src/invoice/date/index.js:37
+#: blocks/src/invoice/duedate/index.js:37
+#: blocks/src/invoice/invoice-number/index.js:37
+#: blocks/src/invoice/paymentinformation/index.js:37
+#: blocks/src/quote/information/index.js:37
 #: blocks/src/_deprecated/header/index.js:41
-#: blocks/src/_invoice/date/index.js:38
-#: blocks/src/_invoice/duedate/index.js:38
-#: blocks/src/_invoice/invoice-number/index.js:38
-#: blocks/src/_invoice/paymentinformation/index.js:38
-#: blocks/src/_quote/information/index.js:35
-#: blocks/build/index.js:1427
-#: blocks/build/index.js:1559
-#: blocks/build/index.js:1620
-#: blocks/build/index.js:1681
-#: blocks/build/index.js:1881
-#: blocks/build/index.js:3093
 msgid "Info"
 msgstr ""
 
-#: blocks/build/index.js:1185
+#: blocks/build/index.js:1
 #: blocks/src/_deprecated/header/index.js:46
-#: blocks/build/index.js:1432
 msgid "Edit the %s layout"
 msgstr ""
 
-#: blocks/build/index.js:1189
-#: blocks/build/index.js:1387
-#: blocks/build/index.js:1452
-#: blocks/build/index.js:1649
-#: blocks/build/index.js:2627
+#: blocks/build/index.js:1
+#: blocks/src/invoice/duedate/index.js:41
+#: blocks/src/invoice/invoice-number/index.js:41
+#: blocks/src/invoice/paymentinformation/index.js:41
+#: blocks/src/quote/information/index.js:41
 #: blocks/src/_deprecated/header/index.js:54
-#: blocks/src/_invoice/duedate/index.js:42
-#: blocks/src/_invoice/invoice-number/index.js:42
-#: blocks/src/_invoice/paymentinformation/index.js:42
-#: blocks/src/_quote/information/index.js:39
-#: blocks/build/index.js:1440
-#: blocks/build/index.js:1624
-#: blocks/build/index.js:1685
-#: blocks/build/index.js:1885
-#: blocks/build/index.js:3097
 msgid "The %s values can be modified in the Theme Customizer."
 msgstr ""
 
-#: blocks/build/index.js:1322
-#: blocks/build/index.js:1456
-#: blocks/src/_invoice/date/index.js:42
-#: blocks/src/_invoice/invoice-number/index.js:49
-#: blocks/build/index.js:1563
-#: blocks/build/index.js:1692
-msgid "Due to legal requirements in some countries, autogenerated data like %s can't be modified anymore after an invoice has been created in the system!"
+#: blocks/build/index.js:1
+#: blocks/src/accounting/actions/index.js:18
+#: blocks/src/accounting/actions/index.js:53
+#: blocks/src/accounting/table/index.js:43
+#: blocks/src/accounting/table/index.js:437
+#: blocks/src/invoice/actions/index.js:18
+#: blocks/src/invoice/actions/index.js:53
+#: blocks/src/invoice/date/index.js:19
+#: blocks/src/invoice/duedate/index.js:19
+#: blocks/src/invoice/invoice-number/index.js:19
+#: blocks/src/invoice/meta/index.js:19
+#: blocks/src/invoice/paymentinformation/index.js:19
+#: blocks/src/invoice/table/index.js:39
+#: blocks/src/invoice/table/index.js:424
+#: blocks/src/quote/actions/index.js:18
+#: blocks/src/quote/actions/index.js:53
+#: blocks/src/quote/date/index.js:19
+#: blocks/src/quote/information/index.js:19
+#: blocks/src/quote/meta/index.js:19
+#: blocks/src/quote/table/index.js:39
+#: blocks/src/quote/table/index.js:423
+#: blocks/src/quote/validuntildate/index.js:19
+msgid "%1$s: %2$s"
 msgstr ""
 
-#: blocks/build/index.js:1369
-#: blocks/src/_invoice/duedate/index.js:24
-#: blocks/build/index.js:1606
-msgid "Due Date"
+#: blocks/build/index.js:1
+#: blocks/src/accounting/actions/index.js:20
+#: blocks/src/accounting/table/index.js:164
+#: blocks/src/invoice/actions/index.js:20
+#: blocks/src/invoice/table/index.js:183
+#: blocks/src/quote/actions/index.js:20
+#: blocks/src/quote/table/index.js:182
+msgid "Actions"
 msgstr ""
 
-#: blocks/build/index.js:1387
-#: blocks/src/_invoice/duedate/index.js:42
-#: blocks/build/index.js:1624
-msgid "Payment due days"
+#: blocks/build/index.js:1
+#: blocks/src/accounting/actions/index.js:54
+#: blocks/src/invoice/actions/index.js:54
+#: blocks/src/quote/actions/index.js:54
+msgid "Last modified"
 msgstr ""
 
-#: blocks/build/index.js:1434
-#: blocks/src/_invoice/invoice-number/index.js:24
-#: blocks/build/index.js:1667
-msgid "Number"
-msgstr ""
-
-#: blocks/build/index.js:1456
-#: blocks/build/index.js:3644
-#: blocks/src/_invoice/invoice-number/index.js:49
-#: blocks/src/_settings/panel/index.js:24
-#: blocks/build/index.js:1692
-#: blocks/build/index.js:4381
-msgid "Invoice number"
-msgstr ""
-
-#: blocks/build/index.js:1501
-#: blocks/build/index.js:2672
-#: blocks/src/_invoice/meta/index.js:17
-#: blocks/src/_quote/meta/index.js:26
-#: blocks/build/index.js:1728
-#: blocks/build/index.js:3140
+#: blocks/build/index.js:1
+#: blocks/src/invoice/meta/index.js:21
+#: blocks/src/quote/meta/index.js:21
 msgid "Meta"
 msgstr ""
 
-#: blocks/build/index.js:1543
-#: blocks/build/index.js:2714
-#: blocks/src/_invoice/meta/index.js:57
-#: blocks/src/_quote/meta/index.js:67
-#: blocks/build/index.js:1768
-#: blocks/build/index.js:3181
+#: blocks/build/index.js:1
+#: blocks/src/invoice/meta/index.js:64
+#: blocks/src/quote/meta/index.js:64
 msgid "Label"
 msgstr ""
 
-#: blocks/build/index.js:1550
-#: blocks/build/index.js:2721
-#: blocks/src/_invoice/meta/index.js:60
-#: blocks/src/_quote/meta/index.js:75
-#: blocks/build/index.js:1771
-#: blocks/build/index.js:3189
+#: blocks/build/index.js:1
+#: blocks/src/invoice/meta/index.js:72
+#: blocks/src/quote/meta/index.js:72
 msgid "Text"
 msgstr ""
 
-#: blocks/build/index.js:1589
-#: blocks/build/index.js:2760
-#: blocks/src/_invoice/meta/index.js:120
-#: blocks/src/_quote/meta/index.js:142
-#: blocks/build/index.js:1831
-#: blocks/build/index.js:3256
+#: blocks/build/index.js:1
+#: blocks/src/invoice/meta/index.js:188
+#: blocks/src/quote/meta/index.js:186
 msgid "<strong>%1$s</strong> <span>%2$s</span>"
 msgstr ""
 
-#: blocks/build/index.js:1842
-#: blocks/build/index.js:1926
-#: blocks/build/index.js:2215
-#: blocks/build/index.js:2408
-#: blocks/build/index.js:2948
-#: blocks/build/index.js:3032
-#: blocks/build/index.js:3321
-#: blocks/build/index.js:3514
-#: blocks/src/_invoice/table/deprecatedOuter.js:88
-#: blocks/src/_invoice/table/deprecatedOuter.js:225
-#: blocks/src/_invoice/table/index.js:284
-#: blocks/src/_invoice/table/index.js:536
-#: blocks/src/_quote/table/deprecatedOuter.js:88
-#: blocks/src/_quote/table/deprecatedOuter.js:224
-#: blocks/src/_quote/table/index.js:284
-#: blocks/src/_quote/table/index.js:536
-#: blocks/build/index.js:2118
-#: blocks/build/index.js:2255
-#: blocks/build/index.js:2623
-#: blocks/build/index.js:2875
-#: blocks/build/index.js:3480
-#: blocks/build/index.js:3616
-#: blocks/build/index.js:3984
-#: blocks/build/index.js:4236
+#: blocks/build/index.js:1
+#: blocks/src/invoice/date/index.js:41
+#: blocks/src/invoice/invoice-number/index.js:52
+msgid "Due to legal requirements in some countries, autogenerated data like %s can't be modified anymore after an invoice has been created in the system!"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/duedate/index.js:21
+msgid "Due Date"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/duedate/index.js:45
+msgid "Payment due days"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/invoice-number/index.js:21
+msgid "Number"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/invoice-number/index.js:56
+#: blocks/src/settings/panel/index.js:25
+msgid "Invoice number"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:74
+#: blocks/src/accounting/table/deprecatedOuter.js:266
+#: blocks/src/accounting/table/deprecatedOuter.js:460
+#: blocks/src/accounting/table/deprecatedOuter.js:654
+#: blocks/src/accounting/table/index.js:297
+#: blocks/src/invoice/table/deprecatedOuter.js:82
+#: blocks/src/invoice/table/deprecatedOuter.js:219
+#: blocks/src/invoice/table/index.js:309
+#: blocks/src/quote/table/deprecatedOuter.js:82
+#: blocks/src/quote/table/deprecatedOuter.js:218
+#: blocks/src/quote/table/index.js:308
+msgid "#"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:88
+#: blocks/src/accounting/table/deprecatedOuter.js:280
+#: blocks/src/accounting/table/deprecatedOuter.js:474
+#: blocks/src/accounting/table/deprecatedOuter.js:668
+#: blocks/src/accounting/table/index.js:307
+#: blocks/src/invoice/table/deprecatedOuter.js:85
+#: blocks/src/invoice/table/deprecatedOuter.js:222
+#: blocks/src/invoice/table/index.js:310
+#: blocks/src/quote/table/deprecatedOuter.js:85
+#: blocks/src/quote/table/deprecatedOuter.js:221
+#: blocks/src/quote/table/index.js:309
+msgid "Description"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/deprecatedOuter.js:88
+#: blocks/src/invoice/table/deprecatedOuter.js:225
+#: blocks/src/invoice/table/index.js:311
+#: blocks/src/invoice/table/index.js:603
+#: blocks/src/quote/table/deprecatedOuter.js:88
+#: blocks/src/quote/table/deprecatedOuter.js:224
+#: blocks/src/quote/table/index.js:310
+#: blocks/src/quote/table/index.js:602
 msgid "Amount"
 msgstr ""
 
-#: blocks/build/index.js:1849
-#: blocks/build/index.js:1933
-#: blocks/build/index.js:2164
-#: blocks/build/index.js:2221
-#: blocks/build/index.js:2955
-#: blocks/build/index.js:3039
-#: blocks/build/index.js:3270
-#: blocks/build/index.js:3327
-#: blocks/src/_invoice/table/deprecatedOuter.js:110
-#: blocks/src/_invoice/table/deprecatedOuter.js:247
-#: blocks/src/_invoice/table/index.js:192
-#: blocks/src/_invoice/table/index.js:306
-#: blocks/src/_quote/table/deprecatedOuter.js:110
-#: blocks/src/_quote/table/deprecatedOuter.js:246
-#: blocks/src/_quote/table/index.js:192
-#: blocks/src/_quote/table/index.js:306
-#: blocks/build/index.js:2140
-#: blocks/build/index.js:2277
-#: blocks/build/index.js:2531
-#: blocks/build/index.js:2645
-#: blocks/build/index.js:3502
-#: blocks/build/index.js:3638
-#: blocks/build/index.js:3892
-#: blocks/build/index.js:4006
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:502
+#: blocks/src/accounting/table/deprecatedOuter.js:696
+#: blocks/src/accounting/table/index.js:710
+#: blocks/src/invoice/table/deprecatedOuter.js:94
+#: blocks/src/invoice/table/deprecatedOuter.js:126
+#: blocks/src/invoice/table/deprecatedOuter.js:231
+#: blocks/src/invoice/table/deprecatedOuter.js:263
+#: blocks/src/invoice/table/index.js:223
+#: blocks/src/invoice/table/index.js:313
+#: blocks/src/invoice/table/index.js:345
+#: blocks/src/invoice/table/index.js:617
+#: blocks/src/quote/table/deprecatedOuter.js:94
+#: blocks/src/quote/table/deprecatedOuter.js:126
+#: blocks/src/quote/table/deprecatedOuter.js:230
+#: blocks/src/quote/table/deprecatedOuter.js:262
+#: blocks/src/quote/table/index.js:222
+#: blocks/src/quote/table/index.js:312
+#: blocks/src/quote/table/index.js:344
+#: blocks/src/quote/table/index.js:616
+msgid "Tax"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/deprecatedOuter.js:110
+#: blocks/src/invoice/table/deprecatedOuter.js:247
+#: blocks/src/invoice/table/index.js:208
+#: blocks/src/invoice/table/index.js:325
+#: blocks/src/quote/table/deprecatedOuter.js:110
+#: blocks/src/quote/table/deprecatedOuter.js:246
+#: blocks/src/quote/table/index.js:207
+#: blocks/src/quote/table/index.js:324
 msgid "Subtotal"
 msgstr ""
 
-#: blocks/build/index.js:1849
-#: blocks/build/index.js:1871
-#: blocks/build/index.js:1933
-#: blocks/build/index.js:1951
-#: blocks/build/index.js:2164
-#: blocks/build/index.js:2184
-#: blocks/build/index.js:2221
-#: blocks/build/index.js:2241
-#: blocks/build/index.js:2955
-#: blocks/build/index.js:2977
-#: blocks/build/index.js:3039
-#: blocks/build/index.js:3057
-#: blocks/build/index.js:3270
-#: blocks/build/index.js:3290
-#: blocks/build/index.js:3327
-#: blocks/build/index.js:3347
-#: blocks/src/_invoice/table/deprecatedOuter.js:110
-#: blocks/src/_invoice/table/deprecatedOuter.js:152
-#: blocks/src/_invoice/table/deprecatedOuter.js:247
-#: blocks/src/_invoice/table/deprecatedOuter.js:289
-#: blocks/src/_invoice/table/index.js:192
-#: blocks/src/_invoice/table/index.js:234
-#: blocks/src/_invoice/table/index.js:306
-#: blocks/src/_invoice/table/index.js:348
-#: blocks/src/_quote/table/deprecatedOuter.js:110
-#: blocks/src/_quote/table/deprecatedOuter.js:152
-#: blocks/src/_quote/table/deprecatedOuter.js:246
-#: blocks/src/_quote/table/deprecatedOuter.js:288
-#: blocks/src/_quote/table/index.js:192
-#: blocks/src/_quote/table/index.js:234
-#: blocks/src/_quote/table/index.js:306
-#: blocks/src/_quote/table/index.js:348
-#: blocks/build/index.js:2140
-#: blocks/build/index.js:2182
-#: blocks/build/index.js:2277
-#: blocks/build/index.js:2319
-#: blocks/build/index.js:2531
-#: blocks/build/index.js:2573
-#: blocks/build/index.js:2645
-#: blocks/build/index.js:2687
-#: blocks/build/index.js:3502
-#: blocks/build/index.js:3544
-#: blocks/build/index.js:3638
-#: blocks/build/index.js:3680
-#: blocks/build/index.js:3892
-#: blocks/build/index.js:3934
-#: blocks/build/index.js:4006
-#: blocks/build/index.js:4048
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/deprecatedOuter.js:110
+#: blocks/src/invoice/table/deprecatedOuter.js:152
+#: blocks/src/invoice/table/deprecatedOuter.js:247
+#: blocks/src/invoice/table/deprecatedOuter.js:289
+#: blocks/src/invoice/table/index.js:209
+#: blocks/src/invoice/table/index.js:268
+#: blocks/src/invoice/table/index.js:326
+#: blocks/src/invoice/table/index.js:392
+#: blocks/src/quote/table/deprecatedOuter.js:110
+#: blocks/src/quote/table/deprecatedOuter.js:152
+#: blocks/src/quote/table/deprecatedOuter.js:246
+#: blocks/src/quote/table/deprecatedOuter.js:288
+#: blocks/src/quote/table/index.js:208
+#: blocks/src/quote/table/index.js:267
+#: blocks/src/quote/table/index.js:325
+#: blocks/src/quote/table/index.js:391
 msgid "Total"
 msgstr ""
 
-#: blocks/build/index.js:1864
-#: blocks/build/index.js:1944
-#: blocks/build/index.js:2176
-#: blocks/build/index.js:2235
-#: blocks/build/index.js:2970
-#: blocks/build/index.js:3050
-#: blocks/build/index.js:3282
-#: blocks/build/index.js:3341
-#: blocks/src/_invoice/table/deprecatedOuter.js:136
-#: blocks/src/_invoice/table/deprecatedOuter.js:273
-#: blocks/src/_invoice/table/index.js:218
-#: blocks/src/_invoice/table/index.js:332
-#: blocks/src/_quote/table/deprecatedOuter.js:136
-#: blocks/src/_quote/table/deprecatedOuter.js:272
-#: blocks/src/_quote/table/index.js:218
-#: blocks/src/_quote/table/index.js:332
-#: blocks/build/index.js:2166
-#: blocks/build/index.js:2303
-#: blocks/build/index.js:2557
-#: blocks/build/index.js:2671
-#: blocks/build/index.js:3528
-#: blocks/build/index.js:3664
-#: blocks/build/index.js:3918
-#: blocks/build/index.js:4032
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/deprecatedOuter.js:136
+#: blocks/src/invoice/table/deprecatedOuter.js:273
+#: blocks/src/invoice/table/index.js:243
+#: blocks/src/invoice/table/index.js:368
+#: blocks/src/quote/table/deprecatedOuter.js:136
+#: blocks/src/quote/table/deprecatedOuter.js:272
+#: blocks/src/quote/table/index.js:242
+#: blocks/src/quote/table/index.js:367
 msgid "%1$s %2$s %3$s"
 msgstr ""
 
-#: blocks/build/index.js:2379
-#: blocks/build/index.js:3485
-#: blocks/src/_invoice/table/index.js:489
-#: blocks/src/_quote/table/index.js:489
-#: blocks/build/index.js:2828
-#: blocks/build/index.js:4189
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:45
+#: blocks/src/invoice/table/index.js:41
+#: blocks/src/quote/table/index.js:41
+msgid "Table"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:170
+#: blocks/src/invoice/table/index.js:189
+#: blocks/src/quote/table/index.js:188
+msgid "Update Totals"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:439
+#: blocks/src/invoice/table/index.js:426
+#: blocks/src/quote/table/index.js:425
+msgid "Table Row"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/index.js:550
+#: blocks/src/quote/table/index.js:549
 msgid "Quantity/Rate Calculator"
 msgstr ""
 
-#: blocks/build/index.js:2382
-#: blocks/build/index.js:3488
-#: blocks/src/_invoice/table/index.js:492
-#: blocks/src/_quote/table/index.js:492
-#: blocks/build/index.js:2831
-#: blocks/build/index.js:4192
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/index.js:553
+#: blocks/src/quote/table/index.js:552
 msgid "Quantity"
 msgstr ""
 
-#: blocks/build/index.js:2388
-#: blocks/build/index.js:3494
-#: blocks/src/_invoice/table/index.js:500
-#: blocks/src/_quote/table/index.js:500
-#: blocks/build/index.js:2839
-#: blocks/build/index.js:4200
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:687
+#: blocks/src/accounting/table/index.js:700
+#: blocks/src/accounting/table/index.js:713
+#: blocks/src/invoice/table/index.js:554
+#: blocks/src/invoice/table/index.js:566
+#: blocks/src/invoice/table/index.js:607
+#: blocks/src/invoice/table/index.js:649
+#: blocks/src/quote/table/index.js:553
+#: blocks/src/quote/table/index.js:565
+#: blocks/src/quote/table/index.js:606
+#: blocks/src/quote/table/index.js:648
+msgid "0"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:683
+#: blocks/src/accounting/table/index.js:696
+#: blocks/src/accounting/table/index.js:709
+#: blocks/src/invoice/table/index.js:562
+#: blocks/src/invoice/table/index.js:602
+#: blocks/src/invoice/table/index.js:616
+#: blocks/src/quote/table/index.js:561
+#: blocks/src/quote/table/index.js:601
+#: blocks/src/quote/table/index.js:615
+msgid "%1$s in %2$s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/invoice/table/index.js:563
+#: blocks/src/quote/table/index.js:562
 msgid "Rate"
 msgstr ""
 
-#: blocks/build/index.js:3638
-#: blocks/src/_settings/panel/index.js:11
-#: blocks/build/index.js:4368
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:129
+#: blocks/src/accounting/table/deprecatedOuter.js:321
+#: blocks/src/accounting/table/deprecatedOuter.js:515
+#: blocks/src/accounting/table/deprecatedOuter.js:709
+#: blocks/src/accounting/table/index.js:351
+msgid "%1$s / %2$s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:159
+#: blocks/src/accounting/table/deprecatedOuter.js:352
+#: blocks/src/accounting/table/deprecatedOuter.js:546
+#: blocks/src/accounting/table/deprecatedOuter.js:740
+#: blocks/src/accounting/table/index.js:222
+#: blocks/src/accounting/table/index.js:381
+msgid "Profit"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:178
+#: blocks/src/accounting/table/deprecatedOuter.js:372
+#: blocks/src/accounting/table/deprecatedOuter.js:566
+#: blocks/src/accounting/table/deprecatedOuter.js:760
+#: blocks/src/accounting/table/index.js:399
+msgid "%1$s (%2$s / %3$s)"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:682
+#: blocks/src/accounting/table/index.js:684
+msgid "Earning"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:689
+#: blocks/src/accounting/table/index.js:697
+msgid "Expense"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedInner.js:99
+#: blocks/src/accounting/table/deprecatedInner.js:118
+#: blocks/src/accounting/table/deprecatedInner.js:234
+#: blocks/src/accounting/table/deprecatedInner.js:253
+#: blocks/src/accounting/table/deprecatedInner.js:375
+#: blocks/src/accounting/table/deprecatedInner.js:394
+#: blocks/src/accounting/table/index.js:643
+#: blocks/src/accounting/table/index.js:745
+#: blocks/src/accounting/table/index.js:761
+msgid "Q%s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:241
+#: blocks/src/accounting/table/index.js:256
+msgid "Taxes (%s)"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:616
+msgid "Reference: %s"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/index.js:620
+msgid "Post"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:11
 msgid "Billy Setup"
 msgstr ""
 
-#: blocks/build/index.js:3641
-#: blocks/src/_settings/panel/index.js:20
-#: blocks/build/index.js:4377
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:21
 msgid "Settings (Theme Customizer)"
 msgstr ""
 
-#: blocks/build/index.js:3724
-#: blocks/build/index.js:3754
-#: blocks/src/_settings/theme-mod/index.js:22
-#: blocks/src/_settings/theme-mod/index.js:53
-#: blocks/build/index.js:4440
-#: blocks/build/index.js:4471
+#: blocks/build/index.js:1
+#: blocks/src/settings/theme-mod/index.js:18
+#: blocks/src/settings/theme-mod/index.js:48
 msgid "Theme Mod"
 msgstr ""
 
-#: blocks/build/index.js:3756
-#: blocks/src/_settings/theme-mod/index.js:55
-#: blocks/build/index.js:4473
+#: blocks/build/index.js:1
+#: blocks/src/settings/theme-mod/index.js:50
 msgid "Setting"
 msgstr ""
 
-#: blocks/build/index.js:3757
-#: blocks/src/_settings/theme-mod/index.js:56
-#: blocks/build/index.js:4474
+#: blocks/build/index.js:1
+#: blocks/src/settings/theme-mod/index.js:51
 msgid "Modify the value in the Theme Customizer."
 msgstr ""

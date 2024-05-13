@@ -35,89 +35,249 @@ body {
 		&.single-billy-accounting .show-on-accounting {
 			display: block;
 		}
-	}
-}
 
-img {
-	vertical-align: middle;
-}
+		/* Header */
 
-mark {
-	background-color: $warning;
-}
+		.pre-header {
+			display: flex;
+			justify-content: space-between;
+			padding: 15px 0;
+			margin: 30px 0;
+			border-bottom: 1px dashed;
 
-/* Header */
-
-.pre-header {
-	display: flex;
-	justify-content: space-between;
-	padding: 15px 0;
-	border-bottom: 1px dashed;
-
-	.wp-block-button {
-		margin: 0 15px 0 0 !important;
-	}
-}
-
-.header {
-	margin-top: 30px;
-	margin-bottom: 100px;
-
-	p {
-		margin: 0;
-	}
-
-	.wp-block-image {
-		margin: 0 !important;
-
-		img {
-			max-height: 110px;
-			width: auto;
+			.wp-block-button {
+				margin: 0 15px 0 0 !important;
+			}
 		}
-	}
 
-	.wp-block-columns {
-		margin-top: 0;
-		margin-bottom: 0;
+		.header {
+			margin-top: 30px;
+			margin-bottom: 100px;
 
-		div {
-			margin-block-start: 0;
-		}
-	}
-}
+			p {
+				margin: 0;
+			}
 
-.details {
-	p {
-		margin: 0;
-	}
+			.wp-block-image {
+				margin: 0 !important;
 
-	.wp-block-column {
-		&:last-of-type {
-			div {
-				display: flex;
-				margin-block-start: 0;
+				img {
+					max-height: 110px;
+					width: auto;
+				}
+			}
+
+			.wp-block-columns {
+				margin-top: 0;
+				margin-bottom: 0;
 
 				div {
-					flex-basis: 50%;
-					flex-grow: 0;
-					padding: 0 0 0.5rem;
-					line-height: 1.15;
-					hyphens: auto;
-				}
-
-				.label {
-					font-weight: bold;
-					padding-right: 1rem;
-					padding-left: 1rem;
+					margin-block-start: 0;
 				}
 			}
 		}
-	}
-}
 
-.information {
-	p {
-		font-size: smaller;
+		.footer {
+			font-size: small;
+			display: none;
+
+			.wp-block-column {
+				&:last-child {
+					text-align: right;
+				}
+			}
+		}
+
+		.details {
+			p {
+				margin: 0;
+			}
+
+			.wp-block-column {
+				&:last-of-type {
+					div {
+						display: flex;
+						margin-block-start: 0;
+
+						div {
+							flex-basis: 50%;
+							flex-grow: 0;
+							padding: 0 0 0.5rem;
+							line-height: 1.15;
+							hyphens: auto;
+						}
+
+						.label {
+							font-weight: bold;
+							padding-right: 1rem;
+							padding-left: 1rem;
+						}
+					}
+				}
+			}
+		}
+
+		.information {
+			p {
+				font-size: smaller;
+			}
+		}
+
+		img {
+			vertical-align: middle;
+		}
+
+		mark {
+			background-color: $warning;
+		}
+
+		.wp-block-table {
+			width: 100%;
+			margin: 30px 0 60px;
+			border-collapse: collapse;
+
+			th,
+			td {
+				padding: 5px;
+				border-top: 1px solid;
+				border-bottom: 1px solid;
+			}
+
+			th {
+				cursor: pointer;
+				white-space: nowrap;
+
+				&::after {
+					content: "";
+					display: inline-block;
+					width: 10px;
+					height: 10px;
+					margin-top: -5px;
+					margin-left: 10px;
+					border-bottom: 1px solid $primary;
+					border-left: 1px solid $primary;
+					transform: rotate(-225deg);
+					transition: all 0.3s ease-in-out;
+					visibility: hidden;
+				}
+
+				&.asc::after {
+					visibility: visible;
+					transform: rotate(-225deg);
+				}
+
+				&.desc::after {
+					visibility: visible;
+					transform: rotate(-45deg);
+				}
+
+				&.earnings {
+					color: $success;
+					background-color: lighten($success, 50%);
+				}
+
+				&.expenses {
+					color: $danger;
+					background-color: lighten($danger, 33%);
+				}
+			}
+
+			tbody,
+			thead {
+				border-bottom: $table-border-width solid;
+			}
+
+			tbody {
+				th,
+				td {
+					vertical-align: top;
+				}
+			}
+
+			tfoot {
+				tr {
+					&.total {
+						font-weight: bold;
+
+						td {
+							border-top: $table-border-width solid;
+						}
+					}
+
+					th,
+					td {
+						text-align: initial;
+						white-space: nowrap;
+
+						&.sum {
+							text-align: center;
+
+							&.earnings,
+							&.tax-earnings {
+								background-color: lighten($success, 50%);
+							}
+
+							&.expenses,
+							&.tax-expenses {
+								background-color: lighten($danger, 33%);
+							}
+						}
+
+						&.profit {
+							position: relative;
+							text-align: center;
+
+							&::before,
+							&::after {
+								content: "";
+								display: block;
+								width: 1rem;
+								height: 1rem;
+								position: absolute;
+								top: 0;
+								transform-origin: center center;
+								z-index: -2;
+								border-top: 2px dotted $primary;
+							}
+							&::before {
+								left: 15%;
+								border-left: 2px dotted $primary;
+								transform: rotate(-90deg);
+							}
+							&::after {
+								right: 15%;
+								border-right: 2px dotted $primary;
+								transform: rotate(90deg);
+							}
+						}
+					}
+					th {
+						text-align: right;
+					}
+				}
+			}
+		}
+
+		#pdf {
+			position: relative;
+			display: flex;
+			align-items: flex-start;
+
+			> a {
+				margin: 0 10px 10px 0;
+				display: inline-block;
+			}
+
+			.wp-block-file__embed {
+				width: 350px;
+				margin: 0 10px;
+				box-shadow: 0 10px 5px -5px gray;
+
+				&:hover {
+					height: 480px;
+				}
+			}
+		}
 	}
 }
 
@@ -144,153 +304,6 @@ mark {
 			th {
 				background-color: #b8b8b8;
 			}
-		}
-	}
-}
-
-.wp-block-table {
-	width: 100%;
-	margin-top: 60px;
-	margin-bottom: 60px;
-	border-collapse: collapse;
-
-	th,
-	td {
-		padding: 5px;
-	}
-
-	th {
-		cursor: pointer;
-		white-space: nowrap;
-
-		&::after {
-			content: "";
-			display: inline-block;
-			width: 10px;
-			height: 10px;
-			margin-top: -5px;
-			margin-left: 10px;
-			border-bottom: 1px solid $primary;
-			border-left: 1px solid $primary;
-			transform: rotate(-225deg);
-			transition: all 0.3s ease-in-out;
-			visibility: hidden;
-		}
-
-		&.asc::after {
-			visibility: visible;
-			transform: rotate(-225deg);
-		}
-
-		&.desc::after {
-			visibility: visible;
-			transform: rotate(-45deg);
-		}
-
-		&.earnings {
-			color: $success;
-			background-color: lighten($success, 50%);
-		}
-
-		&.expenses {
-			color: $danger;
-			background-color: lighten($danger, 33%);
-		}
-	}
-
-	tbody,
-	thead {
-		border-bottom: $table-border-width solid;
-	}
-
-	tbody {
-		th,
-		td {
-			vertical-align: top;
-		}
-	}
-
-	tfoot {
-		tr {
-			&.total {
-				font-weight: bold;
-
-				td {
-					border-top: $table-border-width solid;
-				}
-			}
-
-			th,
-			td {
-				text-align: initial;
-				white-space: nowrap;
-
-				&.sum {
-					text-align: center;
-
-					&.earnings,
-					&.tax-earnings {
-						background-color: lighten($success, 50%);
-					}
-
-					&.expenses,
-					&.tax-expenses {
-						background-color: lighten($danger, 33%);
-					}
-				}
-
-				&.profit {
-					position: relative;
-					text-align: center;
-
-					&::before,
-					&::after {
-						content: "";
-						display: block;
-						width: 1rem;
-						height: 1rem;
-						position: absolute;
-						top: 0;
-						transform-origin: center center;
-						z-index: -2;
-						border-top: 2px dotted $primary;
-					}
-					&::before {
-						left: 15%;
-						border-left: 2px dotted $primary;
-						transform: rotate(-90deg);
-					}
-					&::after {
-						right: 15%;
-						border-right: 2px dotted $primary;
-						transform: rotate(90deg);
-					}
-				}
-			}
-			th {
-				text-align: right;
-			}
-		}
-	}
-}
-
-#pdf {
-	position: relative;
-	display: flex;
-	align-items: flex-start;
-
-	> a {
-		margin: 0 10px 10px 0;
-		display: inline-block;
-	}
-
-	.wp-block-file__embed {
-		width: 350px;
-		margin: 0 10px;
-		box-shadow: 0 10px 5px -5px gray;
-
-		&:hover {
-			height: 480px;
 		}
 	}
 }

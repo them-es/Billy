@@ -123,8 +123,10 @@ registerBlockType('billy-blocks/accounting-table', {
 				amountTaxEarningsSum = 0,
 				amountTaxExpensesSum = 0;
 
-			setAttributes({ currency: globalDataBilly.currency });
-			setAttributes({ locale: globalDataBilly.locale });
+			setAttributes({
+				currency: globalDataBilly.currency,
+				locale: globalDataBilly.locale,
+			});
 
 			if (childBlocks && childBlocks.length > 0) {
 				childBlocks.forEach((childBlock) => {
@@ -144,11 +146,12 @@ registerBlockType('billy-blocks/accounting-table', {
 				});
 			}
 
-			setAttributes({ amountTotalEarnings: amountEarningsSum });
-			setAttributes({ amountTotalExpenses: amountExpensesSum });
-
-			setAttributes({ amountTaxEarnings: amountTaxEarningsSum });
-			setAttributes({ amountTaxExpenses: amountTaxExpensesSum });
+			setAttributes({
+				amountTotalEarnings: amountEarningsSum,
+				amountTotalExpenses: amountExpensesSum,
+				amountTaxEarnings: amountTaxEarningsSum,
+				amountTaxExpenses: amountTaxExpensesSum,
+			});
 		};
 		useEffect(() => {
 			updateTotals();
@@ -171,15 +174,9 @@ registerBlockType('billy-blocks/accounting-table', {
 
 				<InnerBlocks
 					templateLock={false}
-					template={[
-						[
-							'billy-blocks/accounting-tablerow',
-							{
-								//placeholder: 'Enter content…',
-							},
-						],
-					]}
+					template={[['billy-blocks/accounting-tablerow']]}
 					allowedBlocks={['billy-blocks/accounting-tablerow']}
+					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
 				/>
 
 				<table className="totals">
@@ -535,17 +532,18 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 			},
 			setAttributes,
 		} = props;
+		const blockProps = useBlockProps();
 
 		useEffect(() => {
-			setAttributes({ index: i });
-			setAttributes({ currency: globalDataBilly.currency });
-			setAttributes({ locale: globalDataBilly.locale });
+			setAttributes({
+				index: i,
+				currency: globalDataBilly.currency,
+				locale: globalDataBilly.locale,
+			});
 
 			if ('' === date) {
 				setAttributes({
 					date: new Date().toISOString().substring(0, 10),
-				}); // Current date
-				setAttributes({
 					quarter: getQuarter(
 						new Date().toISOString().substring(0, 10)
 					),
@@ -583,17 +581,13 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 		};
 
 		const updateEarning = (val) => {
-			setAttributes({ expense: '' }); // Clear value
-
-			setAttributes({ earning: val > 0 ? Number(val) : '' });
+			setAttributes({ expense: '', earning: val > 0 ? Number(val) : '' });
 
 			updateTotals();
 		};
 
 		const updateExpense = (val) => {
-			setAttributes({ earning: '' }); // Clear value
-
-			setAttributes({ expense: val > 0 ? Number(val) : '' });
+			setAttributes({ earning: '', expense: val > 0 ? Number(val) : '' });
 
 			updateTotals();
 		};
@@ -606,7 +600,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 
 		// Markup: Backend
 		return (
-			<>
+			<div {...blockProps}>
 				<InspectorControls>
 					{!postUUID && (
 						<PanelBody title={__('Date', 'billy')}>
@@ -658,10 +652,6 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 										[
 											'core/paragraph',
 											{
-												placeholder: __(
-													'Add content',
-													'billy'
-												),
 												content: description
 													? description
 													: '', // < v1.2.0
@@ -669,6 +659,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 										],
 									]}
 									allowedBlocks={[
+										'core/block',
 										'core/heading',
 										'core/paragraph',
 										'core/list',
@@ -727,7 +718,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 						</tr>
 					</tbody>
 				</table>
-			</>
+			</div>
 		);
 	}),
 

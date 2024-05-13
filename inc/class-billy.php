@@ -6,7 +6,6 @@ defined( 'ABSPATH' ) || exit;
  * Primary controller class.
  */
 class Billy {
-
 	/**
 	 * Plugin Name.
 	 *
@@ -275,7 +274,7 @@ class Billy {
 				</tr>
 				<tr>
 					<td><strong>' . esc_html__( 'Current invoice number', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . sprintf( esc_html__( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '#' ), get_theme_mod( 'invoice_number', '0' ) ) . '</a></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . sprintf( esc_html__( '%1$s%2$03s', 'billy' ), get_theme_mod( 'invoice_number_prefix', '' ), get_theme_mod( 'invoice_number', '0' ) ) . '</a></td>
 				</tr>
 				<tr>
 					<td>' . ( ! empty( $output_script ) ? '<span class="dashicons dashicons-warning" aria-hidden="true" title="' . esc_attr__( 'Problems detected. Please open the Web Console for more information!', 'billy' ) . '" style="color: red;"></span>' : '' ) . '</td>
@@ -325,7 +324,6 @@ class Billy {
 
 	/**
 	 * Modify Post content
-	 * Add a <div class="{post_type}-wrapper"> wrapper to Custom Post types.
 	 * Add pre-header with general information, Download buttons and PDF preview.
 	 *
 	 * @return string
@@ -339,7 +337,7 @@ class Billy {
 			$output .= '&nbsp;';
 		}
 
-		if ( in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
+		if ( defined( 'TABLE_EXPORT' ) ) {
 			// Export table data as tab separated txt file.
 			$output .= '<div class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></div>';
 		}
@@ -368,8 +366,14 @@ class Billy {
 	 * @return string
 	 */
 	public function cpt_wrapper_content( $content ) {
+		$post_type = get_post_type();
+
 		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ), true ) ) {
-			$content = '<div id="' . get_post_type() . '" class="' . get_post_type() . '-wrapper' . ( ! in_array( get_post_type(), array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
+			if ( 'billy-accounting' === $post_type && ! defined( 'TABLE_EXPORT' ) ) {
+				define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
+			}
+
+			$content = '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
 		}
 
 		return $content;
@@ -467,6 +471,7 @@ class Billy {
 	 * Post Type "Quote".
 	 *
 	 * After save/update:
+	 * - Autoincrement quote number
 	 * - Change title
 	 * - Make private
 	 *
@@ -476,20 +481,58 @@ class Billy {
 	 * @return void
 	 */
 	public function onsave_quote( $post, $request ) {
-		$post_id    = $post->ID;
-		$post_title = get_the_date( 'Ymd', $post_id );
+		$post_id = $post->ID;
+		// $post_title = get_the_date( 'Ymd', $post_id );
 
-		// Update title and slug.
 		$my_post = array(
-			'ID'         => $post_id,
-			'post_title' => $post_title,
-			'post_name'  => sanitize_title( $post_title ),
+			'ID' => $post_id,
 		);
 
-		// (Optional) Update post status: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future' ), true ) ) {
+		$quotenumber = get_post_meta( $post_id, '_quote_number', true );
+
+		// Update post status if unpublished: https://wordpress.org/support/article/post-status
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
+			// New?
+			if ( ! is_numeric( $quotenumber ) ) {
+				global $post;
+				$post = get_post( $post_id );
+
+				$get_prev = get_previous_post();
+
+				if ( $get_prev ) {
+					// Get quote number (previous quote).
+					$quotenumber = get_post_meta( $get_prev->ID, '_quote_number', true );
+				} else {
+					// Get current invoice number (Customizer).
+					$quotenumber = get_theme_mod( 'quote_number', '0' );
+				}
+
+				// Increment +1.
+				++$quotenumber;
+
+				// Update Post meta value.
+				update_post_meta( $post_id, '_quote_number', $quotenumber );
+				// Update Customizer value.
+				set_theme_mod( 'quote_number', $quotenumber );
+
+				// Update post date: Current quote must be published after previous quote.
+				$get_prev_unix_time = strtotime( $get_prev->post_date );
+
+				if ( get_the_date( 'U', $post_id ) < $get_prev_unix_time ) {
+					$post_date = date_i18n( 'Y-m-d H:i:s', (int) ++$get_prev_unix_time );
+
+					$my_post['post_date']     = $post_date;
+					$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
+				}
+			}
+
 			$my_post['post_status'] = 'private';
 		}
+
+		// Update title and slug.
+		$post_title            = $this->get_quotenumber( $post_id );
+		$my_post['post_title'] = $post_title;
+		$my_post['post_name']  = sanitize_title( $post_title );
 
 		wp_update_post( $my_post );
 	}
@@ -506,6 +549,17 @@ class Billy {
 			$post_id = get_the_ID();
 		}
 
+		if ( 'billy-invoice' !== get_post_type( $post_id ) ) {
+			$post_id = wp_get_recent_posts(
+				array(
+					'post_type'   => 'billy-invoice',
+					'numberposts' => 1,
+					'post_status' => 'private',
+				)
+			)[0]['ID'];
+		}
+
+		// Autoincrement number.
 		$invoicenumber = get_post_meta( $post_id, '_invoice_number', true );
 
 		// New post?
@@ -516,21 +570,91 @@ class Billy {
 			$get_prev = get_previous_post();
 
 			if ( $get_prev ) {
-				// Get invoice number (previous invoice).
-				$invoicenumber = get_post_meta( $get_prev->ID, '_invoice_number', true );
+				// Get invoice number (previous post).
+				$invoicenumber = (int) get_post_meta( $get_prev->ID, '_invoice_number', true );
 			} else {
 				// Get current invoice number (Customizer).
-				$invoicenumber = get_theme_mod( 'invoice_number', '0' );
+				$invoicenumber = (int) get_theme_mod( 'invoice_number', 0 );
 			}
 
-			// Increment +1.
+			// +1.
 			++$invoicenumber;
 		}
 
 		// (Optional) Add prefix.
-		$prefix = get_theme_mod( 'invoice_number_prefix', '#' );
+		$prefix = get_theme_mod( 'invoice_number_prefix', '' );
+
+		// Replace placeholders.
+		$prefix_placeholders       = array(
+			'{YEAR}',
+			'{MONTH}',
+			'{DAY}',
+		);
+		$prefix_placeholder_values = array(
+			esc_attr( get_the_date( 'Y', $post_id ) ),
+			esc_attr( get_the_date( 'm', $post_id ) ),
+			esc_attr( get_the_date( 'd', $post_id ) ),
+		);
+		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
 		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $invoicenumber );
+	}
+
+	/**
+	 * Get quotenumber in predefined format.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return string
+	 */
+	public static function get_quotenumber( $post_id = null ) {
+		if ( null === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		if ( get_theme_mod( 'quote_number_as_date', 1 ) ) {
+			$quotenumber = get_the_date( 'Ymd', $post_id );
+		} else {
+			// Autoincrement number.
+			$quotenumber = get_post_meta( $post_id, '_quote_number', true );
+
+			// New post?
+			if ( ! is_numeric( $quotenumber ) ) {
+				global $post;
+				$post = get_post( $post_id );
+
+				$get_prev = get_previous_post();
+
+				if ( $get_prev ) {
+					// Get quote number (previous post).
+					$quotenumber = (int) get_post_meta( $get_prev->ID, '_quote_number', true );
+				} else {
+					// Get current quote number (Customizer).
+					$quotenumber = (int) get_theme_mod( 'quote_number', 0 );
+				}
+
+				// +1.
+				++$quotenumber;
+			}
+		}
+
+		// (Optional) Add prefix.
+		$prefix = get_theme_mod( 'quote_number_prefix', '' );
+
+		// Replace placeholders.
+		$prefix_placeholders       = array(
+			'{YEAR}',
+			'{MONTH}',
+			'{DAY}',
+		);
+		$prefix_placeholder_values = array(
+			esc_attr( get_the_date( 'Y', $post_id ) ),
+			esc_attr( get_the_date( 'm', $post_id ) ),
+			esc_attr( get_the_date( 'd', $post_id ) ),
+		);
+		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
+
+		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $quotenumber );
 	}
 
 	/**
@@ -755,8 +879,8 @@ class Billy {
 <div class="wp-block-column"></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"className":"text-right"} -->
-<div class="wp-block-column text-right"><!-- wp:billy-blocks/theme-mod {"themeMod":"name"} /-->
+<!-- wp:column {"className":"align-right text-right"} -->
+<div class="wp-block-column align-right text-right"><!-- wp:billy-blocks/theme-mod {"themeMod":"name"} /-->
 
 <!-- wp:billy-blocks/theme-mod {"themeMod":"address"} /-->
 
@@ -800,7 +924,7 @@ class Billy {
 				}
 			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
 				foreach ( $header_reusable_blocks as $header_reusable_block ) {
-					if ( wpml_get_language_information( $header_reusable_block->ID ) === self::$locale ) {
+					if ( wpml_get_language_information( null, $header_reusable_block->ID ) === self::$locale ) {
 						$header_id = $header_reusable_block->ID;
 					}
 				}
@@ -808,6 +932,79 @@ class Billy {
 
 			if ( empty( $header_id ) ) {
 				$header_id = $header_reusable_blocks[0]->ID;
+			}
+		}
+
+		$footer_reusable_blocks = get_posts(
+			array(
+				'post_type'   => 'wp_block',
+				'title'       => 'Billy Footer',
+				'post_status' => array( 'publish', 'private' ),
+			)
+		);
+		if ( ! $footer_reusable_blocks ) {
+			$footer_content = '<!-- wp:group {"className":"footer"} -->
+			<div class="wp-block-group footer"><!-- wp:columns -->
+			<div class="wp-block-columns"><!-- wp:column -->
+			<div class="wp-block-column"><!-- wp:paragraph -->
+			<p></p>
+			<!-- /wp:paragraph -->
+			<!-- wp:billy-blocks/theme-mod {"themeMod":"name"} /--></div>
+			<!-- /wp:column -->
+
+			<!-- wp:column -->
+			<div class="wp-block-column"><!-- wp:paragraph {"align":"center"} -->
+			<p class="has-text-align-center"></p>
+			<!-- /wp:paragraph --><!-- wp:paragraph {"align":"center","className":"align-center"} -->
+			<p class="has-text-align-center align-center">{CURRENTPAGE}/{TOTALPAGES}</p>
+			<!-- /wp:paragraph --></div>
+			<!-- /wp:column -->
+
+			<!-- wp:column {"className":"align-right text-right"} -->
+			<div class="wp-block-column align-right text-right"><!-- wp:paragraph -->
+			<p></p>
+			<!-- /wp:paragraph -->
+			<!-- wp:billy-blocks/theme-mod {"themeMod":"address"} /-->
+
+			<!-- wp:billy-blocks/theme-mod {"themeMod":"vat","className":"vat"} /--></div>
+			<!-- /wp:column --></div>
+			<!-- /wp:columns --></div>
+			<!-- /wp:group -->';
+
+			// Insert new reusable block.
+			$footer_id = wp_insert_post(
+				array(
+					'post_title'     => 'Billy Footer',
+					'post_content'   => $footer_content,
+					'post_type'      => 'wp_block',
+					'post_status'    => 'publish',
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'guid'           => sprintf(
+						'%s/wp_block/%s',
+						site_url(),
+						sanitize_title( 'billy-footer' ),
+					),
+				)
+			);
+		} else {
+			// Get existing reusable block.
+			if ( function_exists( 'pll_get_post_language' ) ) {
+				foreach ( $footer_reusable_blocks as $footer_reusable_block ) {
+					if ( pll_get_post_language( $footer_reusable_block->ID ) === substr( self::$locale, 0, 2 ) ) {
+						$footer_id = $footer_reusable_block->ID;
+					}
+				}
+			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
+				foreach ( $footer_reusable_blocks as $footer_reusable_block ) {
+					if ( wpml_get_language_information( null, $footer_reusable_block->ID ) === self::$locale ) {
+						$footer_id = $footer_reusable_block->ID;
+					}
+				}
+			}
+
+			if ( empty( $footer_id ) ) {
+				$footer_id = $footer_reusable_blocks[0]->ID;
 			}
 		}
 
@@ -825,6 +1022,7 @@ class Billy {
 				'supports'      => array( 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ), // Custom fields need to be supported for "register_post_meta".
 				'taxonomies'    => array( 'category' ),
 				'show_ui'       => true,
+				'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
 				'template_lock' => 'insert',
 				'template'      => array(
 					// Actions.
@@ -883,7 +1081,7 @@ class Billy {
 									array( 'billy-blocks/invoice-number' ),
 									// Postdate.
 									array( 'billy-blocks/invoice-date' ),
-									// Postdate + ## days.
+									// Postdate + # days.
 									array( 'billy-blocks/invoice-duedate' ),
 									// Meta field: Billing period.
 									array(
@@ -951,6 +1149,11 @@ class Billy {
 							),
 						),
 					),
+					// Footer (reusable block).
+					array(
+						'core/block',
+						array( 'ref' => $footer_id ),
+					),
 				),
 			)
 		);
@@ -969,6 +1172,7 @@ class Billy {
 				'supports'      => array( 'editor', 'thumbnail', 'revisions', 'custom-fields' ), // Custom fields need to be supported for "register_post_meta".
 				'taxonomies'    => array( 'category' ),
 				'show_ui'       => true,
+				'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
 				'template_lock' => 'insert',
 				'template'      => array(
 					// Actions.
@@ -1019,14 +1223,14 @@ class Billy {
 								array(
 									// Postdate.
 									array( 'billy-blocks/quote-date' ),
-									// Postdate + ## days.
+									// Postdate + # days.
 									array( 'billy-blocks/quote-validuntildate' ),
 									// Meta field: Reference.
 									array(
 										'billy-blocks/quote-meta',
 										array(
 											'label' => esc_html__( 'Reference', 'billy' ),
-											'text'  => '',
+											'text'  => $this->get_quotenumber(),
 										),
 									),
 								),
@@ -1085,6 +1289,11 @@ class Billy {
 							),
 						),
 					),
+					// Footer (reusable block).
+					array(
+						'core/block',
+						array( 'ref' => $footer_id ),
+					),
 				),
 			)
 		);
@@ -1103,6 +1312,7 @@ class Billy {
 				'supports'      => array( 'editor', 'thumbnail', 'revisions' ),
 				'taxonomies'    => array( 'category' ),
 				'show_ui'       => true,
+				'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
 				'template_lock' => 'insert',
 				'template'      => array(
 					// Actions.
@@ -1392,22 +1602,6 @@ class Billy {
 			)
 		);
 
-		// Invoice number prefix.
-		$wp_customize->add_setting(
-			'invoice_number_prefix',
-			array(
-				'sanitize_callback' => 'sanitize_text_field',
-			)
-		);
-		$wp_customize->add_control(
-			'invoice_number_prefix',
-			array(
-				'type'    => 'text',
-				'label'   => esc_html__( 'Invoice number: Prefix', 'billy' ),
-				'section' => 'billy_invoice_section',
-			)
-		);
-
 		// Invoice number start.
 		$wp_customize->add_setting(
 			'invoice_number',
@@ -1437,7 +1631,24 @@ class Billy {
 			set_theme_mod( 'invoice_number', ( $latest_invoices ? get_post_meta( $latest_invoices[0]->ID, '_invoice_number', true ) : '0' ) );
 		}
 
-		// Payment is due within ## days.
+		// Invoice number prefix.
+		$wp_customize->add_setting(
+			'invoice_number_prefix',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'invoice_number_prefix',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Invoice number: Prefix', 'billy' ),
+				'description' => esc_html__( 'You can include placeholders like {YEAR}, {MONTH} and {DAY}.', 'billy' ),
+				'section'     => 'billy_invoice_section',
+			)
+		);
+
+		// Payment is due within # days.
 		$wp_customize->add_setting(
 			'payment_due_days',
 			array(
@@ -1499,7 +1710,69 @@ class Billy {
 			set_theme_mod( 'quote_information', esc_html__( 'We will be happy to answer any questions you may have!', 'billy' ) );
 		}
 
-		// Quote is valid for ## days.
+		// Quote number start.
+		$wp_customize->add_setting(
+			'quote_number',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'quote_number',
+			array(
+				'type'        => 'number',
+				'label'       => esc_html__( 'Current quote number', 'billy' ),
+				'description' => esc_html__( 'Upcoming quote numbers will be autoincremented based on this value!', 'billy' ),
+				'section'     => 'billy_quote_section',
+			)
+		);
+		// Default mod.
+		if ( empty( get_theme_mod( 'quote_number' ) ) ) {
+			$latest_quotes = get_posts(
+				array(
+					'numberposts' => 1,
+					'post_status' => 'private',
+					'post_type'   => 'billy-quote',
+				)
+			);
+
+			set_theme_mod( 'quote_number', ( $latest_quotes ? get_post_meta( $latest_quotes[0]->ID, '_quote_number', true ) : '0' ) );
+		}
+
+		// Quote number format: Use current date.
+		$wp_customize->add_setting(
+			'quote_number_as_date',
+			array(
+				'default' => '1',
+			)
+		);
+		$wp_customize->add_control(
+			'quote_number_as_date',
+			array(
+				'label'   => esc_html__( 'Just use the current date ("Ymd") as quote number', 'billy' ),
+				'section' => 'billy_quote_section',
+				'type'    => 'checkbox',
+			)
+		);
+
+		// Quote number prefix.
+		$wp_customize->add_setting(
+			'quote_number_prefix',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'quote_number_prefix',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Quote number: Prefix', 'billy' ),
+				'description' => esc_html__( 'You can include placeholders like {YEAR}, {MONTH} and {DAY}.', 'billy' ),
+				'section'     => 'billy_quote_section',
+			)
+		);
+
+		// Quote is valid for # days.
 		$wp_customize->add_setting(
 			'quote_valid_days',
 			array(

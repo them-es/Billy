@@ -6,7 +6,6 @@ defined( 'ABSPATH' ) || exit;
  * Primary controller class.
  */
 class Billy_Blocks {
-
 	/**
 	 * On load.
 	 */
@@ -21,6 +20,8 @@ class Billy_Blocks {
 	 * @return void
 	 */
 	public function init() {
+		add_action( 'init', array( $this, 'on_init' ), 999 );
+
 		// Editor: Block assets.
 		add_action( 'enqueue_block_editor_assets', array( $this, 'get_block_editor_assets' ) );
 
@@ -32,7 +33,14 @@ class Billy_Blocks {
 			// >= WordPress v5.8
 			add_filter( 'block_categories_all', array( $this, 'categories' ), 10 );
 		}
+	}
 
+	/**
+	 * On init.
+	 *
+	 * @return void
+	 */
+	public function on_init() {
 		// Serverside Render callbacks.
 		if ( function_exists( 'register_block_type' ) ) {
 			register_block_type(
@@ -215,103 +223,97 @@ class Billy_Blocks {
 	/**
 	 * Meta label.
 	 *
-	 * @param string $label Meta label.
-	 * @param string $text  Meta text.
-	 * @param string $class Meta class.
+	 * @param string $label      Meta label.
+	 * @param string $text       Meta text.
+	 * @param string $class_name Meta class.
 	 *
 	 * @return string
 	 */
-	public function meta_label_text_render_callback( $label, $text, $class ) {
-		return '<div' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), wp_kses_post( $text ) ) : $label ) . '</div>';
+	public function meta_label_text_render_callback( $label, $text, $class_name ) {
+		return '<div' . ( ! empty( $class_name ) ? ' class="' . $class_name . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), wp_kses_post( $text ) ) : $label ) . '</div>';
 	}
 
 	/**
 	 * Theme mod (WP Customizer API setting).
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $block_attributes Block attributes.
 	 *
 	 * @return string
 	 */
-	public function theme_mod_render_callback( $attributes, $content ) {
-		$value = esc_attr( $attributes['themeMod'] );
+	public function theme_mod_render_callback( $block_attributes ) {
+		$value = esc_attr( $block_attributes['themeMod'] );
 		// Fallback value (only shown in edit mode).
 		global $wp;
 		$fallback_value = ( false !== strpos( $wp->request, 'block-renderer' ) ? sprintf( __( '<strong>%1$s</strong> %2$s', 'billy' ), '{' . $value . '}', esc_html__( 'N/A', 'billy' ) ) : '' );
 
-		return $this->meta_label_text_render_callback( '', nl2br( get_theme_mod( $value, $fallback_value ) ), 'thememod' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
+		return $this->meta_label_text_render_callback( '', nl2br( get_theme_mod( $value, $fallback_value ) ), 'thememod' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
 	 * Post Date.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $block_attributes Block attributes.
 	 *
 	 * @return string
 	 */
-	public function date_render_callback( $attributes, $content ) {
-		return $this->meta_label_text_render_callback( esc_html__( 'Date', 'billy' ), get_the_date(), 'date' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
+	public function date_render_callback( $block_attributes ) {
+		return $this->meta_label_text_render_callback( esc_html__( 'Date', 'billy' ), get_the_date(), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
 	 * Invoice payment information.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array  $block_attributes Block attributes.
+	 * @param string $content          Block content (needed for "Pro < 1.4.0" backwards compatibility).
 	 *
 	 * @return string
 	 */
-	public function invoicepaymentinformation_render_callback( $attributes, $content ) {
-		return '<p class="paymentinformation' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'payment_information' ) ) . '</p>';
+	public function invoicepaymentinformation_render_callback( $block_attributes, $content ) {
+		return '<p class="paymentinformation' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'payment_information' ) ) . '</p>';
 	}
 
 	/**
 	 * Invoice number.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $block_attributes Block attributes.
 	 *
 	 * @return string
 	 */
-	public function invoicenumber_render_callback( $attributes, $content ) {
-		return $this->meta_label_text_render_callback( esc_html__( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
+	public function invoicenumber_render_callback( $block_attributes ) {
+		return $this->meta_label_text_render_callback( esc_html__( 'Invoice', 'billy' ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
 	 * Invoice due date.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $block_attributes Block attributes.
 	 *
 	 * @return string
 	 */
-	public function invoiceduedate_render_callback( $attributes, $content ) {
-		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'payment_due_days', 14 ) ), 'date' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
+	public function invoiceduedate_render_callback( $block_attributes ) {
+		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'payment_due_days', 14 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
 	 * Quote information.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $block_attributes Block attributes.
 	 *
 	 * @return string
 	 */
-	public function quoteinformation_render_callback( $attributes, $content ) {
-		return '<p class="quoteinformation' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
+	public function quoteinformation_render_callback( $block_attributes ) {
+		return '<p class="quoteinformation' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
 	}
 
 	/**
 	 * Quote valid until date.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $block_attributes Block attributes.
 	 *
 	 * @return string
 	 */
-	public function quotevaliduntildate_render_callback( $attributes, $content ) {
-		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'quote_valid_days', 30 ) ), 'date' . ( $attributes['className'] ? ' ' . esc_attr( $attributes['className'] ) : '' ) );
+	public function quotevaliduntildate_render_callback( $block_attributes ) {
+		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'quote_valid_days', 30 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**

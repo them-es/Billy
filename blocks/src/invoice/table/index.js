@@ -113,8 +113,10 @@ registerBlockType('billy-blocks/invoice-table', {
 				taxRatesHolderOutput = [],
 				taxRatesMergedOutput = [];
 
-			setAttributes({ currency: globalDataBilly.currency });
-			setAttributes({ locale: globalDataBilly.locale });
+			setAttributes({
+				currency: globalDataBilly.currency,
+				locale: globalDataBilly.locale,
+			});
 
 			// Create values-array of child block attributes
 			if (childBlocks && childBlocks.length > 0) {
@@ -162,13 +164,12 @@ registerBlockType('billy-blocks/invoice-table', {
 					}, {});
 				}
 
-				setAttributes({ taxRatesTotal: taxRatesTotalSum });
 				setAttributes({
+					taxRatesTotal: taxRatesTotalSum,
 					taxRates: JSON.stringify(taxRatesMergedOutput),
+					amountSubtotal: amountSubtotalSum,
+					amountTotal: amountTotalSum,
 				});
-
-				setAttributes({ amountSubtotal: amountSubtotalSum });
-				setAttributes({ amountTotal: amountTotalSum });
 			}
 		};
 		useEffect(() => {
@@ -192,15 +193,9 @@ registerBlockType('billy-blocks/invoice-table', {
 
 				<InnerBlocks
 					templateLock={false}
-					template={[
-						[
-							'billy-blocks/invoice-tablerow',
-							{
-								//placeholder: 'Enter content…',
-							},
-						],
-					]}
+					template={[['billy-blocks/invoice-tablerow']]}
 					allowedBlocks={['billy-blocks/invoice-tablerow']}
+					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
 				/>
 
 				{amountSubtotal > 0 && (
@@ -498,9 +493,11 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 		const blockProps = useBlockProps();
 
 		useEffect(() => {
-			setAttributes({ index: i });
-			setAttributes({ currency: globalDataBilly.currency });
-			setAttributes({ locale: globalDataBilly.locale });
+			setAttributes({
+				index: i,
+				currency: globalDataBilly.currency,
+				locale: globalDataBilly.locale,
+			});
 
 			if ('' === taxRate) {
 				setAttributes({
@@ -583,10 +580,6 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 										[
 											'core/paragraph',
 											{
-												placeholder: __(
-													'Add content',
-													'billy'
-												),
 												content: description
 													? description
 													: '', // < v1.2.0
@@ -594,6 +587,7 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 										],
 									]}
 									allowedBlocks={[
+										'core/block',
 										'core/heading',
 										'core/paragraph',
 										'core/list',

@@ -40,24 +40,28 @@ function download_tsv(tsv, filename) {
 	downloadLink.click();
 }
 
-function export_table_to_tsv(html, filename) {
+function export_table_to_tsv(el, filename) {
 	var tsv = [],
-		rows = document.querySelectorAll('.table thead tr, .table tbody tr');
+		rows = document.querySelectorAll(el + ' thead tr,' + el + ' tbody tr');
 
 	for (var i = 0; i < rows.length; i++) {
 		var row = [],
 			cols = rows[i].querySelectorAll('td, th');
 
 		for (var j = 0; j < cols.length; j++) {
+			// Get value (data-value or inner HTML). Strip HTML tags.
 			row.push(
 				cols[j].dataset.value
 					? cols[j].dataset.value
-					: cols[j].innerHTML.replace(/<[^>]*>?/gm, ' ')
-			); // Get value (data-value or inner HTML). Strip HTML tags.
+					: cols[j].innerHTML
+							.replace(/(<([^>]+)>)/gi, '')
+							.replace(/(?:\r\n|\r|\n)/g, '')
+			);
 		}
 
 		tsv.push(row.join('	'));
 	}
+	//console.log(tsv.join('\n'));
 
 	// Create download link
 	download_tsv(tsv.join('\n'), filename);
@@ -67,12 +71,11 @@ if (document.querySelector('.tsv-button') !== null) {
 	document
 		.querySelector('.tsv-button')
 		.addEventListener('click', function () {
-			var html = document.querySelector('.table').outerHTML;
-
 			export_table_to_tsv(
-				html,
-				document.querySelector('#billy-accounting h1').innerHTML +
-					'.tsv'
+				'.wp-block-post-content .table',
+				(document.title
+					? document.title
+					: document.querySelector('.wp-block-post-title')) + '.tsv'
 			);
 		});
 }
