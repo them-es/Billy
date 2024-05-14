@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.6
 Tested up to: 6.5
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -144,12 +144,17 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 1.8.1 =
+* Improve theme compatibility with Export tables
+* PDF footer: Include {DATE}, {EMAIL}, {SITETITLE} and {SITEICON} placeholders to output the post date, the admin email and the site title/icon
+* Show the current quote number in Editor sidebar panel
+
 = 1.8.0 =
 * In general more possibilities to customize the look and feel
 * All Billy menu items are restructured and combined in a single dashboard menu
 * Always show [+] row appender in tables
 * Enhancement: Enabled the Synced Patterns core feature in invoice, quote and accounting tables to be able to create reusable blocks for products and services.
-* Bugfix: Make table rows in ccounting table selectable
+* Bugfix: Make table rows in accounting table selectable again
 * Quotes: Optionally autoincrement numbers (like in invoices) and add a number prefix
 * Number prefixes: Include placeholders {YEAR}, {MONTH} and {DAY} to output the post date variables. Remove "#" fallback prefix from output.
 * Tables: Add top/bottom borders by default

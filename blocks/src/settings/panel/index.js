@@ -25,6 +25,9 @@ const BillySetup = () => (
 			<li title={__('Invoice number', 'billy')}>
 				<ServerSideRender block="billy-blocks/invoice-number" />
 			</li>
+			<li title={__('Quote number', 'billy')}>
+				<ServerSideRender block="billy-blocks/quote-number" />
+			</li>
 			<li title={__('Name', 'billy')}>
 				<ServerSideRender
 					block="billy-blocks/theme-mod"

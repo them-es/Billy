@@ -71,8 +71,10 @@ if (document.querySelector('.tsv-button') !== null) {
 	document
 		.querySelector('.tsv-button')
 		.addEventListener('click', function () {
+			const billyWrapperId = this.closest('[id^="billy-"]').id;
+
 			export_table_to_tsv(
-				'.wp-block-post-content .table',
+				'#' + billyWrapperId + ' .table',
 				(document.title
 					? document.title
 					: document.querySelector('.wp-block-post-title')) + '.tsv'

@@ -226,6 +226,10 @@ class Billy_PDF_Export {
 				$footer_content = $footer_reusable_blocks[0]->post_content;
 
 				$footer_placeholders       = array(
+					'{DATE}',
+					'{EMAIL}',
+					'{SITETITLE}',
+					'{SITEICON}',
 					'{CURRENTPAGE}',
 					'{TOTALPAGES}',
 					'class="has-text-align-center',
@@ -235,6 +239,10 @@ class Billy_PDF_Export {
 					'</p>',
 				);
 				$footer_placeholder_values = array(
+					esc_html( get_the_date( '', $post_id ) ),
+					esc_html( get_bloginfo( 'admin_email' ) ),
+					esc_html( get_bloginfo( 'name' ) ),
+					get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
 					'{PAGENO}',
 					'{nbpg}',
 					'align="center" class="has-text-align-center',
