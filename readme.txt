@@ -3,13 +3,13 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 5.6
-Tested up to: 6.5
-Stable tag: 1.8.1
+Tested up to: 6.6
+Stable tag: 1.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
 
-Create invoices, quotes and keep track of your earnings and expenses with this business-oriented billing suite—tailored for freelancers and small agencies.
+Create invoices, quotes and keep track of your earnings and expenses with this billing suite—tailored for freelancers and small agencies.
 
 == Description ==
 
@@ -143,6 +143,12 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.8.2 =
+* Bugfix: Exclude all reusable footer blocks - not only the latest one - from PDF body
+* Show the current quote number in Dashboard widget
+* Add a blueprint.json
+* Tested up to WordPress 6.6 (beta)
 
 = 1.8.1 =
 * Improve theme compatibility with Export tables

@@ -166,23 +166,19 @@ class Billy_PDF_Export {
 
 			setup_postdata( $post );
 
-			$footer_id = 0;
-
-			$footer_reusable_blocks = get_posts(
+			$footer_ids = get_posts(
 				array(
 					'post_type'   => 'wp_block',
 					'title'       => 'Billy Footer',
 					'post_status' => array( 'publish', 'private' ),
+					'fields'      => 'ids',
 				)
 			);
-			if ( $footer_reusable_blocks ) {
-				$footer_id = $footer_reusable_blocks[0]->ID;
-			}
 
 			$blocks = parse_blocks( get_the_content() );
 			foreach ( $blocks as $block ) {
-				// Exclude reusable Footer block.
-				if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && $footer_id !== $block['attrs']['ref'] ) ) {
+				// Exclude reusable Footer blocks.
+				if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
 					$content .= render_block( $block );
 				}
 			}
@@ -222,8 +218,8 @@ class Billy_PDF_Export {
 			wp_reset_postdata();
 
 			// PDF footer.
-			if ( $footer_reusable_blocks ) {
-				$footer_content = $footer_reusable_blocks[0]->post_content;
+			if ( $footer_ids ) {
+				$footer_content = get_post_field( 'post_content', $footer_ids[0] );
 
 				$footer_placeholders       = array(
 					'{DATE}',

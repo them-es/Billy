@@ -1,0 +1,23 @@
+{
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"phpExtensionBundles": ["kitchen-sink"],
+	"landingPage": "/wp-admin/edit.php?post_type=billy-invoice",
+	"steps": [
+		{ "step": "login", "username": "admin", "password": "password" },
+		{
+			"step": "defineWpConfigConsts",
+			"consts": { "IS_PLAYGROUND_PREVIEW": true }
+		},
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "billy"
+			},
+			"options": { "activate": true }
+		}
+	]
+}

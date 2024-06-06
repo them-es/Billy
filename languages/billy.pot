@@ -167,7 +167,7 @@ msgid "Get the <u>Pro</u> version"
 msgstr ""
 
 #: inc/class-billy.php:296
-msgid "Premium add-on with WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
+msgid "Premium add-on with a project management suite, WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
 msgstr ""
 
 #: inc/class-billy.php:296
