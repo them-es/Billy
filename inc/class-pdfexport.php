@@ -118,11 +118,6 @@ class Billy_PDF_Export {
 	 * @return bool|WP_Error
 	 */
 	public function billy_export_pdf( $request ) {
-		$has_valid_parameters = $request->has_valid_params();
-		if ( ! $has_valid_parameters || is_wp_error( $has_valid_parameters ) ) {
-			return $has_valid_parameters;
-		}
-
 		// PDF generation is restricted.
 		if ( ! self::billy_authorized_to_view_pdf() ) {
 			return new WP_Error(
@@ -130,6 +125,11 @@ class Billy_PDF_Export {
 				esc_html__( 'You are not allowed to view this content.', 'billy' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
+		}
+
+		$has_valid_parameters = $request->has_valid_params();
+		if ( ! $has_valid_parameters || is_wp_error( $has_valid_parameters ) ) {
+			return $has_valid_parameters;
 		}
 
 		$parameters = $request->get_params();
@@ -156,6 +156,11 @@ class Billy_PDF_Export {
 				'setAutoBottomMargin' => 'stretch',
 			)
 		);
+
+		if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ), true ) ) {
+			$mpdf->SetWatermarkText( new \Mpdf\WatermarkText( esc_html__( 'DRAFT', 'billy' ) ) );
+			$mpdf->showWatermarkText = true;
+		}
 
 		$mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
 
@@ -236,7 +241,7 @@ class Billy_PDF_Export {
 				);
 				$footer_placeholder_values = array(
 					esc_html( get_the_date( '', $post_id ) ),
-					esc_html( get_bloginfo( 'admin_email' ) ),
+					esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
 					esc_html( get_bloginfo( 'name' ) ),
 					get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
 					'{PAGENO}',
@@ -262,14 +267,21 @@ class Billy_PDF_Export {
 			$mpdf->SetHTMLFooter( do_blocks( $footer_content ) );
 		}
 
-		$output = '<html>
+		$html_content = '<html>
 			<body class="' . esc_attr( $post_type ) . '-template-default single single-' . esc_attr( $post_type ) . ' singular"><div class="entry-content"><div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper">' . $content . '</div></div>
 			</body>
 		</html>';
 
 		$mpdf->SetTitle( esc_html( $reference ) );
-		$mpdf->WriteHTML( $output, \Mpdf\HTMLParserMode::HTML_BODY );
-		$mpdf->Output( esc_attr( $reference ) . '.pdf', 'I' );
+		$mpdf->WriteHTML( $html_content, \Mpdf\HTMLParserMode::HTML_BODY );
+		$file = esc_attr( $reference ) . '.pdf';
+
+		// https://mpdf.github.io/reference/mpdf-functions/output.html
+		if ( ! empty( $parameters['return'] ) ) {
+			return $mpdf->Output( $file, 'S' );// Return the document data as a string. Required for ZIP generation, etc.
+		}
+
+		$mpdf->Output( $file, 'I' );// Send file inline.
 		exit();
 	}
 }

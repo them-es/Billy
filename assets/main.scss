@@ -262,16 +262,25 @@ body {
 			position: relative;
 			display: flex;
 			align-items: flex-start;
+			width: 100%;
 
-			> a {
+			&:hover {
+				.wp-block-file__embed {
+					display: block;
+				}
+			}
+
+			> * {
 				margin: 0 10px 10px 0;
-				display: inline-block;
 			}
 
 			.wp-block-file__embed {
-				width: 350px;
-				margin: 0 10px;
-				box-shadow: 0 10px 5px -5px gray;
+				display: none;
+				position: absolute;
+				top: 100%;
+				z-index: 100;
+				width: 100% !important;
+				box-shadow: 0 20px 20px -15px gray;
 
 				&:hover {
 					height: 480px;

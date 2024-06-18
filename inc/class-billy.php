@@ -92,7 +92,7 @@ class Billy {
 		self::$plugin_uri     = esc_url( $plugin_data['PluginURI'] );
 		self::$billy_url      = esc_url( $plugin_data['AuthorURI'] );
 		self::$locale         = esc_attr( str_replace( '_', '-', get_user_locale() ) );
-		self::$currency       = esc_attr( get_theme_mod( 'currency', '$' ) );
+		self::$currency       = esc_attr( get_theme_mod( 'currency', 'USD' ) );
 
 		$this->init();
 	}
@@ -220,7 +220,7 @@ class Billy {
 						// Update Post meta value.
 						if ( 1 === $row ) {
 							// Latest invoice.
-							$invoicenumber = get_theme_mod( 'invoice_number' );
+							$invoice_number = get_theme_mod( 'invoice_number' );
 						} else {
 							// Next invoice.
 							global $post;
@@ -230,17 +230,17 @@ class Billy {
 
 							if ( $get_next ) {
 								// Get invoice number (next invoice).
-								$invoicenumber = get_post_meta( $get_next->ID, '_invoice_number', true );
+								$invoice_number = get_post_meta( $get_next->ID, '_invoice_number', true );
 
 								// Decrement -1.
-								--$invoicenumber;
+								--$invoice_number;
 							}
 						}
 
-						update_post_meta( $post_id, '_invoice_number', $invoicenumber );
+						update_post_meta( $post_id, '_invoice_number', $invoice_number );
 
 						// Update title and slug.
-						$post_title = self::get_invoicenumber( $post_id );
+						$post_title = self::get_invoice_number( $post_id );
 
 						wp_update_post(
 							array(
@@ -290,12 +290,12 @@ class Billy {
 				( $latest_quotes ? '
 				<tr>
 					<td><strong>' . esc_html__( 'Current invoice', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_html( self::get_invoicenumber( $latest_invoices[0]->ID ) ) . '</a></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_html( self::get_invoice_number( $latest_invoices[0]->ID ) ) . '</a></td>
 				</tr>' : '' ) .
 				( $latest_invoices ?
 				'<tr>
 					<td><strong>' . esc_html__( 'Current quote', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-quote' ) ) . '">' . esc_html( self::get_quotenumber( $latest_quotes[0]->ID ) ) . '</a></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-quote' ) ) . '">' . esc_html( self::get_quote_number( $latest_quotes[0]->ID ) ) . '</a></td>
 				</tr>' : '' ) . '
 				<tr>
 					<td>' . ( ! empty( $output_script ) ? '<span class="dashicons dashicons-warning" aria-hidden="true" title="' . esc_attr__( 'Problems detected. Please open the Web Console for more information!', 'billy' ) . '" style="color: red;"></span>' : '' ) . '</td>
@@ -350,26 +350,30 @@ class Billy {
 	 * @return string
 	 */
 	public function preheader_render_callback() {
+		$post_id = get_the_id();
+
 		$output      = '<div class="pre-header d-print-none d-admin-none">';
 			$output .= '<div>';
-				// Print.
+
+		// Print. Deprecated and uncommented for all browsers in v1.9. TODO: Remove!
+		/*
 		if ( ! str_contains( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ), 'Chrome' ) ) {
 			$output .= '<div class="wp-block-button"><button class="wp-block-button__link is-style-outline" onclick="window.print();">' . esc_html__( 'Print', 'billy' ) . '</button></div>';
 			$output .= '&nbsp;';
-		}
+		}*/
 
 		if ( defined( 'TABLE_EXPORT' ) ) {
 			// Export table data as tab separated txt file.
 			$output .= '<div class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></div>';
 		}
 
-				$output .= '</div>';
+			$output .= '</div>';
 
 			// PDF export link with 'wp_rest' nonce.
 			$pdf_link = wp_nonce_url(
 				get_rest_url(
 					null,
-					'export/pdf/?id=' . get_the_id(),
+					'export/pdf/?id=' . $post_id,
 				),
 				'wp_rest'
 			);
@@ -439,12 +443,12 @@ class Billy {
 			'ID' => $post_id,
 		);
 
-		$invoicenumber = get_post_meta( $post_id, '_invoice_number', true );
+		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Update post status if unpublished: https://wordpress.org/support/article/post-status
 		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
 			// New?
-			if ( ! is_numeric( $invoicenumber ) ) {
+			if ( ! is_numeric( $invoice_number ) ) {
 				global $post;
 				$post = get_post( $post_id );
 
@@ -452,19 +456,19 @@ class Billy {
 
 				if ( $get_prev ) {
 					// Get invoice number (previous invoice).
-					$invoicenumber = get_post_meta( $get_prev->ID, '_invoice_number', true );
+					$invoice_number = get_post_meta( $get_prev->ID, '_invoice_number', true );
 				} else {
 					// Get current invoice number (Customizer).
-					$invoicenumber = get_theme_mod( 'invoice_number', '0' );
+					$invoice_number = get_theme_mod( 'invoice_number', '0' );
 				}
 
 				// Increment +1.
-				++$invoicenumber;
+				++$invoice_number;
 
 				// Update Post meta value.
-				update_post_meta( $post_id, '_invoice_number', $invoicenumber );
+				update_post_meta( $post_id, '_invoice_number', $invoice_number );
 				// Update Customizer value.
-				set_theme_mod( 'invoice_number', $invoicenumber );
+				set_theme_mod( 'invoice_number', $invoice_number );
 
 				// Update post date: Current invoice must be published after previous invoice.
 				$get_prev_unix_time = strtotime( $get_prev->post_date );
@@ -481,7 +485,7 @@ class Billy {
 		}
 
 		// Update title and slug.
-		$post_title            = ( empty( $invoicenumber ) ? sprintf( '%1$s (%2$s)', $this->get_invoicenumber( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoicenumber( $post_id ) );
+		$post_title            = ( empty( $invoice_number ) ? sprintf( '%1$s (%2$s)', $this->get_invoice_number( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoice_number( $post_id ) );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = sanitize_title( $post_title );
 
@@ -551,7 +555,7 @@ class Billy {
 		}
 
 		// Update title and slug.
-		$post_title            = $this->get_quotenumber( $post_id );
+		$post_title            = $this->get_quote_number( $post_id );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = sanitize_title( $post_title );
 
@@ -559,13 +563,13 @@ class Billy {
 	}
 
 	/**
-	 * Get invoicenumber in predefined format.
+	 * Get invoice number in predefined format.
 	 *
 	 * @param int $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_invoicenumber( $post_id = null ) {
+	public static function get_invoice_number( $post_id = null ) {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -581,10 +585,10 @@ class Billy {
 		}
 
 		// Autoincrement number.
-		$invoicenumber = get_post_meta( $post_id, '_invoice_number', true );
+		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// New post?
-		if ( ! is_numeric( $invoicenumber ) ) {
+		if ( ! is_numeric( $invoice_number ) ) {
 			global $post;
 			$post = get_post( $post_id );
 
@@ -592,14 +596,14 @@ class Billy {
 
 			if ( $get_prev ) {
 				// Get invoice number (previous post).
-				$invoicenumber = (int) get_post_meta( $get_prev->ID, '_invoice_number', true );
+				$invoice_number = (int) get_post_meta( $get_prev->ID, '_invoice_number', true );
 			} else {
 				// Get current invoice number (Customizer).
-				$invoicenumber = (int) get_theme_mod( 'invoice_number', 0 );
+				$invoice_number = (int) get_theme_mod( 'invoice_number', 0 );
 			}
 
 			// +1.
-			++$invoicenumber;
+			++$invoice_number;
 		}
 
 		// (Optional) Add prefix.
@@ -618,17 +622,29 @@ class Billy {
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
-		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $invoicenumber );
+		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $invoice_number );
 	}
 
 	/**
-	 * Get quotenumber in predefined format.
+	 * Get invoice number in predefined format.
+	 * Backwards compatibility after function renaming in v1.9.
 	 *
 	 * @param int $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_quotenumber( $post_id = null ) {
+	public static function get_invoicenumber( $post_id = null ) {
+		return self::get_invoice_number( $post_id );
+	}
+
+	/**
+	 * Get quote number in predefined format.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return string
+	 */
+	public static function get_quote_number( $post_id = null ) {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -676,6 +692,18 @@ class Billy {
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
 		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $quotenumber );
+	}
+
+	/**
+	 * Get quote number in predefined format.
+	 * Backwards compatibility after function renaming in v1.9.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return string
+	 */
+	public static function get_quotenumber( $post_id = null ) {
+		return self::get_quote_number( $post_id );
 	}
 
 	/**
@@ -1112,6 +1140,14 @@ class Billy {
 											'text'  => '',
 										),
 									),
+									// Meta field: Reference.
+									array(
+										'billy-blocks/invoice-meta',
+										array(
+											'label' => esc_html__( 'Reference', 'billy' ),
+											'text'  => '',
+										),
+									),
 								),
 							),
 						),
@@ -1251,7 +1287,7 @@ class Billy {
 										'billy-blocks/quote-meta',
 										array(
 											'label' => esc_html__( 'Reference', 'billy' ),
-											'text'  => $this->get_quotenumber(),
+											'text'  => $this->get_quote_number(),
 										),
 									),
 								),
@@ -1400,7 +1436,7 @@ class Billy {
 		global $post;
 
 		// Only enqueue when post contains a Billy block.
-		if ( $post && has_blocks( $post->post_content ) ) {
+		if ( is_user_logged_in() && $post && has_blocks( $post->post_content ) ) {
 			if ( str_contains( $post->post_content, ':billy-blocks/' ) ) {
 				// Styles.
 				wp_enqueue_style( 'dashicons' );
@@ -1555,6 +1591,7 @@ class Billy {
 			'address',
 			array(
 				'sanitize_callback' => 'wp_kses',
+				'validate_callback' => array( $this, 'geocode' ),
 			)
 		);
 		$wp_customize->add_control(
@@ -1563,6 +1600,65 @@ class Billy {
 				'type'    => 'textarea',
 				'label'   => esc_html__( 'Address', 'billy' ),
 				'section' => 'billy_general_section',
+			)
+		);
+
+		// Address (geocoded).
+		$wp_customize->add_setting(
+			'address_geocoded',
+			array(
+				'sanitize_callback' => 'wp_kses',
+			)
+		);
+		$wp_customize->add_control(
+			'address_geocoded',
+			array(
+				'type'        => 'textarea',
+				'label'       => esc_html__( 'Address (geocoded)', 'billy' ),
+				'description' => sprintf( esc_html__( 'Geocoding powered by %s', 'billy' ), 'nominatim.openstreetmap.org' ),
+				'input_attrs' => array(
+					'readonly' => 'readonly',
+					'style'    => 'display: none;',
+				),
+				'section'     => 'billy_general_section',
+			)
+		);
+
+		// Email.
+		$wp_customize->add_setting(
+			'email',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'email',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Email', 'billy' ),
+				'description' => esc_html__( 'Enter your email', 'billy' ),
+				'section'     => 'billy_general_section',
+			)
+		);
+		// Default mod.
+		if ( empty( get_theme_mod( 'email' ) ) ) {
+			set_theme_mod( 'email', get_bloginfo( 'admin_email' ) );
+		}
+
+		// Phone.
+		$wp_customize->add_setting(
+			'phone',
+			array(
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'phone',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Phone', 'billy' ),
+				'description' => esc_html__( 'Enter your phone number', 'billy' ),
+				'section'     => 'billy_general_section',
 			)
 		);
 
@@ -1812,6 +1908,48 @@ class Billy {
 		if ( empty( get_theme_mod( 'quote_valid_days' ) ) ) {
 			set_theme_mod( 'quote_valid_days', '30' );
 		}
+	}
+
+	/**
+	 * Theme Customizer: Geocode.
+	 *
+	 * @param object $validity WP Customize validity.
+	 * @param string $value    WP Customize value.
+	 *
+	 * @return object
+	 */
+	public function geocode( $validity, $value ) {
+		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
+			$result = null;
+
+			$address = preg_replace( '/^\/\d\p{L}+/u', ' ', trim( $value ) );
+
+			$response = wp_remote_get(
+				'https://nominatim.openstreetmap.org/search?q=' . urlencode( $address ) . '&addressdetails=1&format=json&limit=1',
+				array(
+					'timeout' => 10,
+					'referer' => get_home_url(),
+				),
+			);
+
+			if ( ! is_wp_error( $response ) ) {
+				$response_body = wp_remote_retrieve_body( $response );
+
+				$result = json_decode( $response_body, true )[0] ?? '';
+
+				if ( ! empty( $result ) ) {
+					set_theme_mod( 'address_geocoded', json_encode( $result ) );
+				} else {
+					error_log( json_encode( $response ) );
+					$validity->add( 'no_address_found', sprintf( esc_html__( 'Geocode was not successful - please provide a valid address: %s', 'billy' ), $address ) );
+				}
+			} else {
+				error_log( json_encode( $response ) );
+				$validity->add( 'error', json_encode( $response ) );
+			}
+		}
+
+		return $validity;
 	}
 
 	/**

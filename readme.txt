@@ -2,9 +2,9 @@
 Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
-Requires at least: 5.6
+Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 1.8.2
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -72,6 +72,7 @@ Please consider purchasing the premium add-on with the following features:
 * Address book
 * Project Management: Kanban-style todos
 * Time tracking
+* Electronic invoices: Generate UBL-XML files
 * Enhanced invoices: Contact selector, Status selector, QR code generator for customized payment codes
 * Enhanced quotes: Contact selector, Status selector
 * Enhanced accounting: Autofilter, Autosync invoices
@@ -133,6 +134,10 @@ Please consider purchasing the premium add-on with the following features:
 * A PDF-Exporter is included.
 * If you need an exact copy of the screen version you can try the [Print to PDF feature](https://www.google.com/search?q=print+to+pdf "Print to PDF") built into your operating system.
 
+= How do I create an UBL e-invoice? =
+* This is only possible in the [PRO add-on](https://them.es/plugins/billy "them.es Billy") and considered "beta" support.
+* You can generate a XML that can be sent to third-parties for further processing.
+
 = Why do I see a 404 error page when trying to open an invoice/quote? =
 * __Billing information is sensitive data!__ Due to privacy reasons these posts cannot be made public which means that only authorized users have access. You need to be logged in to see private posts.
 * If you would like to share a post with others you need to use the __Share Link option__ in the [PRO add-on](https://them.es/plugins/billy "them.es Billy").
@@ -143,6 +148,19 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.9.0 =
+* Include an optional reference meta field in invoice post templates
+* Customizer: 1. Add new settings for email (default value is "admin_email") and phone number, 2. Implement a Geocoder API (powered by nominatim.openstreetmap.org) which validates the address input and stores the geocoded data string in a new field for further processing
+* Change default currency code from "$" to "USD" (ISO 4217 format)
+* PDF generator: Optionally return the file instead of triggering a download
+* PDF: Add "DRAFT" watermark if the post has not been published yet
+* Redesign the post header and improve the way PDFs are previewed
+* Remove Print button which never was active in Chrome due to compatibility issues - users are adviced to print via the browser menu or via OS printing window shortcuts
+* Code refactoring with improvements to the load time
+* Renaming of some functions for consistency
+* Bumb minimum supported WordPress version to v6.0 (v6.5 is recommended!)
+* Update dependencies
 
 = 1.8.2 =
 * Bugfix: Exclude all reusable footer blocks - not only the latest one - from PDF body

@@ -83,7 +83,7 @@ class Billy_Blocks {
 							'default' => '',
 						),
 					),
-					'render_callback' => array( $this, 'invoicepaymentinformation_render_callback' ),
+					'render_callback' => array( $this, 'invoice_paymentinformation_render_callback' ),
 				)
 			);
 
@@ -96,7 +96,7 @@ class Billy_Blocks {
 							'default' => '',
 						),
 					),
-					'render_callback' => array( $this, 'invoicenumber_render_callback' ),
+					'render_callback' => array( $this, 'invoice_number_render_callback' ),
 				)
 			);
 
@@ -122,7 +122,7 @@ class Billy_Blocks {
 							'default' => '',
 						),
 					),
-					'render_callback' => array( $this, 'invoiceduedate_render_callback' ),
+					'render_callback' => array( $this, 'invoice_duedate_render_callback' ),
 				)
 			);
 
@@ -135,7 +135,7 @@ class Billy_Blocks {
 							'default' => '',
 						),
 					),
-					'render_callback' => array( $this, 'quotenumber_render_callback' ),
+					'render_callback' => array( $this, 'quote_number_render_callback' ),
 				)
 			);
 
@@ -148,7 +148,7 @@ class Billy_Blocks {
 							'default' => '',
 						),
 					),
-					'render_callback' => array( $this, 'quoteinformation_render_callback' ),
+					'render_callback' => array( $this, 'quote_information_render_callback' ),
 				)
 			);
 
@@ -174,7 +174,7 @@ class Billy_Blocks {
 							'default' => '',
 						),
 					),
-					'render_callback' => array( $this, 'quotevaliduntildate_render_callback' ),
+					'render_callback' => array( $this, 'quote_validuntildate_render_callback' ),
 				)
 			);
 		}
@@ -281,7 +281,7 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public function invoicepaymentinformation_render_callback( $block_attributes, $content ) {
+	public function invoice_paymentinformation_render_callback( $block_attributes, $content ) {
 		return '<p class="paymentinformation' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'payment_information' ) ) . '</p>';
 	}
 
@@ -292,8 +292,8 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public function invoicenumber_render_callback( $block_attributes ) {
-		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Invoice', 'billy' ) ), Billy::get_invoicenumber( get_the_ID() ), 'invoicenumber' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
+	public function invoice_number_render_callback( $block_attributes ) {
+		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Invoice', 'billy' ) ), Billy::get_invoice_number( get_the_ID() ), 'invoice_number' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -303,7 +303,7 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public function invoiceduedate_render_callback( $block_attributes ) {
+	public function invoice_duedate_render_callback( $block_attributes ) {
 		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'payment_due_days', 14 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
@@ -314,8 +314,8 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public function quotenumber_render_callback( $block_attributes ) {
-		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Quote', 'billy' ) ), Billy::get_quotenumber( get_the_ID() ), 'quotenumber' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
+	public function quote_number_render_callback( $block_attributes ) {
+		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Quote', 'billy' ) ), Billy::get_quote_number( get_the_ID() ), 'quotenumber' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -325,7 +325,7 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public function quoteinformation_render_callback( $block_attributes ) {
+	public function quote_information_render_callback( $block_attributes ) {
 		return '<p class="quoteinformation' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) . '">' . nl2br( get_theme_mod( 'quote_information' ) ) . '</p>';
 	}
 
@@ -336,7 +336,7 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public function quotevaliduntildate_render_callback( $block_attributes ) {
+	public function quote_validuntildate_render_callback( $block_attributes ) {
 		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'quote_valid_days', 30 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
