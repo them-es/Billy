@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -148,6 +148,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.9.1 =
+* Allow to disable Geocoding
+* Accounting: Move export button to the right and fix a PHP notice
+* Invoices/Quotes lookup: Fix a PHP notice if no posts have been published yet
 
 = 1.9.0 =
 * Include an optional reference meta field in invoice post templates

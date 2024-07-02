@@ -287,12 +287,12 @@ class Billy {
 					<td><strong>' . esc_html__( 'Taxes', 'billy' ) . '</strong></td>
 					<td>' . ( get_theme_mod( 'taxrates' ) ? nl2br( get_theme_mod( 'taxrates' ) ) : '-' ) . '</td>
 				</tr>' .
-				( $latest_quotes ? '
+				( $latest_invoices ? '
 				<tr>
 					<td><strong>' . esc_html__( 'Current invoice', 'billy' ) . '</strong></td>
 					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_html( self::get_invoice_number( $latest_invoices[0]->ID ) ) . '</a></td>
 				</tr>' : '' ) .
-				( $latest_invoices ?
+				( $latest_quotes ?
 				'<tr>
 					<td><strong>' . esc_html__( 'Current quote', 'billy' ) . '</strong></td>
 					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-quote' ) ) . '">' . esc_html( self::get_quote_number( $latest_quotes[0]->ID ) ) . '</a></td>
@@ -352,23 +352,7 @@ class Billy {
 	public function preheader_render_callback() {
 		$post_id = get_the_id();
 
-		$output      = '<div class="pre-header d-print-none d-admin-none">';
-			$output .= '<div>';
-
-		// Print. Deprecated and uncommented for all browsers in v1.9. TODO: Remove!
-		/*
-		if ( ! str_contains( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ), 'Chrome' ) ) {
-			$output .= '<div class="wp-block-button"><button class="wp-block-button__link is-style-outline" onclick="window.print();">' . esc_html__( 'Print', 'billy' ) . '</button></div>';
-			$output .= '&nbsp;';
-		}*/
-
-		if ( defined( 'TABLE_EXPORT' ) ) {
-			// Export table data as tab separated txt file.
-			$output .= '<div class="wp-block-button"><button class="wp-block-button__link tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></div>';
-		}
-
-			$output .= '</div>';
-
+		$output = '<div class="pre-header d-print-none d-admin-none">';
 			// PDF export link with 'wp_rest' nonce.
 			$pdf_link = wp_nonce_url(
 				get_rest_url(
@@ -378,7 +362,12 @@ class Billy {
 				'wp_rest'
 			);
 			$output  .= '<!-- wp:file {"href":"' . esc_url( $pdf_link ) . '","displayPreview":true} --><div id="pdf" class="wp-block-file"><a href="' . esc_url( $pdf_link ) . '" class="wp-block-file__button wp-element-button" download>' . sprintf( esc_html__( 'Download %s', 'billy' ), esc_html__( 'PDF', 'billy' ) ) . '</a>' . esc_html( get_the_title() ) . ' <object class="wp-block-file__embed" data="' . esc_url( $pdf_link ) . '"></object></div><!-- /wp:file -->';
-		$output      .= '</div>';
+
+		if ( defined( 'TABLE_EXPORT' ) ) {
+			// Export table data as tab separated txt file.
+			$output .= ' &nbsp; &nbsp; <div class="wp-block-button"><button class="wp-block-button__link wp-element-button tsv-button">' . sprintf( esc_html__( 'Export %s', 'billy' ), esc_html__( 'TSV', 'billy' ) ) . '</button></div>';
+		}
+		$output .= '</div>';
 
 		return $output;
 	}
@@ -446,7 +435,7 @@ class Billy {
 		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Update post status if unpublished: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
+		if ( wp_count_posts( 'billy-invoice' )->publish > 1 && in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
 			// New?
 			if ( ! is_numeric( $invoice_number ) ) {
 				global $post;
@@ -581,7 +570,7 @@ class Billy {
 					'numberposts' => 1,
 					'post_status' => 'private',
 				)
-			)[0]['ID'];
+			)[0]['ID'] ?? 0;
 		}
 
 		// Autoincrement number.
@@ -1603,26 +1592,44 @@ class Billy {
 			)
 		);
 
-		// Address (geocoded).
+		// Geocoding on/off.
 		$wp_customize->add_setting(
-			'address_geocoded',
+			'geocoding_enabled',
 			array(
-				'sanitize_callback' => 'wp_kses',
+				'default' => '1',
 			)
 		);
 		$wp_customize->add_control(
-			'address_geocoded',
+			'geocoding_enabled',
 			array(
-				'type'        => 'textarea',
-				'label'       => esc_html__( 'Address (geocoded)', 'billy' ),
-				'description' => sprintf( esc_html__( 'Geocoding powered by %s', 'billy' ), 'nominatim.openstreetmap.org' ),
-				'input_attrs' => array(
-					'readonly' => 'readonly',
-					'style'    => 'display: none;',
-				),
-				'section'     => 'billy_general_section',
+				'type'    => 'checkbox',
+				'label'   => sprintf( esc_html__( 'Enable %s', 'billy-pro' ), sprintf( esc_html__( 'Geocoding powered by %s', 'billy' ), 'nominatim.openstreetmap.org' ) ),
+				'section' => 'billy_general_section',
 			)
 		);
+
+		// Address (geocoded).
+		if ( get_theme_mod( 'geocoding_enabled', '1' ) ) {
+			$wp_customize->add_setting(
+				'address_geocoded',
+				array(
+					'sanitize_callback' => 'wp_kses',
+				)
+			);
+			$wp_customize->add_control(
+				'address_geocoded',
+				array(
+					'type'        => 'textarea',
+					'label'       => esc_html__( 'Address (geocoded)', 'billy' ),
+					'description' => sprintf( esc_html__( 'Geocoding powered by %s', 'billy' ), 'nominatim.openstreetmap.org' ),
+					'input_attrs' => array(
+						'readonly' => 'readonly',
+						'style'    => 'display: none;',
+					),
+					'section'     => 'billy_general_section',
+				)
+			);
+		}
 
 		// Email.
 		$wp_customize->add_setting(
@@ -1919,7 +1926,7 @@ class Billy {
 	 * @return object
 	 */
 	public function geocode( $validity, $value ) {
-		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
+		if ( get_theme_mod( 'geocoding_enabled', '1' ) && ! empty( $value ) && strlen( $value ) > 3 ) {
 			$result = null;
 
 			$address = preg_replace( '/^\/\d\p{L}+/u', ' ', trim( $value ) );
