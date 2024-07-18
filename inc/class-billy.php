@@ -201,7 +201,7 @@ class Billy {
 				$debug[] = '#' . get_the_ID();
 			}
 
-			if ( isset( $_GET['fix_invoices'] ) && 'true' === $_GET['fix_invoices'] ) {
+			if ( wp_verify_nonce( wp_unslash( $_GET['_wpnonce'] ?? '' ) ) && isset( $_GET['fix_invoices'] ) && 'true' === $_GET['fix_invoices'] ) {
 				$invoices_fix = new WP_Query(
 					array(
 						'post_type'      => 'billy-invoice',
@@ -255,7 +255,7 @@ class Billy {
 				}
 			}
 
-			$output_script = '<script>console.error( "The following [Billy] Invoices are missing required meta data: ' . implode( ', ', $debug ) . '", "\n", "Would you like to fix it? Please make sure that the latest invoice number is correct. Invoice numbers will be regenerated and updated in descending order. It is strongly advised to backup the database before clicking this link. ' . esc_url( admin_url( 'index.php?fix_invoices=true' ) ) . '" )</script>';
+			$output_script = '<script>console.error( "The following [Billy] Invoices are missing required meta data: ' . implode( ', ', $debug ) . '", "\n", "Would you like to fix it? Please make sure that the latest invoice number is correct. Invoice numbers will be regenerated and updated in descending order. It is strongly advised to backup the database before clicking this link. ' . esc_url( wp_nonce_url( admin_url( 'index.php?fix_invoices=true' ) ) ) . '" )</script>';
 		}
 
 		$latest_invoices = get_posts(
@@ -328,7 +328,7 @@ class Billy {
 	 * @return void
 	 */
 	public static function dashboard_widget() {
-		echo wp_kses_post( self::dashboard_widget_content() . self::dashboard_widget_footer() );
+		echo self::dashboard_widget_content() . self::dashboard_widget_footer();
 	}
 
 	/**
@@ -474,7 +474,7 @@ class Billy {
 		}
 
 		// Update title and slug.
-		$post_title            = ( empty( $invoice_number ) ? sprintf( '%1$s (%2$s)', $this->get_invoice_number( $post_id ), esc_html__( 'Pending', 'billy' ) ) : $this->get_invoice_number( $post_id ) );
+		$post_title            = ( empty( $invoice_number ) ? sprintf( '%1$s (%2$s)', self::get_invoice_number( $post_id ), esc_html__( 'Pending', 'billy' ) ) : self::get_invoice_number( $post_id ) );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = sanitize_title( $post_title );
 
@@ -544,7 +544,7 @@ class Billy {
 		}
 
 		// Update title and slug.
-		$post_title            = $this->get_quote_number( $post_id );
+		$post_title            = self::get_quote_number( $post_id );
 		$my_post['post_title'] = $post_title;
 		$my_post['post_name']  = sanitize_title( $post_title );
 
@@ -605,9 +605,9 @@ class Billy {
 			'{DAY}',
 		);
 		$prefix_placeholder_values = array(
-			esc_attr( get_the_date( 'Y', $post_id ) ),
-			esc_attr( get_the_date( 'm', $post_id ) ),
-			esc_attr( get_the_date( 'd', $post_id ) ),
+			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'Y', $post_id ) : wp_date( 'Y' ) ) ),
+			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'm', $post_id ) : wp_date( 'm' ) ) ),
+			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'd', $post_id ) : wp_date( 'd' ) ) ),
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
@@ -639,7 +639,7 @@ class Billy {
 		}
 
 		if ( get_theme_mod( 'quote_number_as_date', 1 ) ) {
-			$quotenumber = get_the_date( 'Ymd', $post_id );
+			$quotenumber = ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'Ymd', $post_id ) : wp_date( 'Ymd' ) );
 		} else {
 			// Autoincrement number.
 			$quotenumber = get_post_meta( $post_id, '_quote_number', true );
@@ -674,9 +674,9 @@ class Billy {
 			'{DAY}',
 		);
 		$prefix_placeholder_values = array(
-			esc_attr( get_the_date( 'Y', $post_id ) ),
-			esc_attr( get_the_date( 'm', $post_id ) ),
-			esc_attr( get_the_date( 'd', $post_id ) ),
+			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'Y', $post_id ) : wp_date( 'Y' ) ) ),
+			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'm', $post_id ) : wp_date( 'm' ) ) ),
+			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'd', $post_id ) : wp_date( 'd' ) ) ),
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
@@ -1276,7 +1276,7 @@ class Billy {
 										'billy-blocks/quote-meta',
 										array(
 											'label' => esc_html__( 'Reference', 'billy' ),
-											'text'  => $this->get_quote_number(),
+											'text'  => self::get_quote_number(),
 										),
 									),
 								),

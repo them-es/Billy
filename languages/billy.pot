@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Billy 1.8.0\n"
+"Project-Id-Version: Billy 1.9.1\n"
 "Report-Msgid-Bugs-To: https://github.com/them-es/billy/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-13T13:58:52+00:00\n"
+"POT-Creation-Date: 2024-07-18T10:01:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: billy\n"
@@ -56,8 +56,8 @@ msgid "The temp directory %s is not writable. Please change the read/write permi
 msgstr ""
 
 #: inc/class-billy.php:166
-#: inc/class-billy.php:281
-#: inc/class-billy.php:296
+#: inc/class-billy.php:302
+#: inc/class-billy.php:317
 #: blocks/build/index.js:1
 #: blocks/src/accounting/table/deprecatedOuter.js:136
 #: blocks/src/accounting/table/deprecatedOuter.js:146
@@ -114,18 +114,18 @@ msgstr ""
 msgid "%1$s %2$s"
 msgstr ""
 
-#: inc/class-billy.php:264
+#: inc/class-billy.php:279
 msgid "Locale"
 msgstr ""
 
-#: inc/class-billy.php:268
-#: inc/class-billy.php:1411
+#: inc/class-billy.php:283
+#: inc/class-billy.php:1467
 #: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:46
+#: blocks/src/settings/panel/index.js:49
 msgid "Currency"
 msgstr ""
 
-#: inc/class-billy.php:272
+#: inc/class-billy.php:287
 #: blocks/build/index.js:1
 #: blocks/src/accounting/table/deprecatedOuter.js:116
 #: blocks/src/accounting/table/deprecatedOuter.js:179
@@ -135,82 +135,79 @@ msgstr ""
 #: blocks/src/accounting/table/deprecatedOuter.js:761
 #: blocks/src/accounting/table/index.js:337
 #: blocks/src/accounting/table/index.js:400
-#: blocks/src/settings/panel/index.js:52
+#: blocks/src/settings/panel/index.js:55
 msgid "Taxes"
 msgstr ""
 
-#: inc/class-billy.php:276
-#: inc/class-billy.php:1606
-msgid "Current invoice number"
+#: inc/class-billy.php:292
+msgid "Current invoice"
 msgstr ""
 
-#: inc/class-billy.php:277
-#: inc/class-billy.php:590
-#: inc/class-billy.php:647
-msgid "%1$s%2$03s"
+#: inc/class-billy.php:297
+msgid "Current quote"
 msgstr ""
 
-#: inc/class-billy.php:280
+#: inc/class-billy.php:301
 msgid "Problems detected. Please open the Web Console for more information!"
 msgstr ""
 
-#: inc/class-billy.php:281
+#: inc/class-billy.php:302
 msgid "Edit"
 msgstr ""
 
-#: inc/class-billy.php:296
+#: inc/class-billy.php:317
 msgid "Thank you for purchasing %s!"
 msgstr ""
 
-#: inc/class-billy.php:296
+#: inc/class-billy.php:317
 msgid "Get the <u>Pro</u> version"
 msgstr ""
 
-#: inc/class-billy.php:296
+#: inc/class-billy.php:317
 msgid "Premium add-on with a project management suite, WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
 msgstr ""
 
-#: inc/class-billy.php:296
+#: inc/class-billy.php:317
 msgid "Please rate this Plugin"
 msgstr ""
 
-#: inc/class-billy.php:336
-msgid "Print"
-msgstr ""
-
-#: inc/class-billy.php:342
-msgid "Export %s"
-msgstr ""
-
-#: inc/class-billy.php:342
-msgid "TSV"
-msgstr ""
-
-#: inc/class-billy.php:355
+#: inc/class-billy.php:364
 msgid "Download %s"
 msgstr ""
 
-#: inc/class-billy.php:355
+#: inc/class-billy.php:364
 msgid "PDF"
 msgstr ""
 
-#: inc/class-billy.php:463
-#: inc/class-billy.php:533
+#: inc/class-billy.php:368
+msgid "Export %s"
+msgstr ""
+
+#: inc/class-billy.php:368
+msgid "TSV"
+msgstr ""
+
+#: inc/class-billy.php:477
 msgid "Pending"
 msgstr ""
 
-#: inc/class-billy.php:782
-#: inc/class-billy.php:783
+#: inc/class-billy.php:614
+#: inc/class-billy.php:683
+msgid "%1$s%2$03s"
+msgstr ""
+
+#: inc/class-billy.php:830
+#: inc/class-billy.php:831
 msgid "%s Header"
 msgstr ""
 
-#: inc/class-billy.php:1006
+#: inc/class-billy.php:1054
 msgid "Invoices"
 msgstr ""
 
-#: inc/class-billy.php:1007
-#: inc/class-billy.php:1493
-#: inc/class-blocks.php:282
+#: inc/class-billy.php:1055
+#: inc/class-billy.php:1549
+#: inc/class-blocks.php:296
 #: blocks/build/index.js:1
 #: blocks/src/invoice/actions/index.js:19
 #: blocks/src/invoice/date/index.js:20
@@ -223,80 +220,93 @@ msgstr ""
 msgid "Invoice"
 msgstr ""
 
-#: inc/class-billy.php:1051
-#: inc/class-billy.php:1198
-#: inc/class-billy.php:1408
-#: inc/class-billy.php:1513
+#: inc/class-billy.php:1099
+#: inc/class-billy.php:1254
+#: inc/class-billy.php:1464
+#: inc/class-billy.php:1569
 #: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:28
+#: blocks/src/settings/panel/index.js:31
 msgid "Name"
 msgstr ""
 
-#: inc/class-billy.php:1051
-#: inc/class-billy.php:1198
+#: inc/class-billy.php:1099
+#: inc/class-billy.php:1254
 msgid "Company"
 msgstr ""
 
-#: inc/class-billy.php:1051
-#: inc/class-billy.php:1198
+#: inc/class-billy.php:1099
+#: inc/class-billy.php:1254
 msgid "Address Field %s"
 msgstr ""
 
-#: inc/class-billy.php:1051
-#: inc/class-billy.php:1198
+#: inc/class-billy.php:1099
+#: inc/class-billy.php:1254
 msgid "Country"
 msgstr ""
 
-#: inc/class-billy.php:1080
+#: inc/class-billy.php:1128
 msgid "Billing Period"
 msgstr ""
 
-#: inc/class-billy.php:1099
-#: inc/class-billy.php:1105
-#: inc/class-billy.php:1137
-#: inc/class-billy.php:1241
-#: inc/class-billy.php:1247
-#: inc/class-billy.php:1277
-#: inc/class-billy.php:1331
+#: inc/class-billy.php:1136
+#: inc/class-billy.php:1278
+#: blocks/build/index.js:1
+#: blocks/src/accounting/table/deprecatedOuter.js:95
+#: blocks/src/accounting/table/deprecatedOuter.js:287
+#: blocks/src/accounting/table/deprecatedOuter.js:481
+#: blocks/src/accounting/table/deprecatedOuter.js:675
+#: blocks/src/accounting/table/index.js:314
+#: blocks/src/accounting/table/index.js:673
+msgid "Reference"
+msgstr ""
+
+#: inc/class-billy.php:1155
+#: inc/class-billy.php:1161
+#: inc/class-billy.php:1193
+#: inc/class-billy.php:1297
+#: inc/class-billy.php:1303
+#: inc/class-billy.php:1333
+#: inc/class-billy.php:1387
 msgid "%s (optional)"
 msgstr ""
 
-#: inc/class-billy.php:1099
-#: inc/class-billy.php:1241
+#: inc/class-billy.php:1155
+#: inc/class-billy.php:1297
 msgid "Subject"
 msgstr ""
 
-#: inc/class-billy.php:1105
-#: inc/class-billy.php:1247
+#: inc/class-billy.php:1161
+#: inc/class-billy.php:1303
 msgid "Intro text"
 msgstr ""
 
-#: inc/class-billy.php:1105
-#: inc/class-billy.php:1247
+#: inc/class-billy.php:1161
+#: inc/class-billy.php:1303
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
 msgstr ""
 
-#: inc/class-billy.php:1129
-#: inc/class-billy.php:1130
-#: inc/class-billy.php:1269
-#: inc/class-billy.php:1270
+#: inc/class-billy.php:1185
+#: inc/class-billy.php:1186
+#: inc/class-billy.php:1325
+#: inc/class-billy.php:1326
 #: blocks/build/index.js:1
 #: blocks/src/quote/information/index.js:21
 msgid "Information"
 msgstr ""
 
-#: inc/class-billy.php:1137
-#: inc/class-billy.php:1277
-#: inc/class-billy.php:1331
+#: inc/class-billy.php:1193
+#: inc/class-billy.php:1333
+#: inc/class-billy.php:1387
 msgid "Notes"
 msgstr ""
 
-#: inc/class-billy.php:1156
+#: inc/class-billy.php:1212
 msgid "Quotes"
 msgstr ""
 
-#: inc/class-billy.php:1157
-#: inc/class-billy.php:1484
+#: inc/class-billy.php:1213
+#: inc/class-billy.php:1540
+#: inc/class-blocks.php:318
 #: blocks/build/index.js:1
 #: blocks/src/quote/actions/index.js:19
 #: blocks/src/quote/date/index.js:20
@@ -308,19 +318,8 @@ msgstr ""
 msgid "Quote"
 msgstr ""
 
-#: inc/class-billy.php:1222
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:95
-#: blocks/src/accounting/table/deprecatedOuter.js:287
-#: blocks/src/accounting/table/deprecatedOuter.js:481
-#: blocks/src/accounting/table/deprecatedOuter.js:675
-#: blocks/src/accounting/table/index.js:314
-#: blocks/src/accounting/table/index.js:673
-msgid "Reference"
-msgstr ""
-
-#: inc/class-billy.php:1296
-#: inc/class-billy.php:1297
+#: inc/class-billy.php:1352
+#: inc/class-billy.php:1353
 #: blocks/build/index.js:1
 #: blocks/src/accounting/actions/index.js:19
 #: blocks/src/accounting/table/index.js:44
@@ -328,11 +327,11 @@ msgstr ""
 msgid "Accounting"
 msgstr ""
 
-#: inc/class-billy.php:1318
+#: inc/class-billy.php:1374
 msgid "Heading"
 msgstr ""
 
-#: inc/class-billy.php:1392
+#: inc/class-billy.php:1448
 #: blocks/build/index.js:1
 #: blocks/src/accounting/table/deprecatedOuter.js:102
 #: blocks/src/accounting/table/deprecatedOuter.js:130
@@ -353,7 +352,7 @@ msgstr ""
 msgid "Earnings"
 msgstr ""
 
-#: inc/class-billy.php:1393
+#: inc/class-billy.php:1449
 #: blocks/build/index.js:1
 #: blocks/src/accounting/table/deprecatedOuter.js:109
 #: blocks/src/accounting/table/deprecatedOuter.js:131
@@ -374,130 +373,163 @@ msgstr ""
 msgid "Expenses"
 msgstr ""
 
-#: inc/class-billy.php:1409
-#: inc/class-billy.php:1533
+#: inc/class-billy.php:1465
+#: inc/class-billy.php:1590
 #: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:34
+#: blocks/src/settings/panel/index.js:37
 msgid "Address"
 msgstr ""
 
-#: inc/class-billy.php:1410
-#: inc/class-billy.php:1549
+#: inc/class-billy.php:1466
+#: inc/class-billy.php:1683
 #: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:40
+#: blocks/src/settings/panel/index.js:43
 msgid "VAT"
 msgstr ""
 
-#: inc/class-billy.php:1465
+#: inc/class-billy.php:1521
 msgid "Plugin Setup"
 msgstr ""
 
-#: inc/class-billy.php:1475
+#: inc/class-billy.php:1531
 msgid "General"
 msgstr ""
 
-#: inc/class-billy.php:1550
+#: inc/class-billy.php:1606
+#: inc/class-billy.php:1624
+msgid "Geocoding powered by %s"
+msgstr ""
+
+#: inc/class-billy.php:1623
+msgid "Address (geocoded)"
+msgstr ""
+
+#: inc/class-billy.php:1645
+msgid "Email"
+msgstr ""
+
+#: inc/class-billy.php:1646
+msgid "Enter your email"
+msgstr ""
+
+#: inc/class-billy.php:1666
+msgid "Phone"
+msgstr ""
+
+#: inc/class-billy.php:1667
+msgid "Enter your phone number"
+msgstr ""
+
+#: inc/class-billy.php:1684
 msgid "Enter your VAT identification number or Taxpayer ID"
 msgstr ""
 
-#: inc/class-billy.php:1567
+#: inc/class-billy.php:1701
 msgid "Currency Code"
 msgstr ""
 
-#: inc/class-billy.php:1568
-#: inc/class-billy.php:1590
+#: inc/class-billy.php:1702
+#: inc/class-billy.php:1724
 msgid "Caution: Any changes made here may affect existing entries. Create a backup first!"
 msgstr ""
 
-#: inc/class-billy.php:1585
+#: inc/class-billy.php:1719
 msgid "Tax Rates"
 msgstr ""
 
-#: inc/class-billy.php:1587
+#: inc/class-billy.php:1721
 msgid "Enter the taxrates separated by newline: e.g. %s"
 msgstr ""
 
-#: inc/class-billy.php:1607
+#: inc/class-billy.php:1740
+msgid "Current invoice number"
+msgstr ""
+
+#: inc/class-billy.php:1741
 msgid "Upcoming invoice numbers will be autoincremented based on this value!"
 msgstr ""
 
-#: inc/class-billy.php:1635
+#: inc/class-billy.php:1769
 #: blocks/build/index.js:1
 #: blocks/src/invoice/invoice-number/index.js:45
 msgid "Invoice number: Prefix"
 msgstr ""
 
-#: inc/class-billy.php:1636
-#: inc/class-billy.php:1760
+#: inc/class-billy.php:1770
+#: inc/class-billy.php:1894
 msgid "You can include placeholders like {YEAR}, {MONTH} and {DAY}."
 msgstr ""
 
-#: inc/class-billy.php:1652
+#: inc/class-billy.php:1786
 msgid "Payment due within # days"
 msgstr ""
 
-#: inc/class-billy.php:1672
+#: inc/class-billy.php:1806
 #: blocks/build/index.js:1
 #: blocks/src/invoice/paymentinformation/index.js:21
 #: blocks/src/invoice/paymentinformation/index.js:45
 msgid "Payment Information"
 msgstr ""
 
-#: inc/class-billy.php:1673
+#: inc/class-billy.php:1807
 msgid "Add the payment instructions and link to your terms."
 msgstr ""
 
-#: inc/class-billy.php:1679
+#: inc/class-billy.php:1813
 msgid "Thank you for your business!"
 msgstr ""
 
-#: inc/class-billy.php:1693
+#: inc/class-billy.php:1827
 #: blocks/build/index.js:1
 #: blocks/src/quote/information/index.js:45
 msgid "Quote Information"
 msgstr ""
 
-#: inc/class-billy.php:1694
+#: inc/class-billy.php:1828
 msgid "Inform your contacts about special terms, quote expiration clauses, etc."
 msgstr ""
 
-#: inc/class-billy.php:1700
+#: inc/class-billy.php:1834
 msgid "We will be happy to answer any questions you may have!"
 msgstr ""
 
-#: inc/class-billy.php:1714
+#: inc/class-billy.php:1848
 msgid "Current quote number"
 msgstr ""
 
-#: inc/class-billy.php:1715
+#: inc/class-billy.php:1849
 msgid "Upcoming quote numbers will be autoincremented based on this value!"
 msgstr ""
 
-#: inc/class-billy.php:1742
+#: inc/class-billy.php:1876
 msgid "Just use the current date (\"Ymd\") as quote number"
 msgstr ""
 
-#: inc/class-billy.php:1759
+#: inc/class-billy.php:1893
 msgid "Quote number: Prefix"
 msgstr ""
 
-#: inc/class-billy.php:1776
+#: inc/class-billy.php:1910
 msgid "Quote valid for # days"
 msgstr ""
 
-#: inc/class-billy.php:1796
+#: inc/class-billy.php:1951
+msgid "Geocode was not successful - please provide a valid address: %s"
+msgstr ""
+
+#: inc/class-billy.php:1972
 msgid "Please provide a valid currency format"
 msgstr ""
 
-#: inc/class-billy.php:1822
+#: inc/class-billy.php:1998
 msgid "Please separate the taxrates by newline and don't forget to append the \"%\" sign to each value."
 msgstr ""
 
-#: inc/class-blocks.php:181
+#: inc/class-blocks.php:194
 msgid "Billy Blocks"
 msgstr ""
 
-#: inc/class-blocks.php:233
+#: inc/class-blocks.php:246
 #: blocks/build/index.js:1
 #: blocks/src/invoice/meta/index.js:84
 #: blocks/src/invoice/meta/index.js:111
@@ -508,11 +540,11 @@ msgstr ""
 msgid "<div class=\"label\">%1$s</div> <div class=\"text\">%2$s</div>"
 msgstr ""
 
-#: inc/class-blocks.php:247
+#: inc/class-blocks.php:260
 msgid "<strong>%1$s</strong> %2$s"
 msgstr ""
 
-#: inc/class-blocks.php:247
+#: inc/class-blocks.php:260
 #: blocks/build/index.js:1
 #: blocks/src/invoice/meta/index.js:89
 #: blocks/src/invoice/meta/index.js:116
@@ -525,7 +557,7 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: inc/class-blocks.php:260
+#: inc/class-blocks.php:273
 #: blocks/build/index.js:1
 #: blocks/src/accounting/table/deprecatedOuter.js:81
 #: blocks/src/accounting/table/deprecatedOuter.js:273
@@ -539,18 +571,27 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: inc/class-blocks.php:293
+#: inc/class-blocks.php:296
+#: inc/class-blocks.php:318
+msgid "Current %s"
+msgstr ""
+
+#: inc/class-blocks.php:307
 msgid "Due By"
 msgstr ""
 
-#: inc/class-blocks.php:315
+#: inc/class-blocks.php:340
 #: blocks/build/index.js:1
 #: blocks/src/quote/validuntildate/index.js:21
 msgid "Valid Until"
 msgstr ""
 
-#: inc/class-pdfexport.php:130
+#: inc/class-pdfexport.php:125
 msgid "You are not allowed to view this content."
+msgstr ""
+
+#: inc/class-pdfexport.php:161
+msgid "DRAFT"
 msgstr ""
 
 #: blocks/build/index.js:1
@@ -930,6 +971,11 @@ msgstr ""
 #: blocks/build/index.js:1
 #: blocks/src/settings/panel/index.js:21
 msgid "Settings (Theme Customizer)"
+msgstr ""
+
+#: blocks/build/index.js:1
+#: blocks/src/settings/panel/index.js:28
+msgid "Quote number"
 msgstr ""
 
 #: blocks/build/index.js:1
