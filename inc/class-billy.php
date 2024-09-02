@@ -176,9 +176,7 @@ class Billy {
 	public static function dashboard_widget_content() {
 		$debug = array();
 
-		$output_script = '';
-
-		// [UNDOCUMENTED: "/wp-admin/index.php?fix_invoices=true"] Get invoices with missing metadata ("_invoice_number" is required on each incoice post!) and provide a solution to rewrite all posts from up->bottom based on the latest invoice number.
+		// [UNDOCUMENTED] "/wp-admin/?fix_invoices=true" Get invoices with missing metadata ("_invoice_number" is required on each incoice post!) and provide a solution to rewrite all posts from up->bottom based on the latest invoice number.
 		$invoices_missing_meta = new WP_Query(
 			array(
 				'post_type'      => 'billy-invoice',
@@ -237,16 +235,17 @@ class Billy {
 							}
 						}
 
-						update_post_meta( $post_id, '_invoice_number', $invoice_number );
-
 						// Update title and slug.
 						$post_title = self::get_invoice_number( $post_id );
 
-						wp_update_post(
+						$fix_post = wp_update_post(
 							array(
 								'ID'         => $post_id,
 								'post_title' => $post_title,
 								'post_name'  => sanitize_title( $post_title ),
+								'meta_input' => array(
+									'_invoice_number' => $invoice_number,
+								),
 							)
 						);
 
@@ -254,8 +253,6 @@ class Billy {
 					}
 				}
 			}
-
-			$output_script = '<script>console.error( "The following [Billy] Invoices are missing required meta data: ' . implode( ', ', $debug ) . '", "\n", "Would you like to fix it? Please make sure that the latest invoice number is correct. Invoice numbers will be regenerated and updated in descending order. It is strongly advised to backup the database before clicking this link. ' . esc_url( wp_nonce_url( admin_url( 'index.php?fix_invoices=true' ) ) ) . '" )</script>';
 		}
 
 		$latest_invoices = get_posts(
@@ -298,11 +295,12 @@ class Billy {
 					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-quote' ) ) . '">' . esc_html( self::get_quote_number( $latest_quotes[0]->ID ) ) . '</a></td>
 				</tr>' : '' ) . '
 				<tr>
-					<td>' . ( ! empty( $output_script ) ? '<span class="dashicons dashicons-warning" aria-hidden="true" title="' . esc_attr__( 'Problems detected. Please open the Web Console for more information!', 'billy' ) . '" style="color: red;"></span>' : '' ) . '</td>
+					<td>' . ( isset( $fix_post ) ? '<span class="dashicons dashicons-yes-alt" aria-hidden="true" style="color: green;"></span> ' . esc_attr__( 'Problems have been solved!', 'billy' ) : ( $invoices_missing_meta->have_posts() ? '<span class="dashicons dashicons-warning" aria-hidden="true" style="color: red;"></span> The following invoices are missing required meta data: <strong>' . implode( ', ', $debug ) . '</strong>. <a href="' . add_query_arg( 'fix_invoices', 'true', wp_nonce_url( admin_url() ) ) . '" onclick="return confirm(\'Please make sure that the latest invoice number is correct. Invoice numbers will be regenerated and updated in descending order.\')">Click here to try to fix the problem</a> - Backing up the database beforehand is strongly recommended!
+' : '' ) ) . '</td>
 					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . esc_attr__( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', esc_html__( 'Edit', 'billy' ) ) . '</a></p></td>
 				</tr>
 			</tbody>
-		</table>' . $output_script;
+		</table>';
 	}
 
 	/**
@@ -435,7 +433,7 @@ class Billy {
 		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Update post status if unpublished: https://wordpress.org/support/article/post-status
-		if ( wp_count_posts( 'billy-invoice' )->publish > 1 && in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
 			// New?
 			if ( ! is_numeric( $invoice_number ) ) {
 				global $post;
@@ -605,9 +603,9 @@ class Billy {
 			'{DAY}',
 		);
 		$prefix_placeholder_values = array(
-			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'Y', $post_id ) : wp_date( 'Y' ) ) ),
-			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'm', $post_id ) : wp_date( 'm' ) ) ),
-			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'd', $post_id ) : wp_date( 'd' ) ) ),
+			esc_attr( ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'Y', $post_id ) : wp_date( 'Y' ) ) ),
+			esc_attr( ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'm', $post_id ) : wp_date( 'm' ) ) ),
+			esc_attr( ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'd', $post_id ) : wp_date( 'd' ) ) ),
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
@@ -639,7 +637,7 @@ class Billy {
 		}
 
 		if ( get_theme_mod( 'quote_number_as_date', 1 ) ) {
-			$quotenumber = ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'Ymd', $post_id ) : wp_date( 'Ymd' ) );
+			$quotenumber = ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'Ymd', $post_id ) : wp_date( 'Ymd' ) );
 		} else {
 			// Autoincrement number.
 			$quotenumber = get_post_meta( $post_id, '_quote_number', true );
@@ -674,9 +672,9 @@ class Billy {
 			'{DAY}',
 		);
 		$prefix_placeholder_values = array(
-			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'Y', $post_id ) : wp_date( 'Y' ) ) ),
-			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'm', $post_id ) : wp_date( 'm' ) ) ),
-			esc_attr( ( 'publish' === get_post_status( $post_id ) ? get_the_date( 'd', $post_id ) : wp_date( 'd' ) ) ),
+			esc_attr( ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'Y', $post_id ) : wp_date( 'Y' ) ) ),
+			esc_attr( ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'm', $post_id ) : wp_date( 'm' ) ) ),
+			esc_attr( ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'd', $post_id ) : wp_date( 'd' ) ) ),
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 

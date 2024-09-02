@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -148,6 +148,12 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.9.3 =
+* Bugfix for post revisions: Don't overwrite invoice and quote titles with current date on save
+* Make "fix_invoices" function public and add info with actual link to the dashboard widget instead of the JS console output
+* Confirm that a "fix_invoices" update has been executed
+* Upgrade third-party dependencies
 
 = 1.9.2 =
 * Invoice and Quote number formatting: Use current date instead of post date if the post is unpublished
