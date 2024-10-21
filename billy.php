@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.9.3
+ * Version: 1.9.4
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -131,3 +131,46 @@ function billy_plugins_loaded() {
 	$billy_pdfexport = new Billy_PDF_Export();
 }
 add_action( 'plugins_loaded', 'billy_plugins_loaded', 998 );
+
+/**
+ * Yoast Duplicate Post: Enable the plugin for the WooCommerce "product" post type, which is unavailable by default.
+ *
+ * @param array $enabled_post_types The array of post type names for which the plugin is enabled.
+ *
+ * @return array The filtered array of post types names.
+ */
+function billy_custom_enabled_post_types( $enabled_post_types ) {
+	$enabled_post_types[] = 'billy-invoice';
+	$enabled_post_types[] = 'billy-quote';
+
+	return $enabled_post_types;
+}
+add_filter( 'duplicate_post_enabled_post_types', 'billy_custom_enabled_post_types' );
+
+/**
+ * Yoast Duplicate Post: Filters out custom fields from being duplicated in addition to the defaults.
+ *
+ * @param array $meta_excludelist The default exclusion list, based on the “Do not copy these fields” setting, plus some other field names.
+ *
+ * @return array The custom fields to exclude.
+ */
+function billy_custom_fields_filter( $meta_excludelist ) {
+	return array_merge( $meta_excludelist, array( '_invoice_number', '_quote_number' ) );
+}
+add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
+
+/**
+ * Yoast Duplicate Post: Performs some actions after the WordPress standard fields of a post, or a non-hierarchical custom type item, have been copied.
+ *
+ * @param int     $new_post_id The newly created post's ID.
+ * @param WP_Post $post The original post's object.
+ * @param string  $status The destination status as set by the calling method: e.g. ‘draft’ if the function has been called using the “New Draft” links. Empty otherwise.
+ */
+function billy_custom_dp_duplicate_post( $new_post_id, $post, $status ) {
+	$contact_uuid = get_post_meta( $post->ID, '_contact_uuid', true );
+
+	if ( $contact_uuid ) {
+		update_post_meta( $new_post_id, '_contact_uuid', $contact_uuid );
+	}
+}
+add_action( 'dp_duplicate_post', 'billy_custom_dp_duplicate_post', 10, 3 );

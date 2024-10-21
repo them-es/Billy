@@ -3,8 +3,8 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
-Tested up to: 6.6
-Stable tag: 1.9.3
+Tested up to: 6.7
+Stable tag: 1.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -148,6 +148,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.9.4 =
+* Ensure compatibility with Yoast Duplicate Post (by also cloning specific meta fields)
+* Minor refactoring
+* Tested up to WordPress 6.7
 
 = 1.9.3 =
 * Bugfix for post revisions: Don't overwrite invoice and quote titles with current date on save

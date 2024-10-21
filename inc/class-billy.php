@@ -176,7 +176,6 @@ class Billy {
 	public static function dashboard_widget_content() {
 		$debug = array();
 
-		// [UNDOCUMENTED] "/wp-admin/?fix_invoices=true" Get invoices with missing metadata ("_invoice_number" is required on each incoice post!) and provide a solution to rewrite all posts from up->bottom based on the latest invoice number.
 		$invoices_missing_meta = new WP_Query(
 			array(
 				'post_type'      => 'billy-invoice',
@@ -433,7 +432,7 @@ class Billy {
 		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Update post status if unpublished: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future', 'private' ), true ) ) {
 			// New?
 			if ( ! is_numeric( $invoice_number ) ) {
 				global $post;
@@ -443,10 +442,20 @@ class Billy {
 
 				if ( $get_prev ) {
 					// Get invoice number (previous invoice).
-					$invoice_number = get_post_meta( $get_prev->ID, '_invoice_number', true );
+					$invoice_number = (int) get_post_meta( $get_prev->ID, '_invoice_number', true );
+
+					// Update post date: Current invoice must be published after previous invoice.
+					$get_prev_unix_time = strtotime( $get_prev->post_date );
+
+					if ( get_the_date( 'U', $post_id ) < $get_prev_unix_time ) {
+						$post_date = date_i18n( 'Y-m-d H:i:s', (int) ++$get_prev_unix_time );
+
+						$my_post['post_date']     = $post_date;
+						$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
+					}
 				} else {
 					// Get current invoice number (Customizer).
-					$invoice_number = get_theme_mod( 'invoice_number', '0' );
+					$invoice_number = (int) get_theme_mod( 'invoice_number', 0 );
 				}
 
 				// Increment +1.
@@ -456,16 +465,6 @@ class Billy {
 				update_post_meta( $post_id, '_invoice_number', $invoice_number );
 				// Update Customizer value.
 				set_theme_mod( 'invoice_number', $invoice_number );
-
-				// Update post date: Current invoice must be published after previous invoice.
-				$get_prev_unix_time = strtotime( $get_prev->post_date );
-
-				if ( get_the_date( 'U', $post_id ) < $get_prev_unix_time ) {
-					$post_date = date_i18n( 'Y-m-d H:i:s', (int) ++$get_prev_unix_time );
-
-					$my_post['post_date']     = $post_date;
-					$my_post['post_date_gmt'] = get_gmt_from_date( $post_date );
-				}
 			}
 
 			$my_post['post_status'] = 'private';
@@ -500,12 +499,12 @@ class Billy {
 			'ID' => $post_id,
 		);
 
-		$quotenumber = get_post_meta( $post_id, '_quote_number', true );
+		$quote_number = get_post_meta( $post_id, '_quote_number', true );
 
 		// Update post status if unpublished: https://wordpress.org/support/article/post-status
-		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future'/*, 'private', 'pending', 'draft', 'auto-draft'*/ ), true ) ) {
+		if ( in_array( get_post_status( $post_id ), array( 'publish', 'future', 'private' ), true ) ) {
 			// New?
-			if ( ! is_numeric( $quotenumber ) ) {
+			if ( ! is_numeric( $quote_number ) ) {
 				global $post;
 				$post = get_post( $post_id );
 
@@ -513,19 +512,19 @@ class Billy {
 
 				if ( $get_prev ) {
 					// Get quote number (previous quote).
-					$quotenumber = get_post_meta( $get_prev->ID, '_quote_number', true );
+					$quote_number = (int) get_post_meta( $get_prev->ID, '_quote_number', true );
 				} else {
 					// Get current invoice number (Customizer).
-					$quotenumber = get_theme_mod( 'quote_number', '0' );
+					$quote_number = (int) get_theme_mod( 'quote_number', 0 );
 				}
 
 				// Increment +1.
-				++$quotenumber;
+				++$quote_number;
 
 				// Update Post meta value.
-				update_post_meta( $post_id, '_quote_number', $quotenumber );
+				update_post_meta( $post_id, '_quote_number', $quote_number );
 				// Update Customizer value.
-				set_theme_mod( 'quote_number', $quotenumber );
+				set_theme_mod( 'quote_number', $quote_number );
 
 				// Update post date: Current quote must be published after previous quote.
 				$get_prev_unix_time = strtotime( $get_prev->post_date );
@@ -637,13 +636,13 @@ class Billy {
 		}
 
 		if ( get_theme_mod( 'quote_number_as_date', 1 ) ) {
-			$quotenumber = ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'Ymd', $post_id ) : wp_date( 'Ymd' ) );
+			$quote_number = ( in_array( get_post_status( $post_id ), array( 'publish', 'private' ), true ) ? get_the_date( 'Ymd', $post_id ) : wp_date( 'Ymd' ) );
 		} else {
 			// Autoincrement number.
-			$quotenumber = get_post_meta( $post_id, '_quote_number', true );
+			$quote_number = get_post_meta( $post_id, '_quote_number', true );
 
 			// New post?
-			if ( ! is_numeric( $quotenumber ) ) {
+			if ( ! is_numeric( $quote_number ) ) {
 				global $post;
 				$post = get_post( $post_id );
 
@@ -651,14 +650,14 @@ class Billy {
 
 				if ( $get_prev ) {
 					// Get quote number (previous post).
-					$quotenumber = (int) get_post_meta( $get_prev->ID, '_quote_number', true );
+					$quote_number = (int) get_post_meta( $get_prev->ID, '_quote_number', true );
 				} else {
 					// Get current quote number (Customizer).
-					$quotenumber = (int) get_theme_mod( 'quote_number', 0 );
+					$quote_number = (int) get_theme_mod( 'quote_number', 0 );
 				}
 
 				// +1.
-				++$quotenumber;
+				++$quote_number;
 			}
 		}
 
@@ -678,7 +677,7 @@ class Billy {
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
-		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $quotenumber );
+		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $quote_number );
 	}
 
 	/**
