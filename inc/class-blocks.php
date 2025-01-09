@@ -26,13 +26,7 @@ class Billy_Blocks {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'get_block_editor_assets' ) );
 
 		// Editor: Block categories.
-		if ( ! function_exists( 'get_default_block_categories' ) ) {
-			// < WordPress v5.8
-			add_filter( 'block_categories', array( $this, 'categories' ), 10 );
-		} else {
-			// >= WordPress v5.8
-			add_filter( 'block_categories_all', array( $this, 'categories' ), 10 );
-		}
+		add_filter( 'block_categories_all', array( $this, 'categories' ), 10 );
 	}
 
 	/**
@@ -215,22 +209,19 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function headerlayout_render_callback() {
-		$output = '';
 		if ( in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
-			$output .= '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
-		} else {
-			$header_reusable_block = get_posts(
-				array(
-					'post_type'   => 'wp_block',
-					'title'       => 'Billy Header',
-					'post_status' => array( 'publish', 'private' ),
-				)
-			);
-
-			$output .= do_blocks( '<!-- wp:block {"ref":' . (int) $header_reusable_block[0]->ID . '} /-->' );
+			return '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
 		}
 
-		return $output;
+		$header_reusable_block = get_posts(
+			array(
+				'post_type'   => 'wp_block',
+				'title'       => 'Billy Header',
+				'post_status' => array( 'publish', 'private' ),
+			)
+		);
+
+		return do_blocks( '<!-- wp:block {"ref":' . (int) $header_reusable_block[0]->ID . '} /-->' );
 	}
 
 	/**
@@ -293,7 +284,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function invoice_number_render_callback( $block_attributes ) {
-		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Invoice', 'billy' ) ), Billy::get_invoice_number( get_the_ID() ), 'invoice_number' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
+		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Invoice', 'billy' ) ), ( new Billy() )->get_invoice_number( get_the_ID() ), 'invoice_number' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -304,7 +295,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function invoice_duedate_render_callback( $block_attributes ) {
-		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'payment_due_days', 14 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Due By', 'billy' ), ( new Billy() )->get_duedate( get_the_ID(), (int) get_theme_mod( 'payment_due_days', 14 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -315,7 +306,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function quote_number_render_callback( $block_attributes ) {
-		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Quote', 'billy' ) ), Billy::get_quote_number( get_the_ID() ), 'quotenumber' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
+		return $this->meta_label_text_render_callback( sprintf( esc_html__( 'Current %s', 'billy' ), esc_html__( 'Quote', 'billy' ) ), ( new Billy() )->get_quote_number( get_the_ID() ), 'quotenumber' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**
@@ -337,7 +328,7 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function quote_validuntildate_render_callback( $block_attributes ) {
-		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), Billy::get_duedate( get_the_ID(), (int) get_theme_mod( 'quote_valid_days', 30 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
+		return $this->meta_label_text_render_callback( esc_html__( 'Valid Until', 'billy' ), ( new Billy() )->get_duedate( get_the_ID(), (int) get_theme_mod( 'quote_valid_days', 30 ) ), 'date' . ( $block_attributes['className'] ? ' ' . esc_attr( $block_attributes['className'] ) : '' ) );
 	}
 
 	/**

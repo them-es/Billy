@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.9.4
+ * Version: 1.9.5
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -126,9 +126,9 @@ function billy_plugins_loaded() {
 	include_once __DIR__ . '/inc/class-blocks.php';
 	include_once __DIR__ . '/inc/class-pdfexport.php';
 
-	$billy           = new Billy();
-	$billy_blocks    = new Billy_Blocks();
-	$billy_pdfexport = new Billy_PDF_Export();
+	new Billy();
+	new Billy_Blocks();
+	new Billy_PDF_Export();
 }
 add_action( 'plugins_loaded', 'billy_plugins_loaded', 998 );
 

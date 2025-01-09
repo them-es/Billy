@@ -4,9 +4,9 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
 
 Create invoices, quotes and keep track of your earnings and expenses with this billing suite—tailored for freelancers and small agencies.
@@ -148,6 +148,9 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.9.5 =
+* Refactoring, Cleanup and Code quality
 
 = 1.9.4 =
 * Ensure compatibility with Yoast Duplicate Post (by also cloning specific meta fields)

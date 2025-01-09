@@ -27,7 +27,7 @@ import { formatNumber, percentToDecimal } from '../../functions';
 import deprecatedInvoiceOuter from './deprecatedOuter';
 import deprecatedInvoiceInner from './deprecatedInner';
 
-var updateTotals;
+let updateTotals;
 
 /**
  * 1. Outer Block
@@ -107,7 +107,7 @@ registerBlockType('billy-blocks/invoice-table', {
 
 		// Onload "once": Calculate values and update attributes
 		updateTotals = () => {
-			var amountSubtotalSum = 0,
+			let amountSubtotalSum = 0,
 				amountTotalSum = 0,
 				taxRatesTotalSum = 0,
 				taxRatesHolderOutput = [],
@@ -120,38 +120,37 @@ registerBlockType('billy-blocks/invoice-table', {
 
 			// Create values-array of child block attributes
 			if (childBlocks && childBlocks.length > 0) {
-				childBlocks.map((childBlock, i) => {
+				childBlocks.forEach((childBlock) => {
+					const amount = Number(childBlock.attributes.amount);
+					const taxRate = percentToDecimal(
+						childBlock.attributes.taxRate
+					);
+
 					// 1. Sum of Subtotals
-					amountSubtotalSum += Number(childBlock.attributes.amount);
+					amountSubtotalSum += amount;
 
 					// 2. Sum of Totals
-					amountTotalSum +=
-						Number(childBlock.attributes.amount) +
-						percentToDecimal(childBlock.attributes.taxRate) *
-							Number(childBlock.attributes.amount);
+					amountTotalSum += amount + taxRate * amount;
 
 					// 3. Sum of Taxrates
 					taxRatesHolderOutput.push({
 						taxRate: childBlock.attributes.taxRate,
-						amount:
-							percentToDecimal(childBlock.attributes.taxRate) *
-							Number(childBlock.attributes.amount),
+						amount: taxRate * amount,
 					});
 				});
 
 				if (taxRatesHolderOutput.length > 0) {
 					// Sum up Tax amount
-					taxRatesTotalSum = taxRatesHolderOutput.reduce(function (
-						res,
-						value
-					) {
-						return res + value.amount;
-					},
-					0);
+					taxRatesTotalSum = taxRatesHolderOutput.reduce(
+						(res, value) => {
+							return res + value.amount;
+						},
+						0
+					);
 					taxRatesTotalSum = Number(taxRatesTotalSum.toFixed(2));
 
 					// Merge amounts having the same Taxrate
-					taxRatesHolderOutput.reduce(function (res, value) {
+					taxRatesHolderOutput.reduce((res, value) => {
 						if (!res[value.taxRate]) {
 							res[value.taxRate] = {
 								taxRate: value.taxRate,
@@ -174,7 +173,7 @@ registerBlockType('billy-blocks/invoice-table', {
 		};
 		useEffect(() => {
 			updateTotals();
-		});
+		}, [childBlocks]);
 
 		// Markup: Backend
 		return (
@@ -507,7 +506,7 @@ registerBlockType('billy-blocks/invoice-tablerow', {
 							: globalDataBilly.taxOptions[0].value,
 				});
 			}
-		});
+		}, [taxRate]);
 
 		const updateAmountIncl = (val) => {
 			setAttributes({ amountIncl: val > 0 ? Number(val) : '' });

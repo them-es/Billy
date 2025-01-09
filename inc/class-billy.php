@@ -84,7 +84,6 @@ class Billy {
 				'AuthorURI'  => 'Author URI',
 			),
 		);
-		$plugin_name          = $plugin_data['Name'];
 		self::$plugin_name    = esc_attr( $plugin_data['Name'] );
 		self::$plugin_version = esc_attr( $plugin_data['Version'] );
 		self::$plugin_slug    = esc_attr( $plugin_data['TextDomain'] );
@@ -384,7 +383,9 @@ class Billy {
 				define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
 			}
 
-			$content = '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
+			$content = $this->preheader_render_callback() . $content;
+
+			return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $content . '</div>';
 		}
 
 		return $content;
@@ -1984,10 +1985,10 @@ class Billy {
 		if ( ! empty( $value ) ) {
 			$newlines = explode( "\n", $value );
 			foreach ( $newlines as $newline ) {
+				$wrong = true;
+
 				if ( preg_match( '/^([0-9]{1,2}){1}(\.[0-9]{1,2})?%$/', $newline ) ) {
 					$wrong = false;
-				} else {
-					$wrong = true;
 				}
 			}
 

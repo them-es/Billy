@@ -1,8 +1,8 @@
-// https://github.com/WordPress/gutenberg/blob/trunk/packages/edit-post/src/components/sidebar/plugin-document-setting-panel/index.js#L88
+// https://github.com/WordPress/gutenberg/blob/trunk/packages/editor/src/components/plugin-document-setting-panel/index.js
 
 import { registerPlugin } from '@wordpress/plugins';
 import { __ } from '@wordpress/i18n';
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
+import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import ServerSideRender from '@wordpress/server-side-render';
 
 const BillySetup = () => (

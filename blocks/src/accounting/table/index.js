@@ -31,7 +31,7 @@ import { getQuarter, formatNumber } from '../../functions';
 import deprecatedAccountingOuter from './deprecatedOuter';
 import deprecatedAccountingInner from './deprecatedInner';
 
-var updateTotals;
+let updateTotals;
 
 /**
  * 1. Outer Block
@@ -118,7 +118,7 @@ registerBlockType('billy-blocks/accounting-table', {
 
 		// Calculate values and update attributes
 		updateTotals = () => {
-			var amountEarningsSum = 0,
+			let amountEarningsSum = 0,
 				amountExpensesSum = 0,
 				amountTaxEarningsSum = 0,
 				amountTaxExpensesSum = 0;
@@ -130,18 +130,15 @@ registerBlockType('billy-blocks/accounting-table', {
 
 			if (childBlocks && childBlocks.length > 0) {
 				childBlocks.forEach((childBlock) => {
+					const taxRate = Number(childBlock.attributes.tax);
 					amountEarningsSum += Number(childBlock.attributes.earning);
 					amountExpensesSum += Number(childBlock.attributes.expense);
 
 					if (childBlock.attributes.earning) {
-						amountTaxEarningsSum += Number(
-							childBlock.attributes.tax
-						);
+						amountTaxEarningsSum += taxRate;
 					}
 					if (childBlock.attributes.expense) {
-						amountTaxExpensesSum += Number(
-							childBlock.attributes.tax
-						);
+						amountTaxExpensesSum += taxRate;
 					}
 				});
 			}
@@ -155,7 +152,7 @@ registerBlockType('billy-blocks/accounting-table', {
 		};
 		useEffect(() => {
 			updateTotals();
-		});
+		}, [childBlocks]);
 
 		// Markup: Backend
 		return (
@@ -549,7 +546,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 					),
 				}); // Current date
 			}
-		});
+		}, []);
 
 		const reOrder = () => {
 			// Reorder by date (move up/down): see "childBlocks.sort()"

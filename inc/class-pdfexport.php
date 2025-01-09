@@ -6,6 +6,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Mpdf\Mpdf;
+use Mpdf\WatermarkText;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -158,7 +159,7 @@ class Billy_PDF_Export {
 		);
 
 		if ( ! in_array( $post->post_status, array( 'publish', 'future', 'private' ), true ) ) {
-			$mpdf->SetWatermarkText( new \Mpdf\WatermarkText( esc_html__( 'DRAFT', 'billy' ) ) );
+			$mpdf->SetWatermarkText( new WatermarkText( esc_html__( 'DRAFT', 'billy' ) ) );
 			$mpdf->showWatermarkText = true;
 		}
 
