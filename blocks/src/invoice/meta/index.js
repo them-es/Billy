@@ -46,7 +46,7 @@ registerBlockType('billy-blocks/invoice-meta', {
 			setAttributes,
 		} = props;
 		const blockProps = useBlockProps({
-			className: (className ? ' ' + className : ''),
+			className: className ? ' ' + className : '',
 		});
 
 		const updateLabel = (val) => {
@@ -65,7 +65,7 @@ registerBlockType('billy-blocks/invoice-meta', {
 						<TextControl
 							type="text"
 							className="label"
-							value={label}
+							value={label ?? ''}
 							onChange={updateLabel}
 						/>
 					</PanelBody>
@@ -73,7 +73,7 @@ registerBlockType('billy-blocks/invoice-meta', {
 						<TextControl
 							type="text"
 							className="text"
-							value={text}
+							value={text ?? ''}
 							onChange={updateInput}
 						/>
 					</PanelBody>
@@ -100,7 +100,7 @@ registerBlockType('billy-blocks/invoice-meta', {
 		} = props;
 
 		const blockProps = useBlockProps.save({
-			className: (className ? ' ' + className : ''),
+			className: className ? ' ' + className : '',
 		});
 
 		return (

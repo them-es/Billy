@@ -669,7 +669,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 									type="text"
 									label={__('Reference', 'billy')}
 									placeholder=""
-									value={reference}
+									value={reference ?? ''}
 									onChange={updateReference}
 								/>
 							</td>
@@ -682,7 +682,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 										currency
 									)}
 									placeholder={__('0', 'billy')}
-									value={earning}
+									value={earning ?? ''}
 									onChange={updateEarning}
 								/>
 							</td>
@@ -695,7 +695,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 										currency
 									)}
 									placeholder={__('0', 'billy')}
-									value={expense}
+									value={expense ?? ''}
 									onChange={updateExpense}
 								/>
 							</td>
@@ -708,7 +708,7 @@ registerBlockType('billy-blocks/accounting-tablerow', {
 										currency
 									)}
 									placeholder={__('0', 'billy')}
-									value={tax}
+									value={tax ?? ''}
 									onChange={updateTax}
 								/>
 							</td>

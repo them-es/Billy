@@ -550,7 +550,7 @@ registerBlockType('billy-blocks/quote-tablerow', {
 							type="number"
 							label={__('Quantity', 'billy')}
 							placeholder={__('0', 'billy')}
-							value={quantity}
+							value={quantity ?? ''}
 							onChange={updateQuantity}
 						/>
 
@@ -562,7 +562,7 @@ registerBlockType('billy-blocks/quote-tablerow', {
 								currency
 							)}
 							placeholder={__('0', 'billy')}
-							value={quantityRate}
+							value={quantityRate ?? ''}
 							onChange={updateQuantityRate}
 						/>
 					</PanelBody>
@@ -603,7 +603,7 @@ registerBlockType('billy-blocks/quote-tablerow', {
 									)}
 									className="amount"
 									placeholder={__('0', 'billy')}
-									value={amount}
+									value={amount ?? ''}
 									onChange={updateAmount}
 								/>
 							</td>
@@ -615,7 +615,7 @@ registerBlockType('billy-blocks/quote-tablerow', {
 										__('Tax', 'billy'),
 										'%'
 									)}
-									value={taxRate}
+									value={taxRate ?? ''}
 									options={
 										0 !== globalDataBilly.taxOptions.length
 											? globalDataBilly.taxOptions
@@ -645,7 +645,7 @@ registerBlockType('billy-blocks/quote-tablerow', {
 									label={currency}
 									className="amount-tax"
 									placeholder={__('0', 'billy')}
-									value={amountIncl}
+									value={amountIncl ?? ''}
 								/>
 							</td>
 						</tr>

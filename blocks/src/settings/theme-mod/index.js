@@ -53,7 +53,7 @@ registerBlockType('billy-blocks/theme-mod', {
 								'billy'
 							)}
 							options={globalDataBilly.themeModOptions}
-							value={themeMod}
+							value={themeMod ?? ''}
 							onChange={updateThemeMod}
 						/>
 					</PanelBody>
