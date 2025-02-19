@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.10.0
+Stable tag: 1.10.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -149,6 +149,9 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.10.1 =
+* Also customize the output of PDF content and footer via "/templates/billy-pdf-{content|footer}.html"
 
 = 1.10.0 =
 * Full customization of output using block templates or filter hooks: 1. Block templates via "/templates/billy-{invoice|quote|accounting}.html", 2. `add_filter()` CPT "billy_{invoice|quote|accounting}_template", 3. `add_filter()` PDF output "billy_pdf_{content|footer}"

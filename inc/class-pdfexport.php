@@ -222,7 +222,39 @@ class Billy_PDF_Export {
 			$content = preg_replace( '/\r|\n/', '', $content );
 
 			// Filterable content. @since 1.10.0!
-			$content = apply_filters( 'billy_pdf_content', $content, $post_type );
+			if ( is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) ) ) {
+				$content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
+			} else {
+				$content = apply_filters( 'billy_pdf_content', $content, $post_type );
+			}
+
+			$content_placeholders       = array(
+				'{DATE}',
+				'{EMAIL}',
+				'{SITETITLE}',
+				'{SITEICON}',
+				'{CURRENTPAGE}',
+				'{TOTALPAGES}',
+				'class="has-text-align-center',
+				'class="has-text-align-right',
+				'class="has-text-align-left',
+				'<p ',
+				'</p>',
+			);
+			$content_placeholder_values = array(
+				esc_html( get_the_date( '', $post_id ) ),
+				esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
+				esc_html( get_bloginfo( 'name' ) ),
+				get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="70" />' : '',
+				'{PAGENO}',
+				'{nbpg}',
+				'align="center" class="has-text-align-center',
+				'align="right" class="has-text-align-right',
+				'align="left" class="has-text-align-left',
+				'<figure ',
+				'</figure><br>',
+			);
+			$content                    = str_replace( $content_placeholders, $content_placeholder_values, $content );
 
 			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
 			$dom = new DOMDocument();
@@ -254,34 +286,6 @@ class Billy_PDF_Export {
 			// PDF footer.
 			if ( $footer_ids ) {
 				$footer_content = get_post_field( 'post_content', $footer_ids[0] );
-
-				$footer_placeholders       = array(
-					'{DATE}',
-					'{EMAIL}',
-					'{SITETITLE}',
-					'{SITEICON}',
-					'{CURRENTPAGE}',
-					'{TOTALPAGES}',
-					'class="has-text-align-center',
-					'class="has-text-align-right',
-					'class="has-text-align-left',
-					'<p ',
-					'</p>',
-				);
-				$footer_placeholder_values = array(
-					esc_html( get_the_date( '', $post_id ) ),
-					esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
-					esc_html( get_bloginfo( 'name' ) ),
-					get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
-					'{PAGENO}',
-					'{nbpg}',
-					'align="center" class="has-text-align-center',
-					'align="right" class="has-text-align-right',
-					'align="left" class="has-text-align-left',
-					'<figure ',
-					'</figure><br>',
-				);
-				$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
 			} else {
 				// Fallback.
 				$footer_content = '<table class="footer" width="100%">
@@ -294,7 +298,39 @@ class Billy_PDF_Export {
 			}
 
 			// Filterable footer. @since 1.10.0!
-			$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );
+			if ( is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) ) ) {
+				$footer_content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
+			} else {
+				$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );
+			}
+
+			$footer_placeholders       = array(
+				'{DATE}',
+				'{EMAIL}',
+				'{SITETITLE}',
+				'{SITEICON}',
+				'{CURRENTPAGE}',
+				'{TOTALPAGES}',
+				'class="has-text-align-center',
+				'class="has-text-align-right',
+				'class="has-text-align-left',
+				'<p ',
+				'</p>',
+			);
+			$footer_placeholder_values = array(
+				esc_html( get_the_date( '', $post_id ) ),
+				esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
+				esc_html( get_bloginfo( 'name' ) ),
+				get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
+				'{PAGENO}',
+				'{nbpg}',
+				'align="center" class="has-text-align-center',
+				'align="right" class="has-text-align-right',
+				'align="left" class="has-text-align-left',
+				'<figure ',
+				'</figure><br>',
+			);
+			$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
 
 			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
 			$dom = new DOMDocument();
