@@ -48,11 +48,9 @@ hr {
 	display: block;
 	width: 100%;
 }
-.header .wp-block-columns .wp-block-column {
+.wp-block-columns .wp-block-column {
 	display: block;
 	float: left;
-	width: 33%;
-	min-width: 33%;
 	margin: 0;
 	border-bottom: 1px solid #fff;
 }
@@ -65,9 +63,6 @@ hr {
 	width: 100%;
 }
 .footer .wp-block-columns .wp-block-column {
-	float: left;
-	width: 33%;
-	min-width: 33%;
 	margin: 0;
 	border: none;
 }
@@ -101,10 +96,6 @@ strong {
 	width: 100%;
 }
 .details .wp-block-column {
-	display: block;
-	float: left;
-	width: 33%;
-	min-width: 33%;
 	margin: 0;
 	border-bottom: 1px solid #fff;
 }

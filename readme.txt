@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.9.6
+Stable tag: 1.10.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -51,6 +51,7 @@ The following WordPress themes have been tested:
 * Locale specific number formatting
 * Legally compliant: Unique and sequential invoice numbers
 * PDF-Export
+* Fully customizable HTML and PDF output using block templates or add_filter()
 * Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties
 * Dashboard widget
 * Multilingual: You can [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
@@ -148,6 +149,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.10.0 =
+* Full customization of output using block templates or filter hooks: 1. Block templates via "/templates/billy-{invoice|quote|accounting}.html", 2. `add_filter()` CPT "billy_{invoice|quote|accounting}_template", 3. `add_filter()` PDF output "billy_pdf_{content|footer}"
+* PDF generator: Support for mutable block columns instead of fixed 3-col layout
+* Improved theme compatibility: Changed priority of "the_content" filter to 1
 
 = 1.9.6 =
 * Fix console warning: Ensure that all input values are defined before referencing them in the attribute

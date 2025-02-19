@@ -203,25 +203,29 @@ class Billy_Blocks {
 	 */
 
 	/**
-	 * Header: Reusable Block.
+	 * Header layout: Reusable Block.
 	 * CPT "billy-header" has been deprecated in 2022-09. It got replaced by this Reusable Block.
 	 *
 	 * @return string
 	 */
 	public function headerlayout_render_callback() {
-		if ( in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
-			return '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
+		$header_content = '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
+
+		if ( ! in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
+			$header_reusable_block = get_posts(
+				array(
+					'post_type'   => 'wp_block',
+					'title'       => 'Billy Header',
+					'post_status' => array( 'publish', 'private' ),
+				)
+			);
+
+			if ( $header_reusable_block ) {
+				$header_content = do_blocks( '<!-- wp:block {"ref":' . (int) $header_reusable_block[0]->ID . '} /-->' );
+			}
 		}
 
-		$header_reusable_block = get_posts(
-			array(
-				'post_type'   => 'wp_block',
-				'title'       => 'Billy Header',
-				'post_status' => array( 'publish', 'private' ),
-			)
-		);
-
-		return do_blocks( '<!-- wp:block {"ref":' . (int) $header_reusable_block[0]->ID . '} /-->' );
+		return $header_content;
 	}
 
 	/**

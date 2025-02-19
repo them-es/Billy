@@ -116,7 +116,7 @@ class Billy_PDF_Export {
 	 *
 	 * @param WP_REST_Request $request Options for the function.
 	 *
-	 * @return bool|WP_Error
+	 * @return string|WP_Error
 	 */
 	public function billy_export_pdf( $request ) {
 		// PDF generation is restricted.
@@ -221,6 +221,34 @@ class Billy_PDF_Export {
 			// Remove line breaks from content.
 			$content = preg_replace( '/\r|\n/', '', $content );
 
+			// Filterable content. @since 1.10.0!
+			$content = apply_filters( 'billy_pdf_content', $content, $post_type );
+
+			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
+			$dom = new DOMDocument();
+			libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
+			$dom->loadHTML( $content );
+			libxml_clear_errors();
+
+			$xpath = new DOMXPath( $dom );
+
+			// Find all wp-block-columns elements.
+			$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
+
+			foreach ( $columns as $column ) {
+				// Find all inner wp-block-column elements.
+				$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
+				$count         = $inner_columns->length;
+
+				if ( $count > 0 ) {
+					foreach ( $inner_columns as $inner_column ) {
+						$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
+					}
+				}
+			}
+
+			$content = $dom->saveHTML();
+
 			wp_reset_postdata();
 
 			// PDF footer.
@@ -265,16 +293,44 @@ class Billy_PDF_Export {
 			</table>';
 			}
 
+			// Filterable footer. @since 1.10.0!
+			$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );
+
+			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
+			$dom = new DOMDocument();
+			libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
+			$dom->loadHTML( $footer_content );
+			libxml_clear_errors();
+
+			$xpath = new DOMXPath( $dom );
+
+			// Find all wp-block-columns elements.
+			$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
+
+			foreach ( $columns as $column ) {
+				// Find all inner wp-block-column elements.
+				$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
+				$count         = $inner_columns->length;
+
+				if ( $count > 0 ) {
+					foreach ( $inner_columns as $inner_column ) {
+						$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
+					}
+				}
+			}
+
+			$footer_content = $dom->saveHTML();
+
 			$mpdf->SetHTMLFooter( do_blocks( $footer_content ) );
 		}
 
-		$html_content = '<html>
+		$write_html = '<html>
 			<body class="' . esc_attr( $post_type ) . '-template-default single single-' . esc_attr( $post_type ) . ' singular"><div class="entry-content"><div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper">' . $content . '</div></div>
 			</body>
 		</html>';
 
 		$mpdf->SetTitle( esc_html( $reference ) );
-		$mpdf->WriteHTML( $html_content, \Mpdf\HTMLParserMode::HTML_BODY );
+		$mpdf->WriteHTML( $write_html, \Mpdf\HTMLParserMode::HTML_BODY );
 		$file = esc_attr( $reference ) . '.pdf';
 
 		// https://mpdf.github.io/reference/mpdf-functions/output.html

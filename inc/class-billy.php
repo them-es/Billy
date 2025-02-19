@@ -122,7 +122,10 @@ class Billy {
 		add_filter( 'protected_title_format', array( $this, 'title_format' ), 10, 2 );
 
 		// Custom Post Type wrapper.
-		add_filter( 'the_content', array( $this, 'cpt_wrapper_content' ) );
+		add_filter( 'the_content', array( $this, 'cpt_wrapper_content' ), 1 );
+
+		// Output default block templates (if defined in theme).
+		add_filter( 'default_content', array( $this, 'cpt_block_template_content' ), 10, 2 );
 
 		// Include Custom Posts in main query.
 		// add_action( 'pre_get_posts', array( $this, 'include_invoices_in_postsquery' ) );
@@ -268,6 +271,12 @@ class Billy {
 			)
 		);
 
+		$billy_invoice_template_filter    = has_filter( 'billy_invoice_template' ) || is_readable( get_theme_file_path( 'templates/billy-invoice.html' ) );
+		$billy_quote_template_filter      = has_filter( 'billy_quote_template' ) || is_readable( get_theme_file_path( 'templates/billy-quote.html' ) );
+		$billy_accounting_template_filter = has_filter( 'billy_accounting_template' ) || is_readable( get_theme_file_path( 'templates/billy-accounting.html' ) );
+		$billy_pdf_content_filter         = has_filter( 'billy_pdf_content' );
+		$billy_pdf_footer_filter          = has_filter( 'billy_pdf_footer' );
+
 		return '<table class="widefat">
 			<tbody>
 				<tr>
@@ -297,7 +306,13 @@ class Billy {
 ' : '' ) ) . '</td>
 					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . esc_attr__( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', esc_html__( 'Edit', 'billy' ) ) . '</a></p></td>
 				</tr>
-			</tbody>
+				</tr>' .
+				( $billy_invoice_template_filter || $billy_quote_template_filter || $billy_accounting_template_filter || $billy_pdf_footer_filter || $billy_pdf_content_filter ? '
+				<tr>
+					<td><strong>' . esc_html__( 'Customized templates', 'billy' ) . '</strong></td>
+					<td>' . ( $billy_invoice_template_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'Invoice Template', 'billy' ) ) . '<br>' : '' ) . ( $billy_quote_template_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'Quote Template', 'billy' ) ) . '<br>' : '' ) . ( $billy_accounting_template_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'Accounting Template', 'billy' ) ) . '<br>' : '' ) . ( $billy_pdf_footer_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'PDF Footer', 'billy' ) ) . '<br>' : '' ) . ( $billy_pdf_content_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'PDF Content', 'billy' ) ) . '<br>' : '' ) . '</td>
+				</tr>' : '' ) .
+			'</tbody>
 		</table>';
 	}
 
@@ -383,9 +398,40 @@ class Billy {
 				define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
 			}
 
-			$content = $this->preheader_render_callback() . $content;
+			return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
+		}
 
-			return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $content . '</div>';
+		return $content;
+	}
+
+	/**
+	 * Optional: Output block template from theme templates directory.
+	 * /templates/billy-{invoice|quote|accounting}.html
+	 *
+	 * @return string
+	 */
+	public function cpt_block_template_content( $content, $post ) {
+		if ( str_starts_with( $post->post_type, 'billy-' ) ) {
+			$template = get_theme_file_path( 'templates/' . esc_attr( $post->post_type ) . '.html' );
+
+			if ( is_readable( $template ) ) {
+				$template_content = file_get_contents( $template );
+
+				if ( 0 === strlen( $template_content ) ) {
+					return $content;
+				}
+
+				switch ( $post->post_type ) {
+					case 'billy-invoice':
+						return ( str_contains( $template_content, '<!-- wp:billy-blocks/invoice-actions /-->' ) ? '' : '<!-- wp:billy-blocks/invoice-actions /-->' ) . $template_content;
+					case 'billy-quote':
+						return ( str_contains( $template_content, '<!-- wp:billy-blocks/quote-actions /-->' ) ? '' : '<!-- wp:billy-blocks/quote-actions /-->' ) . $template_content;
+					case 'billy-accounting':
+						return ( str_contains( $template_content, '<!-- wp:billy-blocks/accounting-actions /-->' ) ? '' : '<!-- wp:billy-blocks/accounting-actions /-->' ) . $template_content;
+					default:
+						break;
+				}
+			}
 		}
 
 		return $content;
@@ -820,7 +866,7 @@ class Billy {
 		// Load translations.
 		load_plugin_textdomain( 'billy', false, plugin_basename( dirname( BILLY_PLUGIN_FILE ) ) . '/languages/' );
 
-		// [Deprecated 2022-09].
+		// [TODO: Remove] Deprecated 2022-09.
 		register_post_type(
 			'billy-header',
 			array(
@@ -888,7 +934,7 @@ class Billy {
 		);
 
 		// Add existing content from deprecated Header posts as reusable block.
-		// [Deprecated 2022-09] billy-header found? Insert existing content as reusable block and delete old post. Otherwise insert empty template.
+		// [TODO: Remove] Deprecated 2022-09: billy-header found? Insert existing content as reusable block and delete old post. Otherwise insert empty template.
 		$deprecated_header_posts = get_posts(
 			array(
 				'post_type'   => 'billy-header',
@@ -1033,7 +1079,7 @@ class Billy {
 				}
 			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
 				foreach ( $footer_reusable_blocks as $footer_reusable_block ) {
-					if ( wpml_get_language_information( null, $footer_reusable_block->ID ) === self::$locale ) {
+					if ( wpml_get_language_information( null, $footer_reusable_block->ID )['locale'] === self::$locale ) {
 						$footer_id = $footer_reusable_block->ID;
 					}
 				}
@@ -1044,341 +1090,134 @@ class Billy {
 			}
 		}
 
-		// Invoices.
-		register_post_type(
-			'billy-invoice',
+		/**
+		 * Invoices.
+		 */
+		$invoice_template = array(
+			// Actions.
 			array(
-				'labels'        => array(
-					'name'          => esc_html__( 'Invoices', 'billy' ),
-					'singular_name' => esc_html__( 'Invoice', 'billy' ),
+				'billy-blocks/invoice-actions',
+				array( 'align' => 'wide' ),
+			),
+			// Header (reusable block).
+			array(
+				'core/block',
+				array( 'ref' => $header_id ),
+			),
+			// Recipient address field.
+			array(
+				'core/columns',
+				array(
+					'align'     => 'wide',
+					'className' => 'details',
 				),
-				'menu_icon'     => 'dashicons-tickets',
-				'public'        => true,
-				'show_in_rest'  => true,
-				'supports'      => array( 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ), // Custom fields need to be supported for "register_post_meta".
-				'taxonomies'    => array( 'category' ),
-				'show_ui'       => true,
-				'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
-				'template_lock' => 'insert',
-				'template'      => array(
-					// Actions.
+				array(
 					array(
-						'billy-blocks/invoice-actions',
-						array( 'align' => 'wide' ),
-					),
-					// Header (reusable block).
-					array(
-						'core/block',
-						array( 'ref' => $header_id ),
-					),
-					// Recipient address field.
-					array(
-						'core/columns',
+						'core/column',
+						array( 'className' => 'addressee' ),
 						array(
-							'align'     => 'wide',
-							'className' => 'details',
-						),
-						array(
+							class_exists( 'Billy_Pro_Blocks' )
+							?
 							array(
-								'core/column',
-								array( 'className' => 'addressee' ),
-								array(
-									class_exists( 'Billy_Pro_Blocks' )
-									?
-									array(
-										'billy-blocks/contact-selector',
-										array(),
-									)
-									:
-									// Static address field.
-									array(
-										'core/paragraph',
-										array(
-											'placeholder' => esc_html__( 'Name', 'billy' ) . ' / ' . esc_html__( 'Company', 'billy' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '2' ) . "\n" . esc_html__( 'Country', 'billy' ),
-										),
-									),
-								),
-							),
-							array(
-								'core/column',
+								'billy-blocks/contact-selector',
 								array(),
-								array(
-									array(
-										'core/spacer',
-										array(),
-									),
-								),
-							),
-							array(
-								'core/column',
-								array( 'className' => 'metadata' ),
-								array(
-									// Autogenerated from previous entry.
-									array( 'billy-blocks/invoice-number' ),
-									// Postdate.
-									array( 'billy-blocks/invoice-date' ),
-									// Postdate + # days.
-									array( 'billy-blocks/invoice-duedate' ),
-									// Meta field: Billing period.
-									array(
-										'billy-blocks/invoice-meta',
-										array(
-											'label' => esc_html__( 'Billing Period', 'billy' ),
-											'text'  => '',
-										),
-									),
-									// Meta field: Reference.
-									array(
-										'billy-blocks/invoice-meta',
-										array(
-											'label' => esc_html__( 'Reference', 'billy' ),
-											'text'  => '',
-										),
-									),
-								),
-							),
-						),
-					),
-					// Intro text.
-					array(
-						'core/group',
-						array(
-							'align'     => 'wide',
-							'className' => 'intro',
-						),
-						array(
+							)
+							:
+							// Static address field.
 							array(
 								'core/paragraph',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
-								),
-							),
-							array(
-								'core/paragraph',
-								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+									'placeholder' => esc_html__( 'Name', 'billy' ) . ' / ' . esc_html__( 'Company', 'billy' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '2' ) . "\n" . esc_html__( 'Country', 'billy' ),
 								),
 							),
 						),
 					),
-					// Product or service details (table).
 					array(
-						'billy-blocks/invoice-table',
-						array(
-							'align' => 'wide',
-						),
-					),
-					// Payment Information, Notes.
-					array(
-						'core/group',
-						array(
-							'align'     => 'wide',
-							'className' => 'information',
-						),
+						'core/column',
+						array(),
 						array(
 							array(
-								'core/heading',
-								array(
-									'level'       => 3,
-									'placeholder' => esc_html__( 'Information', 'billy' ),
-									'content'     => esc_html__( 'Information', 'billy' ),
-								),
-							),
-							array( 'billy-blocks/invoice-paymentinformation' ),
-							array(
-								'core/paragraph',
-								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
-								),
-							),
-						),
-					),
-					// Footer (reusable block).
-					array(
-						'core/block',
-						array( 'ref' => $footer_id ),
-					),
-				),
-			)
-		);
-
-		// Quotes.
-		register_post_type(
-			'billy-quote',
-			array(
-				'labels'        => array(
-					'name'          => esc_html__( 'Quotes', 'billy' ),
-					'singular_name' => esc_html__( 'Quote', 'billy' ),
-				),
-				'menu_icon'     => 'dashicons-tickets-alt',
-				'public'        => true,
-				'show_in_rest'  => true,
-				'supports'      => array( 'editor', 'thumbnail', 'revisions', 'custom-fields' ), // Custom fields need to be supported for "register_post_meta".
-				'taxonomies'    => array( 'category' ),
-				'show_ui'       => true,
-				'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
-				'template_lock' => 'insert',
-				'template'      => array(
-					// Actions.
-					array(
-						'billy-blocks/quote-actions',
-						array( 'align' => 'wide' ),
-					),
-					// Header (reusable block).
-					array(
-						'core/block',
-						array( 'ref' => $header_id ),
-					),
-					// Recipient address field.
-					array(
-						'core/columns',
-						array(
-							'align'     => 'wide',
-							'className' => 'details',
-						),
-						array(
-							array(
-								'core/column',
-								array( 'className' => 'addressee' ),
-								array(
-									class_exists( 'Billy_Pro_Blocks' )
-									?
-									array( 'billy-blocks/contact-selector', array() )
-									:
-									// Static address field.
-									array(
-										'core/paragraph',
-										array(
-											'placeholder' => esc_html__( 'Name', 'billy' ) . ' / ' . esc_html__( 'Company', 'billy' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '2' ) . "\n" . esc_html__( 'Country', 'billy' ),
-										),
-									),
-								),
-							),
-							array(
-								'core/column',
+								'core/spacer',
 								array(),
-								array(
-									array( 'core/spacer', array() ),
-								),
-							),
-							array(
-								'core/column',
-								array( 'className' => 'metadata' ),
-								array(
-									// Postdate.
-									array( 'billy-blocks/quote-date' ),
-									// Postdate + # days.
-									array( 'billy-blocks/quote-validuntildate' ),
-									// Meta field: Reference.
-									array(
-										'billy-blocks/quote-meta',
-										array(
-											'label' => esc_html__( 'Reference', 'billy' ),
-											'text'  => self::get_quote_number(),
-										),
-									),
-								),
 							),
 						),
 					),
-					// Intro text.
 					array(
-						'core/group',
+						'core/column',
+						array( 'className' => 'metadata' ),
 						array(
-							'align'     => 'wide',
-							'className' => 'intro',
-						),
-						array(
+							// Autogenerated from previous entry.
+							array( 'billy-blocks/invoice-number' ),
+							// Postdate.
+							array( 'billy-blocks/invoice-date' ),
+							// Postdate + # days.
+							array( 'billy-blocks/invoice-duedate' ),
+							// Meta field: Billing period.
 							array(
-								'core/paragraph',
+								'billy-blocks/invoice-meta',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
+									'label' => esc_html__( 'Billing Period', 'billy' ),
+									'text'  => '',
 								),
 							),
+							// Meta field: Reference.
 							array(
-								'core/paragraph',
+								'billy-blocks/invoice-meta',
 								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
-								),
-							),
-						),
-					),
-					// Product or service details (table).
-					array(
-						'billy-blocks/quote-table',
-						array( 'align' => 'wide' ),
-					),
-					// Quote Information, Notes.
-					array(
-						'core/group',
-						array(
-							'align'     => 'wide',
-							'className' => 'information',
-						),
-						array(
-							array(
-								'core/heading',
-								array(
-									'level'       => 3,
-									'placeholder' => esc_html__( 'Information', 'billy' ),
-									'content'     => esc_html__( 'Information', 'billy' ),
-								),
-							),
-							array( 'billy-blocks/quote-information' ),
-							array(
-								'core/paragraph',
-								array(
-									'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
+									'label' => esc_html__( 'Reference', 'billy' ),
+									'text'  => '',
 								),
 							),
 						),
-					),
-					// Footer (reusable block).
-					array(
-						'core/block',
-						array( 'ref' => $footer_id ),
 					),
 				),
-			)
-		);
-
-		// Accounting.
-		register_post_type(
-			'billy-accounting',
+			),
+			// Intro text.
 			array(
-				'labels'        => array(
-					'name'          => esc_html__( 'Accounting', 'billy' ),
-					'singular_name' => esc_html__( 'Accounting', 'billy' ),
+				'core/group',
+				array(
+					'align'     => 'wide',
+					'className' => 'intro',
 				),
-				'menu_icon'     => 'dashicons-book-alt',
-				'public'        => true,
-				'show_in_rest'  => true,
-				'supports'      => array( 'editor', 'thumbnail', 'revisions' ),
-				'taxonomies'    => array( 'category' ),
-				'show_ui'       => true,
-				'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
-				'template_lock' => 'insert',
-				'template'      => array(
-					// Actions.
+				array(
 					array(
-						'billy-blocks/accounting-actions',
-						array( 'align' => 'wide' ),
+						'core/paragraph',
+						array(
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
+						),
 					),
-					// Heading.
+					array(
+						'core/paragraph',
+						array(
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+						),
+					),
+				),
+			),
+			// Product or service details (table).
+			array(
+				'billy-blocks/invoice-table',
+				array(
+					'align' => 'wide',
+				),
+			),
+			// Payment Information, Notes.
+			array(
+				'core/group',
+				array(
+					'align'     => 'wide',
+					'className' => 'information',
+				),
+				array(
 					array(
 						'core/heading',
 						array(
-							'level'       => 1,
-							'placeholder' => esc_html__( 'Heading', 'billy' ),
-							'content'     => wp_date( 'Y' ),
+							'level'       => 3,
+							'placeholder' => esc_html__( 'Information', 'billy' ),
+							'content'     => esc_html__( 'Information', 'billy' ),
 						),
 					),
-					// Table.
-					array(
-						'billy-blocks/accounting-table',
-						array( 'align' => 'wide' ),
-					),
-					// Notes.
+					array( 'billy-blocks/invoice-paymentinformation' ),
 					array(
 						'core/paragraph',
 						array(
@@ -1386,8 +1225,259 @@ class Billy {
 						),
 					),
 				),
+			),
+			// Footer (reusable block).
+			array(
+				'core/block',
+				array( 'ref' => $footer_id ),
+			),
+		);
+
+		// Filterable template. @since 1.10.0
+		$invoice_template = apply_filters(
+			'billy_invoice_template',
+			$invoice_template,
+			array(
+				'ref_header' => $header_id,
+				'ref_footer' => $footer_id,
 			)
 		);
+
+		$cpt_settings = array(
+			'labels'        => array(
+				'name'          => esc_html__( 'Invoices', 'billy' ),
+				'singular_name' => esc_html__( 'Invoice', 'billy' ),
+			),
+			'menu_icon'     => 'dashicons-tickets',
+			'public'        => true,
+			'show_in_rest'  => true,
+			'supports'      => array( 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ), // Custom fields need to be supported for "register_post_meta".
+			'taxonomies'    => array( 'category' ),
+			'show_ui'       => true,
+			'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
+			'template_lock' => 'insert',
+		);
+
+		if ( ! is_readable( get_theme_file_path( 'templates/billy-invoice.html' ) ) ) {
+			$cpt_settings['templates'] = $invoice_template;
+		}
+
+		// Register.
+		register_post_type( 'billy-invoice', $cpt_settings );
+
+		/**
+		 * Quotes.
+		 */
+		$quote_template = array(
+			// Actions.
+			array(
+				'billy-blocks/quote-actions',
+				array( 'align' => 'wide' ),
+			),
+			// Header (reusable block).
+			array(
+				'core/block',
+				array( 'ref' => $header_id ),
+			),
+			// Recipient address field.
+			array(
+				'core/columns',
+				array(
+					'align'     => 'wide',
+					'className' => 'details',
+				),
+				array(
+					array(
+						'core/column',
+						array( 'className' => 'addressee' ),
+						array(
+							class_exists( 'Billy_Pro_Blocks' )
+							?
+							array( 'billy-blocks/contact-selector', array() )
+							:
+							// Static address field.
+							array(
+								'core/paragraph',
+								array(
+									'placeholder' => esc_html__( 'Name', 'billy' ) . ' / ' . esc_html__( 'Company', 'billy' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '1' ) . "\n" . sprintf( esc_html__( 'Address Field %s', 'billy' ), '2' ) . "\n" . esc_html__( 'Country', 'billy' ),
+								),
+							),
+						),
+					),
+					array(
+						'core/column',
+						array(),
+						array(
+							array( 'core/spacer', array() ),
+						),
+					),
+					array(
+						'core/column',
+						array( 'className' => 'metadata' ),
+						array(
+							// Postdate.
+							array( 'billy-blocks/quote-date' ),
+							// Postdate + # days.
+							array( 'billy-blocks/quote-validuntildate' ),
+							// Meta field: Reference.
+							array(
+								'billy-blocks/quote-meta',
+								array(
+									'label' => esc_html__( 'Reference', 'billy' ),
+									'text'  => self::get_quote_number(),
+								),
+							),
+						),
+					),
+				),
+			),
+			// Intro text.
+			array(
+				'core/group',
+				array(
+					'align'     => 'wide',
+					'className' => 'intro',
+				),
+				array(
+					array(
+						'core/paragraph',
+						array(
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
+						),
+					),
+					array(
+						'core/paragraph',
+						array(
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Intro text', 'billy' ) ) . "\n" . esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas.', 'billy' ),
+						),
+					),
+				),
+			),
+			// Product or service details (table).
+			array(
+				'billy-blocks/quote-table',
+				array( 'align' => 'wide' ),
+			),
+			// Quote Information, Notes.
+			array(
+				'core/group',
+				array(
+					'align'     => 'wide',
+					'className' => 'information',
+				),
+				array(
+					array(
+						'core/heading',
+						array(
+							'level'       => 3,
+							'placeholder' => esc_html__( 'Information', 'billy' ),
+							'content'     => esc_html__( 'Information', 'billy' ),
+						),
+					),
+					array( 'billy-blocks/quote-information' ),
+					array(
+						'core/paragraph',
+						array(
+							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
+						),
+					),
+				),
+			),
+			// Footer (reusable block).
+			array(
+				'core/block',
+				array( 'ref' => $footer_id ),
+			),
+		);
+
+		// Filterable template. @since 1.10.0
+		$quote_template = apply_filters(
+			'billy_quote_template',
+			$quote_template,
+			array(
+				'ref_header' => $header_id,
+				'ref_footer' => $footer_id,
+			)
+		);
+
+		$cpt_settings = array(
+			'labels'        => array(
+				'name'          => esc_html__( 'Quotes', 'billy' ),
+				'singular_name' => esc_html__( 'Quote', 'billy' ),
+			),
+			'menu_icon'     => 'dashicons-tickets-alt',
+			'public'        => true,
+			'show_in_rest'  => true,
+			'supports'      => array( 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ), // Custom fields need to be supported for "register_post_meta".
+			'taxonomies'    => array( 'category' ),
+			'show_ui'       => true,
+			'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
+			'template_lock' => 'insert',
+		);
+
+		if ( ! is_readable( get_theme_file_path( 'templates/billy-quote.html' ) ) ) {
+			$cpt_settings['templates'] = $quote_template;
+		}
+
+		// Register.
+		register_post_type( 'billy-quote', $cpt_settings );
+
+		/**
+		 * Accounting.
+		 */
+		$accounting_template = array(
+			// Actions.
+			array(
+				'billy-blocks/accounting-actions',
+				array( 'align' => 'wide' ),
+			),
+			// Heading.
+			array(
+				'core/heading',
+				array(
+					'level'       => 1,
+					'placeholder' => esc_html__( 'Heading', 'billy' ),
+					'content'     => wp_date( 'Y' ),
+				),
+			),
+			// Table.
+			array(
+				'billy-blocks/accounting-table',
+				array( 'align' => 'wide' ),
+			),
+			// Notes.
+			array(
+				'core/paragraph',
+				array(
+					'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Notes', 'billy' ) ),
+				),
+			),
+		);
+
+		// Filterable template. @since 1.10.0!
+		$accounting_template = apply_filters( 'billy_accounting_template', $accounting_template );
+
+		$cpt_settings = array(
+			'labels'        => array(
+				'name'          => esc_html__( 'Accounting', 'billy' ),
+				'singular_name' => esc_html__( 'Accounting', 'billy' ),
+			),
+			'menu_icon'     => 'dashicons-book-alt',
+			'public'        => true,
+			'show_in_rest'  => true,
+			'supports'      => array( 'editor', 'thumbnail', 'revisions' ),
+			'taxonomies'    => array( 'category' ),
+			'show_ui'       => true,
+			'show_in_menu'  => defined( 'BILLY_ADMIN_MENU' ) ? 'billy' : true,
+			'template_lock' => 'insert',
+		);
+
+		if ( ! is_readable( get_theme_file_path( 'templates/billy-accounting.html' ) ) ) {
+			$cpt_settings['templates'] = $accounting_template;
+		}
+
+		// Register.
+		register_post_type( 'billy-accounting', $cpt_settings );
 
 		// Flush permalinks.
 		do_action( 'after_register_post_type' );
@@ -1414,11 +1504,11 @@ class Billy {
 		register_post_meta( 'billy-quote', '_quote_number', $field_args );
 	}
 
-	/**
-	 * Enqueue frontend assets.
-	 *
-	 * @return void
-	 */
+		/**
+		 * Enqueue frontend assets.
+		 *
+		 * @return void
+		 */
 	public function enqueue_assets() {
 		global $post;
 
@@ -1452,11 +1542,11 @@ class Billy {
 		}
 	}
 
-	/**
-	 * Enqueue admin assets.
-	 *
-	 * @return void
-	 */
+		/**
+		 * Enqueue admin assets.
+		 *
+		 * @return void
+		 */
 	public function enqueue_admin_assets() {
 		$theme_mods        = array(
 			'name'     => esc_html__( 'Name', 'billy' ),
@@ -1501,13 +1591,13 @@ class Billy {
 		);
 	}
 
-	/**
-	 * Theme Customizer options.
-	 *
-	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
-	 *
-	 * @return void
-	 */
+		/**
+		 * Theme Customizer options.
+		 *
+		 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+		 *
+		 * @return void
+		 */
 	public function wp_customizer_options( $wp_customize ) {
 		/**
 		 * Initialize panel.
@@ -1915,14 +2005,14 @@ class Billy {
 		}
 	}
 
-	/**
-	 * Theme Customizer: Geocode.
-	 *
-	 * @param object $validity WP Customize validity.
-	 * @param string $value    WP Customize value.
-	 *
-	 * @return object
-	 */
+		/**
+		 * Theme Customizer: Geocode.
+		 *
+		 * @param object $validity WP Customize validity.
+		 * @param string $value    WP Customize value.
+		 *
+		 * @return object
+		 */
 	public function geocode( $validity, $value ) {
 		if ( get_theme_mod( 'geocoding_enabled', '1' ) && ! empty( $value ) && strlen( $value ) > 3 ) {
 			$result = null;
@@ -1957,14 +2047,14 @@ class Billy {
 		return $validity;
 	}
 
-	/**
-	 * Theme Customizer: Validate currency.
-	 *
-	 * @param object $validity WP Customize validity.
-	 * @param string $value    WP Customize value.
-	 *
-	 * @return object
-	 */
+		/**
+		 * Theme Customizer: Validate currency.
+		 *
+		 * @param object $validity WP Customize validity.
+		 * @param string $value    WP Customize value.
+		 *
+		 * @return object
+		 */
 	public function validate_currency( $validity, $value ) {
 		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
 			$validity->add( 'no_valid_currency', esc_html__( 'Please provide a valid currency format', 'billy' ) );
@@ -1973,14 +2063,14 @@ class Billy {
 		return $validity;
 	}
 
-	/**
-	 * Theme Customizer: Validate tax rates.
-	 *
-	 * @param object $validity WP Customize validity.
-	 * @param string $value    WP Customize value.
-	 *
-	 * @return object
-	 */
+		/**
+		 * Theme Customizer: Validate tax rates.
+		 *
+		 * @param object $validity WP Customize validity.
+		 * @param string $value    WP Customize value.
+		 *
+		 * @return object
+		 */
 	public function validate_taxrates( $validity, $value ) {
 		if ( ! empty( $value ) ) {
 			$newlines = explode( "\n", $value );
