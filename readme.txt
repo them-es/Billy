@@ -151,10 +151,10 @@ Please consider purchasing the premium add-on with the following features:
 == Changelog ==
 
 = 1.10.1 =
-* Also customize the output of PDF content and footer via "/templates/billy-pdf-{content|footer}.html"
+* Also customize the output of PDF content and footer via `/templates/billy-pdf-{content|footer}.html`
 
 = 1.10.0 =
-* Full customization of output using block templates or filter hooks: 1. Block templates via "/templates/billy-{invoice|quote|accounting}.html", 2. `add_filter()` CPT "billy_{invoice|quote|accounting}_template", 3. `add_filter()` PDF output "billy_pdf_{content|footer}"
+* Full customization of output using block templates or filter hooks: 1. Block templates via `/templates/billy-{invoice|quote|accounting}.html`, 2. `add_filter()` CPT `billy_{invoice|quote|accounting}_template`, 3. `add_filter()` PDF output `billy_pdf_{content|footer}`
 * PDF generator: Support for mutable block columns instead of fixed 3-col layout
 * Improved theme compatibility: Changed priority of "the_content" filter to 1
 
@@ -178,7 +178,7 @@ Please consider purchasing the premium add-on with the following features:
 = 1.9.2 =
 * Invoice and Quote number formatting: Use current date instead of post date if the post is unpublished
 * Dashboard widget: Remove output sanitization as this caused issues when meta data errors were found
-* Add a nonce verifiction to the undocumented "fix_invoices" function
+* Add a nonce verification to the undocumented "fix_invoices" function
 
 = 1.9.1 =
 * Allow to disable Geocoding
