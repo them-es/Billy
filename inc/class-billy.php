@@ -274,8 +274,8 @@ class Billy {
 		$billy_invoice_template_filter    = has_filter( 'billy_invoice_template' ) || is_readable( get_theme_file_path( 'templates/billy-invoice.html' ) );
 		$billy_quote_template_filter      = has_filter( 'billy_quote_template' ) || is_readable( get_theme_file_path( 'templates/billy-quote.html' ) );
 		$billy_accounting_template_filter = has_filter( 'billy_accounting_template' ) || is_readable( get_theme_file_path( 'templates/billy-accounting.html' ) );
-		$billy_pdf_content_filter         = has_filter( 'billy_pdf_content' );
-		$billy_pdf_footer_filter          = has_filter( 'billy_pdf_footer' );
+		$billy_pdf_content_filter         = has_filter( 'billy_pdf_content' ) || is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
+		$billy_pdf_footer_filter          = has_filter( 'billy_pdf_footer' ) || is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
 
 		return '<table class="widefat">
 			<tbody>
