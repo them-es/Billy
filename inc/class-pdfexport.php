@@ -222,7 +222,9 @@ class Billy_PDF_Export {
 			$content = preg_replace( '/\r|\n/', '', $content );
 
 			// Filterable content. @since 1.10.0!
-			if ( is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) ) ) {
+			if ( is_readable( get_theme_file_path( 'templates/' . $post_type . '-pdf-content.html' ) ) ) {
+				$content = file_get_contents( get_theme_file_path( 'templates/' . $post_type . '-pdf-content.html' ) );
+			} elseif ( is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) ) ) {
 				$content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
 			} else {
 				$content = apply_filters( 'billy_pdf_content', $content, $post_type );
@@ -298,7 +300,9 @@ class Billy_PDF_Export {
 			}
 
 			// Filterable footer. @since 1.10.0!
-			if ( is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) ) ) {
+			if ( is_readable( get_theme_file_path( 'templates/' . $post_type . '-pdf-footer.html' ) ) ) {
+				$content = file_get_contents( get_theme_file_path( 'templates/' . $post_type . '-pdf-footer.html' ) );
+			} elseif ( is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) ) ) {
 				$footer_content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
 			} else {
 				$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );

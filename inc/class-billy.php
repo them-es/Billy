@@ -1259,7 +1259,7 @@ class Billy {
 		);
 
 		if ( ! is_readable( get_theme_file_path( 'templates/billy-invoice.html' ) ) ) {
-			$cpt_settings['templates'] = $invoice_template;
+			$cpt_settings['template'] = $invoice_template;
 		}
 
 		// Register.
@@ -1416,7 +1416,7 @@ class Billy {
 		);
 
 		if ( ! is_readable( get_theme_file_path( 'templates/billy-quote.html' ) ) ) {
-			$cpt_settings['templates'] = $quote_template;
+			$cpt_settings['template'] = $quote_template;
 		}
 
 		// Register.
@@ -1473,7 +1473,7 @@ class Billy {
 		);
 
 		if ( ! is_readable( get_theme_file_path( 'templates/billy-accounting.html' ) ) ) {
-			$cpt_settings['templates'] = $accounting_template;
+			$cpt_settings['template'] = $accounting_template;
 		}
 
 		// Register.
