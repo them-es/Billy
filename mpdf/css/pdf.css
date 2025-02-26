@@ -35,6 +35,10 @@ hr {
 	margin: 5pt 0;
 }
 
+figure {
+	margin-bottom: 0.5pt;
+}
+
 .header {
 	margin-bottom: 40pt;
 }
@@ -110,6 +114,7 @@ strong {
 	width: 50%;
 	min-width: 50%;
 	font-size: 7pt;
+	margin-bottom: 5pt;
 }
 .metadata .label {
 	font-weight: bold;

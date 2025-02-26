@@ -198,7 +198,6 @@ class Billy_PDF_Export {
 				'<ol>',
 				'</ol>',
 			);
-			$spacer       = '<hr style="margin: 1.5pt 0; color: #FFF;">';
 			$replace_tags = array(
 				$spacer . '<p>',
 				'</p>' . $spacer,
@@ -254,14 +253,14 @@ class Billy_PDF_Export {
 				'align="right" class="has-text-align-right',
 				'align="left" class="has-text-align-left',
 				'<figure ',
-				'</figure><br>',
+				'</figure>',
 			);
 			$content                    = str_replace( $content_placeholders, $content_placeholder_values, $content );
 
 			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
 			$dom = new DOMDocument();
 			libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
-			$dom->loadHTML( $content );
+			$dom->loadHTML( '<meta charset="UTF-8" />' . $content ); // Make sure the content will be UTF-8 formatted.
 			libxml_clear_errors();
 
 			$xpath = new DOMXPath( $dom );
@@ -332,14 +331,14 @@ class Billy_PDF_Export {
 				'align="right" class="has-text-align-right',
 				'align="left" class="has-text-align-left',
 				'<figure ',
-				'</figure><br>',
+				'</figure>',
 			);
 			$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
 
 			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
 			$dom = new DOMDocument();
 			libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
-			$dom->loadHTML( $footer_content );
+			$dom->loadHTML( '<meta charset="UTF-8" />' . $footer_content ); // Make sure the content will be UTF-8 formatted.
 			libxml_clear_errors();
 
 			$xpath = new DOMXPath( $dom );

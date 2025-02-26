@@ -271,11 +271,25 @@ class Billy {
 			)
 		);
 
-		$billy_invoice_template_filter    = has_filter( 'billy_invoice_template' ) || is_readable( get_theme_file_path( 'templates/billy-invoice.html' ) );
-		$billy_quote_template_filter      = has_filter( 'billy_quote_template' ) || is_readable( get_theme_file_path( 'templates/billy-quote.html' ) );
-		$billy_accounting_template_filter = has_filter( 'billy_accounting_template' ) || is_readable( get_theme_file_path( 'templates/billy-accounting.html' ) );
-		$billy_pdf_content_filter         = has_filter( 'billy_pdf_content' ) || is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
-		$billy_pdf_footer_filter          = has_filter( 'billy_pdf_footer' ) || is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
+		$billy_template_filter = array();
+		// CPT Templates.
+		$billy_template_filter[ esc_html__( 'Invoice', 'billy' ) ]    = has_filter( 'billy_invoice_template' ) || is_readable( get_theme_file_path( 'templates/billy-invoice.html' ) );
+		$billy_template_filter[ esc_html__( 'Quote', 'billy' ) ]      = has_filter( 'billy_quote_template' ) || is_readable( get_theme_file_path( 'templates/billy-quote.html' ) );
+		$billy_template_filter[ esc_html__( 'Accounting', 'billy' ) ] = has_filter( 'billy_accounting_template' ) || is_readable( get_theme_file_path( 'templates/billy-accounting.html' ) );
+		// [PRO].
+		$billy_template_filter[ esc_html__( 'Contact', 'billy' ) ]      = has_filter( 'billy_contact_template' ) || is_readable( get_theme_file_path( 'templates/billy-contact.html' ) );
+		$billy_template_filter[ esc_html__( 'To do', 'billy' ) ]        = has_filter( 'billy_to_do_template' ) || is_readable( get_theme_file_path( 'templates/billy-to-do.html' ) );
+		$billy_template_filter[ esc_html__( 'Timetracking', 'billy' ) ] = has_filter( 'billy_timetracking_template' ) || is_readable( get_theme_file_path( 'templates/billy-timetracking.html' ) );
+		// PDF templates.
+		$billy_template_filter[ esc_html__( 'PDF Content', 'billy' ) ] = has_filter( 'billy_pdf_content' ) || is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
+		$billy_template_filter[ esc_html__( 'PDF Footer', 'billy' ) ]  = has_filter( 'billy_pdf_footer' ) || is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
+
+		$output_billy_templates = '';
+		foreach ( $billy_template_filter as $template_name => $template_found ) {
+			if ( $template_found ) {
+				$output_billy_templates .= sprintf( esc_html__( '✅ %s', 'billy' ), $template_name ) . '<br>';
+			}
+		}
 
 		return '<table class="widefat">
 			<tbody>
@@ -307,10 +321,10 @@ class Billy {
 					<td><p class="customize-edit"><a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=billy_setup_panel' ) ) . '" title="' . esc_attr__( 'Edit', 'billy' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), '<span class="dashicons dashicons-edit" aria-hidden="true"></span>', esc_html__( 'Edit', 'billy' ) ) . '</a></p></td>
 				</tr>
 				</tr>' .
-				( $billy_invoice_template_filter || $billy_quote_template_filter || $billy_accounting_template_filter || $billy_pdf_footer_filter || $billy_pdf_content_filter ? '
+				( ! empty( $output_billy_templates ) ? '
 				<tr>
 					<td><strong>' . esc_html__( 'Customized templates', 'billy' ) . '</strong></td>
-					<td>' . ( $billy_invoice_template_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'Invoice Template', 'billy' ) ) . '<br>' : '' ) . ( $billy_quote_template_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'Quote Template', 'billy' ) ) . '<br>' : '' ) . ( $billy_accounting_template_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'Accounting Template', 'billy' ) ) . '<br>' : '' ) . ( $billy_pdf_footer_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'PDF Footer', 'billy' ) ) . '<br>' : '' ) . ( $billy_pdf_content_filter ? sprintf( esc_html__( '✅ %s', 'billy' ), esc_html__( 'PDF Content', 'billy' ) ) . '<br>' : '' ) . '</td>
+					<td>' . $output_billy_templates . '</td>
 				</tr>' : '' ) .
 			'</tbody>
 		</table>';
@@ -1091,7 +1105,7 @@ class Billy {
 		}
 
 		/**
-		 * Invoices.
+		 * Register post type: Invoices.
 		 */
 		$invoice_template = array(
 			// Actions.
@@ -1262,11 +1276,10 @@ class Billy {
 			$cpt_settings['template'] = $invoice_template;
 		}
 
-		// Register.
 		register_post_type( 'billy-invoice', $cpt_settings );
 
 		/**
-		 * Quotes.
+		 * Register post type: Quotes.
 		 */
 		$quote_template = array(
 			// Actions.
@@ -1419,11 +1432,10 @@ class Billy {
 			$cpt_settings['template'] = $quote_template;
 		}
 
-		// Register.
 		register_post_type( 'billy-quote', $cpt_settings );
 
 		/**
-		 * Accounting.
+		 * Register post type: Accounting.
 		 */
 		$accounting_template = array(
 			// Actions.
@@ -1476,7 +1488,6 @@ class Billy {
 			$cpt_settings['template'] = $accounting_template;
 		}
 
-		// Register.
 		register_post_type( 'billy-accounting', $cpt_settings );
 
 		// Flush permalinks.
