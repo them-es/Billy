@@ -3,10 +3,11 @@
  * "mPDF" PHP library.
  * https://mpdf.github.io
  */
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor-prefixed/autoload.php';
 
-use Mpdf\Mpdf;
-use Mpdf\WatermarkText;
+use Billy\Mpdf\Mpdf;
+use Billy\Mpdf\WatermarkText;
+use Billy\Mpdf\HTMLParserMode;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -135,8 +136,13 @@ class Billy_PDF_Export {
 
 		$parameters = $request->get_params();
 
-		$post_id   = (int) $parameters['id']; // Invoice/Quote.
-		$post      = get_post( $post_id );
+		$post_id = (int) $parameters['id']; // Invoice/Quote.
+		$post    = get_post( $post_id );
+
+		if ( empty( $post_id ) || ! $post ) {
+			return '404';
+		}
+
 		$post_type = $post->post_type;
 		$reference = $post->post_title;
 
@@ -163,185 +169,205 @@ class Billy_PDF_Export {
 			$mpdf->showWatermarkText = true;
 		}
 
-		$mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
+		$mpdf->WriteHTML( $css, HTMLParserMode::HEADER_CSS );
 
-		$content = '';
-		if ( ! empty( $post_id ) && get_post( $post_id ) ) {
-			global $post;
-			$post = get_post( $post_id );
+		$footer_ids = get_posts(
+			array(
+				'post_type'   => 'wp_block',
+				'title'       => 'Billy Footer',
+				'post_status' => array( 'publish', 'private' ),
+				'fields'      => 'ids',
+			)
+		);
 
-			setup_postdata( $post );
+		global $post;
+		$post = get_post( $post_id );
+		setup_postdata( $post );
 
-			$footer_ids = get_posts(
-				array(
-					'post_type'   => 'wp_block',
-					'title'       => 'Billy Footer',
-					'post_status' => array( 'publish', 'private' ),
-					'fields'      => 'ids',
-				)
-			);
-
-			$blocks = parse_blocks( get_the_content() );
-			foreach ( $blocks as $block ) {
-				// Exclude reusable Footer blocks.
-				if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
-					$content .= render_block( $block );
-				}
-			}
-
-			// Remove line breaks from content.
-			$content = preg_replace( '/\r|\n/', '', $content );
-
-			// Filterable content. @since 1.10.0!
-			if ( is_readable( get_theme_file_path( 'templates/' . $post_type . '-pdf-content.html' ) ) ) {
-				$content = file_get_contents( get_theme_file_path( 'templates/' . $post_type . '-pdf-content.html' ) );
-			} elseif ( is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) ) ) {
-				$content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
-			} else {
-				$content = apply_filters( 'billy_pdf_content', $content, $post_type );
-			}
-
-			$content_placeholders       = array(
-				'{DATE}',
-				'{EMAIL}',
-				'{SITETITLE}',
-				'{SITEICON}',
-				'{CURRENTPAGE}',
-				'{TOTALPAGES}',
-				'class="has-text-align-center',
-				'class="has-text-align-right',
-				'class="has-text-align-left',
-				'<p ',
-				'</p>',
-			);
-			$content_placeholder_values = array(
-				esc_html( get_the_date( '', $post_id ) ),
-				esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
-				esc_html( get_bloginfo( 'name' ) ),
-				get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="70" />' : '',
-				'{PAGENO}',
-				'{nbpg}',
-				'align="center" class="has-text-align-center',
-				'align="right" class="has-text-align-right',
-				'align="left" class="has-text-align-left',
-				'<figure ',
-				'</figure>',
-			);
-			$content                    = str_replace( $content_placeholders, $content_placeholder_values, $content );
-
-			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
-			$dom = new DOMDocument();
-			libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
-			$dom->loadHTML( '<meta charset="UTF-8" />' . $content ); // Make sure the content will be UTF-8 formatted.
-			libxml_clear_errors();
-
-			$xpath = new DOMXPath( $dom );
-
-			// Find all wp-block-columns elements.
-			$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
-
-			foreach ( $columns as $column ) {
-				// Find all inner wp-block-column elements.
-				$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
-				$count         = $inner_columns->length;
-
-				if ( $count > 0 ) {
-					foreach ( $inner_columns as $inner_column ) {
-						$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
-					}
-				}
-			}
-
-			$content = $dom->saveHTML();
-
-			wp_reset_postdata();
-
-			// PDF footer.
-			if ( $footer_ids ) {
-				$footer_content = get_post_field( 'post_content', $footer_ids[0] );
-			} else {
-				// Fallback.
-				$footer_content = '<table class="footer" width="100%">
-				<tr>
-					<td width="33%"><small>' . esc_html( get_the_date( '', $post_id ) ) . '</small></td>
-					<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
-					<td width="33%" align="right"><small>' . esc_html( $reference ) . '</small></td>
-				</tr>
-			</table>';
-			}
-
-			// Filterable footer. @since 1.10.0!
-			if ( is_readable( get_theme_file_path( 'templates/' . $post_type . '-pdf-footer.html' ) ) ) {
-				$content = file_get_contents( get_theme_file_path( 'templates/' . $post_type . '-pdf-footer.html' ) );
-			} elseif ( is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) ) ) {
-				$footer_content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
-			} else {
-				$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );
-			}
-
-			$footer_placeholders       = array(
-				'{DATE}',
-				'{EMAIL}',
-				'{SITETITLE}',
-				'{SITEICON}',
-				'{CURRENTPAGE}',
-				'{TOTALPAGES}',
-				'class="has-text-align-center',
-				'class="has-text-align-right',
-				'class="has-text-align-left',
-				'<p ',
-				'</p>',
-			);
-			$footer_placeholder_values = array(
-				esc_html( get_the_date( '', $post_id ) ),
-				esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
-				esc_html( get_bloginfo( 'name' ) ),
-				get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
-				'{PAGENO}',
-				'{nbpg}',
-				'align="center" class="has-text-align-center',
-				'align="right" class="has-text-align-right',
-				'align="left" class="has-text-align-left',
-				'<figure ',
-				'</figure>',
-			);
-			$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
-
-			// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
-			$dom = new DOMDocument();
-			libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
-			$dom->loadHTML( '<meta charset="UTF-8" />' . $footer_content ); // Make sure the content will be UTF-8 formatted.
-			libxml_clear_errors();
-
-			$xpath = new DOMXPath( $dom );
-
-			// Find all wp-block-columns elements.
-			$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
-
-			foreach ( $columns as $column ) {
-				// Find all inner wp-block-column elements.
-				$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
-				$count         = $inner_columns->length;
-
-				if ( $count > 0 ) {
-					foreach ( $inner_columns as $inner_column ) {
-						$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
-					}
-				}
-			}
-
-			$footer_content = $dom->saveHTML();
-
-			$mpdf->SetHTMLFooter( do_blocks( $footer_content ) );
+		if ( function_exists( 'pll_get_post_language' ) ) {
+			switch_to_locale( pll_get_post_language( $post_id, 'locale' ) );
 		}
 
+		$content = '';
+		$blocks  = parse_blocks( get_the_content() );
+		foreach ( $blocks as $block ) {
+			// Exclude reusable Footer blocks.
+			if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
+				$content .= apply_filters( 'the_content', render_block( $block ) );
+			}
+		}
+
+		// Remove line breaks from content.
+		$content = preg_replace( '/\r|\n/', '', $content );
+
+		// Filterable content. @since 1.10.0!
+		if ( is_readable( get_theme_file_path( 'templates/' . $post_type . '-pdf-content.html' ) ) ) {
+			$content = file_get_contents( get_theme_file_path( 'templates/' . $post_type . '-pdf-content.html' ) );
+		} elseif ( is_readable( get_theme_file_path( 'templates/billy-pdf-content.html' ) ) ) {
+			$content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-content.html' ) );
+		} else {
+			$content = apply_filters( 'billy_pdf_content', $content, $post_type );
+		}
+
+		// [WORKAROUND] Replace hardcoded "EN" translation strings in table. [TODO] Refactor table block.
+		$translation_placeholders       = array(
+			'Description</th>',
+			'Amount</th>',
+			'Subtotal</th>',
+			'Total</th>',
+			'Tax</th>',
+		);
+		$translation_placeholder_values = array(
+			__( 'Description', 'billy' ) . '</th>',
+			__( 'Amount', 'billy' ) . '</th>',
+			__( 'Subtotal', 'billy' ) . '</th>',
+			__( 'Total', 'billy' ) . '</th>',
+			__( 'Tax', 'billy' ) . '</th>',
+		);
+		$content                        = str_replace( $translation_placeholders, $translation_placeholder_values, $content );
+
+		// Replace dynamic value.
+		$content_placeholders       = array(
+			'{DATE}',
+			'{EMAIL}',
+			'{SITETITLE}',
+			'{SITEICON}',
+			'{CURRENTPAGE}',
+			'{TOTALPAGES}',
+			'class="has-text-align-center',
+			'class="has-text-align-right',
+			'class="has-text-align-left',
+			'<p ',
+			'</p>',
+		);
+		$content_placeholder_values = array(
+			esc_html( get_the_date( '', $post_id ) ),
+			esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
+			esc_html( get_bloginfo( 'name' ) ),
+			get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="70" />' : '',
+			'{PAGENO}',
+			'{nbpg}',
+			'align="center" class="has-text-align-center',
+			'align="right" class="has-text-align-right',
+			'align="left" class="has-text-align-left',
+			'<figure ',
+			'</figure>',
+		);
+		$content                    = str_replace( $content_placeholders, $content_placeholder_values, $content );
+
+		// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
+		$dom = new DOMDocument();
+		libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
+		$dom->loadHTML( '<meta charset="UTF-8" />' . $content ); // Make sure the content will be UTF-8 formatted.
+		libxml_clear_errors();
+
+		$xpath = new DOMXPath( $dom );
+
+		// Find all wp-block-columns elements.
+		$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
+
+		foreach ( $columns as $column ) {
+			// Find all inner wp-block-column elements.
+			$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
+			$count         = $inner_columns->length;
+
+			if ( $count > 0 ) {
+				foreach ( $inner_columns as $inner_column ) {
+					$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
+				}
+			}
+		}
+
+		$content = $dom->saveHTML();
+
+		wp_reset_postdata();
+
+		// PDF footer.
+		if ( $footer_ids ) {
+			$footer_content = get_post_field( 'post_content', $footer_ids[0] );
+		} else {
+			// Fallback.
+			$footer_content = '<table class="footer" width="100%">
+			<tr>
+				<td width="33%"><small>' . esc_html( get_the_date( '', $post_id ) ) . '</small></td>
+				<td width="33%" align="center"><small>{PAGENO}/{nbpg}</small></td>
+				<td width="33%" align="right"><small>' . esc_html( $reference ) . '</small></td>
+			</tr>
+		</table>';
+		}
+
+		// Filterable footer. @since 1.10.0!
+		if ( is_readable( get_theme_file_path( 'templates/' . $post_type . '-pdf-footer.html' ) ) ) {
+			$content = file_get_contents( get_theme_file_path( 'templates/' . $post_type . '-pdf-footer.html' ) );
+		} elseif ( is_readable( get_theme_file_path( 'templates/billy-pdf-footer.html' ) ) ) {
+			$footer_content = file_get_contents( get_theme_file_path( 'templates/billy-pdf-footer.html' ) );
+		} else {
+			$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );
+		}
+
+		$footer_placeholders       = array(
+			'{DATE}',
+			'{EMAIL}',
+			'{SITETITLE}',
+			'{SITEICON}',
+			'{CURRENTPAGE}',
+			'{TOTALPAGES}',
+			'class="has-text-align-center',
+			'class="has-text-align-right',
+			'class="has-text-align-left',
+			'<p ',
+			'</p>',
+		);
+		$footer_placeholder_values = array(
+			esc_html( get_the_date( '', $post_id ) ),
+			esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
+			esc_html( get_bloginfo( 'name' ) ),
+			get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
+			'{PAGENO}',
+			'{nbpg}',
+			'align="center" class="has-text-align-center',
+			'align="right" class="has-text-align-right',
+			'align="left" class="has-text-align-left',
+			'<figure ',
+			'</figure>',
+		);
+		$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
+
+		// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
+		$dom = new DOMDocument();
+		libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
+		$dom->loadHTML( '<meta charset="UTF-8" />' . $footer_content ); // Make sure the content will be UTF-8 formatted.
+		libxml_clear_errors();
+
+		$xpath = new DOMXPath( $dom );
+
+		// Find all wp-block-columns elements.
+		$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
+
+		foreach ( $columns as $column ) {
+			// Find all inner wp-block-column elements.
+			$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
+			$count         = $inner_columns->length;
+
+			if ( $count > 0 ) {
+				foreach ( $inner_columns as $inner_column ) {
+					$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
+				}
+			}
+		}
+
+		$footer_content = $dom->saveHTML();
+
+		$mpdf->SetHTMLFooter( do_blocks( $footer_content ) );
+
 		$write_html = '<html>
-			<body class="' . esc_attr( $post_type ) . '-template-default single single-' . esc_attr( $post_type ) . ' singular"><div class="entry-content"><div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper">' . $content . '</div></div>
+			<body class="' . esc_attr( $post_type ) . '-template-default single single-' . esc_attr( $post_type ) . ' singular">
+			<div class="entry-content"><div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper">' . $content . '</div></div>
 			</body>
 		</html>';
 
 		$mpdf->SetTitle( esc_html( $reference ) );
-		$mpdf->WriteHTML( $write_html, \Mpdf\HTMLParserMode::HTML_BODY );
+		$mpdf->WriteHTML( $write_html, HTMLParserMode::HTML_BODY );
 		$file = esc_attr( $reference ) . '.pdf';
 
 		// https://mpdf.github.io/reference/mpdf-functions/output.html

@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.10.4
+Stable tag: 1.10.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -149,6 +149,10 @@ Please consider purchasing the premium add-on with the following features:
 * You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
 
 == Changelog ==
+
+= 1.10.5 =
+* Refactor PDF generator: Ensure that some non-translated strings are correctly output
+* Vendor-prefix composer packages using Strauss to improve compatibility with third-party plugins using the same dependencies (e.g. mPDF)
 
 = 1.10.4 =
 * PDF generator: Remove an outdated workaround that potentially caused a PHP error

@@ -12,6 +12,7 @@ package.json
 package.txt
 npm*
 mpdf/tmp/
+bin
 
 # Compiled source #
 ###################

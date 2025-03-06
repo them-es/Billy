@@ -86,6 +86,7 @@ This code repository is not suitable for support requests. If you have a questio
 -   PDF file generation
     -   [mPDF](https://github.com/mpdf/mpdf), [GPLv2](https://github.com/mpdf/mpdf/blob/development/LICENSE.txt)
     -   [Roboto Font](https://fonts.google.com/specimen/Roboto), [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0)
+-   [Strauss](https://github.com/BrianHenryIE/strauss), [MIT](https://github.com/BrianHenryIE/strauss/blob/master/LICENSE)
 
 ## Copyright & License
 
