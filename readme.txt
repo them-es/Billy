@@ -3,8 +3,8 @@ Contributors: them.es
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
-Tested up to: 6.7
-Stable tag: 1.10.5
+Tested up to: 6.8
+Stable tag: 1.11.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -54,7 +54,7 @@ The following WordPress themes have been tested:
 * Fully customizable HTML and PDF output using block templates or add_filter()
 * Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties
 * Dashboard widget
-* Multilingual: You can [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
+* Multilingual - Feel free to help localize Billy into your language: [them.es](https://them.es/plugins/billy/docs "them.es") (them.es user account required) or [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") (WordPress.org user account required)
 
 = Dependencies? =
 
@@ -146,9 +146,14 @@ Please consider purchasing the premium add-on with the following features:
 = I need more features! =
 * Please check out the __PRO add-on__ which is available for purchase here: [https://them.es/plugins/billy](https://them.es/plugins/billy "them.es Billy")
 * WordPress developers are welcome to help improve the plugin via [GitHub](https://github.com/them-es "GitHub")
-* You can also [help translate](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") the plugin into your language
+* You can also help translate the plugin into your language: [them.es](https://them.es/plugins/billy/docs "them.es") (them.es user account required) or [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") (WordPress.org user account required)
 
 == Changelog ==
+
+= 1.11.0 =
+* Removed translation strings in table block and added custom placeholders that get replaced in the frontend to prevent potentially corrupted block warnings if the post language has been switched
+* Users can now contribute new translations or request changes via https://them.es/plugins/billy/docs/
+* Compatibility with WordPress 6.8
 
 = 1.10.5 =
 * Refactor PDF generator: Ensure that some non-translated strings are correctly output

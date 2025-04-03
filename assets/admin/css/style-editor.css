@@ -7,7 +7,7 @@ body.block-editor-page[class*="post-type-billy-"] .wp-block-post-content {
 }
 
 body.block-editor-page[class*="post-type-billy-"] .wp-block-group {
-	margin-block-start: 1.5rem !important;
+	margin-block-start: 3rem !important;
 }
 
 body.block-editor-page[class*="post-type-billy-"] .d-admin-none {
@@ -116,16 +116,14 @@ li[class*="billy"] li a[href*="accounting"]::before {
 
 /* Header */
 
-body.block-editor-page[class*="post-type-billy-"]
-	.wp-block-post-content
-	> .wp-block.is-reusable,
+body[class*="post-type-billy-"] .wp-block-post-content > .wp-block.is-reusable,
 [data-type="billy-blocks/header"] {
 	border-top: 1px dashed;
 	border-bottom: 1px dashed;
 	margin: 15px auto;
 	max-width: 100%;
 }
-body.block-editor-page[class*="post-type-billy-"]
+body[class*="post-type-billy-"]
 	.wp-block-post-content
 	> .wp-block.is-reusable
 	> *,
@@ -228,6 +226,9 @@ body.block-editor-page[class*="post-type-billy-"]
 	font-size: initial !important;
 }
 
+[data-type$="-tablerow"] table {
+	padding: 1rem 0;
+}
 [data-type$="-tablerow"] table {
 	width: 100%;
 	border-top: 1px solid;

@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.10.5
+ * Version: 1.11.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -84,7 +84,7 @@ function billy_is_plugin_active( $plugin = '' ) {
  * Register "Billy" menu.
  */
 function billy_register_menu_page() {
-	add_menu_page( 'Billy', 'Billy', 'edit_private_posts', 'billy', null, 'dashicons-tickets', 10 );
+	add_menu_page( 'Billy', 'Billy', 'edit_private_posts', 'billy', '', 'dashicons-tickets', 10 );
 }
 add_action( 'admin_menu', 'billy_register_menu_page' );
 define( 'BILLY_ADMIN_MENU', true );

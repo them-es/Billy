@@ -304,11 +304,11 @@ registerBlockType('billy-blocks/quote-table', {
 				<table className="table wp-block-table">
 					<thead>
 						<tr>
-							<th scope="col">{__('#', 'billy')}</th>
-							<th scope="col">{__('Description', 'billy')}</th>
-							<th scope="col">{__('Amount', 'billy')}</th>
+							<th scope="col" data-label="title"></th>
+							<th scope="col" data-label="description"></th>
+							<th scope="col" data-label="amount"></th>
 							{taxRates && taxRatesTotal > 0 && (
-								<th scope="col">{__('Tax', 'billy')}</th>
+								<th scope="col" data-label="tax"></th>
 							)}
 						</tr>
 					</thead>
@@ -318,11 +318,9 @@ registerBlockType('billy-blocks/quote-table', {
 					<tfoot>
 						{amountSubtotal > 0 && (
 							<tr className="subtotal">
-								<th colSpan="2">
-									{amountTotal > amountSubtotal
-										? __('Subtotal', 'billy')
-										: __('Total', 'billy')}
-								</th>
+								<th colSpan="2" data-label={amountTotal > amountSubtotal
+										? 'subtotal'
+										: 'total'}></th>
 								<td
 									colSpan={
 										taxRates && taxRatesTotal > 0
@@ -340,7 +338,7 @@ registerBlockType('billy-blocks/quote-table', {
 						)}
 						{taxRates && taxRatesTotal > 0 && (
 							<tr className="taxrates">
-								<th colSpan="2">{__('Tax', 'billy')}</th>
+								<th colSpan="2" data-label="tax"></th>
 								<td
 									colSpan={
 										taxRates && taxRatesTotal > 0
@@ -387,7 +385,7 @@ registerBlockType('billy-blocks/quote-table', {
 						)}
 						{amountTotal > amountSubtotal && (
 							<tr className="total">
-								<th colSpan="2">{__('Total', 'billy')}</th>
+								<th colSpan="2" data-label="total"></th>
 								<td
 									colSpan={
 										taxRates && taxRatesTotal > 0

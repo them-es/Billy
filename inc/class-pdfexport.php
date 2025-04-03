@@ -75,7 +75,7 @@ class Billy_PDF_Export {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'rest_api_init', array( $this, 'billy_rest_api_init' ) );
+		add_action( 'rest_api_init', array( $this, 'billy_rest_api_init' ), 100 );
 	}
 
 	/**
@@ -137,7 +137,9 @@ class Billy_PDF_Export {
 		$parameters = $request->get_params();
 
 		$post_id = (int) $parameters['id']; // Invoice/Quote.
-		$post    = get_post( $post_id );
+
+		global $post;
+		$post = get_post( $post_id );
 
 		if ( empty( $post_id ) || ! $post ) {
 			return '404';
@@ -180,20 +182,14 @@ class Billy_PDF_Export {
 			)
 		);
 
-		global $post;
-		$post = get_post( $post_id );
-		setup_postdata( $post );
-
-		if ( function_exists( 'pll_get_post_language' ) ) {
-			switch_to_locale( pll_get_post_language( $post_id, 'locale' ) );
-		}
-
 		$content = '';
-		$blocks  = parse_blocks( get_the_content() );
+
+		$blocks = parse_blocks( get_the_content() );
+
 		foreach ( $blocks as $block ) {
 			// Exclude reusable Footer blocks.
 			if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
-				$content .= apply_filters( 'the_content', render_block( $block ) );
+				$content .= render_block( $block );
 			}
 		}
 
@@ -209,20 +205,22 @@ class Billy_PDF_Export {
 			$content = apply_filters( 'billy_pdf_content', $content, $post_type );
 		}
 
-		// [WORKAROUND] Replace hardcoded "EN" translation strings in table. [TODO] Refactor table block.
+		// [WORKAROUND] Replace translation labels in table output with gettext strings. [TODO] Refactor table block.
 		$translation_placeholders       = array(
-			'Description</th>',
-			'Amount</th>',
-			'Subtotal</th>',
-			'Total</th>',
-			'Tax</th>',
+			'data-label="title"></th>',
+			'data-label="description"></th>',
+			'data-label="amount"></th>',
+			'data-label="subtotal"></th>',
+			'data-label="total"></th>',
+			'data-label="tax"></th>',
 		);
 		$translation_placeholder_values = array(
-			__( 'Description', 'billy' ) . '</th>',
-			__( 'Amount', 'billy' ) . '</th>',
-			__( 'Subtotal', 'billy' ) . '</th>',
-			__( 'Total', 'billy' ) . '</th>',
-			__( 'Tax', 'billy' ) . '</th>',
+			'>' . __( '#', 'billy' ) . '</th>',
+			'>' . __( 'Description', 'billy' ) . '</th>',
+			'>' . __( 'Amount', 'billy' ) . '</th>',
+			'>' . __( 'Subtotal', 'billy' ) . '</th>',
+			'>' . __( 'Total', 'billy' ) . '</th>',
+			'>' . __( 'Tax', 'billy' ) . '</th>',
 		);
 		$content                        = str_replace( $translation_placeholders, $translation_placeholder_values, $content );
 

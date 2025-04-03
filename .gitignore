@@ -13,6 +13,7 @@ package.txt
 npm*
 mpdf/tmp/
 bin
+languages/
 
 # Compiled source #
 ###################

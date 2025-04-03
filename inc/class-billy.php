@@ -113,6 +113,7 @@ class Billy {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 998 );
 		// Enqueue Backend assets.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ), 998 );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_admin_styles' ), 998 );
 
 		// Theme Customizer.
 		add_action( 'customize_register', array( $this, 'wp_customizer_options' ), 998 );
@@ -241,7 +242,7 @@ class Billy {
 
 						$fix_post = wp_update_post(
 							array(
-								'ID'         => $post_id,
+								'ID'         => (int) $post_id,
 								'post_title' => $post_title,
 								'post_name'  => sanitize_title( $post_title ),
 								'meta_input' => array(
@@ -408,6 +409,25 @@ class Billy {
 		$post_type = get_post_type();
 
 		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ), true ) ) {
+			// [WORKAROUND] Replace translation labels in table output with gettext strings. [TODO] Refactor table block.
+			$translation_placeholders       = array(
+				'data-label="title"></th>',
+				'data-label="description"></th>',
+				'data-label="amount"></th>',
+				'data-label="subtotal"></th>',
+				'data-label="total"></th>',
+				'data-label="tax"></th>',
+			);
+			$translation_placeholder_values = array(
+				'>' . __( '#', 'billy' ) . '</th>',
+				'>' . __( 'Description', 'billy' ) . '</th>',
+				'>' . __( 'Amount', 'billy' ) . '</th>',
+				'>' . __( 'Subtotal', 'billy' ) . '</th>',
+				'>' . __( 'Total', 'billy' ) . '</th>',
+				'>' . __( 'Tax', 'billy' ) . '</th>',
+			);
+			$content                        = str_replace( $translation_placeholders, $translation_placeholder_values, $content );
+
 			if ( 'billy-accounting' === $post_type && ! defined( 'TABLE_EXPORT' ) ) {
 				define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
 			}
@@ -487,7 +507,7 @@ class Billy {
 		$post_id = $post->ID;
 
 		$my_post = array(
-			'ID' => $post_id,
+			'ID' => (int) $post_id,
 		);
 
 		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
@@ -557,7 +577,7 @@ class Billy {
 		// $post_title = get_the_date( 'Ymd', $post_id );
 
 		$my_post = array(
-			'ID' => $post_id,
+			'ID' => (int) $post_id,
 		);
 
 		$quote_number = get_post_meta( $post_id, '_quote_number', true );
@@ -790,7 +810,7 @@ class Billy {
 
 		// Update title and slug.
 		$my_post = array(
-			'ID'         => $post_id,
+			'ID'         => (int) $post_id,
 			'post_title' => $post_title,
 			'post_name'  => sanitize_title( $post_title ),
 		);
@@ -1020,7 +1040,7 @@ class Billy {
 				}
 			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
 				foreach ( $header_reusable_blocks as $header_reusable_block ) {
-					if ( wpml_get_language_information( null, $header_reusable_block->ID ) === self::$locale ) {
+					if ( wpml_get_language_information( null, $header_reusable_block->ID )['locale'] === self::$locale ) {
 						$header_id = $header_reusable_block->ID;
 					}
 				}
@@ -1515,11 +1535,11 @@ class Billy {
 		register_post_meta( 'billy-quote', '_quote_number', $field_args );
 	}
 
-		/**
-		 * Enqueue frontend assets.
-		 *
-		 * @return void
-		 */
+	/**
+	 * Enqueue frontend assets.
+	 *
+	 * @return void
+	 */
 	public function enqueue_assets() {
 		global $post;
 
@@ -1553,11 +1573,11 @@ class Billy {
 		}
 	}
 
-		/**
-		 * Enqueue admin assets.
-		 *
-		 * @return void
-		 */
+	/**
+	 * Enqueue admin assets.
+	 *
+	 * @return void
+	 */
 	public function enqueue_admin_assets() {
 		$theme_mods        = array(
 			'name'     => esc_html__( 'Name', 'billy' ),
@@ -1602,13 +1622,28 @@ class Billy {
 		);
 	}
 
-		/**
-		 * Theme Customizer options.
-		 *
-		 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
-		 *
-		 * @return void
-		 */
+	/**
+	 * Enqueue admin styles.
+	 *
+	 * @return void
+	 */
+	public function enqueue_admin_styles() {
+		if ( is_admin() ) {
+			// Styles.
+			wp_enqueue_style( 'billy-editor-style', self::$plugin_url . 'assets/admin/css/style-editor.css', array(), self::$plugin_version );
+			if ( is_rtl() ) {
+				wp_enqueue_style( 'billy-editor-rtl-style', self::$plugin_url . 'assets/admin/css/style-editor-rtl.css', array(), self::$plugin_version );
+			}
+		}
+	}
+
+	/**
+	 * Theme Customizer options.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+	 *
+	 * @return void
+	 */
 	public function wp_customizer_options( $wp_customize ) {
 		/**
 		 * Initialize panel.
@@ -2016,14 +2051,14 @@ class Billy {
 		}
 	}
 
-		/**
-		 * Theme Customizer: Geocode.
-		 *
-		 * @param object $validity WP Customize validity.
-		 * @param string $value    WP Customize value.
-		 *
-		 * @return object
-		 */
+	/**
+	 * Theme Customizer: Geocode.
+	 *
+	 * @param object $validity WP Customize validity.
+	 * @param string $value    WP Customize value.
+	 *
+	 * @return object
+	 */
 	public function geocode( $validity, $value ) {
 		if ( get_theme_mod( 'geocoding_enabled', '1' ) && ! empty( $value ) && strlen( $value ) > 3 ) {
 			$result = null;
@@ -2058,14 +2093,14 @@ class Billy {
 		return $validity;
 	}
 
-		/**
-		 * Theme Customizer: Validate currency.
-		 *
-		 * @param object $validity WP Customize validity.
-		 * @param string $value    WP Customize value.
-		 *
-		 * @return object
-		 */
+	/**
+	 * Theme Customizer: Validate currency.
+	 *
+	 * @param object $validity WP Customize validity.
+	 * @param string $value    WP Customize value.
+	 *
+	 * @return object
+	 */
 	public function validate_currency( $validity, $value ) {
 		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
 			$validity->add( 'no_valid_currency', esc_html__( 'Please provide a valid currency format', 'billy' ) );
@@ -2074,14 +2109,14 @@ class Billy {
 		return $validity;
 	}
 
-		/**
-		 * Theme Customizer: Validate tax rates.
-		 *
-		 * @param object $validity WP Customize validity.
-		 * @param string $value    WP Customize value.
-		 *
-		 * @return object
-		 */
+	/**
+	 * Theme Customizer: Validate tax rates.
+	 *
+	 * @param object $validity WP Customize validity.
+	 * @param string $value    WP Customize value.
+	 *
+	 * @return object
+	 */
 	public function validate_taxrates( $validity, $value ) {
 		if ( ! empty( $value ) ) {
 			$newlines = explode( "\n", $value );
