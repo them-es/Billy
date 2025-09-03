@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.11.0
+ * Version: 1.11.1
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -163,8 +163,8 @@ add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
  * Yoast Duplicate Post: Performs some actions after the WordPress standard fields of a post, or a non-hierarchical custom type item, have been copied.
  *
  * @param int     $new_post_id The newly created post's ID.
- * @param WP_Post $post The original post's object.
- * @param string  $status The destination status as set by the calling method: e.g. ‘draft’ if the function has been called using the “New Draft” links. Empty otherwise.
+ * @param WP_Post $post        The original post's object.
+ * @param string  $status      The destination status as set by the calling method: e.g. ‘draft’ if the function has been called using the “New Draft” links. Empty otherwise.
  */
 function billy_custom_dp_duplicate_post( $new_post_id, $post, $status ) {
 	$contact_uuid = get_post_meta( $post->ID, '_contact_uuid', true );

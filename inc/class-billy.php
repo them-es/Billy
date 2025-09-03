@@ -408,34 +408,34 @@ class Billy {
 	public function cpt_wrapper_content( $content ) {
 		$post_type = get_post_type();
 
-		if ( is_singular() && in_array( get_post_type(), array( 'billy-invoice', 'billy-quote', 'billy-accounting' ), true ) ) {
-			// [WORKAROUND] Replace translation labels in table output with gettext strings. [TODO] Refactor table block.
-			$translation_placeholders       = array(
-				'data-label="title"></th>',
-				'data-label="description"></th>',
-				'data-label="amount"></th>',
-				'data-label="subtotal"></th>',
-				'data-label="total"></th>',
-				'data-label="tax"></th>',
-			);
-			$translation_placeholder_values = array(
-				'>' . __( '#', 'billy' ) . '</th>',
-				'>' . __( 'Description', 'billy' ) . '</th>',
-				'>' . __( 'Amount', 'billy' ) . '</th>',
-				'>' . __( 'Subtotal', 'billy' ) . '</th>',
-				'>' . __( 'Total', 'billy' ) . '</th>',
-				'>' . __( 'Tax', 'billy' ) . '</th>',
-			);
-			$content                        = str_replace( $translation_placeholders, $translation_placeholder_values, $content );
-
-			if ( 'billy-accounting' === $post_type && ! defined( 'TABLE_EXPORT' ) ) {
-				define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
-			}
-
-			return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
+		if ( ! str_starts_with( $post_type, 'billy-' ) ) {
+			return $content;
 		}
 
-		return $content;
+		// [WORKAROUND] Replace translation labels in table output with gettext strings. [TODO] Refactor table block.
+		$translation_placeholders       = array(
+			'data-label="title"></th>',
+			'data-label="description"></th>',
+			'data-label="amount"></th>',
+			'data-label="subtotal"></th>',
+			'data-label="total"></th>',
+			'data-label="tax"></th>',
+		);
+		$translation_placeholder_values = array(
+			'>' . __( '#', 'billy' ) . '</th>',
+			'>' . __( 'Description', 'billy' ) . '</th>',
+			'>' . __( 'Amount', 'billy' ) . '</th>',
+			'>' . __( 'Subtotal', 'billy' ) . '</th>',
+			'>' . __( 'Total', 'billy' ) . '</th>',
+			'>' . __( 'Tax', 'billy' ) . '</th>',
+		);
+		$content                        = str_replace( $translation_placeholders, $translation_placeholder_values, $content );
+
+		if ( 'billy-accounting' === $post_type && ! defined( 'TABLE_EXPORT' ) ) {
+			define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
+		}
+
+		return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
 	}
 
 	/**
@@ -445,26 +445,28 @@ class Billy {
 	 * @return string
 	 */
 	public function cpt_block_template_content( $content, $post ) {
-		if ( str_starts_with( $post->post_type, 'billy-' ) ) {
-			$template = get_theme_file_path( 'templates/' . esc_attr( $post->post_type ) . '.html' );
+		if ( ! str_starts_with( $post->post_type, 'billy-' ) ) {
+			return $content;
+		}
 
-			if ( is_readable( $template ) ) {
-				$template_content = file_get_contents( $template );
+		$template = get_theme_file_path( 'templates/' . esc_attr( $post->post_type ) . '.html' );
 
-				if ( 0 === strlen( $template_content ) ) {
-					return $content;
-				}
+		if ( is_readable( $template ) ) {
+			$template_content = file_get_contents( $template );
 
-				switch ( $post->post_type ) {
-					case 'billy-invoice':
-						return ( str_contains( $template_content, '<!-- wp:billy-blocks/invoice-actions /-->' ) ? '' : '<!-- wp:billy-blocks/invoice-actions /-->' ) . $template_content;
-					case 'billy-quote':
-						return ( str_contains( $template_content, '<!-- wp:billy-blocks/quote-actions /-->' ) ? '' : '<!-- wp:billy-blocks/quote-actions /-->' ) . $template_content;
-					case 'billy-accounting':
-						return ( str_contains( $template_content, '<!-- wp:billy-blocks/accounting-actions /-->' ) ? '' : '<!-- wp:billy-blocks/accounting-actions /-->' ) . $template_content;
-					default:
-						break;
-				}
+			if ( 0 === strlen( $template_content ) ) {
+				return $content;
+			}
+
+			switch ( $post->post_type ) {
+				case 'billy-invoice':
+					return ( str_contains( $template_content, '<!-- wp:billy-blocks/invoice-actions /-->' ) ? '' : '<!-- wp:billy-blocks/invoice-actions /-->' ) . $template_content;
+				case 'billy-quote':
+					return ( str_contains( $template_content, '<!-- wp:billy-blocks/quote-actions /-->' ) ? '' : '<!-- wp:billy-blocks/quote-actions /-->' ) . $template_content;
+				case 'billy-accounting':
+					return ( str_contains( $template_content, '<!-- wp:billy-blocks/accounting-actions /-->' ) ? '' : '<!-- wp:billy-blocks/accounting-actions /-->' ) . $template_content;
+				default:
+					break;
 			}
 		}
 

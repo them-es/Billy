@@ -188,10 +188,41 @@ class Billy_PDF_Export {
 
 		foreach ( $blocks as $block ) {
 			// Exclude reusable Footer blocks.
-			if ( 'core/block' !== $block['blockName'] || ( 'core/block' === $block['blockName'] && ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
+			if ( 'core/block' !== $block['blockName'] || ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) {
 				$content .= render_block( $block );
 			}
 		}
+
+		// --> Start Workaround: Add spacing in tbody content to each <p>/<ul>/<ol>.
+		$spacer      = '<hr style="margin: 1.5pt 0; color: #FFF;">';
+		$search_tags = array(
+			'<p>',
+			'</p>',
+			'<ul>',
+			'</ul>',
+			'<ol>',
+			'</ol>',
+		);
+
+		$replace_tags = array(
+			$spacer . '<p>',
+			'</p>' . $spacer,
+			$spacer . '<ul>',
+			'</ul>' . $spacer,
+			$spacer . '<ol>',
+			'</ol>' . $spacer,
+		);
+
+		// Modify <tbody> content.
+		preg_match( '/<tbody>(.*?)<\/tbody>/s', $content, $match );
+
+		if ( $match && $match[0] ) {
+			$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
+
+			// Replace <tbody> with modified content.
+			$content = preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $content );
+		}
+		// <-- End Workaround.
 
 		// Remove line breaks from content.
 		$content = preg_replace( '/\r|\n/', '', $content );
