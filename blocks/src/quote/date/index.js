@@ -3,10 +3,6 @@
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
 
-/**
- * WordPress dependencies
- */
-
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps } from '@wordpress/block-editor';
 import { Disabled } from '@wordpress/components';

@@ -319,9 +319,14 @@ registerBlockType('billy-blocks/invoice-table', {
 					<tfoot>
 						{amountSubtotal > 0 && (
 							<tr className="subtotal">
-								<th colSpan="2" data-label={amountTotal > amountSubtotal
-										? 'subtotal'
-										: 'total'}></th>
+								<th
+									colSpan="2"
+									data-label={
+										amountTotal > amountSubtotal
+											? 'subtotal'
+											: 'total'
+									}
+								></th>
 								<td
 									colSpan={
 										taxRates && taxRatesTotal > 0

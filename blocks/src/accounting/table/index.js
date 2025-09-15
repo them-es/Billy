@@ -118,31 +118,37 @@ registerBlockType('billy-blocks/accounting-table', {
 
 		// Calculate values and update attributes
 		updateTotals = () => {
-			let amountEarningsSum = 0,
-				amountExpensesSum = 0,
-				amountTaxEarningsSum = 0,
-				amountTaxExpensesSum = 0;
+			let amountEarningsSum = 0;
+			let amountExpensesSum = 0;
+			let amountTaxEarningsSum = 0;
+			let amountTaxExpensesSum = 0;
 
+			// Set currency and locale attributes
 			setAttributes({
 				currency: globalDataBilly.currency,
 				locale: globalDataBilly.locale,
 			});
 
-			if (childBlocks && childBlocks.length > 0) {
+			// Calculate totals from child blocks
+			if (childBlocks?.length) {
 				childBlocks.forEach((childBlock) => {
-					const taxRate = Number(childBlock.attributes.tax);
-					amountEarningsSum += Number(childBlock.attributes.earning);
-					amountExpensesSum += Number(childBlock.attributes.expense);
+					const taxRate = Number(childBlock.attributes.tax) || 0;
+					const earning = Number(childBlock.attributes.earning) || 0;
+					const expense = Number(childBlock.attributes.expense) || 0;
 
-					if (childBlock.attributes.earning) {
+					amountEarningsSum += earning;
+					amountExpensesSum += expense;
+
+					if (earning) {
 						amountTaxEarningsSum += taxRate;
 					}
-					if (childBlock.attributes.expense) {
+					if (expense) {
 						amountTaxExpensesSum += taxRate;
 					}
 				});
 			}
 
+			// Update attributes with calculated totals
 			setAttributes({
 				amountTotalEarnings: amountEarningsSum,
 				amountTotalExpenses: amountExpensesSum,
@@ -150,6 +156,7 @@ registerBlockType('billy-blocks/accounting-table', {
 				amountTaxExpenses: amountTaxExpensesSum,
 			});
 		};
+
 		useEffect(() => {
 			updateTotals();
 		}, [childBlocks]);

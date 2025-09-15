@@ -1,15 +1,20 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path'),
+	removeEmptyScriptsPlugin = require('webpack-remove-empty-scripts'),
+	webpackConfig = require('@wordpress/scripts/config/webpack.config');
 
 module.exports = {
-	context: path.resolve(__dirname, 'assets'),
-	entry: {
-		main: ['./main.js'],
+	...webpackConfig,
+	...{
+		mode: 'production',
+		context: path.resolve(__dirname, 'assets'),
+		entry: {
+			main: ['./main.js', './main.scss'],
+		},
+		plugins: [
+			...webpackConfig.plugins,
+			new removeEmptyScriptsPlugin({
+				stage: removeEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS,
+			}),
+		],
 	},
-	output: {
-		path: path.resolve(__dirname, 'assets/js'),
-		filename: '[name].bundle.js',
-	},
-	devtool: 'source-map',
-	watch: true,
 };

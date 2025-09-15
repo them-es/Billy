@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoices, quotes
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 1.11.1
+Stable tag: 1.12.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 8.0
@@ -149,6 +149,10 @@ Please consider purchasing the premium add-on with the following features:
 * You can also help translate the plugin into your language: [them.es](https://them.es/plugins/billy/docs "them.es") (them.es user account required) or [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") (WordPress.org user account required)
 
 == Changelog ==
+
+= 1.12.0 =
+* Refactor frontend assets and blocks
+* Drop gulp.js and only use @wordpress/scripts in the frontend assets build process
 
 = 1.11.1 =
 * Re-implement workaround to improve formatting of line spacing in PDF content

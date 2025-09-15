@@ -435,7 +435,7 @@ class Billy {
 			define( 'TABLE_EXPORT', true ); // Include button in preheader to export table data as tab separated txt file.
 		}
 
-		return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . $this->preheader_render_callback() . $content . '</div>';
+		return '<div id="' . esc_attr( $post_type ) . '" class="' . esc_attr( $post_type ) . '-wrapper' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? ' alignwide' : '' ) . '">' . ( ! in_array( $post_type, array( 'billy-contact' ), true ) ? $this->preheader_render_callback() : '' ) . $content . '</div>';
 	}
 
 	/**
@@ -1551,13 +1551,13 @@ class Billy {
 				// Styles.
 				wp_enqueue_style( 'dashicons' );
 
-				wp_enqueue_style( 'billy-style', self::$plugin_url . 'assets/css/main.css', array(), self::$plugin_version );
+				wp_enqueue_style( 'billy-style', self::$plugin_url . 'build/main.css', array(), self::$plugin_version );
 				if ( is_rtl() ) {
-					wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'assets/css/rtl.css', array(), self::$plugin_version );
+					wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'build/main-rtl.css', array(), self::$plugin_version );
 				}
 
 				// Scripts.
-				wp_enqueue_script( 'billy-script', self::$plugin_url . 'assets/js/main.bundle.js', array(), self::$plugin_version, true );
+				wp_enqueue_script( 'billy-script', self::$plugin_url . 'build/main.js', array(), self::$plugin_version, true );
 				wp_add_inline_script(
 					'billy-script',
 					'var globalDataBilly = {

@@ -2,9 +2,6 @@
  * Import custom Bootstrap source
  */
 
-//@import "../node_modules/bootstrap/scss/bootstrap";
-
-// Required
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
@@ -106,12 +103,12 @@ body {
 							line-height: 1.15;
 							hyphens: auto;
 						}
+					}
 
-						.label {
-							font-weight: bold;
-							padding-right: 1rem;
-							padding-left: 1rem;
-						}
+					.label {
+						font-weight: bold;
+						padding-right: 1rem;
+						padding-left: 1rem;
 					}
 				}
 			}
@@ -195,65 +192,63 @@ body {
 			}
 
 			tfoot {
-				tr {
-					&.total {
-						font-weight: bold;
+				.total {
+					font-weight: bold;
 
-						td {
-							border-top: $table-border-width solid;
-						}
-					}
-
-					th,
 					td {
-						text-align: initial;
-						white-space: nowrap;
+						border-top: $table-border-width solid;
+					}
+				}
 
-						&.sum {
-							text-align: center;
+				th,
+				td {
+					text-align: initial;
+					white-space: nowrap;
 
-							&.earnings,
-							&.tax-earnings {
-								background-color: lighten($success, 50%);
-							}
+					&.sum {
+						text-align: center;
 
-							&.expenses,
-							&.tax-expenses {
-								background-color: lighten($danger, 33%);
-							}
+						&.earnings,
+						&.tax-earnings {
+							background-color: lighten($success, 50%);
 						}
 
-						&.profit {
-							position: relative;
-							text-align: center;
-
-							&::before,
-							&::after {
-								content: "";
-								display: block;
-								width: 1rem;
-								height: 1rem;
-								position: absolute;
-								top: 0;
-								transform-origin: center center;
-								z-index: -2;
-								border-top: 2px dotted $primary;
-							}
-							&::before {
-								left: 15%;
-								border-left: 2px dotted $primary;
-								transform: rotate(-90deg);
-							}
-							&::after {
-								right: 15%;
-								border-right: 2px dotted $primary;
-								transform: rotate(90deg);
-							}
+						&.expenses,
+						&.tax-expenses {
+							background-color: lighten($danger, 33%);
 						}
 					}
-					th {
-						text-align: right;
+
+					&.profit {
+						position: relative;
+						text-align: center;
+
+						&::before,
+						&::after {
+							content: "";
+							display: block;
+							width: 1rem;
+							height: 1rem;
+							position: absolute;
+							top: 0;
+							transform-origin: center center;
+							z-index: -2;
+							border-top: 2px dotted $primary;
+						}
+						&::before {
+							left: 15%;
+							border-left: 2px dotted $primary;
+							transform: rotate(-90deg);
+						}
+						&::after {
+							right: 15%;
+							border-right: 2px dotted $primary;
+							transform: rotate(90deg);
+						}
 					}
+				}
+				th {
+					text-align: right;
 				}
 			}
 		}

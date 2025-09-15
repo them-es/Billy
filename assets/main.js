@@ -1,9 +1,7 @@
-const getCurrency = () => {
-	return globalDataBilly.currency;
-};
+const getCurrency = () => globalDataBilly.currency;
 
-const formatNumber = (val, l = globalDataBilly.locale) => {
-	return val.toLocaleString(l, {
+const formatNumber = (val, locale = globalDataBilly.locale) => {
+	return val.toLocaleString(locale, {
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 	});
@@ -16,68 +14,57 @@ const formatNumberPlain = (val) => {
 	});
 };
 
-const formatCurrency = (val) => {
-	return globalDataBilly.currency + ' ' + formatNumber(val);
-};
+const formatCurrency = (val) =>
+	`${globalDataBilly.currency} ${formatNumber(val)}`;
 
 /**
  * Download TSV
  */
+function downloadTsv(tsv, filename) {
+	const tsvFile = new Blob([tsv], { type: 'text/tab-separated-values' });
+	const downloadLink = document.createElement('a');
 
-function download_tsv(tsv, filename) {
-	var tsvFile, downloadLink;
-
-	// TSV file blob
-	tsvFile = new Blob([tsv], { type: 'text/tab-separated-values' });
-
-	// Download link
-	downloadLink = document.createElement('a');
 	downloadLink.download = filename;
 	downloadLink.href = window.URL.createObjectURL(tsvFile);
 	downloadLink.style.display = 'none';
 	document.body.append(downloadLink);
 
 	downloadLink.click();
+	document.body.removeChild(downloadLink); // Clean up the DOM
 }
 
-function export_table_to_tsv(el, filename) {
-	var tsv = [],
-		rows = document.querySelectorAll(el + ' thead tr,' + el + ' tbody tr');
+function exportTableToTsv(selector, filename) {
+	const tsv = [];
+	const rows = document.querySelectorAll(
+		`${selector} thead tr, ${selector} tbody tr`
+	);
 
-	for (var i = 0; i < rows.length; i++) {
-		var row = [],
-			cols = rows[i].querySelectorAll('td, th');
-
-		for (var j = 0; j < cols.length; j++) {
+	rows.forEach((row) => {
+		const cols = row.querySelectorAll('td, th');
+		const rowData = Array.from(cols).map((col) => {
 			// Get value (data-value or inner HTML). Strip HTML tags.
-			row.push(
-				cols[j].dataset.value
-					? cols[j].dataset.value
-					: cols[j].innerHTML
-							.replace(/(<([^>]+)>)/gi, '')
-							.replace(/(?:\r\n|\r|\n)/g, '')
-			);
-		}
-
-		tsv.push(row.join('	'));
-	}
-	//console.log(tsv.join('\n'));
-
-	// Create download link
-	download_tsv(tsv.join('\n'), filename);
-}
-
-if (document.querySelector('.tsv-button') !== null) {
-	document
-		.querySelector('.tsv-button')
-		.addEventListener('click', function () {
-			const billyWrapperId = this.closest('[id^="billy-"]').id;
-
-			export_table_to_tsv(
-				'#' + billyWrapperId + ' .table',
-				(document.title
-					? document.title
-					: document.querySelector('.wp-block-post-title')) + '.tsv'
+			return (
+				col.dataset.value ||
+				col.innerHTML
+					.replace(/(<([^>]+)>)/gi, '')
+					.replace(/(?:\r\n|\r|\n)/g, '')
 			);
 		});
+		tsv.push(rowData.join('\t')); // Use tab character for TSV
+	});
+
+	downloadTsv(tsv.join('\n'), filename);
+}
+
+const tsvButton = document.querySelector('.tsv-button');
+if (tsvButton) {
+	tsvButton.addEventListener('click', function () {
+		const billyWrapperId = this.closest('[id^="billy-"]').id;
+		const filename = `${
+			document.title ||
+			document.querySelector('.wp-block-post-title').textContent
+		}.tsv`;
+
+		exportTableToTsv(`#${billyWrapperId} .table`, filename);
+	});
 }

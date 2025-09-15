@@ -106,62 +106,61 @@ registerBlockType('billy-blocks/quote-table', {
 
 		// Onload "once": Calculate values and update attributes
 		updateTotals = () => {
-			let amountSubtotalSum = 0,
-				amountTotalSum = 0,
-				taxRatesTotalSum = 0,
-				taxRatesHolderOutput = [],
-				taxRatesMergedOutput = [];
+			let amountSubtotalSum = 0;
+			let amountTotalSum = 0;
+			let taxRatesTotalSum = 0;
+			const taxRatesHolderOutput = [];
+			const taxRatesMergedOutput = [];
 
+			// Set currency and locale attributes
 			setAttributes({
 				currency: globalDataBilly.currency,
 				locale: globalDataBilly.locale,
 			});
 
-			// Create values-array of child block attributes
-			if (childBlocks && childBlocks.length > 0) {
+			// Calculate totals from child blocks
+			if (childBlocks?.length) {
 				childBlocks.forEach((childBlock) => {
-					const amount = Number(childBlock.attributes.amount);
+					const amount = Number(childBlock.attributes.amount) || 0;
 					const taxRate = percentToDecimal(
 						childBlock.attributes.taxRate
 					);
 
-					// 1. Sum of Subtotals
+					// 1. Sum of subtotals
 					amountSubtotalSum += amount;
 
-					// 2. Sum of Totals
+					// 2. Sum of totals
 					amountTotalSum += amount + taxRate * amount;
 
-					// 3. Sum of Taxrates
+					// 3. Collect tax rates
 					taxRatesHolderOutput.push({
 						taxRate: childBlock.attributes.taxRate,
 						amount: taxRate * amount,
 					});
 				});
 
-				if (taxRatesHolderOutput.length > 0) {
-					// Sum up Tax amount
+				// Calculate total tax rates and merge amounts
+				if (taxRatesHolderOutput.length) {
 					taxRatesTotalSum = taxRatesHolderOutput.reduce(
-						(res, value) => {
-							return res + value.amount;
-						},
+						(total, { amount }) => total + amount,
 						0
 					);
 					taxRatesTotalSum = Number(taxRatesTotalSum.toFixed(2));
 
-					// Merge amounts having the same Taxrate
-					taxRatesHolderOutput.reduce((res, value) => {
-						if (!res[value.taxRate]) {
-							res[value.taxRate] = {
-								taxRate: value.taxRate,
-								amount: 0,
-							};
-							taxRatesMergedOutput.push(res[value.taxRate]);
+					// Merge amounts having the same tax rate
+					taxRatesHolderOutput.forEach(({ taxRate, amount }) => {
+						const existingRate = taxRatesMergedOutput.find(
+							(rate) => rate.taxRate === taxRate
+						);
+						if (existingRate) {
+							existingRate.amount += amount;
+						} else {
+							taxRatesMergedOutput.push({ taxRate, amount });
 						}
-						res[value.taxRate].amount += value.amount;
-						return res;
-					}, {});
+					});
 				}
 
+				// Update attributes with calculated totals
 				setAttributes({
 					taxRatesTotal: taxRatesTotalSum,
 					taxRates: JSON.stringify(taxRatesMergedOutput),
@@ -170,6 +169,7 @@ registerBlockType('billy-blocks/quote-table', {
 				});
 			}
 		};
+
 		useEffect(() => {
 			updateTotals();
 		}, [childBlocks]);
@@ -222,7 +222,7 @@ registerBlockType('billy-blocks/quote-table', {
 									</th>
 									<td>
 										{
-											// Sort by Taxrate
+											// Sort by tax rate
 											JSON.parse(taxRates)
 												.sort(
 													(a, b) =>
@@ -318,9 +318,14 @@ registerBlockType('billy-blocks/quote-table', {
 					<tfoot>
 						{amountSubtotal > 0 && (
 							<tr className="subtotal">
-								<th colSpan="2" data-label={amountTotal > amountSubtotal
-										? 'subtotal'
-										: 'total'}></th>
+								<th
+									colSpan="2"
+									data-label={
+										amountTotal > amountSubtotal
+											? 'subtotal'
+											: 'total'
+									}
+								></th>
 								<td
 									colSpan={
 										taxRates && taxRatesTotal > 0

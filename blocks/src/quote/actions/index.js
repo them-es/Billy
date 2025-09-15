@@ -3,10 +3,6 @@
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
 
-/**
- * WordPress dependencies
- */
-
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps } from '@wordpress/block-editor';
 import { __, _n, sprintf } from '@wordpress/i18n';
@@ -38,16 +34,14 @@ registerBlockType('billy-blocks/quote-actions', {
 		};
 	})((props) => {
 		const { postModifiedDate } = props;
-		const blockProps = useBlockProps( {
-			className: "components-placeholder",
-			style: { minHeight: 'auto' }
+		const blockProps = useBlockProps({
+			className: 'components-placeholder',
+			style: { minHeight: 'auto' },
 		});
 
 		// Markup: Backend
 		return (
-			<div
-				{...blockProps}
-			>
+			<div {...blockProps}>
 				<small>
 					{sprintf(
 						__('%1$s: %2$s', 'billy'),

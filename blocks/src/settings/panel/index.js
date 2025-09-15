@@ -1,4 +1,7 @@
-// https://github.com/WordPress/gutenberg/blob/trunk/packages/editor/src/components/plugin-document-setting-panel/index.js
+/**
+ * Plugin Settings Panel: Billy Setup
+ * https://github.com/WordPress/gutenberg/blob/trunk/packages/editor/src/components/plugin-document-setting-panel/index.js
+ */
 
 import { registerPlugin } from '@wordpress/plugins';
 import { __ } from '@wordpress/i18n';
