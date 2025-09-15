@@ -11,6 +11,7 @@
 		"build-blocks": "cd ./blocks/ && npm run build",
 		"build": "wp-scripts build",
 		"build-all": "wp-scripts build && npm run build-blocks",
+		"dist": "composer update",
 	},
 	"devDependencies": {
 		"bootstrap": "^4",
