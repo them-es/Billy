@@ -1,28 +1,22 @@
 {
 	"name": "billy",
-	"version": "1.0.0",
+	"version": "1.12.0",
 	"homepage": "https://them.es",
 	"author": "them.es",
 	"description": "",
 	"license": "GPLv2+",
 	"scripts": {
-		"create-translations": "wp i18n make-pot . languages/billy.pot --exclude=/assets/* --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/them-es/billy/issues\"}'",
-		"watch": "gulp watch",
-		"build-css": "gulp build-css",
-		"build-js": "gulp build-js",
-		"build": "npm run build-css && npm run build-js",
-		"update": "npm update",
-		"dist": "gulp dist"
+		"create-languagefile": "wp i18n make-pot . languages/billy.pot --exclude=pdfjs,tmp,assets,blocks/node_modules,mpdf,node_modules,vendor --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/them-es/billy/issues\"}'",
+		"watch": "webpack serve && wp-scripts start",
+		"build-blocks": "cd ./blocks/ && npm run build",
+		"build": "wp-scripts build",
+		"build-all": "wp-scripts build && npm run build-blocks",
 	},
 	"devDependencies": {
-		"autoprefixer": "^9",
 		"bootstrap": "^4",
-		"cssnano": "^4",
-		"gulp": "^4",
-		"gulp-postcss": "^8",
-		"gulp-sass": "^4",
-		"gulp-sourcemaps": "^2",
+		"path": "^0.12.7",
 		"webpack": "^4",
-		"webpack-stream": "^5"
+		"webpack-remove-empty-scripts": "^1.1.1",
+		"@wordpress/scripts": "^30.23.0"
 	}
 }
