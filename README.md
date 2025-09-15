@@ -7,8 +7,8 @@ For more information and a showcase and for purchasing the **PRO Add-on** check 
 
 ## What's included?
 
--   Custom Post types with Blocks and Block templates.
--   Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties.
+- Custom Post types with Blocks and Block templates.
+- Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties.
 
 ## Compatible themes
 
@@ -17,14 +17,14 @@ The Plugin should work with any modern WordPress theme that supports the Block e
 
 ### The Plugin has been tested with the following themes
 
--   [https://them.es/starter-fse](https://them.es/starter-fse)
--   [https://them.es/starter](https://them.es/starter)
--   [https://them.es/starter-material](https://them.es/starter-material)
--   [https://wordpress.org/themes/twentytwentythree](https://wordpress.org/themes/twentytwentythree)
--   [https://wordpress.org/themes/twentytwentytwo](https://wordpress.org/themes/twentytwentytwo)
--   [https://wordpress.org/themes/twentytwentyone](https://wordpress.org/themes/twentytwentyone)
--   [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty)
--   [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen)
+- [https://them.es/starter-fse](https://them.es/starter-fse)
+- [https://them.es/starter](https://them.es/starter)
+- [https://them.es/starter-material](https://them.es/starter-material)
+- [https://wordpress.org/themes/twentytwentythree](https://wordpress.org/themes/twentytwentythree)
+- [https://wordpress.org/themes/twentytwentytwo](https://wordpress.org/themes/twentytwentytwo)
+- [https://wordpress.org/themes/twentytwentyone](https://wordpress.org/themes/twentytwentyone)
+- [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty)
+- [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen)
 
 ## Contributing
 
@@ -33,8 +33,8 @@ Bugs or feature requests can be reported by creating a new issue.
 
 ### JS/CSS assets
 
--   `$ npm install`.
--   `$ npm run watch`: Start developing in the **/assets** directory.
+- `$ npm install`.
+- `$ npm run watch`: Start developing in the **/assets** directory.
 
 ### PHP
 
@@ -42,23 +42,23 @@ All PHP classes are stored in a separate directory **/inc**
 
 Some external dependencies need to be installed via Composer
 
--   `$ composer install`
+- `$ composer install`
 
 ### Blocks
 
 Blocks are stored in a separate directory **/blocks**
 
--   `$ npm install`
--   `$ npm run start`
-    -   Start developing and test the updated version.
--   `$ npm run build`
-    -   Create a build version and test the updated build version.
+- `$ npm install`
+- `$ npm run start`
+  - Start developing and test the updated version.
+- `$ npm run build`
+  - Create a build version and test the updated build version.
 
 ### Translations
 
 All translations are managed via [https://translate.wordpress.org/projects/wp-plugins/billy](translate.wordpress.org). If you have modified translation strings you can update the **POT** file with the following command (WP-CLI required!).
 
--   `$ npm run create-languagefile`
+- `$ npm run create-languagefile`
 
 More information: [https://developer.wordpress.org/block-editor/developers/internationalization](https://developer.wordpress.org/block-editor/developers/internationalization)
 
@@ -66,8 +66,8 @@ More information: [https://developer.wordpress.org/block-editor/developers/inter
 
 The development version may become quite large due to some external libraries and should not be implemented on a live system. You can create a smaller `dist` version with the following command:
 
--   `$ npm run dist`
-    -   Now you can activate and test the plugin on your system
+- `$ npm run dist`
+  - Now you can activate and test the plugin on your system
 
 When you're done with the development you can submit a [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests) to this repository.
 
@@ -77,16 +77,15 @@ This code repository is not suitable for support requests. If you have a questio
 
 ## Technology
 
--   [Gutenberg Block Editor](https://github.com/WordPress/gutenberg), [GPLv2+](https://github.com/WordPress/gutenberg/blob/master/LICENSE.md)
--   [Bootstrap](https://github.com/twbs/bootstrap), [MIT](https://github.com/twbs/bootstrap/blob/master/LICENSE)
--   [gulp](https://github.com/gulpjs/gulp), [MIT](https://github.com/gulpjs/gulp/blob/master/LICENSE)
--   [Sass](https://github.com/sass), [MIT](https://github.com/sass/dart-sass/blob/master/LICENSE)
--   [webpack](https://github.com/webpack/webpack), [MIT](https://github.com/webpack/webpack/blob/master/LICENSE)
--   [Geocoding with Nominatim OSM-Search](https://operations.osmfoundation.org/policies/nominatim), [GPLv2 license](https://github.com/osm-search/Nominatim)
--   PDF file generation
-    -   [mPDF](https://github.com/mpdf/mpdf), [GPLv2](https://github.com/mpdf/mpdf/blob/development/LICENSE.txt)
-    -   [Roboto Font](https://fonts.google.com/specimen/Roboto), [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0)
--   [Strauss](https://github.com/BrianHenryIE/strauss), [MIT](https://github.com/BrianHenryIE/strauss/blob/master/LICENSE)
+- [Gutenberg Block Editor](https://github.com/WordPress/gutenberg), [GPLv2+](https://github.com/WordPress/gutenberg/blob/master/LICENSE.md)
+- [Bootstrap](https://github.com/twbs/bootstrap), [MIT](https://github.com/twbs/bootstrap/blob/master/LICENSE)
+- [WordPress Scripts](https://github.com/WordPress/gutenberg/tree/master/packages/scripts), [GPLv2+](https://github.com/WordPress/gutenberg/blob/master/packages/scripts/package.json)
+- [webpack](https://github.com/webpack/webpack), [MIT](https://github.com/webpack/webpack/blob/master/LICENSE)
+- [Geocoding with Nominatim OSM-Search](https://operations.osmfoundation.org/policies/nominatim), [GPLv2 license](https://github.com/osm-search/Nominatim)
+- PDF file generation
+  - [mPDF](https://github.com/mpdf/mpdf), [GPLv2](https://github.com/mpdf/mpdf/blob/development/LICENSE.txt)
+  - [Roboto Font](https://fonts.google.com/specimen/Roboto), [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0)
+- [Strauss](https://github.com/BrianHenryIE/strauss), [MIT](https://github.com/BrianHenryIE/strauss/blob/master/LICENSE)
 
 ## Copyright & License
 
