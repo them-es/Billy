@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 1.12.0
+ * Version: 2.0.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -19,11 +19,31 @@ defined( 'ABSPATH' ) || exit;
 define( 'BILLY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BILLY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BILLY_PLUGIN_FILE', __FILE__ );
-define( 'REQUIRED_WP', '6.0' );
-define( 'REQUIRED_PHP', '7.2' );
+define( 'REQUIRED_WP', '6.6' );
+define( 'REQUIRED_PHP', '7.4' );
+
+if ( ! function_exists( 'wp_get_wp_version' ) ) {
+	/**
+	 * Fallback of core wp_get_wp_version().
+	 * https://developer.wordpress.org/reference/functions/wp_get_wp_version/
+	 *
+	 * @return string
+	 */
+	function wp_get_wp_version() {
+		static $wp_version;
+
+		if ( ! isset( $wp_version ) ) {
+			require ABSPATH . WPINC . '/version.php';
+		}
+
+		return $wp_version;
+	}
+}
 
 /**
  * On plugin deactivation.
+ *
+ * @return void
  */
 function billy_deactivate() {
 	deactivate_plugins( plugin_basename( BILLY_PLUGIN_FILE ) );
@@ -31,6 +51,8 @@ function billy_deactivate() {
 
 /**
  * Admin notice: Incompatible PHP version.
+ *
+ * @return void
  */
 function billy_php_incompatible_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
@@ -42,6 +64,8 @@ function billy_php_incompatible_admin_notice() {
 
 /**
  * Admin notice: Incompatible WP version.
+ *
+ * @return void
  */
 function billy_wp_incompatible_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) );
@@ -53,6 +77,8 @@ function billy_wp_incompatible_admin_notice() {
 
 /**
  * Admin notice: Incompatible with Classic Editor.
+ *
+ * @return void
  */
 function billy_classic_editor_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) );
@@ -64,6 +90,8 @@ function billy_classic_editor_admin_notice() {
 
 /**
  * Admin notice: PDF directory not writable.
+ *
+ * @return void
  */
 function billy_temp_pdfdirectory_not_writable_admin_notice() {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
@@ -82,6 +110,8 @@ function billy_is_plugin_active( $plugin = '' ) {
 
 /**
  * Register "Billy" menu.
+ *
+ * @return void
  */
 function billy_register_menu_page() {
 	add_menu_page( 'Billy', 'Billy', 'edit_private_posts', 'billy', '', 'dashicons-tickets', 10 );
@@ -93,23 +123,10 @@ define( 'BILLY_ADMIN_MENU', true );
  * On load:
  * 1. Test compatibility.
  * 2. Initialize plugin.
+ *
+ * @return void
  */
 function billy_plugins_loaded() {
-	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
-		add_action( 'admin_notices', 'billy_php_incompatible_admin_notice' );
-		// add_action( 'admin_init', 'billy_deactivate' );
-
-		return;
-	}
-
-	global $wp_version;
-	if ( version_compare( $wp_version, REQUIRED_WP, '<=' ) ) {
-		add_action( 'admin_notices', 'billy_wp_incompatible_admin_notice' );
-		// add_action( 'admin_init', 'billy_deactivate' );
-
-		return;
-	}
-
 	if ( billy_is_plugin_active( 'classic-editor/classic-editor.php' ) || billy_is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ) {
 		add_action( 'admin_notices', 'billy_classic_editor_admin_notice' );
 		add_action( 'admin_init', 'billy_deactivate' );
@@ -117,18 +134,50 @@ function billy_plugins_loaded() {
 		return;
 	}
 
-	if ( isset( $_REQUEST['post_type'] ) && false !== strpos( (string) $_REQUEST['post_type'], 'billy-' ) && ! wp_is_writable( __DIR__ . '/mpdf/tmp' ) ) {
+	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
+		add_action( 'admin_notices', 'billy_php_incompatible_admin_notice' );
+		// add_action( 'admin_init', 'billy_deactivate' );
+
+		return;
+	}
+
+	if ( version_compare( wp_get_wp_version(), REQUIRED_WP, '<=' ) ) {
+		add_action( 'admin_notices', 'billy_wp_incompatible_admin_notice' );
+		// add_action( 'admin_init', 'billy_deactivate' );
+
+		return;
+	}
+
+	if ( isset( $_REQUEST['post_type'] ) && str_starts_with( (string) wp_unslash( $_REQUEST['post_type'] ), 'billy-' ) && ! wp_is_writable( __DIR__ . '/mpdf/tmp' ) ) {
 		add_action( 'admin_notices', 'billy_temp_pdfdirectory_not_writable_admin_notice' );
 	}
 
 	// Initialize Classes.
 	include_once __DIR__ . '/inc/class-billy.php';
-	include_once __DIR__ . '/inc/class-blocks.php';
-	include_once __DIR__ . '/inc/class-pdfexport.php';
+
+	if ( ! class_exists( 'Billy' ) ) {
+		return;
+	}
 
 	new Billy();
-	new Billy_Blocks();
-	new Billy_PDF_Export();
+
+	// Define an array of classes to initialize.
+	$classes = array(
+		'Billy_Admin'      => 'class-admin.php',
+		'Billy_Blocks'     => 'class-blocks.php',
+		'Billy_PDF_Export' => 'class-pdfexport.php',
+	);
+
+	// Loop through the classes to include and instantiate.
+	foreach ( $classes as $class => $file ) {
+		include_once __DIR__ . '/inc/' . $file;
+
+		if ( class_exists( $class ) ) {
+			new $class();
+		} else {
+			error_log( "Class $class could not be initialized." );
+		}
+	}
 }
 add_action( 'plugins_loaded', 'billy_plugins_loaded', 998 );
 
@@ -165,6 +214,8 @@ add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
  * @param int     $new_post_id The newly created post's ID.
  * @param WP_Post $post        The original post's object.
  * @param string  $status      The destination status as set by the calling method: e.g. ‘draft’ if the function has been called using the “New Draft” links. Empty otherwise.
+ *
+ * @return void
  */
 function billy_custom_dp_duplicate_post( $new_post_id, $post, $status ) {
 	$contact_uuid = get_post_meta( $post->ID, '_contact_uuid', true );

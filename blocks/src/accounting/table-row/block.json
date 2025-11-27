@@ -1,0 +1,70 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "billy-blocks/accounting-tablerow",
+	"title": "Accounting: Table Row",
+	"icon": "menu-alt",
+	"category": "billy-blocks",
+	"parent": ["billy-blocks/accounting-table"],
+	"textdomain": "billy",
+	"attributes": {
+		"index": {
+			"type": "number",
+			"default": "0"
+		},
+		"currency": {
+			"type": "string",
+			"default": ""
+		},
+		"locale": {
+			"type": "string",
+			"default": ""
+		},
+		"date": {
+			"type": "string",
+			"default": ""
+		},
+		"quarter": {
+			"type": "number",
+			"default": ""
+		},
+		"reference": {
+			"type": "string",
+			"default": ""
+		},
+		"earning": {
+			"type": "number",
+			"default": ""
+		},
+		"expense": {
+			"type": "number",
+			"default": ""
+		},
+		"tax": {
+			"type": "number",
+			"default": ""
+		},
+		"postUUID": {
+			"type": "string",
+			"default": ""
+		},
+		"postTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"postLink": {
+			"type": "string",
+			"default": ""
+		},
+		"postType": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}

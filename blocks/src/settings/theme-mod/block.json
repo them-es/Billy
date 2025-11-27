@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "billy-blocks/theme-mod",
+	"title": "Theme Mod",
+	"icon": "admin-generic",
+	"category": "billy-blocks",
+	"textdomain": "billy",
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false,
+		"className": true
+	},
+	"attributes": {
+		"themeMod": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

@@ -1,13 +1,13 @@
 === Billy ===
 Contributors: them.es
 Donate link: https://them.es/plugins/billy
-Tags: accounting, billing, invoices, quotes
-Requires at least: 6.0
-Tested up to: 6.8
-Stable tag: 1.12.0
+Tags: accounting, billing, invoice, invoices, quote, quotes
+Requires at least: 6.6
+Tested up to: 6.9
+Stable tag: 2.0.0
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Requires PHP: 8.0
 
 Create invoices, quotes and keep track of your earnings and expenses with this billing suite—tailored for freelancers and small agencies.
 
@@ -16,6 +16,8 @@ Create invoices, quotes and keep track of your earnings and expenses with this b
 This plugin helps you speed-up your billing process, from creating invoices or quotes, minimizing any potential errors to getting paid faster.
 Create an electronic invoice, a quote or accounting records in just a matter of minutes with the block-based WordPress editor. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
 Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer. The post header can be branded with your logo. Any frontend styles will be inherited from the theme, so please make sure the theme installed on your site fully supports the Block editor.
+
+Emoji icon used in teaser © Google ([Apache License 2.0](https://github.com/googlefonts/noto-emoji/blob/main/svg/LICENSE "Apache License 2.0"))
 
 = Target group? =
 
@@ -118,17 +120,20 @@ Please consider purchasing the premium add-on with the following features:
 * Since you're using a self hosted version for your billing data, installing a [WordPress Backup Plugin](https://wordpress.org/plugins/search/backup "WordPress Backup Plugin") should be mandatory.
 * Furthermore [Exporting your Customizer options](https://wordpress.org/plugins/search/customizer+export "WordPress Customizer Export Plugin") is highly recommended since Customizer values may get lost when switching your theme.
 
+= I'm not sure where to begin! =
+* Head over to [https://them.es/plugins/billy/docs/](https://them.es/plugins/billy/docs/ "them.es Plugin") to view the official documentation, which should help you get started.
+
 = Where can I get help? =
 * You can ask questions or post feature requests in the Support forums
   * [https://wordpress.org/support/plugin/billy](https://wordpress.org/support/plugin/billy "WordPress Support")
   * [https://them.es/support](https://them.es/support "them.es Support")
 
-= The billing templates don't look good in my theme =
+= The Billy templates don't look good in my theme =
 * Please note that we can't support you in getting individual themes customized. But if your theme supports the Block editor everything should work out of the box. Minor CSS changes may be required.
 * The plugin has been tested with the latest default WordPress themes and with some other major themes.
 
-= How can I style the billing templates? =
-* This plugin uses core Gutenberg block styles - so your theme needs to support Gutenberg blocks.
+= How can I style the Billy templates? =
+* Billy uses core Gutenberg block styles - so your theme needs to support Gutenberg blocks.
 * All Billy templates are inheriting the styles of your theme. If required you can edit the __style.css__ file of your theme or add __custom CSS__ in the [Customizer](https://www.google.com/search?q=wordpress+customizer+add+custom+css "Customizer").
 
 = How do I create a PDF version of my invoices/quotes? =
@@ -149,6 +154,19 @@ Please consider purchasing the premium add-on with the following features:
 * You can also help translate the plugin into your language: [them.es](https://them.es/plugins/billy/docs "them.es") (them.es user account required) or [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") (WordPress.org user account required)
 
 == Changelog ==
+
+= 2.0.0 =
+* All blocks haven been migrated to Blocks API v3
+* Optimization of the overall codebase with improvements to the performance
+* The financial year can now be defined
+* Invoices, quotes and accounting records can now be downloaded as a native spreadsheet file (XLSX, ODS, CSV)
+* Accounting block: Removed translation strings in table block and added custom placeholders (see v1.11.0)
+* Generated PDFs now support emojis (by converting them to image files via the WordPress CDN) - this behaviour can be disabled
+* Enabled editor notes support (WordPress 6.9+ is required)
+* New banner and icon
+* Tested up to WordPress 6.9 (pre-release)
+* Bumb minimum WordPress version to v6.6
+* Bumb required PHP version to v8.2
 
 = 1.12.0 =
 * Refactor frontend assets and blocks

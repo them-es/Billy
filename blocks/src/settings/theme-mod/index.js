@@ -1,72 +1,41 @@
 /**
- * Header: Render theme_mod
+ * Accounting Actions
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
-
-import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { SelectControl, PanelBody, Disabled } from '@wordpress/components';
-import ServerSideRender from '@wordpress/server-side-render';
+import { registerBlockType } from '@wordpress/blocks';
 
-registerBlockType('billy-blocks/theme-mod', {
-	apiVersion: 2,
-	title: __('Theme Mod', 'billy'),
-	icon: 'admin-generic', // https://developer.wordpress.org/resource/dashicons
-	category: 'billy-blocks', // Custom category: see index.php
-	attributes: {
-		themeMod: {
-			type: 'string',
-			default: '',
-		},
-	},
-	supports: {
-		inserter: false,
-		reusable: false,
-		html: false,
-	},
+/**
+ * Internal dependencies
+ */
+import edit from './edit';
+import save from './save';
+//import deprecated from './deprecated';
 
-	edit: (props) => {
-		const {
-			attributes: { themeMod },
-			setAttributes,
-		} = props;
+import metadata from './block.json';
+const { name } = metadata;
 
-		const updateThemeMod = (val) => {
-			setAttributes({ themeMod: val });
-		};
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType(
+	{ name, ...metadata },
+	{
+		/**
+		 * @see ./edit.js
+		 */
+		edit,
 
-		const blockProps = useBlockProps();
+		/**
+		 * @see ./save.js
+		 */
+		save,
 
-		return (
-			<div {...blockProps}>
-				<InspectorControls>
-					<PanelBody title={__('Theme Mod', 'billy')}>
-						<SelectControl
-							label={__('Setting', 'billy')}
-							help={__(
-								'Modify the value in the Theme Customizer.',
-								'billy'
-							)}
-							options={globalDataBilly.themeModOptions}
-							value={themeMod ?? ''}
-							onChange={updateThemeMod}
-						/>
-					</PanelBody>
-				</InspectorControls>
-
-				<Disabled>
-					<ServerSideRender
-						block="billy-blocks/theme-mod"
-						attributes={props.attributes}
-					/>
-				</Disabled>
-			</div>
-		);
-	},
-
-	save: () => {
-		// Handled by PHP.
-		return null;
-	},
-});
+		/**
+		 * @see ./deprecated.js
+		 */
+		//deprecated: deprecated,
+	}
+);

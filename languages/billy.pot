@@ -2,16 +2,16 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Billy 1.11.0\n"
+"Project-Id-Version: Billy 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/them-es/billy/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-03T05:00:10+00:00\n"
+"POT-Creation-Date: 2025-09-29T13:44:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: billy\n"
 
 #. Plugin Name of the plugin
@@ -40,694 +40,764 @@ msgid "https://them.es/plugins/billy"
 msgstr ""
 
 #: billy.php:36
+#, php-format
 msgid "<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version."
 msgstr ""
 
 #: billy.php:47
+#, php-format
 msgid "<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version."
 msgstr ""
 
 #: billy.php:58
+#, php-format
 msgid "<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin."
 msgstr ""
 
 #: billy.php:69
+#, php-format
 msgid "The temp directory %s is not writable. Please change the read/write permissions."
 msgstr ""
 
-#: inc/class-billy.php:169
-#: inc/class-billy.php:322
-#: inc/class-billy.php:343
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:136
-#: blocks/src/accounting/table/deprecatedOuter.js:146
-#: blocks/src/accounting/table/deprecatedOuter.js:162
-#: blocks/src/accounting/table/deprecatedOuter.js:186
-#: blocks/src/accounting/table/deprecatedOuter.js:196
-#: blocks/src/accounting/table/deprecatedOuter.js:328
-#: blocks/src/accounting/table/deprecatedOuter.js:338
-#: blocks/src/accounting/table/deprecatedOuter.js:356
-#: blocks/src/accounting/table/deprecatedOuter.js:380
-#: blocks/src/accounting/table/deprecatedOuter.js:390
-#: blocks/src/accounting/table/deprecatedOuter.js:522
-#: blocks/src/accounting/table/deprecatedOuter.js:532
-#: blocks/src/accounting/table/deprecatedOuter.js:550
-#: blocks/src/accounting/table/deprecatedOuter.js:574
-#: blocks/src/accounting/table/deprecatedOuter.js:584
-#: blocks/src/accounting/table/deprecatedOuter.js:716
-#: blocks/src/accounting/table/deprecatedOuter.js:726
-#: blocks/src/accounting/table/deprecatedOuter.js:744
-#: blocks/src/accounting/table/deprecatedOuter.js:768
-#: blocks/src/accounting/table/deprecatedOuter.js:778
-#: blocks/src/accounting/table/index.js:188
-#: blocks/src/accounting/table/index.js:205
-#: blocks/src/accounting/table/index.js:223
-#: blocks/src/accounting/table/index.js:244
-#: blocks/src/accounting/table/index.js:259
-#: blocks/src/accounting/table/index.js:355
-#: blocks/src/accounting/table/index.js:365
-#: blocks/src/accounting/table/index.js:381
-#: blocks/src/accounting/table/index.js:404
-#: blocks/src/accounting/table/index.js:411
-#: blocks/src/invoice/table/deprecatedInner.js:79
-#: blocks/src/invoice/table/deprecatedInner.js:149
-#: blocks/src/invoice/table/deprecatedOuter.js:102
-#: blocks/src/invoice/table/deprecatedOuter.js:169
-#: blocks/src/invoice/table/deprecatedOuter.js:263
-#: blocks/src/invoice/table/deprecatedOuter.js:334
-#: blocks/src/invoice/table/deprecatedOuter.js:422
-#: blocks/src/invoice/table/deprecatedOuter.js:481
-#: blocks/src/invoice/table/index.js:212
-#: blocks/src/invoice/table/index.js:271
-#: blocks/src/invoice/table/index.js:333
-#: blocks/src/invoice/table/index.js:398
-#: blocks/src/invoice/table/index.js:673
-#: blocks/src/quote/table/deprecatedInner.js:79
-#: blocks/src/quote/table/deprecatedInner.js:149
-#: blocks/src/quote/table/deprecatedOuter.js:102
-#: blocks/src/quote/table/deprecatedOuter.js:169
-#: blocks/src/quote/table/deprecatedOuter.js:263
-#: blocks/src/quote/table/deprecatedOuter.js:334
-#: blocks/src/quote/table/deprecatedOuter.js:422
-#: blocks/src/quote/table/deprecatedOuter.js:481
-#: blocks/src/quote/table/index.js:211
-#: blocks/src/quote/table/index.js:270
-#: blocks/src/quote/table/index.js:332
-#: blocks/src/quote/table/index.js:397
-#: blocks/src/quote/table/index.js:672
-msgid "%1$s %2$s"
-msgstr ""
-
-#: inc/class-billy.php:277
-#: inc/class-billy.php:1283
-#: inc/class-billy.php:1683
-#: inc/class-blocks.php:291
-#: blocks/build/index.js:1
-#: blocks/src/invoice/actions/index.js:19
-#: blocks/src/invoice/date/index.js:20
-#: blocks/src/invoice/duedate/index.js:20
-#: blocks/src/invoice/invoice-number/index.js:20
-#: blocks/src/invoice/meta/index.js:20
-#: blocks/src/invoice/paymentinformation/index.js:20
-#: blocks/src/invoice/table/index.js:40
-#: blocks/src/invoice/table/index.js:422
-msgid "Invoice"
-msgstr ""
-
-#: inc/class-billy.php:278
-#: inc/class-billy.php:1439
-#: inc/class-billy.php:1674
-#: inc/class-blocks.php:313
-#: blocks/build/index.js:1
-#: blocks/src/quote/actions/index.js:19
-#: blocks/src/quote/date/index.js:20
-#: blocks/src/quote/information/index.js:20
-#: blocks/src/quote/meta/index.js:20
-#: blocks/src/quote/table/index.js:40
-#: blocks/src/quote/table/index.js:421
-#: blocks/src/quote/validuntildate/index.js:20
-msgid "Quote"
-msgstr ""
-
-#: inc/class-billy.php:279
-#: inc/class-billy.php:1494
-#: inc/class-billy.php:1495
-#: blocks/build/index.js:1
-#: blocks/src/accounting/actions/index.js:19
-#: blocks/src/accounting/table/index.js:44
-#: blocks/src/accounting/table/index.js:435
-msgid "Accounting"
-msgstr ""
-
-#: inc/class-billy.php:281
-msgid "Contact"
-msgstr ""
-
-#: inc/class-billy.php:282
-msgid "To do"
-msgstr ""
-
-#: inc/class-billy.php:283
-msgid "Timetracking"
-msgstr ""
-
-#: inc/class-billy.php:285
-msgid "PDF Content"
-msgstr ""
-
-#: inc/class-billy.php:286
-msgid "PDF Footer"
-msgstr ""
-
-#: inc/class-billy.php:291
-msgid "✅ %s"
-msgstr ""
-
-#: inc/class-billy.php:298
-msgid "Locale"
-msgstr ""
-
-#: inc/class-billy.php:302
-#: inc/class-billy.php:1586
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:49
-msgid "Currency"
-msgstr ""
-
-#: inc/class-billy.php:306
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:116
-#: blocks/src/accounting/table/deprecatedOuter.js:179
-#: blocks/src/accounting/table/deprecatedOuter.js:308
-#: blocks/src/accounting/table/deprecatedOuter.js:373
-#: blocks/src/accounting/table/deprecatedOuter.js:567
-#: blocks/src/accounting/table/deprecatedOuter.js:761
-#: blocks/src/accounting/table/index.js:334
-#: blocks/src/accounting/table/index.js:397
-#: blocks/src/settings/panel/index.js:55
-msgid "Taxes"
-msgstr ""
-
-#: inc/class-billy.php:311
-msgid "Current invoice"
-msgstr ""
-
-#: inc/class-billy.php:316
-msgid "Current quote"
-msgstr ""
-
-#: inc/class-billy.php:320
-msgid "Problems have been solved!"
-msgstr ""
-
-#: inc/class-billy.php:322
-msgid "Edit"
-msgstr ""
-
-#: inc/class-billy.php:327
-msgid "Customized templates"
-msgstr ""
-
-#: inc/class-billy.php:343
-msgid "Thank you for purchasing %s!"
-msgstr ""
-
-#: inc/class-billy.php:343
-msgid "Get the <u>Pro</u> version"
-msgstr ""
-
-#: inc/class-billy.php:343
-msgid "Premium add-on with a project management suite, WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
-msgstr ""
-
-#: inc/class-billy.php:343
-msgid "Please rate this Plugin"
-msgstr ""
-
-#: inc/class-billy.php:390
-msgid "Download %s"
-msgstr ""
-
-#: inc/class-billy.php:390
-msgid "PDF"
-msgstr ""
-
-#: inc/class-billy.php:394
-msgid "Export %s"
-msgstr ""
-
-#: inc/class-billy.php:394
-msgid "TSV"
-msgstr ""
-
-#: inc/class-billy.php:422
-#: inc/class-pdfexport.php:218
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:74
-#: blocks/src/accounting/table/deprecatedOuter.js:266
-#: blocks/src/accounting/table/deprecatedOuter.js:460
-#: blocks/src/accounting/table/deprecatedOuter.js:654
-#: blocks/src/accounting/table/index.js:294
-#: blocks/src/invoice/table/deprecatedOuter.js:73
-#: blocks/src/invoice/table/deprecatedOuter.js:234
-#: blocks/src/invoice/table/deprecatedOuter.js:399
-#: blocks/src/quote/table/deprecatedOuter.js:73
-#: blocks/src/quote/table/deprecatedOuter.js:234
-#: blocks/src/quote/table/deprecatedOuter.js:399
-msgid "#"
-msgstr ""
-
-#: inc/class-billy.php:423
-#: inc/class-pdfexport.php:219
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:88
-#: blocks/src/accounting/table/deprecatedOuter.js:280
-#: blocks/src/accounting/table/deprecatedOuter.js:474
-#: blocks/src/accounting/table/deprecatedOuter.js:668
-#: blocks/src/accounting/table/index.js:304
-#: blocks/src/invoice/table/deprecatedOuter.js:75
-#: blocks/src/invoice/table/deprecatedOuter.js:236
-#: blocks/src/invoice/table/deprecatedOuter.js:401
-#: blocks/src/quote/table/deprecatedOuter.js:75
-#: blocks/src/quote/table/deprecatedOuter.js:236
-#: blocks/src/quote/table/deprecatedOuter.js:401
-msgid "Description"
-msgstr ""
-
-#: inc/class-billy.php:424
-#: inc/class-pdfexport.php:220
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/deprecatedOuter.js:77
-#: blocks/src/invoice/table/deprecatedOuter.js:238
-#: blocks/src/invoice/table/deprecatedOuter.js:403
-#: blocks/src/invoice/table/index.js:600
-#: blocks/src/quote/table/deprecatedOuter.js:77
-#: blocks/src/quote/table/deprecatedOuter.js:238
-#: blocks/src/quote/table/deprecatedOuter.js:403
-#: blocks/src/quote/table/index.js:599
-msgid "Amount"
-msgstr ""
-
-#: inc/class-billy.php:425
-#: inc/class-pdfexport.php:221
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/deprecatedOuter.js:91
-#: blocks/src/invoice/table/deprecatedOuter.js:252
-#: blocks/src/invoice/table/deprecatedOuter.js:417
-#: blocks/src/invoice/table/index.js:207
-#: blocks/src/quote/table/deprecatedOuter.js:91
-#: blocks/src/quote/table/deprecatedOuter.js:252
-#: blocks/src/quote/table/deprecatedOuter.js:417
-#: blocks/src/quote/table/index.js:206
-msgid "Subtotal"
-msgstr ""
-
-#: inc/class-billy.php:426
-#: inc/class-pdfexport.php:222
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/deprecatedOuter.js:92
-#: blocks/src/invoice/table/deprecatedOuter.js:160
-#: blocks/src/invoice/table/deprecatedOuter.js:253
-#: blocks/src/invoice/table/deprecatedOuter.js:324
-#: blocks/src/invoice/table/deprecatedOuter.js:418
-#: blocks/src/invoice/table/deprecatedOuter.js:477
-#: blocks/src/invoice/table/index.js:208
-#: blocks/src/invoice/table/index.js:267
-#: blocks/src/quote/table/deprecatedOuter.js:92
-#: blocks/src/quote/table/deprecatedOuter.js:160
-#: blocks/src/quote/table/deprecatedOuter.js:253
-#: blocks/src/quote/table/deprecatedOuter.js:324
-#: blocks/src/quote/table/deprecatedOuter.js:418
-#: blocks/src/quote/table/deprecatedOuter.js:477
-#: blocks/src/quote/table/index.js:207
-#: blocks/src/quote/table/index.js:266
-msgid "Total"
-msgstr ""
-
-#: inc/class-billy.php:427
-#: inc/class-pdfexport.php:223
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:502
-#: blocks/src/accounting/table/deprecatedOuter.js:696
-#: blocks/src/accounting/table/index.js:707
-#: blocks/src/invoice/table/deprecatedOuter.js:79
-#: blocks/src/invoice/table/deprecatedOuter.js:111
-#: blocks/src/invoice/table/deprecatedOuter.js:240
-#: blocks/src/invoice/table/deprecatedOuter.js:273
-#: blocks/src/invoice/table/deprecatedOuter.js:405
-#: blocks/src/invoice/table/deprecatedOuter.js:432
-#: blocks/src/invoice/table/index.js:222
-#: blocks/src/invoice/table/index.js:614
-#: blocks/src/quote/table/deprecatedOuter.js:79
-#: blocks/src/quote/table/deprecatedOuter.js:111
-#: blocks/src/quote/table/deprecatedOuter.js:240
-#: blocks/src/quote/table/deprecatedOuter.js:273
-#: blocks/src/quote/table/deprecatedOuter.js:405
-#: blocks/src/quote/table/deprecatedOuter.js:432
-#: blocks/src/quote/table/index.js:221
-#: blocks/src/quote/table/index.js:613
-msgid "Tax"
-msgstr ""
-
-#: inc/class-billy.php:555
-msgid "Pending"
-msgstr ""
-
-#: inc/class-billy.php:692
-#: inc/class-billy.php:761
-msgid "%1$s%2$03s"
-msgstr ""
-
-#: inc/class-billy.php:908
-#: inc/class-billy.php:909
-msgid "%s Header"
-msgstr ""
-
-#: inc/class-billy.php:1164
-#: inc/class-billy.php:1335
-#: inc/class-billy.php:1583
-#: inc/class-billy.php:1703
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:31
-msgid "Name"
-msgstr ""
-
-#: inc/class-billy.php:1164
-#: inc/class-billy.php:1335
-msgid "Company"
-msgstr ""
-
-#: inc/class-billy.php:1164
-#: inc/class-billy.php:1335
-msgid "Address Field %s"
-msgstr ""
-
-#: inc/class-billy.php:1164
-#: inc/class-billy.php:1335
-msgid "Country"
-msgstr ""
-
-#: inc/class-billy.php:1193
-msgid "Billing Period"
-msgstr ""
-
-#: inc/class-billy.php:1201
-#: inc/class-billy.php:1359
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:95
-#: blocks/src/accounting/table/deprecatedOuter.js:287
-#: blocks/src/accounting/table/deprecatedOuter.js:481
-#: blocks/src/accounting/table/deprecatedOuter.js:675
-#: blocks/src/accounting/table/index.js:311
-#: blocks/src/accounting/table/index.js:670
-msgid "Reference"
-msgstr ""
-
-#: inc/class-billy.php:1220
-#: inc/class-billy.php:1226
-#: inc/class-billy.php:1258
-#: inc/class-billy.php:1378
-#: inc/class-billy.php:1384
-#: inc/class-billy.php:1414
-#: inc/class-billy.php:1484
-msgid "%s (optional)"
-msgstr ""
-
-#: inc/class-billy.php:1220
-#: inc/class-billy.php:1378
-msgid "Subject"
-msgstr ""
-
-#: inc/class-billy.php:1226
-#: inc/class-billy.php:1384
-msgid "Intro text"
-msgstr ""
-
-#: inc/class-billy.php:1226
-#: inc/class-billy.php:1384
-msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
-msgstr ""
-
-#: inc/class-billy.php:1250
-#: inc/class-billy.php:1251
-#: inc/class-billy.php:1406
-#: inc/class-billy.php:1407
-#: blocks/build/index.js:1
-#: blocks/src/quote/information/index.js:21
-msgid "Information"
-msgstr ""
-
-#: inc/class-billy.php:1258
-#: inc/class-billy.php:1414
-#: inc/class-billy.php:1484
-msgid "Notes"
-msgstr ""
-
-#: inc/class-billy.php:1282
-msgid "Invoices"
-msgstr ""
-
-#: inc/class-billy.php:1438
-msgid "Quotes"
-msgstr ""
-
-#: inc/class-billy.php:1471
-msgid "Heading"
-msgstr ""
-
-#: inc/class-billy.php:1567
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:102
-#: blocks/src/accounting/table/deprecatedOuter.js:130
-#: blocks/src/accounting/table/deprecatedOuter.js:180
-#: blocks/src/accounting/table/deprecatedOuter.js:294
-#: blocks/src/accounting/table/deprecatedOuter.js:322
-#: blocks/src/accounting/table/deprecatedOuter.js:374
-#: blocks/src/accounting/table/deprecatedOuter.js:488
-#: blocks/src/accounting/table/deprecatedOuter.js:516
-#: blocks/src/accounting/table/deprecatedOuter.js:568
-#: blocks/src/accounting/table/deprecatedOuter.js:710
-#: blocks/src/accounting/table/deprecatedOuter.js:762
-#: blocks/src/accounting/table/index.js:184
-#: blocks/src/accounting/table/index.js:239
-#: blocks/src/accounting/table/index.js:318
-#: blocks/src/accounting/table/index.js:349
-#: blocks/src/accounting/table/index.js:398
-msgid "Earnings"
-msgstr ""
-
-#: inc/class-billy.php:1568
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:109
-#: blocks/src/accounting/table/deprecatedOuter.js:131
-#: blocks/src/accounting/table/deprecatedOuter.js:181
-#: blocks/src/accounting/table/deprecatedOuter.js:301
-#: blocks/src/accounting/table/deprecatedOuter.js:323
-#: blocks/src/accounting/table/deprecatedOuter.js:375
-#: blocks/src/accounting/table/deprecatedOuter.js:495
-#: blocks/src/accounting/table/deprecatedOuter.js:517
-#: blocks/src/accounting/table/deprecatedOuter.js:569
-#: blocks/src/accounting/table/deprecatedOuter.js:711
-#: blocks/src/accounting/table/deprecatedOuter.js:763
-#: blocks/src/accounting/table/index.js:201
-#: blocks/src/accounting/table/index.js:254
-#: blocks/src/accounting/table/index.js:325
-#: blocks/src/accounting/table/index.js:350
-#: blocks/src/accounting/table/index.js:399
-msgid "Expenses"
-msgstr ""
-
-#: inc/class-billy.php:1584
-#: inc/class-billy.php:1724
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:37
-msgid "Address"
-msgstr ""
-
-#: inc/class-billy.php:1585
-#: inc/class-billy.php:1817
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:43
-msgid "VAT"
-msgstr ""
-
-#: inc/class-billy.php:1655
-msgid "Plugin Setup"
-msgstr ""
-
-#: inc/class-billy.php:1665
-msgid "General"
-msgstr ""
-
-#: inc/class-billy.php:1740
-#: inc/class-billy.php:1758
-msgid "Geocoding powered by %s"
-msgstr ""
-
-#: inc/class-billy.php:1757
-msgid "Address (geocoded)"
-msgstr ""
-
-#: inc/class-billy.php:1779
-msgid "Email"
-msgstr ""
-
-#: inc/class-billy.php:1780
-msgid "Enter your email"
-msgstr ""
-
-#: inc/class-billy.php:1800
-msgid "Phone"
-msgstr ""
-
-#: inc/class-billy.php:1801
-msgid "Enter your phone number"
-msgstr ""
-
-#: inc/class-billy.php:1818
-msgid "Enter your VAT identification number or Taxpayer ID"
-msgstr ""
-
-#: inc/class-billy.php:1835
-msgid "Currency Code"
-msgstr ""
-
-#: inc/class-billy.php:1836
-#: inc/class-billy.php:1858
-msgid "Caution: Any changes made here may affect existing entries. Create a backup first!"
-msgstr ""
-
-#: inc/class-billy.php:1853
-msgid "Tax Rates"
-msgstr ""
-
-#: inc/class-billy.php:1855
-msgid "Enter the taxrates separated by newline: e.g. %s"
-msgstr ""
-
-#: inc/class-billy.php:1874
-msgid "Current invoice number"
-msgstr ""
-
-#: inc/class-billy.php:1875
-msgid "Upcoming invoice numbers will be autoincremented based on this value!"
-msgstr ""
-
-#: inc/class-billy.php:1903
-#: blocks/build/index.js:1
-#: blocks/src/invoice/invoice-number/index.js:45
-msgid "Invoice number: Prefix"
-msgstr ""
-
-#: inc/class-billy.php:1904
-#: inc/class-billy.php:2028
-msgid "You can include placeholders like {YEAR}, {MONTH} and {DAY}."
-msgstr ""
-
-#: inc/class-billy.php:1920
-msgid "Payment due within # days"
-msgstr ""
-
-#: inc/class-billy.php:1940
-#: blocks/build/index.js:1
-#: blocks/src/invoice/paymentinformation/index.js:21
-#: blocks/src/invoice/paymentinformation/index.js:45
-msgid "Payment Information"
-msgstr ""
-
-#: inc/class-billy.php:1941
-msgid "Add the payment instructions and link to your terms."
-msgstr ""
-
-#: inc/class-billy.php:1947
-msgid "Thank you for your business!"
-msgstr ""
-
-#: inc/class-billy.php:1961
-#: blocks/build/index.js:1
-#: blocks/src/quote/information/index.js:45
-msgid "Quote Information"
-msgstr ""
-
-#: inc/class-billy.php:1962
-msgid "Inform your contacts about special terms, quote expiration clauses, etc."
-msgstr ""
-
-#: inc/class-billy.php:1968
-msgid "We will be happy to answer any questions you may have!"
-msgstr ""
-
-#: inc/class-billy.php:1982
-msgid "Current quote number"
-msgstr ""
-
-#: inc/class-billy.php:1983
-msgid "Upcoming quote numbers will be autoincremented based on this value!"
-msgstr ""
-
-#: inc/class-billy.php:2010
-msgid "Just use the current date (\"Ymd\") as quote number"
-msgstr ""
-
-#: inc/class-billy.php:2027
-msgid "Quote number: Prefix"
-msgstr ""
-
-#: inc/class-billy.php:2044
-msgid "Quote valid for # days"
-msgstr ""
-
-#: inc/class-billy.php:2085
-msgid "Geocode was not successful - please provide a valid address: %s"
-msgstr ""
-
-#: inc/class-billy.php:2106
-msgid "Please provide a valid currency format"
-msgstr ""
-
-#: inc/class-billy.php:2132
-msgid "Please separate the taxrates by newline and don't forget to append the \"%\" sign to each value."
-msgstr ""
-
-#: inc/class-blocks.php:188
-msgid "Billy Blocks"
-msgstr ""
-
-#: inc/class-blocks.php:241
-#: blocks/build/index.js:1
-#: blocks/src/invoice/meta/index.js:84
-#: blocks/src/invoice/meta/index.js:111
-#: blocks/src/invoice/meta/index.js:149
-#: blocks/src/quote/meta/index.js:84
-#: blocks/src/quote/meta/index.js:111
-#: blocks/src/quote/meta/index.js:148
-msgid "<div class=\"label\">%1$s</div> <div class=\"text\">%2$s</div>"
-msgstr ""
-
-#: inc/class-blocks.php:255
-msgid "<strong>%1$s</strong> %2$s"
-msgstr ""
-
-#: inc/class-blocks.php:255
-#: blocks/build/index.js:1
-#: blocks/src/invoice/meta/index.js:89
-#: blocks/src/invoice/meta/index.js:116
-#: blocks/src/invoice/meta/index.js:154
-#: blocks/src/invoice/meta/index.js:194
-#: blocks/src/quote/meta/index.js:89
-#: blocks/src/quote/meta/index.js:116
-#: blocks/src/quote/meta/index.js:153
-#: blocks/src/quote/meta/index.js:192
-msgid "N/A"
-msgstr ""
-
-#: inc/class-blocks.php:268
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:81
-#: blocks/src/accounting/table/deprecatedOuter.js:273
-#: blocks/src/accounting/table/deprecatedOuter.js:467
-#: blocks/src/accounting/table/deprecatedOuter.js:661
-#: blocks/src/accounting/table/index.js:297
-#: blocks/src/accounting/table/index.js:603
-#: blocks/src/invoice/date/index.js:21
-#: blocks/src/invoice/date/index.js:45
-#: blocks/src/quote/date/index.js:21
+#: blocks/build/invoice/date/render.php:2
+#: blocks/build/quote/date/render.php:2
+#: blocks/src/invoice/date/render.php:2
+#: blocks/src/quote/date/render.php:2
+#: inc/class-billy.php:441
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/date/index.js:1
+#: blocks/src/accounting/table-row/edit.js:134
+#: blocks/src/accounting/table/deprecated.js:75
+#: blocks/src/accounting/table/deprecated.js:270
+#: blocks/src/accounting/table/deprecated.js:462
+#: blocks/src/accounting/table/deprecated.js:656
+#: blocks/src/accounting/table/deprecated.js:850
+#: blocks/src/invoice/date/edit.js:34
 msgid "Date"
 msgstr ""
 
-#: inc/class-blocks.php:291
-#: inc/class-blocks.php:313
-msgid "Current %s"
-msgstr ""
-
-#: inc/class-blocks.php:302
+#: blocks/build/invoice/duedate/render.php:2
+#: blocks/src/invoice/duedate/render.php:2
 msgid "Due By"
 msgstr ""
 
-#: inc/class-blocks.php:335
-#: blocks/build/index.js:1
-#: blocks/src/quote/validuntildate/index.js:21
+#: blocks/build/invoice/invoice-number/render.php:2
+#: blocks/build/quote/quote-number/render.php:2
+#: blocks/src/invoice/invoice-number/render.php:2
+#: blocks/src/quote/quote-number/render.php:2
+#, php-format
+msgid "Current %s"
+msgstr ""
+
+#: blocks/build/invoice/invoice-number/render.php:2
+#: blocks/src/invoice/invoice-number/render.php:2
+#: inc/class-billy.php:278
+#: inc/class-billy.php:1314
+#: inc/class-billy.php:1712
+msgid "Invoice"
+msgstr ""
+
+#: blocks/build/quote/quote-number/render.php:2
+#: blocks/src/quote/quote-number/render.php:2
+#: inc/class-billy.php:279
+#: inc/class-billy.php:1470
+#: inc/class-billy.php:1703
+msgid "Quote"
+msgstr ""
+
+#: blocks/build/quote/validuntildate/render.php:2
+#: blocks/src/quote/validuntildate/render.php:2
 msgid "Valid Until"
+msgstr ""
+
+#: blocks/build/settings/theme-mod/render.php:6
+#: blocks/src/settings/theme-mod/render.php:6
+#, php-format
+msgid "<strong>%1$s</strong> %2$s"
+msgstr ""
+
+#: blocks/build/settings/theme-mod/render.php:6
+#: blocks/src/settings/theme-mod/render.php:6
+#: blocks/build/invoice/meta/index.js:1
+#: blocks/build/quote/meta/index.js:1
+#: blocks/src/invoice/meta/deprecated.js:42
+#: blocks/src/invoice/meta/deprecated.js:82
+#: blocks/src/invoice/meta/edit.js:66
+#: blocks/src/invoice/meta/save.js:29
+#: blocks/src/quote/meta/deprecated.js:41
+#: blocks/src/quote/meta/deprecated.js:80
+#: blocks/src/quote/meta/edit.js:66
+#: blocks/src/quote/meta/save.js:29
+msgid "N/A"
+msgstr ""
+
+#: inc/class-billy.php:170
+#: inc/class-billy.php:323
+#: inc/class-billy.php:344
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:133
+#: blocks/src/accounting/table/deprecated.js:143
+#: blocks/src/accounting/table/deprecated.js:159
+#: blocks/src/accounting/table/deprecated.js:183
+#: blocks/src/accounting/table/deprecated.js:193
+#: blocks/src/accounting/table/deprecated.js:325
+#: blocks/src/accounting/table/deprecated.js:335
+#: blocks/src/accounting/table/deprecated.js:351
+#: blocks/src/accounting/table/deprecated.js:375
+#: blocks/src/accounting/table/deprecated.js:385
+#: blocks/src/accounting/table/deprecated.js:517
+#: blocks/src/accounting/table/deprecated.js:527
+#: blocks/src/accounting/table/deprecated.js:545
+#: blocks/src/accounting/table/deprecated.js:569
+#: blocks/src/accounting/table/deprecated.js:579
+#: blocks/src/accounting/table/deprecated.js:711
+#: blocks/src/accounting/table/deprecated.js:721
+#: blocks/src/accounting/table/deprecated.js:739
+#: blocks/src/accounting/table/deprecated.js:763
+#: blocks/src/accounting/table/deprecated.js:773
+#: blocks/src/accounting/table/deprecated.js:905
+#: blocks/src/accounting/table/deprecated.js:915
+#: blocks/src/accounting/table/deprecated.js:933
+#: blocks/src/accounting/table/deprecated.js:957
+#: blocks/src/accounting/table/deprecated.js:967
+#: blocks/src/accounting/table/edit.js:161
+#: blocks/src/accounting/table/edit.js:175
+#: blocks/src/accounting/table/edit.js:189
+#: blocks/src/accounting/table/edit.js:210
+#: blocks/src/accounting/table/edit.js:225
+#: blocks/src/accounting/table/save.js:90
+#: blocks/src/accounting/table/save.js:97
+#: blocks/src/accounting/table/save.js:109
+#: blocks/src/accounting/table/save.js:128
+#: blocks/src/accounting/table/save.js:135
+#: blocks/src/invoice/table-row/deprecated.js:71
+#: blocks/src/invoice/table-row/deprecated.js:141
+#: blocks/src/invoice/table-row/save.js:28
+#: blocks/src/invoice/table/deprecated.js:93
+#: blocks/src/invoice/table/deprecated.js:160
+#: blocks/src/invoice/table/deprecated.js:255
+#: blocks/src/invoice/table/deprecated.js:322
+#: blocks/src/invoice/table/deprecated.js:416
+#: blocks/src/invoice/table/deprecated.js:487
+#: blocks/src/invoice/table/deprecated.js:575
+#: blocks/src/invoice/table/deprecated.js:634
+#: blocks/src/invoice/table/edit.js:186
+#: blocks/src/invoice/table/edit.js:242
+#: blocks/src/invoice/table/save.js:64
+#: blocks/src/invoice/table/save.js:123
+#: blocks/src/quote/table-row/deprecated.js:71
+#: blocks/src/quote/table-row/deprecated.js:141
+#: blocks/src/quote/table-row/save.js:28
+#: blocks/src/quote/table/deprecated.js:93
+#: blocks/src/quote/table/deprecated.js:160
+#: blocks/src/quote/table/deprecated.js:255
+#: blocks/src/quote/table/deprecated.js:322
+#: blocks/src/quote/table/deprecated.js:416
+#: blocks/src/quote/table/deprecated.js:487
+#: blocks/src/quote/table/deprecated.js:575
+#: blocks/src/quote/table/deprecated.js:634
+#: blocks/src/quote/table/edit.js:186
+#: blocks/src/quote/table/edit.js:242
+#: blocks/src/quote/table/save.js:64
+#: blocks/src/quote/table/save.js:123
+#, php-format,js-format
+msgid "%1$s %2$s"
+msgstr ""
+
+#: inc/class-billy.php:280
+#: inc/class-billy.php:1525
+#: inc/class-billy.php:1526
+msgid "Accounting"
+msgstr ""
+
+#: inc/class-billy.php:282
+msgid "Contact"
+msgstr ""
+
+#: inc/class-billy.php:283
+msgid "To do"
+msgstr ""
+
+#: inc/class-billy.php:284
+msgid "Timetracking"
+msgstr ""
+
+#: inc/class-billy.php:286
+msgid "PDF Content"
+msgstr ""
+
+#: inc/class-billy.php:287
+msgid "PDF Footer"
+msgstr ""
+
+#: inc/class-billy.php:292
+#, php-format
+msgid "✅ %s"
+msgstr ""
+
+#: inc/class-billy.php:299
+msgid "Locale"
+msgstr ""
+
+#: inc/class-billy.php:303
+#: inc/class-billy.php:1615
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:52
+msgid "Currency"
+msgstr ""
+
+#: inc/class-billy.php:307
+#: inc/class-billy.php:445
+#: inc/class-billy.php:453
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/accounting/table/deprecated.js:112
+#: blocks/src/accounting/table/deprecated.js:176
+#: blocks/src/accounting/table/deprecated.js:305
+#: blocks/src/accounting/table/deprecated.js:368
+#: blocks/src/accounting/table/deprecated.js:497
+#: blocks/src/accounting/table/deprecated.js:562
+#: blocks/src/accounting/table/deprecated.js:756
+#: blocks/src/accounting/table/deprecated.js:950
+#: blocks/src/settings/panel/index.js:58
+msgid "Taxes"
+msgstr ""
+
+#: inc/class-billy.php:312
+msgid "Current invoice"
+msgstr ""
+
+#: inc/class-billy.php:317
+msgid "Current quote"
+msgstr ""
+
+#: inc/class-billy.php:321
+msgid "Problems have been solved!"
+msgstr ""
+
+#: inc/class-billy.php:323
+msgid "Edit"
+msgstr ""
+
+#: inc/class-billy.php:328
+msgid "Customized templates"
+msgstr ""
+
+#: inc/class-billy.php:344
+#, php-format
+msgid "Thank you for purchasing %s!"
+msgstr ""
+
+#: inc/class-billy.php:344
+msgid "Get the <u>Pro</u> version"
+msgstr ""
+
+#: inc/class-billy.php:344
+msgid "Premium add-on with a project management suite, WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more."
+msgstr ""
+
+#: inc/class-billy.php:344
+msgid "Please rate this Plugin"
+msgstr ""
+
+#: inc/class-billy.php:391
+#, php-format
+msgid "Download %s"
+msgstr ""
+
+#: inc/class-billy.php:391
+msgid "PDF"
+msgstr ""
+
+#: inc/class-billy.php:395
+#, php-format
+msgid "Export %s"
+msgstr ""
+
+#: inc/class-billy.php:395
+msgid "TSV"
+msgstr ""
+
+#: inc/class-billy.php:434
+#: inc/class-billy.php:435
+#: inc/class-pdfexport.php:249
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:68
+#: blocks/src/accounting/table/deprecated.js:263
+#: blocks/src/accounting/table/deprecated.js:455
+#: blocks/src/accounting/table/deprecated.js:649
+#: blocks/src/accounting/table/deprecated.js:843
+#: blocks/src/invoice/table/deprecated.js:226
+#: blocks/src/invoice/table/deprecated.js:387
+#: blocks/src/invoice/table/deprecated.js:552
+#: blocks/src/quote/table/deprecated.js:226
+#: blocks/src/quote/table/deprecated.js:387
+#: blocks/src/quote/table/deprecated.js:552
+msgid "#"
+msgstr ""
+
+#: inc/class-billy.php:436
+#: inc/class-pdfexport.php:250
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:82
+#: blocks/src/accounting/table/deprecated.js:277
+#: blocks/src/accounting/table/deprecated.js:469
+#: blocks/src/accounting/table/deprecated.js:663
+#: blocks/src/accounting/table/deprecated.js:857
+#: blocks/src/invoice/table/deprecated.js:228
+#: blocks/src/invoice/table/deprecated.js:389
+#: blocks/src/invoice/table/deprecated.js:554
+#: blocks/src/quote/table/deprecated.js:228
+#: blocks/src/quote/table/deprecated.js:389
+#: blocks/src/quote/table/deprecated.js:554
+msgid "Description"
+msgstr ""
+
+#: inc/class-billy.php:437
+#: inc/class-pdfexport.php:251
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/invoice/table-row/edit.js:162
+#: blocks/src/invoice/table/deprecated.js:230
+#: blocks/src/invoice/table/deprecated.js:391
+#: blocks/src/invoice/table/deprecated.js:556
+#: blocks/src/quote/table-row/edit.js:162
+#: blocks/src/quote/table/deprecated.js:230
+#: blocks/src/quote/table/deprecated.js:391
+#: blocks/src/quote/table/deprecated.js:556
+msgid "Amount"
+msgstr ""
+
+#: inc/class-billy.php:438
+#: inc/class-pdfexport.php:252
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/invoice/table/deprecated.js:244
+#: blocks/src/invoice/table/deprecated.js:405
+#: blocks/src/invoice/table/deprecated.js:570
+#: blocks/src/invoice/table/edit.js:181
+#: blocks/src/quote/table/deprecated.js:244
+#: blocks/src/quote/table/deprecated.js:405
+#: blocks/src/quote/table/deprecated.js:570
+#: blocks/src/quote/table/edit.js:181
+msgid "Subtotal"
+msgstr ""
+
+#: inc/class-billy.php:439
+#: inc/class-pdfexport.php:253
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/invoice/table/deprecated.js:245
+#: blocks/src/invoice/table/deprecated.js:313
+#: blocks/src/invoice/table/deprecated.js:406
+#: blocks/src/invoice/table/deprecated.js:477
+#: blocks/src/invoice/table/deprecated.js:571
+#: blocks/src/invoice/table/deprecated.js:630
+#: blocks/src/invoice/table/edit.js:182
+#: blocks/src/invoice/table/edit.js:238
+#: blocks/src/quote/table/deprecated.js:245
+#: blocks/src/quote/table/deprecated.js:313
+#: blocks/src/quote/table/deprecated.js:406
+#: blocks/src/quote/table/deprecated.js:477
+#: blocks/src/quote/table/deprecated.js:571
+#: blocks/src/quote/table/deprecated.js:630
+#: blocks/src/quote/table/edit.js:182
+#: blocks/src/quote/table/edit.js:238
+msgid "Total"
+msgstr ""
+
+#: inc/class-billy.php:440
+#: inc/class-pdfexport.php:254
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/accounting/table-row/edit.js:233
+#: blocks/src/accounting/table/deprecated.js:691
+#: blocks/src/accounting/table/deprecated.js:885
+#: blocks/src/invoice/table-row/edit.js:176
+#: blocks/src/invoice/table/deprecated.js:232
+#: blocks/src/invoice/table/deprecated.js:264
+#: blocks/src/invoice/table/deprecated.js:393
+#: blocks/src/invoice/table/deprecated.js:426
+#: blocks/src/invoice/table/deprecated.js:558
+#: blocks/src/invoice/table/deprecated.js:585
+#: blocks/src/invoice/table/edit.js:195
+#: blocks/src/quote/table-row/edit.js:176
+#: blocks/src/quote/table/deprecated.js:232
+#: blocks/src/quote/table/deprecated.js:264
+#: blocks/src/quote/table/deprecated.js:393
+#: blocks/src/quote/table/deprecated.js:426
+#: blocks/src/quote/table/deprecated.js:558
+#: blocks/src/quote/table/deprecated.js:585
+#: blocks/src/quote/table/edit.js:195
+msgid "Tax"
+msgstr ""
+
+#: inc/class-billy.php:442
+#: inc/class-billy.php:1232
+#: inc/class-billy.php:1390
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table-row/edit.js:196
+#: blocks/src/accounting/table/deprecated.js:89
+#: blocks/src/accounting/table/deprecated.js:284
+#: blocks/src/accounting/table/deprecated.js:476
+#: blocks/src/accounting/table/deprecated.js:670
+#: blocks/src/accounting/table/deprecated.js:864
+msgid "Reference"
+msgstr ""
+
+#: inc/class-billy.php:443
+#: inc/class-billy.php:448
+#: inc/class-billy.php:454
+#: inc/class-billy.php:1597
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:96
+#: blocks/src/accounting/table/deprecated.js:127
+#: blocks/src/accounting/table/deprecated.js:177
+#: blocks/src/accounting/table/deprecated.js:291
+#: blocks/src/accounting/table/deprecated.js:319
+#: blocks/src/accounting/table/deprecated.js:369
+#: blocks/src/accounting/table/deprecated.js:483
+#: blocks/src/accounting/table/deprecated.js:511
+#: blocks/src/accounting/table/deprecated.js:563
+#: blocks/src/accounting/table/deprecated.js:677
+#: blocks/src/accounting/table/deprecated.js:705
+#: blocks/src/accounting/table/deprecated.js:757
+#: blocks/src/accounting/table/deprecated.js:899
+#: blocks/src/accounting/table/deprecated.js:951
+#: blocks/src/accounting/table/edit.js:157
+#: blocks/src/accounting/table/edit.js:205
+msgid "Earnings"
+msgstr ""
+
+#: inc/class-billy.php:444
+#: inc/class-billy.php:449
+#: inc/class-billy.php:455
+#: inc/class-billy.php:1598
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:103
+#: blocks/src/accounting/table/deprecated.js:128
+#: blocks/src/accounting/table/deprecated.js:178
+#: blocks/src/accounting/table/deprecated.js:298
+#: blocks/src/accounting/table/deprecated.js:320
+#: blocks/src/accounting/table/deprecated.js:370
+#: blocks/src/accounting/table/deprecated.js:490
+#: blocks/src/accounting/table/deprecated.js:512
+#: blocks/src/accounting/table/deprecated.js:564
+#: blocks/src/accounting/table/deprecated.js:684
+#: blocks/src/accounting/table/deprecated.js:706
+#: blocks/src/accounting/table/deprecated.js:758
+#: blocks/src/accounting/table/deprecated.js:900
+#: blocks/src/accounting/table/deprecated.js:952
+#: blocks/src/accounting/table/edit.js:171
+#: blocks/src/accounting/table/edit.js:220
+msgid "Expenses"
+msgstr ""
+
+#: inc/class-billy.php:447
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:126
+#: blocks/src/accounting/table/deprecated.js:318
+#: blocks/src/accounting/table/deprecated.js:510
+#: blocks/src/accounting/table/deprecated.js:704
+#: blocks/src/accounting/table/deprecated.js:898
+#, php-format,js-format
+msgid "%1$s / %2$s"
+msgstr ""
+
+#: inc/class-billy.php:452
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:175
+#: blocks/src/accounting/table/deprecated.js:367
+#: blocks/src/accounting/table/deprecated.js:561
+#: blocks/src/accounting/table/deprecated.js:755
+#: blocks/src/accounting/table/deprecated.js:949
+#, php-format,js-format
+msgid "%1$s (%2$s / %3$s)"
+msgstr ""
+
+#: inc/class-billy.php:583
+msgid "Pending"
+msgstr ""
+
+#: inc/class-billy.php:720
+#: inc/class-billy.php:789
+#, php-format
+msgid "%1$s%2$03s"
+msgstr ""
+
+#: inc/class-billy.php:939
+#: inc/class-billy.php:940
+#, php-format
+msgid "%s Header"
+msgstr ""
+
+#: inc/class-billy.php:1195
+#: inc/class-billy.php:1366
+#: inc/class-billy.php:1612
+#: inc/class-billy.php:1732
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:34
+msgid "Name"
+msgstr ""
+
+#: inc/class-billy.php:1195
+#: inc/class-billy.php:1366
+msgid "Company"
+msgstr ""
+
+#: inc/class-billy.php:1195
+#: inc/class-billy.php:1366
+#, php-format
+msgid "Address Field %s"
+msgstr ""
+
+#: inc/class-billy.php:1195
+#: inc/class-billy.php:1366
+msgid "Country"
+msgstr ""
+
+#: inc/class-billy.php:1224
+msgid "Billing Period"
+msgstr ""
+
+#: inc/class-billy.php:1251
+#: inc/class-billy.php:1257
+#: inc/class-billy.php:1289
+#: inc/class-billy.php:1409
+#: inc/class-billy.php:1415
+#: inc/class-billy.php:1445
+#: inc/class-billy.php:1515
+#, php-format
+msgid "%s (optional)"
+msgstr ""
+
+#: inc/class-billy.php:1251
+#: inc/class-billy.php:1409
+msgid "Subject"
+msgstr ""
+
+#: inc/class-billy.php:1257
+#: inc/class-billy.php:1415
+msgid "Intro text"
+msgstr ""
+
+#: inc/class-billy.php:1257
+#: inc/class-billy.php:1415
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Vitae turpis massa sed elementum tempus egestas."
+msgstr ""
+
+#: inc/class-billy.php:1281
+#: inc/class-billy.php:1282
+#: inc/class-billy.php:1437
+#: inc/class-billy.php:1438
+msgid "Information"
+msgstr ""
+
+#: inc/class-billy.php:1289
+#: inc/class-billy.php:1445
+#: inc/class-billy.php:1515
+msgid "Notes"
+msgstr ""
+
+#: inc/class-billy.php:1313
+msgid "Invoices"
+msgstr ""
+
+#: inc/class-billy.php:1469
+msgid "Quotes"
+msgstr ""
+
+#: inc/class-billy.php:1502
+msgid "Heading"
+msgstr ""
+
+#: inc/class-billy.php:1613
+#: inc/class-billy.php:1753
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:40
+msgid "Address"
+msgstr ""
+
+#: inc/class-billy.php:1614
+#: inc/class-billy.php:1846
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:46
+msgid "VAT"
+msgstr ""
+
+#: inc/class-billy.php:1684
+msgid "Plugin Setup"
+msgstr ""
+
+#: inc/class-billy.php:1694
+msgid "General"
+msgstr ""
+
+#: inc/class-billy.php:1769
+#: inc/class-billy.php:1787
+#, php-format
+msgid "Geocoding powered by %s"
+msgstr ""
+
+#: inc/class-billy.php:1786
+msgid "Address (geocoded)"
+msgstr ""
+
+#: inc/class-billy.php:1808
+msgid "Email"
+msgstr ""
+
+#: inc/class-billy.php:1809
+msgid "Enter your email"
+msgstr ""
+
+#: inc/class-billy.php:1829
+msgid "Phone"
+msgstr ""
+
+#: inc/class-billy.php:1830
+msgid "Enter your phone number"
+msgstr ""
+
+#: inc/class-billy.php:1847
+msgid "Enter your VAT identification number or Taxpayer ID"
+msgstr ""
+
+#: inc/class-billy.php:1864
+msgid "Currency Code"
+msgstr ""
+
+#: inc/class-billy.php:1865
+#: inc/class-billy.php:1887
+msgid "Caution: Any changes made here may affect existing entries. Create a backup first!"
+msgstr ""
+
+#: inc/class-billy.php:1882
+msgid "Tax Rates"
+msgstr ""
+
+#: inc/class-billy.php:1884
+#, php-format
+msgid "Enter the taxrates separated by newline: e.g. %s"
+msgstr ""
+
+#: inc/class-billy.php:1903
+msgid "Current invoice number"
+msgstr ""
+
+#: inc/class-billy.php:1904
+msgid "Upcoming invoice numbers will be autoincremented based on this value!"
+msgstr ""
+
+#: inc/class-billy.php:1932
+#: blocks/build/invoice/invoice-number/index.js:1
+#: blocks/src/invoice/invoice-number/edit.js:34
+msgid "Invoice number: Prefix"
+msgstr ""
+
+#: inc/class-billy.php:1933
+#: inc/class-billy.php:2057
+msgid "You can include placeholders like {YEAR}, {MONTH} and {DAY}."
+msgstr ""
+
+#: inc/class-billy.php:1949
+msgid "Payment due within # days"
+msgstr ""
+
+#: inc/class-billy.php:1969
+#: blocks/build/invoice/paymentinformation/index.js:1
+#: blocks/src/invoice/paymentinformation/edit.js:35
+msgid "Payment Information"
+msgstr ""
+
+#: inc/class-billy.php:1970
+msgid "Add the payment instructions and link to your terms."
+msgstr ""
+
+#: inc/class-billy.php:1976
+msgid "Thank you for your business!"
+msgstr ""
+
+#: inc/class-billy.php:1990
+#: blocks/build/quote/information/index.js:1
+#: blocks/src/quote/information/edit.js:35
+msgid "Quote Information"
+msgstr ""
+
+#: inc/class-billy.php:1991
+msgid "Inform your contacts about special terms, quote expiration clauses, etc."
+msgstr ""
+
+#: inc/class-billy.php:1997
+msgid "We will be happy to answer any questions you may have!"
+msgstr ""
+
+#: inc/class-billy.php:2011
+msgid "Current quote number"
+msgstr ""
+
+#: inc/class-billy.php:2012
+msgid "Upcoming quote numbers will be autoincremented based on this value!"
+msgstr ""
+
+#: inc/class-billy.php:2039
+msgid "Just use the current date (\"Ymd\") as quote number"
+msgstr ""
+
+#: inc/class-billy.php:2056
+#: blocks/build/quote/quote-number/index.js:1
+#: blocks/src/quote/quote-number/edit.js:34
+msgid "Quote number: Prefix"
+msgstr ""
+
+#: inc/class-billy.php:2073
+msgid "Quote valid for # days"
+msgstr ""
+
+#: inc/class-billy.php:2114
+#, php-format
+msgid "Geocode was not successful - please provide a valid address: %s"
+msgstr ""
+
+#: inc/class-billy.php:2135
+msgid "Please provide a valid currency format"
+msgstr ""
+
+#: inc/class-billy.php:2161
+msgid "Please separate the taxrates by newline and don't forget to append the \"%\" sign to each value."
+msgstr ""
+
+#: inc/class-blocks.php:57
+msgid "Billy Blocks"
+msgstr ""
+
+#: inc/class-blocks.php:73
+#: blocks/build/invoice/meta/index.js:1
+#: blocks/build/quote/meta/index.js:1
+#: blocks/src/invoice/meta/deprecated.js:37
+#: blocks/src/invoice/meta/edit.js:61
+#: blocks/src/invoice/meta/save.js:24
+#: blocks/src/quote/meta/deprecated.js:36
+#: blocks/src/quote/meta/edit.js:61
+#: blocks/src/quote/meta/save.js:24
+#, php-format,js-format
+msgid "<div class=\"label\">%1$s</div> <div class=\"text\">%2$s</div>"
 msgstr ""
 
 #: inc/class-pdfexport.php:127
@@ -738,307 +808,416 @@ msgstr ""
 msgid "DRAFT"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/_deprecated/header/index.js:24
-#: blocks/src/_deprecated/header/index.js:46
-#: blocks/src/_deprecated/header/index.js:54
-msgid "Header"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/date/index.js:37
-#: blocks/src/invoice/duedate/index.js:37
-#: blocks/src/invoice/invoice-number/index.js:37
-#: blocks/src/invoice/paymentinformation/index.js:37
-#: blocks/src/quote/information/index.js:37
-#: blocks/src/_deprecated/header/index.js:41
-msgid "Info"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/_deprecated/header/index.js:46
-msgid "Edit the %s layout"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/duedate/index.js:41
-#: blocks/src/invoice/invoice-number/index.js:41
-#: blocks/src/invoice/paymentinformation/index.js:41
-#: blocks/src/quote/information/index.js:41
-#: blocks/src/_deprecated/header/index.js:54
-msgid "The %s values can be modified in the Theme Customizer."
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/actions/index.js:18
-#: blocks/src/accounting/actions/index.js:53
-#: blocks/src/accounting/table/index.js:43
-#: blocks/src/accounting/table/index.js:434
-#: blocks/src/invoice/actions/index.js:18
-#: blocks/src/invoice/actions/index.js:53
-#: blocks/src/invoice/date/index.js:19
-#: blocks/src/invoice/duedate/index.js:19
-#: blocks/src/invoice/invoice-number/index.js:19
-#: blocks/src/invoice/meta/index.js:19
-#: blocks/src/invoice/paymentinformation/index.js:19
-#: blocks/src/invoice/table/index.js:39
-#: blocks/src/invoice/table/index.js:421
-#: blocks/src/quote/actions/index.js:18
-#: blocks/src/quote/actions/index.js:53
-#: blocks/src/quote/date/index.js:19
-#: blocks/src/quote/information/index.js:19
-#: blocks/src/quote/meta/index.js:19
-#: blocks/src/quote/table/index.js:39
-#: blocks/src/quote/table/index.js:420
-#: blocks/src/quote/validuntildate/index.js:19
+#: blocks/build/accounting/actions/index.js:1
+#: blocks/build/invoice/actions/index.js:1
+#: blocks/build/quote/actions/index.js:1
+#: blocks/src/accounting/actions/edit.js:32
+#: blocks/src/invoice/actions/edit.js:32
+#: blocks/src/quote/actions/edit.js:32
+#, js-format
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/accounting/actions/index.js:20
-#: blocks/src/accounting/table/index.js:161
-#: blocks/src/invoice/actions/index.js:20
-#: blocks/src/invoice/table/index.js:182
-#: blocks/src/quote/actions/index.js:20
-#: blocks/src/quote/table/index.js:181
-msgid "Actions"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/actions/index.js:54
-#: blocks/src/invoice/actions/index.js:54
-#: blocks/src/quote/actions/index.js:54
+#: blocks/build/accounting/actions/index.js:1
+#: blocks/build/invoice/actions/index.js:1
+#: blocks/build/quote/actions/index.js:1
+#: blocks/src/accounting/actions/edit.js:33
+#: blocks/src/invoice/actions/edit.js:33
+#: blocks/src/quote/actions/edit.js:33
 msgid "Last modified"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/invoice/meta/index.js:21
-#: blocks/src/quote/meta/index.js:21
-msgid "Meta"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/meta/index.js:64
-#: blocks/src/quote/meta/index.js:64
-msgid "Label"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/meta/index.js:72
-#: blocks/src/quote/meta/index.js:72
-msgid "Text"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/meta/index.js:188
-#: blocks/src/quote/meta/index.js:186
-msgid "<strong>%1$s</strong> <span>%2$s</span>"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/date/index.js:41
-#: blocks/src/invoice/invoice-number/index.js:52
-msgid "Due to legal requirements in some countries, autogenerated data like %s can't be modified anymore after an invoice has been created in the system!"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/duedate/index.js:21
-msgid "Due Date"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/duedate/index.js:45
-msgid "Payment due days"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/invoice-number/index.js:21
-msgid "Number"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/invoice-number/index.js:56
-#: blocks/src/settings/panel/index.js:25
-msgid "Invoice number"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/deprecatedOuter.js:136
-#: blocks/src/invoice/table/deprecatedOuter.js:299
-#: blocks/src/invoice/table/deprecatedOuter.js:452
-#: blocks/src/invoice/table/index.js:242
-#: blocks/src/invoice/table/index.js:365
-#: blocks/src/quote/table/deprecatedOuter.js:136
-#: blocks/src/quote/table/deprecatedOuter.js:299
-#: blocks/src/quote/table/deprecatedOuter.js:452
-#: blocks/src/quote/table/index.js:241
-#: blocks/src/quote/table/index.js:364
-msgid "%1$s %2$s %3$s"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:45
-#: blocks/src/invoice/table/index.js:41
-#: blocks/src/quote/table/index.js:41
-msgid "Table"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:167
-#: blocks/src/invoice/table/index.js:188
-#: blocks/src/quote/table/index.js:187
-msgid "Update Totals"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:436
-#: blocks/src/invoice/table/index.js:423
-#: blocks/src/quote/table/index.js:422
-msgid "Table Row"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/index.js:547
-#: blocks/src/quote/table/index.js:546
-msgid "Quantity/Rate Calculator"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/index.js:550
-#: blocks/src/quote/table/index.js:549
-msgid "Quantity"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:684
-#: blocks/src/accounting/table/index.js:697
-#: blocks/src/accounting/table/index.js:710
-#: blocks/src/invoice/table/index.js:551
-#: blocks/src/invoice/table/index.js:563
-#: blocks/src/invoice/table/index.js:604
-#: blocks/src/invoice/table/index.js:646
-#: blocks/src/quote/table/index.js:550
-#: blocks/src/quote/table/index.js:562
-#: blocks/src/quote/table/index.js:603
-#: blocks/src/quote/table/index.js:645
-msgid "0"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:680
-#: blocks/src/accounting/table/index.js:693
-#: blocks/src/accounting/table/index.js:706
-#: blocks/src/invoice/table/index.js:559
-#: blocks/src/invoice/table/index.js:599
-#: blocks/src/invoice/table/index.js:613
-#: blocks/src/quote/table/index.js:558
-#: blocks/src/quote/table/index.js:598
-#: blocks/src/quote/table/index.js:612
-msgid "%1$s in %2$s"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/invoice/table/index.js:560
-#: blocks/src/quote/table/index.js:559
-msgid "Rate"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:129
-#: blocks/src/accounting/table/deprecatedOuter.js:321
-#: blocks/src/accounting/table/deprecatedOuter.js:515
-#: blocks/src/accounting/table/deprecatedOuter.js:709
-#: blocks/src/accounting/table/index.js:348
-msgid "%1$s / %2$s"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:159
-#: blocks/src/accounting/table/deprecatedOuter.js:352
-#: blocks/src/accounting/table/deprecatedOuter.js:546
-#: blocks/src/accounting/table/deprecatedOuter.js:740
-#: blocks/src/accounting/table/index.js:219
-#: blocks/src/accounting/table/index.js:378
-msgid "Profit"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:178
-#: blocks/src/accounting/table/deprecatedOuter.js:372
-#: blocks/src/accounting/table/deprecatedOuter.js:566
-#: blocks/src/accounting/table/deprecatedOuter.js:760
-#: blocks/src/accounting/table/index.js:396
-msgid "%1$s (%2$s / %3$s)"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:682
-#: blocks/src/accounting/table/index.js:681
-msgid "Earning"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedOuter.js:689
-#: blocks/src/accounting/table/index.js:694
-msgid "Expense"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/deprecatedInner.js:99
-#: blocks/src/accounting/table/deprecatedInner.js:118
-#: blocks/src/accounting/table/deprecatedInner.js:234
-#: blocks/src/accounting/table/deprecatedInner.js:253
-#: blocks/src/accounting/table/deprecatedInner.js:375
-#: blocks/src/accounting/table/deprecatedInner.js:394
-#: blocks/src/accounting/table/index.js:640
-#: blocks/src/accounting/table/index.js:742
-#: blocks/src/accounting/table/index.js:758
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/src/accounting/table-row/deprecated.js:91
+#: blocks/src/accounting/table-row/deprecated.js:110
+#: blocks/src/accounting/table-row/deprecated.js:226
+#: blocks/src/accounting/table-row/deprecated.js:245
+#: blocks/src/accounting/table-row/deprecated.js:367
+#: blocks/src/accounting/table-row/deprecated.js:386
+#: blocks/src/accounting/table-row/edit.js:166
+#: blocks/src/accounting/table-row/save.js:29
+#: blocks/src/accounting/table-row/save.js:45
+#, js-format
 msgid "Q%s"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:238
-#: blocks/src/accounting/table/index.js:253
-msgid "Taxes (%s)"
-msgstr ""
-
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:613
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/src/accounting/table-row/edit.js:141
+#, js-format
 msgid "Reference: %s"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/accounting/table/index.js:617
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/src/accounting/table-row/edit.js:145
 msgid "Post"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:11
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/src/accounting/table-row/edit.js:206
+#: blocks/src/accounting/table-row/edit.js:219
+#: blocks/src/accounting/table-row/edit.js:232
+#: blocks/src/invoice/table-row/edit.js:121
+#: blocks/src/invoice/table-row/edit.js:161
+#: blocks/src/invoice/table-row/edit.js:175
+#: blocks/src/quote/table-row/edit.js:121
+#: blocks/src/quote/table-row/edit.js:161
+#: blocks/src/quote/table-row/edit.js:175
+#, js-format
+msgid "%1$s in %2$s"
+msgstr ""
+
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table-row/edit.js:207
+#: blocks/src/accounting/table/deprecated.js:871
+msgid "Earning"
+msgstr ""
+
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/src/accounting/table-row/edit.js:210
+#: blocks/src/accounting/table-row/edit.js:223
+#: blocks/src/accounting/table-row/edit.js:236
+#: blocks/src/invoice/table-row/edit.js:113
+#: blocks/src/invoice/table-row/edit.js:125
+#: blocks/src/invoice/table-row/edit.js:166
+#: blocks/src/invoice/table-row/edit.js:208
+#: blocks/src/quote/table-row/edit.js:113
+#: blocks/src/quote/table-row/edit.js:125
+#: blocks/src/quote/table-row/edit.js:166
+#: blocks/src/quote/table-row/edit.js:208
+msgid "0"
+msgstr ""
+
+#: blocks/build/accounting/table-row/index.js:1
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table-row/edit.js:220
+#: blocks/src/accounting/table/deprecated.js:878
+msgid "Expense"
+msgstr ""
+
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table/deprecated.js:156
+#: blocks/src/accounting/table/deprecated.js:348
+#: blocks/src/accounting/table/deprecated.js:541
+#: blocks/src/accounting/table/deprecated.js:735
+#: blocks/src/accounting/table/deprecated.js:929
+#: blocks/src/accounting/table/edit.js:185
+msgid "Profit"
+msgstr ""
+
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/accounting/table/edit.js:116
+#: blocks/src/invoice/table/edit.js:139
+#: blocks/src/quote/table/edit.js:139
+msgid "Actions"
+msgstr ""
+
+#: blocks/build/accounting/table/index.js:1
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/accounting/table/edit.js:122
+#: blocks/src/invoice/table/edit.js:145
+#: blocks/src/quote/table/edit.js:145
+msgid "Update Totals"
+msgstr ""
+
+#: blocks/build/accounting/table/index.js:1
+#: blocks/src/accounting/table/edit.js:204
+#: blocks/src/accounting/table/edit.js:219
+#, js-format
+msgid "Taxes (%s)"
+msgstr ""
+
+#: blocks/build/invoice/date/index.js:1
+#: blocks/build/invoice/duedate/index.js:1
+#: blocks/build/invoice/invoice-number/index.js:1
+#: blocks/build/invoice/paymentinformation/index.js:1
+#: blocks/build/quote/information/index.js:1
+#: blocks/build/quote/quote-number/index.js:1
+#: blocks/build/_deprecated/header/index.js:1
+#: blocks/src/invoice/date/edit.js:26
+#: blocks/src/invoice/duedate/edit.js:26
+#: blocks/src/invoice/invoice-number/edit.js:26
+#: blocks/src/invoice/paymentinformation/edit.js:27
+#: blocks/src/quote/information/edit.js:27
+#: blocks/src/quote/quote-number/edit.js:26
+#: blocks/src/_deprecated/header/edit.js:24
+msgid "Info"
+msgstr ""
+
+#: blocks/build/invoice/date/index.js:1
+#: blocks/build/invoice/invoice-number/index.js:1
+#: blocks/src/invoice/date/edit.js:30
+#: blocks/src/invoice/invoice-number/edit.js:41
+#, js-format
+msgid "Due to legal requirements in some countries, autogenerated data like %s can't be modified anymore after an invoice has been created in the system!"
+msgstr ""
+
+#: blocks/build/invoice/duedate/index.js:1
+#: blocks/build/invoice/invoice-number/index.js:1
+#: blocks/build/invoice/paymentinformation/index.js:1
+#: blocks/build/quote/information/index.js:1
+#: blocks/build/quote/quote-number/index.js:1
+#: blocks/build/_deprecated/header/index.js:1
+#: blocks/src/invoice/duedate/edit.js:30
+#: blocks/src/invoice/invoice-number/edit.js:30
+#: blocks/src/invoice/paymentinformation/edit.js:31
+#: blocks/src/quote/information/edit.js:31
+#: blocks/src/quote/quote-number/edit.js:30
+#: blocks/src/_deprecated/header/edit.js:43
+#, js-format
+msgid "The %s values can be modified in the Theme Customizer."
+msgstr ""
+
+#: blocks/build/invoice/duedate/index.js:1
+#: blocks/src/invoice/duedate/edit.js:34
+msgid "Payment due days"
+msgstr ""
+
+#: blocks/build/invoice/invoice-number/index.js:1
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/invoice/invoice-number/edit.js:45
+#: blocks/src/settings/panel/index.js:28
+msgid "Invoice number"
+msgstr ""
+
+#: blocks/build/invoice/meta/index.js:1
+#: blocks/build/quote/meta/index.js:1
+#: blocks/src/invoice/meta/deprecated.js:76
+#: blocks/src/quote/meta/deprecated.js:74
+#, js-format
+msgid "<strong>%1$s</strong> <span>%2$s</span>"
+msgstr ""
+
+#: blocks/build/invoice/meta/index.js:1
+#: blocks/build/quote/meta/index.js:1
+#: blocks/src/invoice/meta/edit.js:41
+#: blocks/src/quote/meta/edit.js:41
+msgid "Label"
+msgstr ""
+
+#: blocks/build/invoice/meta/index.js:1
+#: blocks/build/quote/meta/index.js:1
+#: blocks/src/invoice/meta/edit.js:49
+#: blocks/src/quote/meta/edit.js:49
+msgid "Text"
+msgstr ""
+
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/src/invoice/table-row/edit.js:109
+#: blocks/src/quote/table-row/edit.js:109
+msgid "Quantity/Rate Calculator"
+msgstr ""
+
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/src/invoice/table-row/edit.js:112
+#: blocks/src/quote/table-row/edit.js:112
+msgid "Quantity"
+msgstr ""
+
+#: blocks/build/invoice/table-row/index.js:1
+#: blocks/build/quote/table-row/index.js:1
+#: blocks/src/invoice/table-row/edit.js:122
+#: blocks/src/quote/table-row/edit.js:122
+msgid "Rate"
+msgstr ""
+
+#: blocks/build/invoice/table/index.js:1
+#: blocks/build/quote/table/index.js:1
+#: blocks/src/invoice/table/deprecated.js:127
+#: blocks/src/invoice/table/deprecated.js:289
+#: blocks/src/invoice/table/deprecated.js:452
+#: blocks/src/invoice/table/deprecated.js:605
+#: blocks/src/invoice/table/edit.js:213
+#: blocks/src/invoice/table/save.js:92
+#: blocks/src/quote/table/deprecated.js:127
+#: blocks/src/quote/table/deprecated.js:289
+#: blocks/src/quote/table/deprecated.js:452
+#: blocks/src/quote/table/deprecated.js:605
+#: blocks/src/quote/table/edit.js:213
+#: blocks/src/quote/table/save.js:92
+#, js-format
+msgid "%1$s %2$s %3$s"
+msgstr ""
+
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:14
 msgid "Billy Setup"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:21
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:24
 msgid "Settings (Theme Customizer)"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/settings/panel/index.js:28
+#: blocks/build/settings/panel/index.js:1
+#: blocks/src/settings/panel/index.js:31
 msgid "Quote number"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/settings/theme-mod/index.js:18
-#: blocks/src/settings/theme-mod/index.js:48
+#: blocks/build/settings/theme-mod/index.js:1
+#: blocks/src/settings/theme-mod/edit.js:35
 msgid "Theme Mod"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/settings/theme-mod/index.js:50
+#: blocks/build/settings/theme-mod/index.js:1
+#: blocks/src/settings/theme-mod/edit.js:37
 msgid "Setting"
 msgstr ""
 
-#: blocks/build/index.js:1
-#: blocks/src/settings/theme-mod/index.js:51
+#: blocks/build/settings/theme-mod/index.js:1
+#: blocks/src/settings/theme-mod/edit.js:38
 msgid "Modify the value in the Theme Customizer."
+msgstr ""
+
+#: blocks/build/_deprecated/header/index.js:1
+#: blocks/src/_deprecated/header/edit.js:34
+#, js-format
+msgid "Edit the %s layout"
+msgstr ""
+
+#: blocks/build/_deprecated/header/index.js:1
+#: blocks/src/_deprecated/header/edit.js:35
+#: blocks/src/_deprecated/header/edit.js:47
+msgid "Header"
+msgstr ""
+
+#: blocks/build/accounting/actions/block.json
+#: blocks/src/accounting/actions/block.json
+msgctxt "block title"
+msgid "Accounting: Actions"
+msgstr ""
+
+#: blocks/build/accounting/table-row/block.json
+#: blocks/src/accounting/table-row/block.json
+msgctxt "block title"
+msgid "Accounting: Table Row"
+msgstr ""
+
+#: blocks/build/accounting/table/block.json
+#: blocks/src/accounting/table/block.json
+msgctxt "block title"
+msgid "Accounting: Table"
+msgstr ""
+
+#: blocks/build/invoice/actions/block.json
+#: blocks/src/invoice/actions/block.json
+msgctxt "block title"
+msgid "Invoice: Actions"
+msgstr ""
+
+#: blocks/build/invoice/date/block.json
+#: blocks/src/invoice/date/block.json
+msgctxt "block title"
+msgid "Invoice Date"
+msgstr ""
+
+#: blocks/build/invoice/duedate/block.json
+#: blocks/src/invoice/duedate/block.json
+msgctxt "block title"
+msgid "Invoice Duedate"
+msgstr ""
+
+#: blocks/build/invoice/invoice-number/block.json
+#: blocks/src/invoice/invoice-number/block.json
+msgctxt "block title"
+msgid "Invoice Number"
+msgstr ""
+
+#: blocks/build/invoice/meta/block.json
+#: blocks/src/invoice/meta/block.json
+msgctxt "block title"
+msgid "Invoice Meta Field"
+msgstr ""
+
+#: blocks/build/invoice/paymentinformation/block.json
+#: blocks/src/invoice/paymentinformation/block.json
+msgctxt "block title"
+msgid "Invoice Paymentinformation"
+msgstr ""
+
+#: blocks/build/invoice/table-row/block.json
+#: blocks/src/invoice/table-row/block.json
+msgctxt "block title"
+msgid "Invoice: Table Row"
+msgstr ""
+
+#: blocks/build/invoice/table/block.json
+#: blocks/src/invoice/table/block.json
+msgctxt "block title"
+msgid "Invoice Table"
+msgstr ""
+
+#: blocks/build/quote/actions/block.json
+#: blocks/src/quote/actions/block.json
+msgctxt "block title"
+msgid "Quote: Actions"
+msgstr ""
+
+#: blocks/build/quote/date/block.json
+#: blocks/src/quote/date/block.json
+msgctxt "block title"
+msgid "Quote Date"
+msgstr ""
+
+#: blocks/build/quote/information/block.json
+#: blocks/src/quote/information/block.json
+msgctxt "block title"
+msgid "Quote Information"
+msgstr ""
+
+#: blocks/build/quote/meta/block.json
+#: blocks/src/quote/meta/block.json
+msgctxt "block title"
+msgid "Quote Meta Field"
+msgstr ""
+
+#: blocks/build/quote/quote-number/block.json
+#: blocks/src/quote/quote-number/block.json
+msgctxt "block title"
+msgid "Quote Number"
+msgstr ""
+
+#: blocks/build/quote/table-row/block.json
+#: blocks/src/quote/table-row/block.json
+msgctxt "block title"
+msgid "Quote: Table Row"
+msgstr ""
+
+#: blocks/build/quote/table/block.json
+#: blocks/src/quote/table/block.json
+msgctxt "block title"
+msgid "Quote Table"
+msgstr ""
+
+#: blocks/build/quote/validuntildate/block.json
+#: blocks/src/quote/validuntildate/block.json
+msgctxt "block title"
+msgid "Quote Valid Until"
+msgstr ""
+
+#: blocks/build/settings/panel/block.json
+#: blocks/src/settings/panel/block.json
+msgctxt "block title"
+msgid "Plugin Settings Panel: Billy Setup"
+msgstr ""
+
+#: blocks/build/settings/theme-mod/block.json
+#: blocks/src/settings/theme-mod/block.json
+msgctxt "block title"
+msgid "Theme Mod"
+msgstr ""
+
+#: blocks/build/_deprecated/header/block.json
+#: blocks/src/_deprecated/header/block.json
+msgctxt "block title"
+msgid "Header (Deprecated)"
 msgstr ""

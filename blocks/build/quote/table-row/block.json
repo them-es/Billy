@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "billy-blocks/quote-tablerow",
+  "title": "Quote: Table Row",
+  "icon": "menu-alt",
+  "category": "billy-blocks",
+  "parent": [
+    "billy-blocks/quote-table"
+  ],
+  "textdomain": "billy",
+  "attributes": {
+    "index": {
+      "type": "number",
+      "default": "0"
+    },
+    "currency": {
+      "type": "string",
+      "default": ""
+    },
+    "locale": {
+      "type": "string",
+      "default": ""
+    },
+    "taxRate": {
+      "type": "string",
+      "default": ""
+    },
+    "amount": {
+      "type": "number",
+      "default": ""
+    },
+    "amountIncl": {
+      "type": "number",
+      "default": ""
+    },
+    "quantity": {
+      "type": "number",
+      "default": ""
+    },
+    "quantityRate": {
+      "type": "number",
+      "default": ""
+    }
+  },
+  "supports": {
+    "inserter": false,
+    "reusable": false,
+    "html": false
+  },
+  "editorScript": "file:./index.js"
+}

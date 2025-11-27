@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "billy-blocks/invoice-meta",
+	"title": "Invoice Meta Field",
+	"icon": "editor-textcolor",
+	"category": "billy-blocks",
+	"textdomain": "billy",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"text": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false,
+		"className": true
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

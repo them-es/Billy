@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "billy-blocks/invoice-actions",
+	"title": "Invoice: Actions",
+	"icon": "menu-alt",
+	"category": "billy-blocks",
+	"textdomain": "billy",
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}

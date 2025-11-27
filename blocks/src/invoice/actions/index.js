@@ -1,59 +1,45 @@
 /**
- * Invoice Actions
+ * Accounting Actions
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
-
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps } from '@wordpress/block-editor';
-import { __, _n, sprintf } from '@wordpress/i18n';
-import { withSelect } from '@wordpress/data';
 
-registerBlockType('billy-blocks/invoice-actions', {
-	apiVersion: 2,
-	title: sprintf(
-		__('%1$s: %2$s', 'billy'),
-		__('Invoice', 'billy'),
-		__('Actions', 'billy')
-	),
-	icon: 'menu-alt', // https://developer.wordpress.org/resource/dashicons
-	category: 'billy-blocks', // Custom category: see index.php
-	supports: {
-		inserter: false,
-		reusable: false,
-		html: false,
-	},
+/**
+ * Internal dependencies
+ */
+import edit from './edit';
+import save from './save';
+//import deprecated from './deprecated';
 
-	getEditWrapperProps() {
-		return { 'data-align': 'wide' };
-	},
+import metadata from './block.json';
+const { name } = metadata;
 
-	edit: withSelect((select) => {
-		return {
-			postModifiedDate:
-				select('core/editor').getEditedPostAttribute('modified'),
-		};
-	})((props) => {
-		const { postModifiedDate } = props;
-		const blockProps = useBlockProps({
-			className: 'components-placeholder',
-			style: { minHeight: 'auto' },
-		});
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType(
+	{ name, ...metadata },
+	{
+		getEditWrapperProps() {
+			return { 'data-align': 'wide' };
+		},
 
-		// Markup: Backend
-		return (
-			<div {...blockProps}>
-				<small>
-					{sprintf(
-						__('%1$s: %2$s', 'billy'),
-						__('Last modified', 'billy'),
-						new Date(postModifiedDate).toLocaleString()
-					)}
-				</small>
-			</div>
-		);
-	}),
+		/**
+		 * @see ./edit.js
+		 */
+		edit,
 
-	save: () => {
-		return null;
-	},
-});
+		/**
+		 * @see ./save.js
+		 */
+		save,
+
+		/**
+		 * @see ./deprecated.js
+		 */
+		//deprecated: deprecated,
+	}
+);

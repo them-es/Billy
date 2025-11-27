@@ -15,7 +15,6 @@ defined( 'ABSPATH' ) || exit;
  * Export PDF class.
  */
 class Billy_PDF_Export {
-
 	/**
 	 * Stylesheet.
 	 *
@@ -69,7 +68,6 @@ class Billy_PDF_Export {
 	}
 
 	/**
-	 * Plugin initiation:
 	 * A helper function to initiate actions, hooks and other features needed.
 	 *
 	 * @return void
@@ -84,17 +82,12 @@ class Billy_PDF_Export {
 	 * @return bool
 	 */
 	public function billy_authorized_to_view_pdf() {
-		// [TODO]: Also authorize on password protected posts if the correct password has been entered.
-		// 1. Get Invoice/Quote ID: intval( $_GET['id'] ) )...
-		// 2. Get connected [PRO] Share link ID by querying "_post_uuid"...
-		// 3. Permission granted if connected post has been accessed with the correct password...
-
 		return current_user_can( 'read_private_posts' );
 	}
 
 	/**
 	 * WP-API initiation:
-	 * GET /wp-json/export/pdf/{ID}
+	 * GET /wp-json/export/pdf/?id={post_id}
 	 *
 	 * @return void
 	 */
@@ -110,6 +103,92 @@ class Billy_PDF_Export {
 				},
 			)
 		);
+	}
+
+	/**
+	 * Workaround to add spacing in tbody content to each <p>/<ul>/<ol>.
+	 *
+	 * @param string $html HTML.
+	 *
+	 * @return string
+	 */
+	private function billy_fix_pdf_spacing( $html ) {
+		$spacer      = '<hr style="margin: 1.5pt 0; color: #FFF;">';
+		$search_tags = array(
+			'<p>',
+			'</p>',
+			'<ul>',
+			'</ul>',
+			'<ol>',
+			'</ol>',
+		);
+
+		$replace_tags = array(
+			$spacer . '<p>',
+			'</p>' . $spacer,
+			$spacer . '<ul>',
+			'</ul>' . $spacer,
+			$spacer . '<ol>',
+			'</ol>' . $spacer,
+		);
+
+		// Modify <tbody> content.
+		preg_match( '/<tbody>(.*?)<\/tbody>/s', $html, $match );
+
+		if ( $match && $match[0] ) {
+			$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
+
+			// Replace <tbody> with modified content.
+			return preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $html );
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Workaround to fix output of columns in PDF: Calculate number of columns and add style="width: ##%".
+	 * [TODO|TBD] Refactor with WP_HTML_Tag_Processor.
+	 *
+	 * @param string $html HTML.
+	 *
+	 * @return string
+	 */
+	private function billy_fix_pdf_columns( $html ) {
+		if ( empty( $html ) ) {
+			return $html;
+		}
+
+		$dom = new DOMDocument( '1.0', 'UTF-8' );
+
+		// Suppress warnings for invalid HTML and set internal errors to true.
+		libxml_use_internal_errors( true );
+
+		// Ensure the content will be UTF-8 formatted.
+		$content_type = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+		$dom->loadHTML( $content_type . $html );
+
+		libxml_clear_errors();
+
+		$xpath = new DOMXPath( $dom );
+
+		// Find all wp-block-columns elements.
+		$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
+
+		foreach ( $columns as $column ) {
+			// Find all inner wp-block-column elements.
+			$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
+			$count         = $inner_columns->length;
+
+			if ( $count > 0 ) {
+				$width = (int) ( 100 / $count ) . '%';
+
+				foreach ( $inner_columns as $inner_column ) {
+					$inner_column->setAttribute( 'style', 'width: ' . $width . ';' );
+				}
+			}
+		}
+
+		return $dom->saveHTML();
 	}
 
 	/**
@@ -130,6 +209,7 @@ class Billy_PDF_Export {
 		}
 
 		$has_valid_parameters = $request->has_valid_params();
+
 		if ( ! $has_valid_parameters || is_wp_error( $has_valid_parameters ) ) {
 			return $has_valid_parameters;
 		}
@@ -148,16 +228,16 @@ class Billy_PDF_Export {
 		$post_type = $post->post_type;
 		$reference = $post->post_title;
 
-		$css = static::$pdfstyles;
+		$css = self::$pdfstyles;
 
 		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(
 			array(
-				'tempDir'             => static::$temp_dir,
+				'tempDir'             => self::$temp_dir,
 				'mode'                => 'utf-8',
-				'fontDir'             => static::$pdffont_dir,
+				'fontDir'             => self::$pdffont_dir,
 				'fontdata'            => array(
-					'pdffont' => static::$pdffont,
+					'pdffont' => self::$pdffont,
 				),
 				'default_font'        => 'pdffont',
 				'simpleTables'        => false, // https://stackoverflow.com/a/67087295
@@ -184,7 +264,7 @@ class Billy_PDF_Export {
 
 		$content = '';
 
-		$blocks = parse_blocks( get_the_content() );
+		$blocks = parse_blocks( $post->post_content );
 
 		foreach ( $blocks as $block ) {
 			// Exclude reusable Footer blocks.
@@ -193,36 +273,8 @@ class Billy_PDF_Export {
 			}
 		}
 
-		// --> Start Workaround: Add spacing in tbody content to each <p>/<ul>/<ol>.
-		$spacer      = '<hr style="margin: 1.5pt 0; color: #FFF;">';
-		$search_tags = array(
-			'<p>',
-			'</p>',
-			'<ul>',
-			'</ul>',
-			'<ol>',
-			'</ol>',
-		);
-
-		$replace_tags = array(
-			$spacer . '<p>',
-			'</p>' . $spacer,
-			$spacer . '<ul>',
-			'</ul>' . $spacer,
-			$spacer . '<ol>',
-			'</ol>' . $spacer,
-		);
-
-		// Modify <tbody> content.
-		preg_match( '/<tbody>(.*?)<\/tbody>/s', $content, $match );
-
-		if ( $match && $match[0] ) {
-			$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
-
-			// Replace <tbody> with modified content.
-			$content = preg_replace( '/<tbody>(.*?)<\/tbody>/s', $tbody_content, $content );
-		}
-		// <-- End Workaround.
+		// Workaround: Table spacing.
+		$content = $this->billy_fix_pdf_spacing( $content );
 
 		// Remove line breaks from content.
 		$content = preg_replace( '/\r|\n/', '', $content );
@@ -236,7 +288,7 @@ class Billy_PDF_Export {
 			$content = apply_filters( 'billy_pdf_content', $content, $post_type );
 		}
 
-		// [WORKAROUND] Replace translation labels in table output with gettext strings. [TODO] Refactor table block.
+		// [WORKAROUND] Replace translation labels in table output with gettext strings.
 		$translation_placeholders       = array(
 			'data-label="title"></th>',
 			'data-label="description"></th>',
@@ -256,7 +308,7 @@ class Billy_PDF_Export {
 		$content                        = str_replace( $translation_placeholders, $translation_placeholder_values, $content );
 
 		// Replace dynamic value.
-		$content_placeholders       = array(
+		$content_placeholders = array(
 			'{DATE}',
 			'{EMAIL}',
 			'{SITETITLE}',
@@ -269,6 +321,7 @@ class Billy_PDF_Export {
 			'<p ',
 			'</p>',
 		);
+
 		$content_placeholder_values = array(
 			esc_html( get_the_date( '', $post_id ) ),
 			esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
@@ -282,32 +335,11 @@ class Billy_PDF_Export {
 			'<figure ',
 			'</figure>',
 		);
-		$content                    = str_replace( $content_placeholders, $content_placeholder_values, $content );
 
-		// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
-		$dom = new DOMDocument();
-		libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
-		$dom->loadHTML( '<meta charset="UTF-8" />' . $content ); // Make sure the content will be UTF-8 formatted.
-		libxml_clear_errors();
+		$content = str_replace( $content_placeholders, $content_placeholder_values, $content );
 
-		$xpath = new DOMXPath( $dom );
-
-		// Find all wp-block-columns elements.
-		$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
-
-		foreach ( $columns as $column ) {
-			// Find all inner wp-block-column elements.
-			$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
-			$count         = $inner_columns->length;
-
-			if ( $count > 0 ) {
-				foreach ( $inner_columns as $inner_column ) {
-					$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
-				}
-			}
-		}
-
-		$content = $dom->saveHTML();
+		// Workaround to fix missing display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
+		$content = $this->billy_fix_pdf_columns( $content );
 
 		wp_reset_postdata();
 
@@ -334,60 +366,28 @@ class Billy_PDF_Export {
 			$footer_content = apply_filters( 'billy_pdf_footer', $footer_content, $post_type );
 		}
 
-		$footer_placeholders       = array(
-			'{DATE}',
-			'{EMAIL}',
-			'{SITETITLE}',
-			'{SITEICON}',
-			'{CURRENTPAGE}',
-			'{TOTALPAGES}',
-			'class="has-text-align-center',
-			'class="has-text-align-right',
-			'class="has-text-align-left',
-			'<p ',
-			'</p>',
-		);
-		$footer_placeholder_values = array(
-			esc_html( get_the_date( '', $post_id ) ),
-			esc_html( get_theme_mod( 'email', get_bloginfo( 'admin_email' ) ) ),
-			esc_html( get_bloginfo( 'name' ) ),
-			get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '',
-			'{PAGENO}',
-			'{nbpg}',
-			'align="center" class="has-text-align-center',
-			'align="right" class="has-text-align-right',
-			'align="left" class="has-text-align-left',
-			'<figure ',
-			'</figure>',
-		);
-		$footer_content            = str_replace( $footer_placeholders, $footer_placeholder_values, $footer_content );
+		$content_placeholder_values[3] = get_site_icon_url() ? '<img src="' . esc_url( get_site_icon_url() ) . '" height="35" />' : '';
 
-		// Workaround to fix mising display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
-		$dom = new DOMDocument();
-		libxml_use_internal_errors( true ); // Suppress warnings for invalid HTML.
-		$dom->loadHTML( '<meta charset="UTF-8" />' . $footer_content ); // Make sure the content will be UTF-8 formatted.
-		libxml_clear_errors();
+		$footer_content = str_replace( $content_placeholders, $content_placeholder_values, $footer_content );
 
-		$xpath = new DOMXPath( $dom );
-
-		// Find all wp-block-columns elements.
-		$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
-
-		foreach ( $columns as $column ) {
-			// Find all inner wp-block-column elements.
-			$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
-			$count         = $inner_columns->length;
-
-			if ( $count > 0 ) {
-				foreach ( $inner_columns as $inner_column ) {
-					$inner_column->setAttribute( 'style', 'width: ' . (int) ( 100 / $count ) . '%;' );
-				}
-			}
-		}
-
-		$footer_content = $dom->saveHTML();
+		// Workaround to fix missing display "flex" compatibility. Count inner "wp-block-column" blocks and add width to style attributes.
+		$footer_content = $this->billy_fix_pdf_columns( $footer_content );
 
 		$mpdf->SetHTMLFooter( do_blocks( $footer_content ) );
+
+		if ( get_theme_mod( 'pdf_emoji_support', '1' ) ) {
+			// Convert emojis to static images hosted on "https://s.w.org/images/core/emoji".
+			$content = wp_staticize_emoji( $content );
+		} else {
+			// Remove emojis from content as they are only supported by specific webfonts: https://stackoverflow.com/a/79032084
+			$content = trim(
+				preg_replace(
+					'/[^\p{L}\p{N}\p{P}\p{S}\s]+/u',
+					'',
+					preg_replace( '/[\p{Extended_Pictographic}]/u', '', $content )
+				)
+			);
+		}
 
 		$write_html = '<html>
 			<body class="' . esc_attr( $post_type ) . '-template-default single single-' . esc_attr( $post_type ) . ' singular">
@@ -397,7 +397,7 @@ class Billy_PDF_Export {
 
 		$mpdf->SetTitle( esc_html( $reference ) );
 		$mpdf->WriteHTML( $write_html, HTMLParserMode::HTML_BODY );
-		$file = esc_attr( $reference ) . '.pdf';
+		$file = sanitize_title( $reference ) . '.pdf';
 
 		// https://mpdf.github.io/reference/mpdf-functions/output.html
 		if ( ! empty( $parameters['return'] ) ) {

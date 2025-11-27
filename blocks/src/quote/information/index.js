@@ -1,57 +1,41 @@
 /**
- * Quote Information
+ * Invoice Duedate
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
-
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { __, sprintf } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody } from '@wordpress/components';
-import ServerSideRender from '@wordpress/server-side-render';
 
-registerBlockType('billy-blocks/quote-information', {
-	apiVersion: 2,
-	title: sprintf(
-		__('%1$s: %2$s', 'billy'),
-		__('Quote', 'billy'),
-		__('Information', 'billy')
-	),
-	icon: 'info', // https://developer.wordpress.org/resource/dashicons
-	category: 'billy-blocks', // Custom category: see index.php
-	supports: {
-		inserter: false,
-		reusable: false,
-		html: false,
-	},
+/**
+ * Internal dependencies
+ */
+import edit from './edit';
+import save from './save';
+//import deprecated from './deprecated';
 
-	edit: () => {
-		const blockProps = useBlockProps();
-		// Markup: Backend
-		return (
-			<div {...blockProps}>
-				<InspectorControls>
-					<PanelBody title={__('Info', 'billy')}>
-						<div className="components-notice">
-							<div className="components-notice__content">
-								{sprintf(
-									__(
-										'The %s values can be modified in the Theme Customizer.',
-										'billy'
-									),
-									__('Quote Information', 'billy')
-								)}
-							</div>
-						</div>
-					</PanelBody>
-				</InspectorControls>
+import metadata from './block.json';
+const { name } = metadata;
 
-				<ServerSideRender block="billy-blocks/quote-information" />
-			</div>
-		);
-	},
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType(
+	{ name, ...metadata },
+	{
+		/**
+		 * @see ./edit.js
+		 */
+		edit,
 
-	save: () => {
-		// Handled by PHP.
-		return null;
-	},
-});
+		/**
+		 * @see ./save.js
+		 */
+		save,
+
+		/**
+		 * @see ./deprecated.js
+		 */
+		//deprecated: deprecated,
+	}
+);

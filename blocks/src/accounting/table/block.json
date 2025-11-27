@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "billy-blocks/accounting-table",
+	"title": "Accounting: Table",
+	"icon": "menu-alt",
+	"category": "billy-blocks",
+	"textdomain": "billy",
+	"attributes": {
+		"currency": {
+			"type": "string",
+			"default": ""
+		},
+		"locale": {
+			"type": "string",
+			"default": ""
+		},
+		"amountTotalEarnings": {
+			"type": "number",
+			"default": ""
+		},
+		"amountTotalExpenses": {
+			"type": "number",
+			"default": ""
+		},
+		"amountTaxEarnings": {
+			"type": "number",
+			"default": ""
+		},
+		"amountTaxExpenses": {
+			"type": "number",
+			"default": ""
+		}
+	},
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}

@@ -1,9 +1,10 @@
 {
+	"private": true,
 	"name": "billy",
-	"version": "1.12.0",
+	"version": "2.0.0",
 	"homepage": "https://them.es",
 	"author": "them.es",
-	"description": "",
+	"description": "Billy billing suite for WordPress",
 	"license": "GPLv2+",
 	"scripts": {
 		"create-languagefile": "wp i18n make-pot . languages/billy.pot --exclude=pdfjs,tmp,assets,blocks/node_modules,mpdf,node_modules,vendor --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/them-es/billy/issues\"}'",
@@ -11,7 +12,7 @@
 		"build-blocks": "cd ./blocks/ && npm run build",
 		"build": "wp-scripts build",
 		"build-all": "wp-scripts build && npm run build-blocks",
-		"dist": "composer update",
+		"dist": "composer update"
 	},
 	"devDependencies": {
 		"bootstrap": "^4",

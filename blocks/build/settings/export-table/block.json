@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "billy-blocks/export-table",
+  "title": "Export Table",
+  "icon": "download",
+  "category": "billy-blocks",
+  "textdomain": "billy",
+  "supports": {
+    "inserter": false,
+    "reusable": false,
+    "html": false,
+    "className": true,
+    "interactivity": true
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "viewScriptModule": "file:./view.js"
+}

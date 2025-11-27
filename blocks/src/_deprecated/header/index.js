@@ -2,70 +2,44 @@
  * Header [Deprecated 2022-09; Block is still needed for backwards compatibility]
  * https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/writing-your-first-block-type
  */
-
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { __, sprintf } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, Disabled } from '@wordpress/components';
-import ServerSideRender from '@wordpress/server-side-render';
 
-registerBlockType('billy-blocks/header', {
-	title: __('Header', 'billy'),
-	icon: 'editor-table', // https://developer.wordpress.org/resource/dashicons
-	category: 'billy-blocks', // Custom category: see index.php
-	supports: {
-		inserter: false,
-		reusable: false,
-		html: false,
-	},
+/**
+ * Internal dependencies
+ */
+import edit from './edit';
+import save from './save';
+//import deprecated from './deprecated';
 
-	getEditWrapperProps() {
-		return { 'data-align': 'wide' };
-	},
+import metadata from './block.json';
+const { name } = metadata;
 
-	edit: () => {
-		return (
-			<>
-				<InspectorControls>
-					<PanelBody title={__('Info', 'billy')}>
-						<div className="components-notice">
-							<div className="components-notice__content">
-								<a
-									href={
-										globalDataBilly.wpAdmin +
-										'edit.php?post_type=wp_block'
-									}
-								>
-									{sprintf(
-										__('Edit the %s layout', 'billy'),
-										__('Header', 'billy')
-									)}
-								</a>
-							</div>
-						</div>
-						<div className="components-notice">
-							<div className="components-notice__content">
-								{sprintf(
-									__(
-										'The %s values can be modified in the Theme Customizer.',
-										'billy'
-									),
-									__('Header', 'billy')
-								)}
-							</div>
-						</div>
-					</PanelBody>
-				</InspectorControls>
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType(
+	{ name, ...metadata },
+	{
+		getEditWrapperProps() {
+			return { 'data-align': 'wide' };
+		},
 
-				<Disabled>
-					<ServerSideRender block="billy-blocks/header" />
-				</Disabled>
-			</>
-		);
-	},
+		/**
+		 * @see ./edit.js
+		 */
+		edit,
 
-	save: () => {
-		// Handled by PHP.
-		return null;
-	},
-});
+		/**
+		 * @see ./save.js
+		 */
+		save,
+
+		/**
+		 * @see ./deprecated.js
+		 */
+		//deprecated: deprecated,
+	}
+);

@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "billy-blocks/invoice-table",
+	"title": "Invoice Table",
+	"icon": "menu-alt",
+	"category": "billy-blocks",
+	"allowedBlocks": ["billy-blocks/invoice-tablerow"],
+	"textdomain": "billy",
+	"attributes": {
+		"currency": {
+			"type": "string",
+			"default": ""
+		},
+		"locale": {
+			"type": "string",
+			"default": ""
+		},
+		"amountSubtotal": {
+			"type": "number",
+			"default": ""
+		},
+		"amountTotal": {
+			"type": "number",
+			"default": ""
+		},
+		"taxRates": {
+			"type": "string",
+			"default": ""
+		},
+		"taxRatesTotal": {
+			"type": "number",
+			"default": ""
+		}
+	},
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}
