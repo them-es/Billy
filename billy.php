@@ -140,11 +140,24 @@ define( 'BILLY_ADMIN_MENU', true );
  */
 function billy_plugins_loaded(): void {
 	// TODO: Temporary workaround to fix a potential "Declaration of Billy_Pro::init() must be compatible with Billy::init(): void" fatal error on plugin activation!
-	if ( defined( 'BILLY_PRO_PLUGIN_FILE' ) && version_compare( get_plugin_data( BILLY_PRO_PLUGIN_FILE )['Version'], '2.1.0', '<' ) ) {
-		deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
+	if ( defined( 'BILLY_PRO_PLUGIN_FILE' ) ) {
+		$plugin_file = WP_PLUGIN_DIR . '/billy-pro/billy-pro.php';
 
-		add_action( 'admin_notices', 'billy_pro_incompatible_admin_notice' );
-		return;
+		if ( file_exists( $plugin_file ) ) {
+			// Load the plugin's main file.
+			require_once $plugin_file;
+
+			$content = file_get_contents( $plugin_file );
+			preg_match( '/Version:\s*(.*)/', $content, $matches );
+			$version = isset( $matches[1] ) ? trim( $matches[1] ) : false;
+
+			if ( version_compare( $version, '2.1.0', '<' ) ) {
+				deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
+
+				add_action( 'admin_notices', 'billy_pro_incompatible_admin_notice' );
+				return;
+			}
+		}
 	}
 
 	if ( billy_is_plugin_active( 'classic-editor/classic-editor.php' ) || billy_is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ) {
