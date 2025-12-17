@@ -3,13 +3,12 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.0.0
+ * Version: 2.1.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: billy
- * Domain Path: /languages
  */
 
 // Exit if accessed directly.
@@ -29,7 +28,7 @@ if ( ! function_exists( 'wp_get_wp_version' ) ) {
 	 *
 	 * @return string
 	 */
-	function wp_get_wp_version() {
+	function wp_get_wp_version(): string {
 		static $wp_version;
 
 		if ( ! isset( $wp_version ) ) {
@@ -45,8 +44,21 @@ if ( ! function_exists( 'wp_get_wp_version' ) ) {
  *
  * @return void
  */
-function billy_deactivate() {
+function billy_deactivate(): void {
 	deactivate_plugins( plugin_basename( BILLY_PLUGIN_FILE ) );
+}
+
+/**
+ * Admin notice: Incompatible Billy Pro version.
+ *
+ * @return void
+ */
+function billy_pro_incompatible_admin_notice(): void {
+	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please install the latest version.', 'billy' ), 'Billy' ) );
+
+	if ( isset( $_GET['activate'] ) ) {
+		unset( $_GET['activate'] );
+	}
 }
 
 /**
@@ -54,7 +66,7 @@ function billy_deactivate() {
  *
  * @return void
  */
-function billy_php_incompatible_admin_notice() {
+function billy_php_incompatible_admin_notice(): void {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
 
 	if ( isset( $_GET['activate'] ) ) {
@@ -67,7 +79,7 @@ function billy_php_incompatible_admin_notice() {
  *
  * @return void
  */
-function billy_wp_incompatible_admin_notice() {
+function billy_wp_incompatible_admin_notice(): void {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) );
 
 	if ( isset( $_GET['activate'] ) ) {
@@ -80,7 +92,7 @@ function billy_wp_incompatible_admin_notice() {
  *
  * @return void
  */
-function billy_classic_editor_admin_notice() {
+function billy_classic_editor_admin_notice(): void {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) );
 
 	if ( isset( $_GET['activate'] ) ) {
@@ -93,7 +105,7 @@ function billy_classic_editor_admin_notice() {
  *
  * @return void
  */
-function billy_temp_pdfdirectory_not_writable_admin_notice() {
+function billy_temp_pdfdirectory_not_writable_admin_notice(): void {
 	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
 }
 
@@ -104,7 +116,7 @@ function billy_temp_pdfdirectory_not_writable_admin_notice() {
  *
  * @return bool
  */
-function billy_is_plugin_active( $plugin = '' ) {
+function billy_is_plugin_active( $plugin = '' ): bool {
 	return in_array( $plugin, (array) get_option( 'active_plugins', array() ), true );
 }
 
@@ -113,7 +125,7 @@ function billy_is_plugin_active( $plugin = '' ) {
  *
  * @return void
  */
-function billy_register_menu_page() {
+function billy_register_menu_page(): void {
 	add_menu_page( 'Billy', 'Billy', 'edit_private_posts', 'billy', '', 'dashicons-tickets', 10 );
 }
 add_action( 'admin_menu', 'billy_register_menu_page' );
@@ -126,7 +138,15 @@ define( 'BILLY_ADMIN_MENU', true );
  *
  * @return void
  */
-function billy_plugins_loaded() {
+function billy_plugins_loaded(): void {
+	// TODO: Temporary workaround to fix a potential "Declaration of Billy_Pro::init() must be compatible with Billy::init(): void" fatal error on plugin activation!
+	if ( defined( 'BILLY_PRO_PLUGIN_FILE' ) && version_compare( get_plugin_data( BILLY_PRO_PLUGIN_FILE )['Version'], '2.1.0', '<' ) ) {
+		deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
+
+		add_action( 'admin_notices', 'billy_pro_incompatible_admin_notice' );
+		return;
+	}
+
 	if ( billy_is_plugin_active( 'classic-editor/classic-editor.php' ) || billy_is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ) {
 		add_action( 'admin_notices', 'billy_classic_editor_admin_notice' );
 		add_action( 'admin_init', 'billy_deactivate' );
@@ -188,7 +208,7 @@ add_action( 'plugins_loaded', 'billy_plugins_loaded', 998 );
  *
  * @return array The filtered array of post types names.
  */
-function billy_custom_enabled_post_types( $enabled_post_types ) {
+function billy_custom_enabled_post_types( $enabled_post_types ): array {
 	$enabled_post_types[] = 'billy-invoice';
 	$enabled_post_types[] = 'billy-quote';
 
@@ -203,7 +223,7 @@ add_filter( 'duplicate_post_enabled_post_types', 'billy_custom_enabled_post_type
  *
  * @return array The custom fields to exclude.
  */
-function billy_custom_fields_filter( $meta_excludelist ) {
+function billy_custom_fields_filter( $meta_excludelist ): array {
 	return array_merge( $meta_excludelist, array( '_invoice_number', '_quote_number' ) );
 }
 add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
@@ -217,7 +237,7 @@ add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
  *
  * @return void
  */
-function billy_custom_dp_duplicate_post( $new_post_id, $post, $status ) {
+function billy_custom_dp_duplicate_post( $new_post_id, $post, $status ): void {
 	$contact_uuid = get_post_meta( $post->ID, '_contact_uuid', true );
 
 	if ( $contact_uuid ) {

@@ -27,10 +27,10 @@ class Billy_PDF_Export {
 	 * Temporary directory.
 	 * https://mpdf.github.io/installation-setup/folders-for-temporary-files.html
 	 *
-	 * @access public
+	 * @access private
 	 * @var string
 	 */
-	public static $temp_dir;
+	private static $temp_dir;
 
 	/**
 	 * Font directory.
@@ -72,7 +72,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 		add_action( 'rest_api_init', array( $this, 'billy_rest_api_init' ), 100 );
 	}
 
@@ -81,7 +81,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return bool
 	 */
-	public function billy_authorized_to_view_pdf() {
+	private function billy_authorized_to_view_pdf(): bool {
 		return current_user_can( 'read_private_posts' );
 	}
 
@@ -91,14 +91,14 @@ class Billy_PDF_Export {
 	 *
 	 * @return void
 	 */
-	public function billy_rest_api_init() {
+	public function billy_rest_api_init(): void {
 		register_rest_route(
 			'export',
 			'/pdf',
 			array(
 				'methods'             => 'GET',
 				'callback'            => array( $this, 'billy_export_pdf' ),
-				'permission_callback' => function () {
+				'permission_callback' => function (): bool {
 					return self::billy_authorized_to_view_pdf();
 				},
 			)
@@ -112,7 +112,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return string
 	 */
-	private function billy_fix_pdf_spacing( $html ) {
+	public function billy_fix_pdf_spacing( $html ): string {
 		$spacer      = '<hr style="margin: 1.5pt 0; color: #FFF;">';
 		$search_tags = array(
 			'<p>',
@@ -153,7 +153,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return string
 	 */
-	private function billy_fix_pdf_columns( $html ) {
+	public function billy_fix_pdf_columns( $html ): string {
 		if ( empty( $html ) ) {
 			return $html;
 		}
@@ -166,6 +166,10 @@ class Billy_PDF_Export {
 		// Ensure the content will be UTF-8 formatted.
 		$content_type = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 		$dom->loadHTML( $content_type . $html );
+
+		if ( ! $dom instanceof DOMDocument ) {
+			throw new Exception( 'Invalid DOMDocument.' );
+		}
 
 		libxml_clear_errors();
 
@@ -180,7 +184,7 @@ class Billy_PDF_Export {
 			$count         = $inner_columns->length;
 
 			if ( $count > 0 ) {
-				$width = (int) ( 100 / $count ) . '%';
+				$width = max( 1, (int) ( 100 / $count ) ) . '%';
 
 				foreach ( $inner_columns as $inner_column ) {
 					$inner_column->setAttribute( 'style', 'width: ' . $width . ';' );
@@ -198,7 +202,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return string|WP_Error
 	 */
-	public function billy_export_pdf( $request ) {
+	public function billy_export_pdf( $request ): string|WP_Error {
 		// PDF generation is restricted.
 		if ( ! self::billy_authorized_to_view_pdf() ) {
 			return new WP_Error(
@@ -210,7 +214,7 @@ class Billy_PDF_Export {
 
 		$has_valid_parameters = $request->has_valid_params();
 
-		if ( ! $has_valid_parameters || is_wp_error( $has_valid_parameters ) ) {
+		if ( is_wp_error( $has_valid_parameters ) ) {
 			return $has_valid_parameters;
 		}
 

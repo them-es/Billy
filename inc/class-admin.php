@@ -19,7 +19,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 		// Dashboard widget.
 		add_action( 'wp_dashboard_setup', array( $this, 'add_wp_dashboard_widget' ), 998 );
 
@@ -48,7 +48,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function add_wp_dashboard_widget() {
+	public function add_wp_dashboard_widget(): void {
 		wp_add_dashboard_widget(
 			'billy_dashboard',
 			sprintf( esc_html__( '%1$s %2$s', 'billy' ), self::$plugin_name, self::$plugin_version ),
@@ -61,7 +61,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return string
 	 */
-	public function wp_dashboard_widget_body() {
+	public function wp_dashboard_widget_body(): string {
 		// Autofix invoice posts of current year missing meta "_invoice_number".
 		$get_invoices_missing_meta = new WP_Query(
 			array(
@@ -185,12 +185,12 @@ class Billy_Admin extends Billy {
 				( $latest_invoices ? '
 				<tr>
 					<td><strong>' . esc_html__( 'Current invoice', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_html( self::get_invoice_number( $latest_invoices[0]->ID ) ) . '</a></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-invoice' ) ) . '">' . esc_html( $this->get_invoice_number( $latest_invoices[0]->ID ) ) . '</a></td>
 				</tr>' : '' ) .
 				( $latest_quotes ?
 				'<tr>
 					<td><strong>' . esc_html__( 'Current quote', 'billy' ) . '</strong></td>
-					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-quote' ) ) . '">' . esc_html( self::get_quote_number( $latest_quotes[0]->ID ) ) . '</a></td>
+					<td><a href="' . esc_url( admin_url( 'edit.php?post_type=billy-quote' ) ) . '">' . esc_html( $this->get_quote_number( $latest_quotes[0]->ID ) ) . '</a></td>
 				</tr>
 				<tr>
 					<td><strong>' . esc_html__( 'Financial Year', 'billy' ) . '</strong></td>
@@ -227,7 +227,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return string
 	 */
-	public function wp_dashboard_widget_footer() {
+	public function wp_dashboard_widget_footer(): string {
 		return '<table class="footer">
 			<tbody>
 				<tr>
@@ -244,7 +244,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function wp_dashboard_widget() {
+	public function wp_dashboard_widget(): void {
 		echo $this->wp_dashboard_widget_body() . $this->wp_dashboard_widget_footer();
 	}
 
@@ -254,7 +254,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return string
 	 */
-	public function billy_default_content( $content, $post ) {
+	public function billy_default_content( $content, $post ): string {
 		if ( ! str_starts_with( $post->post_type, 'billy-' ) ) {
 			return $content;
 		}
@@ -296,7 +296,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function onsave_invoice( $post, $request ) {
+	public function onsave_invoice( $post, $request ): void {
 		$post_id = $post->ID;
 
 		$my_post = array(
@@ -352,7 +352,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function onsave_quote( $post, $request ) {
+	public function onsave_quote( $post, $request ): void {
 		$post_id = $post->ID;
 
 		$my_post = array(
@@ -407,7 +407,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function onsave_accounting( $post, $request ) {
+	public function onsave_accounting( $post, $request ): void {
 		$post_id    = $post->ID;
 		$post_title = get_the_date( 'Y', $post_id );
 
@@ -434,7 +434,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return array
 	 */
-	public function keep_original_date_on_publishing( $data, $postarr ) {
+	public function keep_original_date_on_publishing( $data, $postarr ): array {
 		if ( 'billy-invoice' !== $data['post_type'] ) {
 			return $data;
 		}
@@ -457,7 +457,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return array
 	 */
-	public function remove_quick_edit_invoice( $actions, $post ) {
+	public function remove_quick_edit_invoice( $actions, $post ): array {
 		if ( 'billy-invoice' === $post->post_type ) {
 			// unset( $actions['edit'] );
 			// unset( $actions['view'] );
@@ -473,7 +473,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function enqueue_admin_assets() {
+	public function enqueue_admin_assets(): void {
 		$theme_mods        = array(
 			'name'     => esc_html__( 'Name', 'billy' ),
 			'address'  => esc_html__( 'Address', 'billy' ),
@@ -523,7 +523,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function enqueue_admin_styles() {
+	public function enqueue_admin_styles(): void {
 		if ( is_admin() ) {
 			// Styles.
 			wp_enqueue_style( 'billy-editor-style', self::$plugin_url . 'assets/admin/css/style-editor.css', array(), self::$plugin_version );
@@ -540,7 +540,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function wp_customizer_options( $wp_customize ) {
+	public function wp_customizer_options( $wp_customize ): void {
 		/**
 		 * Initialize panel.
 		 */
@@ -777,7 +777,7 @@ class Billy_Admin extends Billy {
 			array(
 				'type'        => 'select',
 				'label'       => esc_html__( 'Custom financial year', 'billy' ),
-				'description' => esc_html__( 'Select the month that your custom financial year begins', 'billy' ) . '<br><em>' . esc_html__( 'Only change this value if you know what you are doing!', 'billy' ) . '</em>',
+				'description' => esc_html__( 'Select the month that your custom financial year begins', 'billy' ) . '<br><em>' . esc_html__( 'Only change this value if you know what you are doing', 'billy' ) . '</em>',
 				'choices'     => array(
 					'01' => __( 'January', 'billy' ),
 					'02' => __( 'February', 'billy' ),
@@ -808,7 +808,7 @@ class Billy_Admin extends Billy {
 			array(
 				'type'        => 'checkbox',
 				'label'       => esc_html__( 'Reset numbers each year', 'billy' ),
-				'description' => esc_html__( 'The number counter will automatically reset at the start of the new financial year.', 'billy' ) . '<br>' . esc_html__( 'Only change this value if you know what you are doing.', 'billy' ) . '</em>',
+				'description' => esc_html__( 'The number counter will automatically reset at the start of the new financial year.', 'billy' ) . '<br>' . esc_html__( 'Only change this value if you know what you are doing', 'billy' ) . '</em>',
 				'section'     => 'billy_general_section',
 			)
 		);
@@ -825,7 +825,7 @@ class Billy_Admin extends Billy {
 			array(
 				'type'        => 'number',
 				'label'       => esc_html__( 'Current invoice number', 'billy' ),
-				'description' => esc_html__( 'Upcoming invoice numbers will be autoincremented based on this value', 'billy' ) . '<br><em>' . esc_html__( 'Only change this value if you know what you are doing!', 'billy' ) . '</em>',
+				'description' => esc_html__( 'Upcoming invoice numbers will be autoincremented based on this value', 'billy' ) . '<br><em>' . esc_html__( 'Only change this value if you know what you are doing', 'billy' ) . '</em>',
 				'section'     => 'billy_invoice_section',
 			)
 		);
@@ -933,7 +933,7 @@ class Billy_Admin extends Billy {
 			array(
 				'type'        => 'number',
 				'label'       => esc_html__( 'Current quote number', 'billy' ),
-				'description' => esc_html__( 'Upcoming quote numbers will be autoincremented based on this value!', 'billy' ),
+				'description' => esc_html__( 'Upcoming quote numbers will be autoincremented based on this value', 'billy' ),
 				'section'     => 'billy_quote_section',
 			)
 		);
@@ -1029,7 +1029,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return object
 	 */
-	public function geocode( $validity, $value ) {
+	public function geocode( $validity, $value ): object {
 		if ( get_theme_mod( 'geocoding_enabled', '1' ) && ! empty( $value ) && strlen( $value ) > 3 ) {
 			$result = null;
 
@@ -1071,7 +1071,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return object
 	 */
-	public function validate_currency( $validity, $value ) {
+	public function validate_currency( $validity, $value ): object {
 		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
 			$validity->add( 'no_valid_currency', esc_html__( 'Please provide a valid currency format', 'billy' ) );
 		}
@@ -1087,7 +1087,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return object
 	 */
-	public function validate_taxrates( $validity, $value ) {
+	public function validate_taxrates( $validity, $value ): object {
 		if ( ! empty( $value ) ) {
 			$newlines = explode( "\n", $value );
 

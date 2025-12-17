@@ -92,7 +92,7 @@ class CurlHttpClient implements \Billy\Mpdf\Http\ClientInterface, \Billy\Psr\Log
 				throw new \Billy\Mpdf\MpdfException($message);
 			}
 
-			curl_close($ch);
+			$this->closeCurl($ch);
 
 			return $response;
 		}
@@ -106,16 +106,22 @@ class CurlHttpClient implements \Billy\Mpdf\Http\ClientInterface, \Billy\Psr\Log
 				throw new \Billy\Mpdf\MpdfException($message);
 			}
 
-			curl_close($ch);
+			$this->closeCurl($ch);
 
 			return $response->withStatus($info['http_code']);
 		}
 
-		curl_close($ch);
+		$this->closeCurl($ch);
 
 		return $response
 			->withStatus($info['http_code'])
 			->withBody(Stream::create($data));
 	}
 
+	private function closeCurl($ch)
+	{
+		if (PHP_VERSION_ID < 80000) {
+			curl_close($ch);
+		}
+	}
 }

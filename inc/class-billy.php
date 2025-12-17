@@ -102,7 +102,7 @@ class Billy {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 		add_action( 'init', array( $this, 'on_init' ), 998 );
 
 		add_action( 'after_register_post_type', array( $this, 'flush_rewrite' ) );
@@ -133,7 +133,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function dashboard_widget_content() {
+	public static function dashboard_widget_content(): string {
 		return ( new Billy_Admin() )->wp_dashboard_widget_body();
 	}
 
@@ -143,7 +143,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function dashboard_widget_footer() {
+	public static function dashboard_widget_footer(): string {
 		return ( new Billy_Admin() )->wp_dashboard_widget_footer();
 	}
 
@@ -156,10 +156,7 @@ class Billy {
 	 *
 	 * @return void
 	 */
-	public function on_init() {
-		// Load translations.
-		load_plugin_textdomain( 'billy', false, plugin_basename( dirname( BILLY_PLUGIN_FILE ) ) . '/languages/' );
-
+	public function on_init(): void {
 		// [TODO: Remove] Deprecated 2022-09.
 		register_post_type(
 			'billy-header',
@@ -826,7 +823,7 @@ class Billy {
 	 *
 	 * @return void
 	 */
-	public function flush_rewrite() {
+	public function flush_rewrite(): void {
 		flush_rewrite_rules();
 	}
 
@@ -835,9 +832,9 @@ class Billy {
 	 *
 	 * @param int $post_id Post ID.
 	 *
-	 * @return int
+	 * @return int|null
 	 */
-	public static function get_previous_post_id( $post_id ) {
+	public static function get_previous_post_id( $post_id ): mixed {
 		global $post;
 		$post = get_post( $post_id );
 
@@ -851,7 +848,7 @@ class Billy {
 	 *
 	 * @return DateTime
 	 */
-	public static function current_financial_year_begins_datetime() {
+	public static function current_financial_year_begins_datetime(): DateTime {
 		$financial_year_begins_on_month = get_theme_mod( 'financial_year_begins_on_month', '01' );
 		$financial_year_begins          = new DateTime( wp_date( 'Y' ) . '-' . $financial_year_begins_on_month . '-01' );
 
@@ -869,7 +866,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_current_financial_year_begins( $format = 'Y-m-d' ) {
+	public static function get_current_financial_year_begins( $format = 'Y-m-d' ): string {
 		return self::current_financial_year_begins_datetime()->format( $format );
 	}
 
@@ -880,7 +877,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_current_financial_year_ends( $format = 'Y-m-d' ) {
+	public static function get_current_financial_year_ends( $format = 'Y-m-d' ): string {
 		return self::current_financial_year_begins_datetime()->modify( '+ 1 year' )->modify( '- 1 day' )->format( $format );
 	}
 
@@ -892,7 +889,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public function title_format( $format, $post ) {
+	public function title_format( $format, $post ): string {
 		return '%s';
 	}
 
@@ -902,7 +899,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public function preheader_render_callback() {
+	public function preheader_render_callback(): string {
 		$post_id = get_the_ID();
 
 		// PDF export link with 'wp_rest' nonce.
@@ -932,7 +929,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public function billy_modify_content( $content ) {
+	public function billy_modify_content( $content ): string {
 		$post_type = get_post_type();
 
 		if ( ! str_starts_with( $post_type, 'billy-' ) ) {
@@ -999,7 +996,7 @@ class Billy {
 	 * @return void
 	 */
 	/*
-	public function include_invoices_in_postsquery( $query ) {
+	public function include_invoices_in_postsquery( $query ): void {
 		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_private_posts' ) ) {
 			$query->set(
 				'post_type',
@@ -1019,7 +1016,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_invoice_number_meta( $post_id = null ) {
+	public static function get_invoice_number_meta( $post_id = null ): string {
 		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Meta does not exist. Autoincrement number from previous post or start new.
@@ -1045,7 +1042,7 @@ class Billy {
 			++$invoice_number;
 		}
 
-		return $invoice_number;
+		return (string) $invoice_number;
 	}
 
 	/**
@@ -1056,7 +1053,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function prefix_number( $post_id, $number = null ) {
+	public static function prefix_number( $post_id, $number = null ): string {
 		if ( 'billy-quote' === get_post_type( $post_id ) ) {
 			if ( empty( $number ) ) {
 				$number = self::get_quote_number_meta( $post_id );
@@ -1108,7 +1105,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_invoice_number( $post_id = null ) {
+	public static function get_invoice_number( $post_id = null ): string {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -1134,7 +1131,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_invoicenumber( $post_id = null ) {
+	public static function get_invoicenumber( $post_id = null ): string {
 		return self::get_invoice_number( $post_id );
 	}
 
@@ -1145,7 +1142,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_quote_number_meta( $post_id = null ) {
+	public static function get_quote_number_meta( $post_id = null ): string {
 		$quote_number = get_post_meta( $post_id, '_quote_number', true );
 
 		// Meta does not exist. Autoincrement number from previous post or start new.
@@ -1171,7 +1168,7 @@ class Billy {
 			++$quote_number;
 		}
 
-		return $quote_number;
+		return (string) $quote_number;
 	}
 
 	/**
@@ -1181,7 +1178,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_quote_number( $post_id = null ) {
+	public static function get_quote_number( $post_id = null ): string {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -1203,7 +1200,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_quotenumber( $post_id = null ) {
+	public static function get_quotenumber( $post_id = null ): string {
 		return self::get_quote_number( $post_id );
 	}
 
@@ -1215,7 +1212,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_duedate( $post_id = null, int $add_days = 14 ) {
+	public static function get_duedate( $post_id = null, int $add_days = 14 ): string {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -1237,7 +1234,7 @@ class Billy {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function blocks_to_rest_api( $response, $post, $request ) {
+	public function blocks_to_rest_api( $response, $post, $request ): WP_REST_Response {
 		if ( 'PUT' === $request->get_method() ) {
 			return $response;
 		}
@@ -1253,7 +1250,7 @@ class Billy {
 	 *
 	 * @return void
 	 */
-	public function enqueue_assets() {
+	public function enqueue_assets(): void {
 		global $post;
 
 		// Only enqueue when post contains a Billy block.

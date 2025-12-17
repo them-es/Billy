@@ -1,10 +1,10 @@
 === Billy ===
 Contributors: them.es
 Donate link: https://them.es/plugins/billy
-Tags: accounting, billing, invoice, invoices, quote, quotes
+Tags: accounting, billing, invoice, invoices, quote
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -154,6 +154,11 @@ Please consider purchasing the premium add-on with the following features:
 * You can also help translate the plugin into your language: [them.es](https://them.es/plugins/billy/docs "them.es") (them.es user account required) or [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") (WordPress.org user account required)
 
 == Changelog ==
+
+= 2.1.0 =
+* Improvements to overall code quality and inline documentation
+* Localized some missing de_DE translations in translate.wordpress.org
+* Update dependencies
 
 = 2.0.0 =
 * All blocks haven been migrated to Blocks API v3
