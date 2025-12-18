@@ -7,19 +7,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Billy_Blocks {
 	/**
-	 * On load.
+	 * On init.
 	 */
 	public function __construct() {
-		$this->init();
-	}
-
-	/**
-	 * Plugin initiation:
-	 * A helper function to initiate actions, hooks and other features needed.
-	 *
-	 * @return void
-	 */
-	public function init(): void {
 		add_action( 'init', array( $this, 'on_init' ), 999 );
 
 		// Editor: Block categories.

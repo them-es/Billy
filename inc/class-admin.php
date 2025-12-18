@@ -7,19 +7,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Billy_Admin extends Billy {
 	/**
-	 * On load.
+	 * On init.
 	 */
 	public function __construct() {
-		$this->init();
-	}
-
-	/**
-	 * Plugin initiation:
-	 * A helper function to initiate actions, hooks and other features needed.
-	 *
-	 * @return void
-	 */
-	public function init(): void {
 		// Dashboard widget.
 		add_action( 'wp_dashboard_setup', array( $this, 'add_wp_dashboard_widget' ), 998 );
 

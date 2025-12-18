@@ -50,7 +50,7 @@ class Billy_PDF_Export {
 	public static $pdffont;
 
 	/**
-	 * On load.
+	 * On init.
 	 */
 	public function __construct() {
 		$mpdf_dir          = dirname( __DIR__ ) . '/mpdf';
@@ -64,15 +64,6 @@ class Billy_PDF_Export {
 			'B' => 'Roboto-Bold.ttf',
 		);
 
-		$this->init();
-	}
-
-	/**
-	 * A helper function to initiate actions, hooks and other features needed.
-	 *
-	 * @return void
-	 */
-	public function init(): void {
 		add_action( 'rest_api_init', array( $this, 'billy_rest_api_init' ), 100 );
 	}
 

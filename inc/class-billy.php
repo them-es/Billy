@@ -71,7 +71,7 @@ class Billy {
 	public static $currency;
 
 	/**
-	 * On load.
+	 * On init.
 	 */
 	public function __construct() {
 		$plugin_data          = get_file_data(
@@ -93,16 +93,6 @@ class Billy {
 		self::$locale         = esc_attr( str_replace( '_', '-', get_user_locale() ) );
 		self::$currency       = esc_attr( get_theme_mod( 'currency', 'USD' ) );
 
-		$this->init();
-	}
-
-	/**
-	 * Plugin initiation:
-	 * A helper function to initiate actions, hooks and other features needed.
-	 *
-	 * @return void
-	 */
-	public function init(): void {
 		add_action( 'init', array( $this, 'on_init' ), 998 );
 
 		add_action( 'after_register_post_type', array( $this, 'flush_rewrite' ) );

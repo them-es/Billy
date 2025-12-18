@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.1.0
+ * Version: 2.1.1
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -49,67 +49,6 @@ function billy_deactivate(): void {
 }
 
 /**
- * Admin notice: Incompatible Billy Pro version.
- *
- * @return void
- */
-function billy_pro_incompatible_admin_notice(): void {
-	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please install the latest version.', 'billy' ), 'Billy' ) );
-
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
-	}
-}
-
-/**
- * Admin notice: Incompatible PHP version.
- *
- * @return void
- */
-function billy_php_incompatible_admin_notice(): void {
-	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
-
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
-	}
-}
-
-/**
- * Admin notice: Incompatible WP version.
- *
- * @return void
- */
-function billy_wp_incompatible_admin_notice(): void {
-	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) );
-
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
-	}
-}
-
-/**
- * Admin notice: Incompatible with Classic Editor.
- *
- * @return void
- */
-function billy_classic_editor_admin_notice(): void {
-	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) );
-
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
-	}
-}
-
-/**
- * Admin notice: PDF directory not writable.
- *
- * @return void
- */
-function billy_temp_pdfdirectory_not_writable_admin_notice(): void {
-	printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
-}
-
-/**
  * Test if plugin is active.
  *
  * @param string $plugin Plugin slug.
@@ -140,7 +79,7 @@ define( 'BILLY_ADMIN_MENU', true );
  */
 function billy_plugins_loaded(): void {
 	// TODO: Temporary workaround to fix a potential "Declaration of Billy_Pro::init() must be compatible with Billy::init(): void" fatal error on plugin activation!
-	if ( defined( 'BILLY_PRO_PLUGIN_FILE' ) ) {
+	if ( billy_is_plugin_active( 'billy-pro/billy-pro.php' ) ) {
 		$plugin_file = WP_PLUGIN_DIR . '/billy-pro/billy-pro.php';
 
 		if ( file_exists( $plugin_file ) ) {
@@ -152,37 +91,81 @@ function billy_plugins_loaded(): void {
 			$version = isset( $matches[1] ) ? trim( $matches[1] ) : false;
 
 			if ( version_compare( $version, '2.1.0', '<' ) ) {
-				deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
+				// deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
 
-				add_action( 'admin_notices', 'billy_pro_incompatible_admin_notice' );
+				add_action(
+					'admin_notices',
+					function (): void {
+						printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please download and install the latest version: <a href="%2$s">them.es</a>', 'billy' ), 'Billy', 'https://them.es/account/' ) );
+
+						if ( isset( $_GET['activate'] ) ) {
+							unset( $_GET['activate'] );
+						}
+					}
+				);
 				return;
 			}
 		}
 	}
 
 	if ( billy_is_plugin_active( 'classic-editor/classic-editor.php' ) || billy_is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ) {
-		add_action( 'admin_notices', 'billy_classic_editor_admin_notice' );
+		add_action(
+			'admin_notices',
+			function (): void {
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) );
+
+				if ( isset( $_GET['activate'] ) ) {
+					unset( $_GET['activate'] );
+				}
+			}
+		);
+
 		add_action( 'admin_init', 'billy_deactivate' );
 
 		return;
 	}
 
 	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
-		add_action( 'admin_notices', 'billy_php_incompatible_admin_notice' );
+		add_action(
+			'admin_notices',
+			function (): void {
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
+
+				if ( isset( $_GET['activate'] ) ) {
+					unset( $_GET['activate'] );
+				}
+			}
+		);
+
 		// add_action( 'admin_init', 'billy_deactivate' );
 
 		return;
 	}
 
 	if ( version_compare( wp_get_wp_version(), REQUIRED_WP, '<=' ) ) {
-		add_action( 'admin_notices', 'billy_wp_incompatible_admin_notice' );
+		add_action(
+			'admin_notices',
+			function (): void {
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) );
+
+				if ( isset( $_GET['activate'] ) ) {
+					unset( $_GET['activate'] );
+				}
+			}
+		);
+
 		// add_action( 'admin_init', 'billy_deactivate' );
 
 		return;
 	}
 
 	if ( isset( $_REQUEST['post_type'] ) && str_starts_with( (string) wp_unslash( $_REQUEST['post_type'] ), 'billy-' ) && ! wp_is_writable( __DIR__ . '/mpdf/tmp' ) ) {
-		add_action( 'admin_notices', 'billy_temp_pdfdirectory_not_writable_admin_notice' );
+		add_action(
+			'admin_notices',
+			function (): void {
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
+			}
+		);
 	}
 
 	// Initialize Classes.
