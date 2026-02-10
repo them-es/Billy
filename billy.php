@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.1.1
+ * Version: 2.1.2
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -72,39 +72,32 @@ define( 'BILLY_ADMIN_MENU', true );
 
 /**
  * On load:
- * 1. Test compatibility.
+ * 1. Check plugin conflicts and compatibility.
  * 2. Initialize plugin.
  *
  * @return void
  */
 function billy_plugins_loaded(): void {
-	// TODO: Temporary workaround to fix a potential "Declaration of Billy_Pro::init() must be compatible with Billy::init(): void" fatal error on plugin activation!
-	if ( billy_is_plugin_active( 'billy-pro/billy-pro.php' ) ) {
-		$plugin_file = WP_PLUGIN_DIR . '/billy-pro/billy-pro.php';
+	// Potential plugin conflicts.
+	$billy_pro = 'billy-pro/billy-pro.php';
+	if ( billy_is_plugin_active( $billy_pro ) ) {
+		$billy_pro_version     = get_file_data( WP_PLUGIN_DIR . '/' . $billy_pro, array( 'Version' => 'Version' ), false )['Version'];
+		$billy_pro_min_version = '2.1.0'; // [2.1.0] Fix fatal error "Declaration of Billy_Pro::init() must be compatible with Billy::init(): void".
 
-		if ( file_exists( $plugin_file ) ) {
-			// Load the plugin's main file.
-			require_once $plugin_file;
+		if ( version_compare( $billy_pro_version, $billy_pro_min_version, '<' ) ) {
+			add_action(
+				'admin_notices',
+				function (): void {
+					printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please download and install the latest version: <a href="%2$s">them.es</a>', 'billy' ), 'Billy', 'https://them.es/account/' ) );
 
-			$content = file_get_contents( $plugin_file );
-			preg_match( '/Version:\s*(.*)/', $content, $matches );
-			$version = isset( $matches[1] ) ? trim( $matches[1] ) : false;
-
-			if ( version_compare( $version, '2.1.0', '<' ) ) {
-				// deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
-
-				add_action(
-					'admin_notices',
-					function (): void {
-						printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please download and install the latest version: <a href="%2$s">them.es</a>', 'billy' ), 'Billy', 'https://them.es/account/' ) );
-
-						if ( isset( $_GET['activate'] ) ) {
-							unset( $_GET['activate'] );
-						}
+					if ( isset( $_GET['activate'] ) ) {
+						unset( $_GET['activate'] );
 					}
-				);
-				return;
-			}
+				}
+			);
+
+			deactivate_plugins( plugin_basename( BILLY_PRO_PLUGIN_FILE ) );
+			// return;
 		}
 	}
 
@@ -168,7 +161,7 @@ function billy_plugins_loaded(): void {
 		);
 	}
 
-	// Initialize Classes.
+	// Initialize classes.
 	include_once __DIR__ . '/inc/class-billy.php';
 
 	if ( ! class_exists( 'Billy' ) ) {

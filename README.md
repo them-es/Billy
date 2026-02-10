@@ -73,7 +73,7 @@ When you're done with the development you can submit a [Pull Request](https://he
 
 ## Support
 
-This code repository is not suitable for support requests. If you have a question or need assistence please access our [https://them.es/support](https://them.es/support) (PRO Add-on) or submit your question in the Support section of the WordPress Plugin directory (FREE version).
+This code repository is not suitable for general support requests. If you have a question or need assistence please access our Support forum at [https://them.es/support](https://them.es/support) or submit your question in the Support section of the WordPress Plugin directory (FREE version only).
 
 ## Technology
 
