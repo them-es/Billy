@@ -75,7 +75,7 @@ class Billy_Admin extends Billy {
 		);
 
 		if ( current_user_can( 'edit_private_posts' ) && $get_invoices_missing_meta->have_posts() ) {
-			if ( wp_verify_nonce( wp_unslash( $_GET['_wpnonce'] ?? '' ) ) && isset( $_GET['fix_invoices'] ) && 'true' === $_GET['fix_invoices'] ) {
+			if ( wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ?? '' ) ) ) && isset( $_GET['fix_invoices'] ) && 'true' === $_GET['fix_invoices'] ) {
 				$all_invoices_attrs = array(
 					'post_type'      => 'billy-invoice',
 					'post_status'    => 'private',
@@ -221,7 +221,7 @@ class Billy_Admin extends Billy {
 		return '<table class="footer">
 			<tbody>
 				<tr>
-					<td><p>' . ( class_exists( 'Billy_Pro' ) ? '<small>' . sprintf( __( 'Thank you for purchasing %s!', 'billy' ), '<strong>Billy Pro</strong> <span class="dashicons dashicons-smiley" aria-hidden="true"></span>' ) . '</small>' : '<strong><a href="' . esc_url( self::$billy_url ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Get the <u>Pro</u> version', 'billy' ), '<span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><small>' . __( 'Premium add-on with a project management suite, WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more.', 'billy' ) . '</small></p>' ) . '<hr><p><strong><a href="' . esc_url( 'https://wordpress.org/support/plugin/' . self::$plugin_slug . '/reviews/?rate=5#new-post' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Please rate this Plugin', 'billy' ), ' <span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span></p></td>
+					<td><p>' . ( class_exists( 'Billy_Pro' ) ? '<small>' . sprintf( __( 'Thank you for purchasing %s!', 'billy' ), '<strong>Billy Pro</strong> <span class="dashicons dashicons-smiley" aria-hidden="true"></span>' ) . '</small>' : '<strong><a href="' . esc_url( self::$billy_url ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Get the <u>Pro</u> version', 'billy' ), '<span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><small>' . __( 'Premium add-on with a project management suite, WooCommerce integration, Contacts, Address Book, QR code payments, Stats & Charts, Share links, and more.', 'billy' ) . '</small></p>' ) . '<hr><p><strong><a href="' . esc_url( 'https://wordpress.org/support/plugin/' . self::$plugin_slug . '/reviews/#new-post' ) . '">' . sprintf( __( '%1$s %2$s', 'billy' ), __( 'Please rate this Plugin', 'billy' ), ' <span class="dashicons dashicons-external" aria-hidden="true"></span>' ) . '</a></strong><br><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="dashicons dashicons-star-filled" aria-hidden="true"></span></p></td>
 					<td> </td>
 					<td><a href="' . esc_url( self::$billy_url ) . '"><img src="' . esc_url( self::$plugin_url ) . 'assets/img/logo.png" class="logo" alt="Billy" /></a></td>
 				</tr>

@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.1.2
+ * Version: 2.2.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
 define( 'BILLY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BILLY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BILLY_PLUGIN_FILE', __FILE__ );
-define( 'REQUIRED_WP', '6.6' );
-define( 'REQUIRED_PHP', '7.4' );
+define( 'BILLY_REQUIRED_WP', '6.6' );
+define( 'BILLY_REQUIRED_PHP', '7.4' );
 
 if ( ! function_exists( 'wp_get_wp_version' ) ) {
 	/**
@@ -88,7 +88,7 @@ function billy_plugins_loaded(): void {
 			add_action(
 				'admin_notices',
 				function (): void {
-					printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please download and install the latest version: <a href="%2$s">them.es</a>', 'billy' ), 'Billy', 'https://them.es/account/' ) );
+					printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please download and install the latest version: <a href="%2$s">them.es</a>', 'billy' ), 'Billy', 'https://them.es/account/' ) ) );
 
 					if ( isset( $_GET['activate'] ) ) {
 						unset( $_GET['activate'] );
@@ -105,7 +105,7 @@ function billy_plugins_loaded(): void {
 		add_action(
 			'admin_notices',
 			function (): void {
-				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) );
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) ) );
 
 				if ( isset( $_GET['activate'] ) ) {
 					unset( $_GET['activate'] );
@@ -118,11 +118,11 @@ function billy_plugins_loaded(): void {
 		return;
 	}
 
-	if ( version_compare( PHP_VERSION, REQUIRED_PHP, '<=' ) ) {
+	if ( version_compare( PHP_VERSION, BILLY_REQUIRED_PHP, '<=' ) ) {
 		add_action(
 			'admin_notices',
 			function (): void {
-				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', REQUIRED_PHP ) );
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', esc_html( BILLY_REQUIRED_PHP ) ) ) );
 
 				if ( isset( $_GET['activate'] ) ) {
 					unset( $_GET['activate'] );
@@ -135,11 +135,11 @@ function billy_plugins_loaded(): void {
 		return;
 	}
 
-	if ( version_compare( wp_get_wp_version(), REQUIRED_WP, '<=' ) ) {
+	if ( version_compare( wp_get_wp_version(), BILLY_REQUIRED_WP, '<=' ) ) {
 		add_action(
 			'admin_notices',
 			function (): void {
-				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) );
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) ) );
 
 				if ( isset( $_GET['activate'] ) ) {
 					unset( $_GET['activate'] );
@@ -156,7 +156,7 @@ function billy_plugins_loaded(): void {
 		add_action(
 			'admin_notices',
 			function (): void {
-				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) );
+				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( 'The temp directory %s is not writable. Please change the read/write permissions.', 'billy' ), '/mpdf/tmp' ) ) );
 			}
 		);
 	}

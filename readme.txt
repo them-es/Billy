@@ -4,7 +4,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoice, invoices, quote
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 2.1.2
+Stable tag: 2.2.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -153,7 +153,17 @@ Please consider purchasing the premium add-on with the following features:
 * WordPress developers are welcome to help improve the plugin via [GitHub](https://github.com/them-es "GitHub")
 * You can also help translate the plugin into your language: [them.es](https://them.es/plugins/billy/docs "them.es") (them.es user account required) or [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/billy "translate.wordpress.org") (WordPress.org user account required)
 
+= Do you accept code contributions? =
+* Yes. This is an Open Source project, so bug fixes, useful code additions or integrating automated tests, that could improve quality and make development easier, are more than welcome. You can find all information on https://them.es/plugins/billy or in the Github repo.
+* The plugin has been uploaded to the WordPress plugin directory, so please make sure you follow the [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards "WordPress Coding Standards") and document your code accordingly.
+* Please understand that we are strong advocates of the [KISS](https://en.wikipedia.org/wiki/KISS_principle "KISS") principle, meaning that our main goal is to keep everything as simple as possible. This means that not all sophisticated pull requests can be considered for inclusion. Sometimes it's better to just create an add-on plugin or similar.
+
 == Changelog ==
+
+= 2.2.0 =
+* Code quality: Implemented some general advice and best practices - Props to the WordPress Plugins Team
+* Important: Constants REQUIRED_WP and REQUIRED_PHP had to be renamed to BILLY_REQUIRED_WP and BILLY_REQUIRED_PHP!
+* Removed unncessary build tool from dist version
 
 = 2.1.2 =
 * Minor cleanup

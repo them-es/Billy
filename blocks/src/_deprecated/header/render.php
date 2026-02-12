@@ -1,4 +1,7 @@
 <?php
+
+defined( 'ABSPATH' ) || exit;
+
 $output = '<h1>' . esc_html( get_the_date( 'Y' ) ) . '</h1>';
 
 if ( ! in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
@@ -15,4 +18,4 @@ if ( ! in_array( get_post_type(), array( 'billy-accounting' ), true ) ) {
 	}
 }
 
-echo $output;
+echo wp_kses_post( $output );

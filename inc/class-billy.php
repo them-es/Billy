@@ -1085,7 +1085,7 @@ class Billy {
 		);
 		$prefix                    = str_replace( $prefix_placeholders, $prefix_placeholder_values, $prefix );
 
-		return sprintf( esc_html__( '%1$s%2$03s', 'billy' ), $prefix, $number );
+		return sprintf( '%1$s%2$03s', $prefix, $number );
 	}
 
 	/**

@@ -1,4 +1,7 @@
 <?php
+
+defined( 'ABSPATH' ) || exit;
+
 if ( class_exists( 'WP_Interactivity_API' ) && is_user_logged_in() ) {
 	$output      = '<div ' . get_block_wrapper_attributes() . ' data-wp-interactive="billy">';
 	$output     .= '<label for="export-table" data-wp-on--click="actions.exportTable">' . esc_html__( 'Export Table', 'billy' ) . '</label>';
@@ -10,5 +13,5 @@ if ( class_exists( 'WP_Interactivity_API' ) && is_user_logged_in() ) {
 	$output .= '</select>';
 	$output .= '</div>';
 
-	echo $output;
+	echo wp_kses_post( $output );
 }
