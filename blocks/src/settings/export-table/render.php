@@ -13,5 +13,5 @@ if ( class_exists( 'WP_Interactivity_API' ) && is_user_logged_in() ) {
 	$output .= '</select>';
 	$output .= '</div>';
 
-	echo wp_kses_post( $output );
+	echo $output;
 }
