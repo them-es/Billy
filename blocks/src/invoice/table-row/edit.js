@@ -181,20 +181,20 @@ export default function edit({
 									0 !== globalDataBilly.taxOptions.length
 										? globalDataBilly.taxOptions
 										: '0%' !== taxRate &&
-										  0 ===
-												globalDataBilly.taxOptions
-													.length
-										? [
-												{
-													label: taxRate,
-													value: taxRate,
-												},
-												{
-													label: '0%',
-													value: '0%',
-												},
-										  ]
-										: ''
+											  0 ===
+													globalDataBilly.taxOptions
+														.length
+											? [
+													{
+														label: taxRate,
+														value: taxRate,
+													},
+													{
+														label: '0%',
+														value: '0%',
+													},
+												]
+											: ''
 								}
 								onChange={updateTaxRate}
 							/>

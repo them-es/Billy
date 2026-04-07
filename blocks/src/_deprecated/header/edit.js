@@ -1,7 +1,7 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, Disabled } from '@wordpress/components';
-import ServerSideRender from '@wordpress/server-side-render';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 /**
  * Editor styles.

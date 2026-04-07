@@ -5,6 +5,14 @@ namespace Billy\Mpdf;
 use Billy\Mpdf\Color\ColorConverter;
 use Billy\Mpdf\Color\ColorModeConverter;
 use Billy\Mpdf\Color\ColorSpaceRestrictor;
+use Billy\Mpdf\Css\BorderMerger;
+use Billy\Mpdf\Css\CssMerger;
+use Billy\Mpdf\Css\CssParser;
+use Billy\Mpdf\Css\InlinePropertyConverter;
+use Billy\Mpdf\Css\InlineStyleParser;
+use Billy\Mpdf\Css\NormalizeProperties;
+use Billy\Mpdf\Css\SelectorParser;
+use Billy\Mpdf\Css\ShadowParser;
 use Billy\Mpdf\File\LocalContentLoader;
 use Billy\Mpdf\Fonts\FontCache;
 use Billy\Mpdf\Fonts\FontFileFinder;
@@ -81,9 +89,29 @@ class ServiceFactory
 			? $this->container->get('localContentLoader')
 			: new LocalContentLoader();
 
-		$assetFetcher = new AssetFetcher($mpdf, $localContentLoader, $httpClient, $logger);
+		$assetFetcher = $this->container && $this->container->has('assetFetcher')
+			? $this->container->get('assetFetcher')
+			: new AssetFetcher($mpdf, $localContentLoader, $httpClient, $logger);
 
-		$cssManager = new CssManager($mpdf, $cache, $sizeConverter, $colorConverter, $assetFetcher);
+		$normalizeProperties = new NormalizeProperties($mpdf, $sizeConverter, $colorConverter);
+		$selectorParser = new SelectorParser($mpdf);
+		$inlineStyleParser = new InlineStyleParser($normalizeProperties);
+		$inlinePropertyConverter = new InlinePropertyConverter($colorConverter);
+		$borderMerger = new BorderMerger();
+
+		$cssParser = new CssParser($mpdf, $cache, $sizeConverter, $colorConverter, $assetFetcher);
+
+		$cssMerger = new CssMerger(
+			$mpdf,
+			$normalizeProperties,
+			$inlineStyleParser,
+			$selectorParser,
+			$inlinePropertyConverter,
+			$colorConverter,
+			$borderMerger
+		);
+
+		$cssManager = new CssManager($cssParser, $cssMerger);
 
 		$otl = new Otl($mpdf, $fontCache);
 

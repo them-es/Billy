@@ -6,7 +6,7 @@
 import { registerPlugin } from '@wordpress/plugins';
 import { __ } from '@wordpress/i18n';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
-import ServerSideRender from '@wordpress/server-side-render';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const BillySetup = () => (
 	<PluginDocumentSettingPanel

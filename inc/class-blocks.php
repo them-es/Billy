@@ -60,6 +60,6 @@ class Billy_Blocks {
 	 * @return string
 	 */
 	public function meta_label_text_render_callback( $label, $text, $class_name ): string {
-		return '<div' . ( ! empty( $class_name ) ? ' class="' . $class_name . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), wp_kses_post( $text ) ) : $label ) . '</div>';
+		return '<div' . ( ! empty( $class_name ) ? ' class="' . esc_attr( $class_name ) . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), wp_kses_post( $text ) ) : $label ) . '</div>';
 	}
 }

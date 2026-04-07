@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { SelectControl, PanelBody, Disabled } from '@wordpress/components';
-import ServerSideRender from '@wordpress/server-side-render';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 /**
  * Editor styles.

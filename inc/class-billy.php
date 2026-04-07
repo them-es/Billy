@@ -279,16 +279,17 @@ class Billy {
 			);
 		} else {
 			// Get existing reusable block.
-			if ( function_exists( 'pll_get_post_language' ) ) {
+			if ( function_exists( 'pll_get_post_language' ) || function_exists( 'wpml_get_language_information' ) ) {
 				foreach ( $header_reusable_blocks as $header_reusable_block ) {
-					if ( pll_get_post_language( $header_reusable_block->ID ) === substr( self::$locale, 0, 2 ) ) {
-						$header_id = $header_reusable_block->ID;
+					if ( function_exists( 'pll_get_post_language' ) ) {
+						$current_lang = pll_get_post_language( $header_reusable_block->ID );
+					} else {
+						$current_lang = wpml_get_language_information( null, $header_reusable_block->ID )['locale'] ?? '';
 					}
-				}
-			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
-				foreach ( $header_reusable_blocks as $header_reusable_block ) {
-					if ( wpml_get_language_information( null, $header_reusable_block->ID )['locale'] === self::$locale ) {
+
+					if ( substr( self::$locale, 0, 2 ) === $current_lang || $current_lang === self::$locale ) {
 						$header_id = $header_reusable_block->ID;
+						break;
 					}
 				}
 			}
@@ -352,16 +353,17 @@ class Billy {
 			);
 		} else {
 			// Get existing reusable block.
-			if ( function_exists( 'pll_get_post_language' ) ) {
+			if ( function_exists( 'pll_get_post_language' ) || function_exists( 'wpml_get_language_information' ) ) {
 				foreach ( $footer_reusable_blocks as $footer_reusable_block ) {
-					if ( pll_get_post_language( $footer_reusable_block->ID ) === substr( self::$locale, 0, 2 ) ) {
-						$footer_id = $footer_reusable_block->ID;
+					if ( function_exists( 'pll_get_post_language' ) ) {
+						$current_lang = pll_get_post_language( $footer_reusable_block->ID );
+					} else {
+						$current_lang = wpml_get_language_information( null, $footer_reusable_block->ID )['locale'] ?? '';
 					}
-				}
-			} elseif ( function_exists( 'wpml_get_language_information' ) ) {
-				foreach ( $footer_reusable_blocks as $footer_reusable_block ) {
-					if ( wpml_get_language_information( null, $footer_reusable_block->ID )['locale'] === self::$locale ) {
+
+					if ( substr( self::$locale, 0, 2 ) === $current_lang || $current_lang === self::$locale ) {
 						$footer_id = $footer_reusable_block->ID;
+						break;
 					}
 				}
 			}
