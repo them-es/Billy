@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.3.0
+ * Version: 2.4.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * License: GPL-2.0+
@@ -90,7 +90,9 @@ function billy_plugins_loaded(): void {
 				function (): void {
 					printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> %1$s requires the latest version of %1$s Pro to function properly. Please download and install the latest version: <a href="%2$s">them.es</a>', 'billy' ), 'Billy', 'https://them.es/account/' ) ) );
 
-					if ( isset( $_GET['activate'] ) ) {
+					$activate = filter_input( INPUT_GET, 'activate', FILTER_VALIDATE_BOOLEAN );
+
+					if ( true === $activate ) {
 						unset( $_GET['activate'] );
 					}
 				}
@@ -107,7 +109,9 @@ function billy_plugins_loaded(): void {
 			function (): void {
 				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> %s is not compatible with the Classic Editor. Please deactivate the Classic Editor Plugin.', 'billy' ), 'Billy' ) ) );
 
-				if ( isset( $_GET['activate'] ) ) {
+				$activate = filter_input( INPUT_GET, 'activate', FILTER_VALIDATE_BOOLEAN );
+
+				if ( true === $activate ) {
 					unset( $_GET['activate'] );
 				}
 			}
@@ -124,7 +128,9 @@ function billy_plugins_loaded(): void {
 			function (): void {
 				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> %1$s requires PHP %2$s (or higher) to function properly. Please upgrade your PHP version.', 'billy' ), 'Billy', esc_html( BILLY_REQUIRED_PHP ) ) ) );
 
-				if ( isset( $_GET['activate'] ) ) {
+				$activate = filter_input( INPUT_GET, 'activate', FILTER_VALIDATE_BOOLEAN );
+
+				if ( true === $activate ) {
 					unset( $_GET['activate'] );
 				}
 			}
@@ -141,7 +147,9 @@ function billy_plugins_loaded(): void {
 			function (): void {
 				printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', wp_kses_post( sprintf( __( '<strong>Warning!</strong> You are currently using an outdated WordPress version which is not compatible with %s. Please update WordPress to the latest version.', 'billy' ), 'Billy' ) ) );
 
-				if ( isset( $_GET['activate'] ) ) {
+				$activate = filter_input( INPUT_GET, 'activate', FILTER_VALIDATE_BOOLEAN );
+
+				if ( true === $activate ) {
 					unset( $_GET['activate'] );
 				}
 			}

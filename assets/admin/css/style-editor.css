@@ -39,7 +39,8 @@ body.block-editor-page.post-type-billy-accounting .show-on-accounting {
 	background-color: var(--billy-light-gray);
 }
 #billy_dashboard table.widefat td:nth-child(even) {
-	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+	font-family:
+		SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
 		"Courier New", monospace;
 }
 #billy_dashboard table.footer td {
@@ -86,7 +87,8 @@ li[class*="billy"] li a[href*="accounting"]::before {
 }
 
 .code {
-	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+	font-family:
+		SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
 		"Courier New", monospace;
 }
 .components-panel__body .ul {
@@ -194,6 +196,10 @@ body[class*="post-type-billy-"]
 
 .intro {
 	margin: 90px 0 !important;
+}
+
+.intro .subject {
+	font-weight: bold;
 }
 
 /* Footer */

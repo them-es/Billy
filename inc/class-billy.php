@@ -466,6 +466,7 @@ class Billy {
 					array(
 						'core/paragraph',
 						array(
+							'className'   => 'subject',
 							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
 						),
 					),
@@ -631,6 +632,7 @@ class Billy {
 					array(
 						'core/paragraph',
 						array(
+							'className'   => 'subject',
 							'placeholder' => sprintf( esc_html__( '%s (optional)', 'billy' ), esc_html__( 'Subject', 'billy' ) ),
 						),
 					),
@@ -1246,17 +1248,17 @@ class Billy {
 		global $post;
 
 		// Only enqueue when post contains a Billy block.
-		if ( is_user_logged_in() && $post instanceof WP_Post && str_contains( $post->post_content, ':billy-blocks/' ) ) {
+		if ( is_user_logged_in() && $post instanceof WP_Post && str_contains( json_encode( get_body_class() ), '-billy-' ) ) {
 			// Styles.
 			wp_enqueue_style( 'dashicons' );
 
-			wp_enqueue_style( 'billy-style', self::$plugin_url . 'build/main.css', array(), self::$plugin_version );
+			wp_enqueue_style( 'billy-style', esc_url( self::$plugin_url . 'build/main.css' ), array(), self::$plugin_version );
 			if ( is_rtl() ) {
-				wp_enqueue_style( 'billy-style-rtl', self::$plugin_url . 'build/main-rtl.css', array(), self::$plugin_version );
+				wp_enqueue_style( 'billy-style-rtl', esc_url( self::$plugin_url . 'build/main-rtl.css' ), array(), self::$plugin_version );
 			}
 
 			// Scripts.
-			wp_enqueue_script( 'billy-script', self::$plugin_url . 'build/main.js', array(), self::$plugin_version, true );
+			wp_enqueue_script( 'billy-script', esc_url( self::$plugin_url . 'build/main.js' ), array(), self::$plugin_version, true );
 			wp_add_inline_script(
 				'billy-script',
 				'var globalDataBilly = {
@@ -1265,8 +1267,8 @@ class Billy {
 					postDate: "' . esc_html( get_the_date( 'Y-m-d' ) ) . '",
 					postType: "' . esc_html( get_post_type() ) . '",
 					wpAdmin: "' . esc_url( get_dashboard_url() ) . '",
-					currency: "' . self::$currency . '",
-					locale: "' . self::$locale . '",
+					currency: "' . esc_attr( self::$currency ) . '",
+					locale: "' . esc_attr( self::$locale ) . '",
 					translations: {
 						earnings: "' . esc_html__( 'Earnings', 'billy' ) . '",
 						expenses: "' . esc_html__( 'Expenses', 'billy' ) . '",

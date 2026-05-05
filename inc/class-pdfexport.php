@@ -228,16 +228,17 @@ class Billy_PDF_Export {
 		// Create PDF: https://github.com/mpdf/mpdf/blob/development/src/Config/ConfigVariables.php
 		$mpdf = new Mpdf(
 			array(
-				'tempDir'             => self::$temp_dir,
-				'mode'                => 'utf-8',
-				'fontDir'             => self::$pdffont_dir,
-				'fontdata'            => array(
+				'tempDir'              => self::$temp_dir,
+				'mode'                 => 'utf-8',
+				'fontDir'              => self::$pdffont_dir,
+				'fontdata'             => array(
 					'pdffont' => self::$pdffont,
 				),
-				'default_font'        => 'pdffont',
-				'simpleTables'        => false, // https://stackoverflow.com/a/67087295
-				'useSubstitutions'    => true,
-				'setAutoBottomMargin' => 'stretch',
+				'default_font'         => 'pdffont',
+				'simpleTables'         => false, // https://stackoverflow.com/a/67087295
+				'useSubstitutions'     => true,
+				'setAutoBottomMargin'  => 'stretch',
+				'shrink_tables_to_fit' => 0,
 			)
 		);
 

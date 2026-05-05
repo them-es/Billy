@@ -128,8 +128,17 @@ strong {
 	margin: 20pt 0 0;
 }
 
+.subject {
+	font-weight: bold;
+	margin-bottom: 20pt;
+}
+
 .wp-block-table {
 	margin: 20pt 0;
+	width: 100%;
+	border-collapse: collapse;
+}
+.wp-block-table table {
 	width: 100%;
 	border-collapse: collapse;
 }

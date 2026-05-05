@@ -102,6 +102,12 @@ body {
 			}
 		}
 
+		.intro {
+			.subject {
+				font-weight: bold;
+			}
+		}
+
 		.details {
 			p {
 				margin: 0;
@@ -393,7 +399,12 @@ body {
 	}
 
 	.wp-block-table {
-		font-size: 10pt;
+		font-size: 9pt;
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
 
 		tfoot {
 			th {
