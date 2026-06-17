@@ -1,5 +1,5 @@
 export const getCurrency = () => {
-	return globalDataBilly.currency;
+	return globalDataBilly?.currency;
 };
 
 export const formatNumber = (val, locale = undefined) => {

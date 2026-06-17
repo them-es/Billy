@@ -16,10 +16,7 @@ const BillySetup = () => (
 	>
 		<p>
 			<a
-				href={
-					globalDataBilly.wpAdmin +
-					'customize.php?autofocus[panel]=billy_setup_panel'
-				}
+				href={`${globalDataBilly?.wpAdmin}customize.php?autofocus[panel]=billy_setup_panel`}
 			>
 				{__('Settings (Theme Customizer)', 'billy')}
 			</a>

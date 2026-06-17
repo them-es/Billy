@@ -56,16 +56,16 @@ export default function edit({
 	useEffect(() => {
 		setAttributes({
 			index: blockData.i,
-			currency: globalDataBilly.currency,
-			locale: globalDataBilly.locale,
+			currency: globalDataBilly?.currency,
+			locale: globalDataBilly?.locale,
 		});
 
 		if ('' === taxRate) {
 			setAttributes({
 				taxRate:
-					0 === globalDataBilly.taxOptions.length
+					0 === globalDataBilly?.taxOptions.length
 						? '0%'
-						: globalDataBilly.taxOptions[0].value,
+						: globalDataBilly?.taxOptions[0].value,
 			});
 		}
 	}, [blockData, taxRate]);
@@ -178,11 +178,11 @@ export default function edit({
 								)}
 								value={taxRate ?? ''}
 								options={
-									0 !== globalDataBilly.taxOptions.length
-										? globalDataBilly.taxOptions
+									0 !== globalDataBilly?.taxOptions.length
+										? globalDataBilly?.taxOptions
 										: '0%' !== taxRate &&
 											  0 ===
-													globalDataBilly.taxOptions
+													globalDataBilly?.taxOptions
 														.length
 											? [
 													{

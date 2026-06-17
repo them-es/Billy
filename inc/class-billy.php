@@ -1247,7 +1247,7 @@ class Billy {
 	public function enqueue_assets(): void {
 		global $post;
 
-		// Only enqueue when post contains a Billy block.
+		// Only enqueue if post contains a Billy block.
 		if ( is_user_logged_in() && $post instanceof WP_Post && str_contains( json_encode( get_body_class() ), '-billy-' ) ) {
 			// Styles.
 			wp_enqueue_style( 'dashicons' );

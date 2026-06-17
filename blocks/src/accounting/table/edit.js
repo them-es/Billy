@@ -63,8 +63,8 @@ export default function edit({
 
 		// Set currency and locale attributes
 		setAttributes({
-			currency: globalDataBilly.currency,
-			locale: globalDataBilly.locale,
+			currency: globalDataBilly?.currency,
+			locale: globalDataBilly?.locale,
 		});
 
 		// Calculate totals from child blocks

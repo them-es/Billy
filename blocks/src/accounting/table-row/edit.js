@@ -67,8 +67,8 @@ export default function edit({
 	useEffect(() => {
 		setAttributes({
 			index: blockData.i,
-			currency: globalDataBilly.currency,
-			locale: globalDataBilly.locale,
+			currency: globalDataBilly?.currency,
+			locale: globalDataBilly?.locale,
 		});
 
 		if ('' === date) {

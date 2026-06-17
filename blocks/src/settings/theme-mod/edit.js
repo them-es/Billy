@@ -39,7 +39,7 @@ export default function edit({ attributes, setAttributes }) {
 							'Modify the value in the Theme Customizer.',
 							'billy'
 						)}
-						options={globalDataBilly.themeModOptions}
+						options={globalDataBilly?.themeModOptions}
 						value={themeMod ?? ''}
 						onChange={updateThemeMod}
 					/>

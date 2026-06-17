@@ -170,7 +170,7 @@ class Billy_Admin extends Billy {
 				</tr>
 				<tr>
 					<td><strong>' . esc_html__( 'Taxes', 'billy' ) . '</strong></td>
-					<td>' . ( get_theme_mod( 'taxrates' ) ? nl2br( get_theme_mod( 'taxrates' ) ) : '-' ) . '</td>
+					<td>' . ( get_theme_mod( 'taxrates' ) ? wp_kses( nl2br( get_theme_mod( 'taxrates' ) ), array( 'br' => array() ) ) : '-' ) . '</td>
 				</tr>' .
 				( $latest_invoices ? '
 				<tr>
@@ -235,7 +235,7 @@ class Billy_Admin extends Billy {
 	 * @return void
 	 */
 	public function wp_dashboard_widget(): void {
-		echo $this->wp_dashboard_widget_body() . $this->wp_dashboard_widget_footer();
+		echo wp_kses_post( $this->wp_dashboard_widget_body() . $this->wp_dashboard_widget_footer() );
 	}
 
 	/**
