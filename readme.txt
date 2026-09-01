@@ -1,10 +1,9 @@
 === Billy ===
-Contributors: themes-1
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoice, invoices, quote
 Requires at least: 6.6
-Tested up to: 7.0
-Stable tag: 2.5.0
+Tested up to: 7.1
+Stable tag: 2.6.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,9 +12,10 @@ Create invoices, quotes and keep track of your earnings and expenses with this b
 
 == Description ==
 
-This plugin helps you speed-up your billing process, from creating invoices or quotes, minimizing any potential errors to getting paid faster.
-Create an electronic invoice, a quote or accounting records in just a matter of minutes with the block-based WordPress editor. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
-Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer. The post header can be branded with your logo. Any frontend styles will be inherited from the theme, so please make sure the theme installed on your site fully supports the Block editor.
+This plugin helps you to speed up your billing process, from creating invoices and quotes, minimizing any potential errors to getting paid faster.
+Electronic invoices, quotes and accounting records can be set up in just a matter of minutes. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
+Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer.
+The header can be branded with your logo. Any frontend styles will be inherited from the theme, so please make sure the theme installed on your site fully supports the block editor.
 
 Emoji icon used in teaser © Google ([Apache License 2.0](https://github.com/googlefonts/noto-emoji/blob/main/svg/LICENSE "Apache License 2.0"))
 
@@ -159,6 +159,11 @@ Please consider purchasing the premium add-on with the following features:
 * Please understand that we are strong advocates of the [KISS](https://en.wikipedia.org/wiki/KISS_principle "KISS") principle, meaning that our main goal is to keep everything as simple as possible. This means that not all sophisticated pull requests can be considered for inclusion. Sometimes it's better to just create an add-on plugin or similar.
 
 == Changelog ==
+
+= 2.6.0 =
+* Only output editor sidebar panel on "billy-" posts
+* Update dependencies
+* Tested up to WordPress 7.1
 
 = 2.5.0 =
 * Refactoring

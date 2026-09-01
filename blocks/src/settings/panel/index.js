@@ -5,11 +5,18 @@
 
 import { registerPlugin } from '@wordpress/plugins';
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { ServerSideRender } from '@wordpress/server-side-render';
 
-const BillySetup = () => (
-	<PluginDocumentSettingPanel
+const BillySetup = () => {
+	const postType = useSelect( select => select( 'core/editor' ).getCurrentPostType() );
+
+	if ( ! postType.includes("billy-") ) {
+		return null;
+	}
+
+	return(<PluginDocumentSettingPanel
 		name="billy-setup"
 		title={__('Billy Setup', 'billy')}
 		className="my-document-setting-plugin"
@@ -59,6 +66,6 @@ const BillySetup = () => (
 				/>
 			</li>
 		</ul>
-	</PluginDocumentSettingPanel>
-);
+	</PluginDocumentSettingPanel>);
+}
 registerPlugin('billy-setup', { render: BillySetup });
