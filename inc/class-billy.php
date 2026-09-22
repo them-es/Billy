@@ -828,7 +828,7 @@ class Billy {
 	 *
 	 * @return int|null
 	 */
-	public static function get_previous_post_id( $post_id ): mixed {
+	public static function get_previous_post_id( int $post_id ): mixed {
 		global $post;
 		$post = get_post( $post_id );
 
@@ -860,7 +860,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_current_financial_year_begins( $format = 'Y-m-d' ): string {
+	public static function get_current_financial_year_begins( string $format = 'Y-m-d' ): string {
 		return self::current_financial_year_begins_datetime()->format( $format );
 	}
 
@@ -871,7 +871,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public static function get_current_financial_year_ends( $format = 'Y-m-d' ): string {
+	public static function get_current_financial_year_ends( string $format = 'Y-m-d' ): string {
 		return self::current_financial_year_begins_datetime()->modify( '+ 1 year' )->modify( '- 1 day' )->format( $format );
 	}
 
@@ -883,7 +883,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public function title_format( $format, $post ): string {
+	public function title_format( string $format, WP_Post $post ): string {
 		return '%s';
 	}
 
@@ -923,7 +923,7 @@ class Billy {
 	 *
 	 * @return string
 	 */
-	public function billy_modify_content( $content ): string {
+	public function billy_modify_content( ?string $content ): string {
 		$post_type = get_post_type();
 
 		if ( ! str_starts_with( $post_type, 'billy-' ) ) {
@@ -987,10 +987,12 @@ class Billy {
 	/**
 	 * Include Custom Post Type in main query.
 	 *
+	 * @param WP_Query $query The WP_Query instance.
+	 *
 	 * @return void
 	 */
 	/*
-	public function include_invoices_in_postsquery( $query ): void {
+	public function include_invoices_in_postsquery(  WP_Query $query ): void {
 		if ( ! is_admin() && $query->is_main_query() && $query->is_home() && current_user_can( 'edit_private_posts' ) ) {
 			$query->set(
 				'post_type',
@@ -1006,11 +1008,11 @@ class Billy {
 	/**
 	 * Get invoice number from meta.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int|null $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_invoice_number_meta( $post_id = null ): string {
+	public static function get_invoice_number_meta( int|null $post_id = null ): string {
 		$invoice_number = get_post_meta( $post_id, '_invoice_number', true );
 
 		// Meta does not exist. Autoincrement number from previous post or start new.
@@ -1042,12 +1044,12 @@ class Billy {
 	/**
 	 * Get number as formatted string with optional prefix.
 	 *
-	 * @param int $post_id Post ID.
-	 * @param int $number  Invoice/Quote number.
+	 * @param int      $post_id Post ID.
+	 * @param int|null $number  Invoice/Quote number.
 	 *
 	 * @return string
 	 */
-	public static function prefix_number( $post_id, $number = null ): string {
+	public static function prefix_number( int $post_id, int|null $number = null ): string {
 		if ( 'billy-quote' === get_post_type( $post_id ) ) {
 			if ( empty( $number ) ) {
 				$number = self::get_quote_number_meta( $post_id );
@@ -1095,11 +1097,11 @@ class Billy {
 	/**
 	 * Get invoice number in predefined format.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int|null $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_invoice_number( $post_id = null ): string {
+	public static function get_invoice_number( int|null $post_id = null ): string {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -1121,22 +1123,22 @@ class Billy {
 	 * [TEMP] Get invoice number in predefined format.
 	 * Backwards compatibility after function renaming in v1.9.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int|null $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_invoicenumber( $post_id = null ): string {
+	public static function get_invoicenumber( int|null $post_id = null ): string {
 		return self::get_invoice_number( $post_id );
 	}
 
 	/**
 	 * Get quote number from meta.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int|null $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_quote_number_meta( $post_id = null ): string {
+	public static function get_quote_number_meta( int|null $post_id = null ): string {
 		$quote_number = get_post_meta( $post_id, '_quote_number', true );
 
 		// Meta does not exist. Autoincrement number from previous post or start new.
@@ -1168,11 +1170,11 @@ class Billy {
 	/**
 	 * Get quote number in predefined format.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int|null $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_quote_number( $post_id = null ): string {
+	public static function get_quote_number( int|null $post_id = null ): string {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -1190,23 +1192,23 @@ class Billy {
 	 * [TEMP] Get quote number in predefined format.
 	 * Backwards compatibility after function renaming in v1.9.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int|null $post_id Post ID.
 	 *
 	 * @return string
 	 */
-	public static function get_quotenumber( $post_id = null ): string {
+	public static function get_quotenumber( int|null $post_id = null ): string {
 		return self::get_quote_number( $post_id );
 	}
 
 	/**
 	 * Get duedate in predefined format.
 	 *
-	 * @param int $post_id  Post ID.
-	 * @param int $add_days Added number of days.
+	 * @param int|null $post_id  Post ID.
+	 * @param int      $add_days Added number of days.
 	 *
 	 * @return string
 	 */
-	public static function get_duedate( $post_id = null, int $add_days = 14 ): string {
+	public static function get_duedate( int|null $post_id = null, int $add_days = 14 ): string {
 		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -1228,7 +1230,7 @@ class Billy {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function blocks_to_rest_api( $response, $post, $request ): WP_REST_Response {
+	public function blocks_to_rest_api( WP_REST_Response $response, WP_Post $post, WP_REST_Request $request ): WP_REST_Response {
 		if ( 'PUT' === $request->get_method() ) {
 			return $response;
 		}

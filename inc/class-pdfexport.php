@@ -103,7 +103,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return string
 	 */
-	public function billy_fix_pdf_spacing( $html ): string {
+	public function billy_fix_pdf_spacing( string $html ): string {
 		$spacer      = '<hr style="margin: 1.5pt 0; color: #FFF;">';
 		$search_tags = array(
 			'<p>',
@@ -126,7 +126,7 @@ class Billy_PDF_Export {
 		// Modify <tbody> content.
 		preg_match( '/<tbody>(.*?)<\/tbody>/s', $html, $match );
 
-		if ( $match && $match[0] ) {
+		if ( $match ) {
 			$tbody_content = str_replace( $search_tags, $replace_tags, $match[0] );
 
 			// Replace <tbody> with modified content.
@@ -144,7 +144,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return string
 	 */
-	public function billy_fix_pdf_columns( $html ): string {
+	public function billy_fix_pdf_columns( string $html ): string {
 		if ( empty( $html ) ) {
 			return $html;
 		}
@@ -158,10 +158,6 @@ class Billy_PDF_Export {
 		$content_type = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 		$dom->loadHTML( $content_type . $html );
 
-		if ( ! $dom instanceof DOMDocument ) {
-			throw new Exception( 'Invalid DOMDocument.' );
-		}
-
 		libxml_clear_errors();
 
 		$xpath = new DOMXPath( $dom );
@@ -169,16 +165,27 @@ class Billy_PDF_Export {
 		// Find all wp-block-columns elements.
 		$columns = $xpath->query( '//div[contains(@class, "wp-block-columns")]' );
 
-		foreach ( $columns as $column ) {
-			// Find all inner wp-block-column elements.
-			$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
-			$count         = $inner_columns->length;
+		if ( $columns ) {
+			foreach ( $columns as $column ) {
+				// Find all inner wp-block-column elements.
+				$inner_columns = $xpath->query( './/div[contains(@class, "wp-block-column")]', $column );
+				$count         = $inner_columns->length;
 
-			if ( $count > 0 ) {
-				$width = max( 1, (int) ( 100 / $count ) ) . '%';
+				if ( $count > 0 ) {
+					$width = max( 1, (int) ( 100 / $count ) ) . '%';
 
-				foreach ( $inner_columns as $inner_column ) {
-					$inner_column->setAttribute( 'style', 'width: ' . $width . ';' );
+					foreach ( $inner_columns as $inner_column ) {
+						$existing_style = $inner_column->getAttribute( 'style' );
+						$new_style      = 'width: ' . $width . ';';
+
+						if ( ! empty( $existing_style ) ) {
+							// Remove any existing width declaration to avoid duplicates, then append.
+							$cleaned_style = preg_replace( '/\bwidth\s*:[^;]+;?/i', '', $existing_style );
+							$new_style     = trim( $cleaned_style ) . ' ' . $new_style;
+						}
+
+						$inner_column->setAttribute( 'style', trim( $new_style ) );
+					}
 				}
 			}
 		}
@@ -193,7 +200,7 @@ class Billy_PDF_Export {
 	 *
 	 * @return string|WP_Error
 	 */
-	public function billy_export_pdf( $request ): string|WP_Error {
+	public function billy_export_pdf( WP_REST_Request $request ): string|WP_Error {
 		// PDF generation is restricted.
 		if ( ! self::billy_authorized_to_view_pdf() ) {
 			return new WP_Error(

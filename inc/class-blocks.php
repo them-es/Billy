@@ -41,7 +41,7 @@ class Billy_Blocks {
 	 *
 	 * @return array
 	 */
-	public function categories( $categories ): array {
+	public function categories( array $categories ): array {
 		$categories[] = array(
 			'slug'  => 'billy-blocks',
 			'title' => esc_html__( 'Billy Blocks', 'billy' ),
@@ -59,7 +59,7 @@ class Billy_Blocks {
 	 *
 	 * @return string
 	 */
-	public static function meta_label_text_render_callback( $label, $text, $class_name ): string {
+	public static function meta_label_text_render_callback( string $label, string $text, string $class_name ): string {
 		return '<div' . ( ! empty( $class_name ) ? ' class="' . esc_attr( $class_name ) . '"' : '' ) . '>' . ( ! empty( $text ) ? sprintf( __( '<div class="label">%1$s</div> <div class="text">%2$s</div>', 'billy' ), esc_html( $label ), wp_kses_post( $text ) ) : $label ) . '</div>';
 	}
 }

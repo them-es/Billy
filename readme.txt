@@ -3,7 +3,7 @@ Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoice, invoices, quote
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -159,6 +159,9 @@ Please consider purchasing the premium add-on with the following features:
 * Please understand that we are strong advocates of the [KISS](https://en.wikipedia.org/wiki/KISS_principle "KISS") principle, meaning that our main goal is to keep everything as simple as possible. This means that not all sophisticated pull requests can be considered for inclusion. Sometimes it's better to just create an add-on plugin or similar.
 
 == Changelog ==
+
+= 2.6.1 =
+* Code refactoring and quality improvements
 
 = 2.6.0 =
 * Only output editor sidebar panel on "billy-" posts

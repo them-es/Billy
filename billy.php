@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.6.0
+ * Version: 2.6.1
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * Text Domain: billy
@@ -55,7 +55,7 @@ function billy_deactivate(): void {
  *
  * @return bool
  */
-function billy_is_plugin_active( $plugin = '' ): bool {
+function billy_is_plugin_active( string $plugin = '' ): bool {
 	return in_array( $plugin, (array) get_option( 'active_plugins', array() ), true );
 }
 
@@ -205,7 +205,7 @@ add_action( 'plugins_loaded', 'billy_plugins_loaded', 998 );
  *
  * @return array The filtered array of post types names.
  */
-function billy_custom_enabled_post_types( $enabled_post_types ): array {
+function billy_custom_enabled_post_types( array $enabled_post_types ): array {
 	$enabled_post_types[] = 'billy-invoice';
 	$enabled_post_types[] = 'billy-quote';
 
@@ -220,7 +220,7 @@ add_filter( 'duplicate_post_enabled_post_types', 'billy_custom_enabled_post_type
  *
  * @return array The custom fields to exclude.
  */
-function billy_custom_fields_filter( $meta_excludelist ): array {
+function billy_custom_fields_filter( array $meta_excludelist ): array {
 	return array_merge( $meta_excludelist, array( '_invoice_number', '_quote_number' ) );
 }
 add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
@@ -234,7 +234,7 @@ add_filter( 'duplicate_post_excludelist_filter', 'billy_custom_fields_filter' );
  *
  * @return void
  */
-function billy_custom_dp_duplicate_post( $new_post_id, $post, $status ): void {
+function billy_custom_dp_duplicate_post( int $new_post_id, WP_Post $post, string $status ): void {
 	$contact_uuid = get_post_meta( $post->ID, '_contact_uuid', true );
 
 	if ( $contact_uuid ) {

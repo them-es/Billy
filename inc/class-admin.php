@@ -242,9 +242,12 @@ class Billy_Admin extends Billy {
 	 * Optional: Output block template from theme templates directory.
 	 * /templates/billy-{invoice|quote|accounting}.html
 	 *
+	 * @param string  $content Content.
+	 * @param WP_Post $post    Post object.
+	 *
 	 * @return string
 	 */
-	public function billy_default_content( $content, $post ): string {
+	public function billy_default_content( string $content, WP_Post $post ): string {
 		if ( ! str_starts_with( $post->post_type, 'billy-' ) ) {
 			return $content;
 		}
@@ -286,7 +289,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function onsave_invoice( $post, $request ): void {
+	public function onsave_invoice( ?WP_Post $post, ?WP_REST_Request $request ): void {
 		$post_id = $post->ID;
 
 		$my_post = array(
@@ -342,7 +345,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function onsave_quote( $post, $request ): void {
+	public function onsave_quote( ?WP_Post $post, ?WP_REST_Request $request ): void {
 		$post_id = $post->ID;
 
 		$my_post = array(
@@ -397,7 +400,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function onsave_accounting( $post, $request ): void {
+	public function onsave_accounting( ?WP_Post $post, ?WP_REST_Request $request ): void {
 		$post_id    = $post->ID;
 		$post_title = get_the_date( 'Y', $post_id );
 
@@ -424,7 +427,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return array
 	 */
-	public function keep_original_date_on_publishing( $data, $postarr ): array {
+	public function keep_original_date_on_publishing( array $data, array $postarr ): array {
 		if ( 'billy-invoice' !== $data['post_type'] ) {
 			return $data;
 		}
@@ -447,7 +450,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return array
 	 */
-	public function remove_quick_edit_invoice( $actions, $post ): array {
+	public function remove_quick_edit_invoice( array $actions, WP_Post $post ): array {
 		if ( 'billy-invoice' === $post->post_type ) {
 			// unset( $actions['edit'] );
 			// unset( $actions['view'] );
@@ -530,7 +533,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return void
 	 */
-	public function wp_customizer_options( $wp_customize ): void {
+	public function wp_customizer_options( ?WP_Customize_Manager $wp_customize ): void {
 		/**
 		 * Initialize panel.
 		 */
@@ -1019,7 +1022,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return object
 	 */
-	public function geocode( $validity, $value ): object {
+	public function geocode( object $validity, string $value ): object {
 		if ( get_theme_mod( 'geocoding_enabled', '1' ) && ! empty( $value ) && strlen( $value ) > 3 ) {
 			$result = null;
 
@@ -1061,7 +1064,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return object
 	 */
-	public function validate_currency( $validity, $value ): object {
+	public function validate_currency( object $validity, string $value ): object {
 		if ( ! empty( $value ) && strlen( $value ) > 3 ) {
 			$validity->add( 'no_valid_currency', esc_html__( 'Please provide a valid currency format', 'billy' ) );
 		}
@@ -1077,7 +1080,7 @@ class Billy_Admin extends Billy {
 	 *
 	 * @return object
 	 */
-	public function validate_taxrates( $validity, $value ): object {
+	public function validate_taxrates( object $validity, string $value ): object {
 		if ( ! empty( $value ) ) {
 			$newlines = explode( "\n", $value );
 
