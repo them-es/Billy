@@ -15,7 +15,6 @@
 		"dist": "composer update"
 	},
 	"devDependencies": {
-		"bootstrap": "^4",
 		"path": "^0.12.7",
 		"webpack": "^4",
 		"webpack-remove-empty-scripts": "^1.1.1",
