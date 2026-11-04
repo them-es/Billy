@@ -1,10 +1,16 @@
 /**
- * Import custom Bootstrap source
+ * Variables
  */
 
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
+$primary: #0d6efd;
+$warning: #ffc107;
+$success: #198754;
+$danger: #dc3545;
+$q1_background: #f8f8f8;
+$q2_background: #e0e0e0;
+$q3_background: #d0d0d0;
+$q4_background: #b8b8b8;
+$shadow: 0 20px 20px -15px gray;
 
 /**
  * General
@@ -45,6 +51,28 @@ body {
 				font-size: initial;
 			}
 
+			details {
+				summary {
+					white-space: nowrap;
+				}
+
+				> ul {
+					background: #fff;
+					box-shadow: $shadow;
+					box-sizing: border-box;
+					min-width: 150px;
+					padding-top: 15px;
+					padding-bottom: 15px;
+					margin: 0;
+					position: absolute;
+					z-index: 200;
+				}
+
+				a {
+					cursor: pointer;
+				}
+			}
+
 			.pre-header-buttons {
 				display: flex;
 				justify-content: space-between;
@@ -54,13 +82,6 @@ body {
 				.wp-block-button {
 					margin: 0;
 				}
-			}
-
-			label[for="export-table"] {
-				white-space: nowrap;
-			}
-			#export-table {
-				width: 100%;
 			}
 		}
 
@@ -299,7 +320,7 @@ body {
 				top: 100%;
 				z-index: 1000;
 				width: 100% !important;
-				box-shadow: 0 20px 20px -15px gray;
+				box-shadow: $shadow;
 
 				&:hover {
 					height: 480px;
@@ -315,22 +336,22 @@ body {
 	table {
 		tr[data-quarter="Q1"] {
 			th {
-				background-color: #f8f8f8;
+				background-color: $q1_background;
 			}
 		}
 		tr[data-quarter="Q2"] {
 			th {
-				background-color: #e0e0e0;
+				background-color: $q2_background;
 			}
 		}
 		tr[data-quarter="Q3"] {
 			th {
-				background-color: #d0d0d0;
+				background-color: $q3_background;
 			}
 		}
 		tr[data-quarter="Q4"] {
 			th {
-				background-color: #b8b8b8;
+				background-color: $q4_background;
 			}
 		}
 	}

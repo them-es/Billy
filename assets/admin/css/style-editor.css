@@ -146,6 +146,7 @@ body[class*="post-type-billy-"]
 	> *,
 [data-type="billy-blocks/header"] > * {
 	padding: 1rem 0;
+	margin: 0 auto;
 }
 
 .invoice-status,

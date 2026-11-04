@@ -175,6 +175,10 @@ class Billy_PDF_Export {
 					$width = max( 1, (int) ( 100 / $count ) ) . '%';
 
 					foreach ( $inner_columns as $inner_column ) {
+						if ( ! $inner_column instanceof DOMElement ) {
+							continue;
+						}
+
 						$existing_style = $inner_column->getAttribute( 'style' );
 						$new_style      = 'width: ' . $width . ';';
 
@@ -223,7 +227,7 @@ class Billy_PDF_Export {
 		global $post;
 		$post = get_post( $post_id );
 
-		if ( empty( $post_id ) || ! $post ) {
+		if ( empty( $post_id ) || ! $post instanceof WP_Post ) {
 			return '404';
 		}
 
@@ -270,10 +274,12 @@ class Billy_PDF_Export {
 		$blocks = parse_blocks( $post->post_content );
 
 		foreach ( $blocks as $block ) {
-			// Exclude reusable Footer blocks.
-			if ( 'core/block' !== $block['blockName'] || ! in_array( $block['attrs']['ref'], $footer_ids, true ) ) {
-				$content .= render_block( $block );
+			// Do not output reusable Footer blocks.
+			if ( 'core/block' === $block['blockName'] || ( isset( $block['attrs']['ref'] ) && in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
+				continue;
 			}
+
+			$content .= render_block( $block );
 		}
 
 		// Workaround: Table spacing.

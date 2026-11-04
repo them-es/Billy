@@ -2,8 +2,8 @@
 Donate link: https://them.es/plugins/billy
 Tags: accounting, billing, invoice, invoices, quote
 Requires at least: 6.6
-Tested up to: 7.1
-Stable tag: 2.6.1
+Tested up to: 7.2
+Stable tag: 2.7.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,12 +12,10 @@ Create invoices, quotes and keep track of your earnings and expenses with this b
 
 == Description ==
 
-This plugin helps you to speed up your billing process, from creating invoices and quotes, minimizing any potential errors to getting paid faster.
-Electronic invoices, quotes and accounting records can be set up in just a matter of minutes. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
+Billy helps you to speed up your billing process by minimizing any potential errors and getting you paid faster.
+__Electronic invoices__, __quotes__ and __accounting records__ can be set up in just a matter of minutes. Invoice numbers are generated automatically in unique and sequential order. For convenience reasons the totals of the table rows are calculated in _What You See Is What You Get_ real-time.
 Global settings like your name, your address, the invoice number format, tax rates and the currency can be defined in the Customizer.
 The header can be branded with your logo. Any frontend styles will be inherited from the theme, so please make sure the theme installed on your site fully supports the block editor.
-
-Emoji icon used in teaser © Google ([Apache License 2.0](https://github.com/googlefonts/noto-emoji/blob/main/svg/LICENSE "Apache License 2.0"))
 
 = Target group? =
 
@@ -33,18 +31,19 @@ The following WordPress themes have been tested:
 * [https://them.es/starter-fse](https://them.es/starter-fse "Block Starter theme")
 * [https://them.es/starter-bootstrap](https://them.es/starter-bootstrap "Bootstrap Starter theme")
 * [https://them.es/starter-material](https://them.es/starter-material "Bootstrap Starter theme")
+* [https://wordpress.org/themes/twentytwentyfive](https://wordpress.org/themes/twentytwentyfive "Twenty Twenty-Five theme")
 * [https://wordpress.org/themes/twentytwentyfour](https://wordpress.org/themes/twentytwentyfour "Twenty Twenty-Four theme")
 * [https://wordpress.org/themes/twentytwentythree](https://wordpress.org/themes/twentytwentythree "Twenty Twenty-Three theme")
 * [https://wordpress.org/themes/twentytwentytwo](https://wordpress.org/themes/twentytwentytwo "Twenty Twenty-Two theme")
 * [https://wordpress.org/themes/twentytwentyone](https://wordpress.org/themes/twentytwentyone "Twenty Twenty-One theme")
 * [https://wordpress.org/themes/twentytwenty](https://wordpress.org/themes/twentytwenty "Twenty Twenty theme")
-* [https://wordpress.org/themes/twentynineteen](https://wordpress.org/themes/twentynineteen "Twenty Nineteen theme")
 
 = What's included? =
 
 * Invoices
 * Quotes
 * Accounting
+* PDF-Export
 * Custom styles: Compatible with any WordPress theme that supports the Block editor
 * Custom Post types
 * Custom Blocks and Block templates
@@ -52,7 +51,6 @@ The following WordPress themes have been tested:
 * WYSIWYG, Real-time calculation
 * Locale specific number formatting
 * Legally compliant: Unique and sequential invoice numbers
-* PDF-Export
 * Fully customizable HTML and PDF output using block templates or add_filter()
 * Privacy by design: All information published will be made private by default and stays confidential as no data is being shared with third-parties
 * Dashboard widget
@@ -160,17 +158,23 @@ Please consider purchasing the premium add-on with the following features:
 
 == Changelog ==
 
+= 2.7.0 =
+* Site editor: Fix error regarding missing "getCurrentPostType"
+* Billy-Header: HTML select box has been replaced with "details" block from core
+* Bootstrap dependency has been dropped
+* Tested up to WordPress 7.2
+
 = 2.6.1 =
 * Code refactoring and quality improvements
 
 = 2.6.0 =
 * Only output editor sidebar panel on "billy-" posts
-* Update dependencies
+* All dependencies have been updated
 * Tested up to WordPress 7.1
 
 = 2.5.0 =
 * Refactoring
-* Update dependencies
+* All dependencies have been updated
 
 = 2.4.0 =
 * Refactoring
@@ -180,11 +184,11 @@ Please consider purchasing the premium add-on with the following features:
 = 2.3.0 =
 * PDF export: List bullets now correctly show up in tables
 * Minor refactoring
-* Update dependencies
+* All dependencies have been updated
 
 = 2.2.1 =
 * Bugfix: Broken "Export table" markup
-* Update dependencies
+* All dependencies have been updated
 * Tested up to WordPress 7.0 (pre-release)
 
 = 2.2.0 =
@@ -202,7 +206,7 @@ Please consider purchasing the premium add-on with the following features:
 = 2.1.0 =
 * Improvements to overall code quality and inline documentation
 * Localized some missing de_DE translations in translate.wordpress.org
-* Update dependencies
+* All dependencies have been updated
 
 = 2.0.0 =
 * All blocks haven been migrated to Blocks API v3
@@ -223,7 +227,7 @@ Please consider purchasing the premium add-on with the following features:
 
 = 1.11.1 =
 * Re-implement workaround to improve formatting of line spacing in PDF content
-* Update dependencies
+* All dependencies have been updated
 
 = 1.11.0 =
 * Removed translation strings in table block and added custom placeholders that get replaced in the frontend to prevent potentially corrupted block warnings if the post language has been switched
@@ -291,7 +295,7 @@ Please consider purchasing the premium add-on with the following features:
 * Code refactoring with improvements to the load time
 * Renaming of some functions for consistency
 * Bumb minimum supported WordPress version to v6.0 (v6.5 is recommended!)
-* Update dependencies
+* All dependencies have been updated
 
 = 1.8.2 =
 * Bugfix: Exclude all reusable footer blocks - not only the latest one - from PDF body
@@ -328,11 +332,11 @@ Please consider purchasing the premium add-on with the following features:
 = 1.7.3 =
 * Minor code refactoring
 * Add .l10n.php translation files to adopt performant translations (WordPress 6.5+)
-* Update dependencies
+* All dependencies have been updated
 
 = 1.7.2 =
 * Minor code refactoring
-* Update dependencies
+* All dependencies have been updated
 * Tested up to WordPress 6.5
 
 = 1.7.1 =

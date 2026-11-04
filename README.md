@@ -50,9 +50,9 @@ Blocks are stored in a separate directory **/blocks**
 
 - `$ npm install`
 - `$ npm run start`
-  - Start developing and test the updated version.
+    - Start developing and test the updated version.
 - `$ npm run build`
-  - Create a build version and test the updated build version.
+    - Create a build version and test the updated build version.
 
 ### Translations
 
@@ -67,7 +67,7 @@ More information: [https://developer.wordpress.org/block-editor/developers/inter
 The development version may become quite large due to some external libraries and should not be implemented on a live system. You can create a smaller `dist` version with the following command:
 
 - `$ npm run dist`
-  - Now you can activate and test the plugin on your system
+    - Now you can activate and test the plugin on your system
 
 When you're done with the development you can submit a [Pull Request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests) to this repository.
 
@@ -78,13 +78,12 @@ This code repository is not suitable for general support requests. If you have a
 ## Technology
 
 - [Gutenberg Block Editor](https://github.com/WordPress/gutenberg), [GPLv2+](https://github.com/WordPress/gutenberg/blob/master/LICENSE.md)
-- [Bootstrap](https://github.com/twbs/bootstrap), [MIT](https://github.com/twbs/bootstrap/blob/master/LICENSE)
 - [WordPress Scripts](https://github.com/WordPress/gutenberg/tree/master/packages/scripts), [GPLv2+](https://github.com/WordPress/gutenberg/blob/master/packages/scripts/package.json)
 - [webpack](https://github.com/webpack/webpack), [MIT](https://github.com/webpack/webpack/blob/master/LICENSE)
 - [Geocoding with Nominatim OSM-Search](https://operations.osmfoundation.org/policies/nominatim), [GPLv2 license](https://github.com/osm-search/Nominatim)
 - PDF file generation
-  - [mPDF](https://github.com/mpdf/mpdf), [GPLv2](https://github.com/mpdf/mpdf/blob/development/LICENSE.txt)
-  - [Roboto Font](https://fonts.google.com/specimen/Roboto), [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0)
+    - [mPDF](https://github.com/mpdf/mpdf), [GPLv2](https://github.com/mpdf/mpdf/blob/development/LICENSE.txt)
+    - [Roboto Font](https://fonts.google.com/specimen/Roboto), [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0)
 - [SheetJS CE](https://git.sheetjs.com/sheetjs/sheetjs), [Apache License](https://git.sheetjs.com/sheetjs/sheetjs/src/branch/master/LICENSE)
 - [Strauss](https://github.com/BrianHenryIE/strauss), [MIT](https://github.com/BrianHenryIE/strauss/blob/master/LICENSE)
 

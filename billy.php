@@ -3,7 +3,7 @@
  * Plugin Name: Billy
  * Plugin URI: https://wordpress.org/plugins/billy
  * Description: A business-oriented billing suite powered by WordPress.
- * Version: 2.6.1
+ * Version: 2.7.0
  * Author: them.es
  * Author URI: https://them.es/plugins/billy
  * Text Domain: billy
@@ -19,7 +19,7 @@ define( 'BILLY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BILLY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BILLY_PLUGIN_FILE', __FILE__ );
 define( 'BILLY_REQUIRED_WP', '6.6' );
-define( 'BILLY_REQUIRED_PHP', '7.4' );
+define( 'BILLY_REQUIRED_PHP', '8.2' );
 
 if ( ! function_exists( 'wp_get_wp_version' ) ) {
 	/**

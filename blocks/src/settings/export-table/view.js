@@ -18,7 +18,7 @@ store('billy', {
 		exportTable: () => {
 			const { ref } = getElement();
 
-			const fileType = ref.value ?? 'xlsx';
+			const fileType = ref?.dataset.filetype ?? 'xlsx';
 
 			const title =
 				globalDataBilly?.postTitle || __('Billy Table', 'billy');
