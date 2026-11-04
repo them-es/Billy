@@ -84,7 +84,7 @@ function billy_plugins_loaded(): void {
 		$billy_pro_version     = get_file_data( WP_PLUGIN_DIR . '/' . $billy_pro, array( 'Version' => 'Version' ) )['Version'];
 		$billy_pro_min_version = '2.1.0'; // [2.1.0] Fix fatal error "Declaration of Billy_Pro::init() must be compatible with Billy::init(): void".
 
-		if ( version_compare( $billy_pro_version, $billy_pro_min_version, '<' ) ) {
+		if ( defined( 'BILLY_PRO_PLUGIN_FILE' ) && version_compare( $billy_pro_version, $billy_pro_min_version, '<' ) ) {
 			add_action(
 				'admin_notices',
 				function (): void {
