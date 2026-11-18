@@ -275,7 +275,7 @@ class Billy_PDF_Export {
 
 		foreach ( $blocks as $block ) {
 			// Do not output reusable Footer blocks.
-			if ( 'core/block' === $block['blockName'] || ( isset( $block['attrs']['ref'] ) && in_array( $block['attrs']['ref'], $footer_ids, true ) ) ) {
+			if ( isset( $block['attrs']['ref'] ) && in_array( $block['attrs']['ref'], $footer_ids, true ) ) {
 				continue;
 			}
 
